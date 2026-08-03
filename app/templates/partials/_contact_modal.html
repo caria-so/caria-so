@@ -1,0 +1,94 @@
+<div id="contact-modal" class="modal-overlay contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-hidden="true">
+  <div class="modal-container contact-modal__panel">
+    <button type="button" class="modal-close contact-modal__close" aria-label="Close contact form">
+      <i class="ph ph-x"></i>
+    </button>
+
+    <div class="modal-content contact-modal__content">
+      <header class="contact-modal__header">
+        <span class="contact-modal__eyebrow">Contact</span>
+        <h2 id="contact-modal-title">Let's work together</h2>
+        <p>Get in touch and tell me about your project or simply say hello.</p>
+      </header>
+
+      <div class="contact-modal__social" aria-label="Other ways to reach me">
+        <a href="mailto:hello@federicocaria.com" class="contact-social-btn contact-social-btn--email" title="Email hello@federicocaria.com" aria-label="Email">
+          <i class="ph ph-envelope-simple"></i>
+        </a>
+        <a href="https://github.com/caria-so" class="contact-social-btn contact-social-btn--github" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+          <i class="ph ph-github-logo"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/federico-caria/" class="contact-social-btn contact-social-btn--linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
+          <i class="ph ph-linkedin-logo"></i>
+        </a>
+      </div>
+
+      <form class="contact-modal__form" action="{{ url_for('blog.contact') }}" method="post">
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="contact-name">Name</label>
+          <input class="contact-modal__input" type="text" id="contact-name" name="name" placeholder="Your name" autocomplete="name">
+        </div>
+
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="contact-email">Email <span class="contact-modal__required" aria-hidden="true">*</span></label>
+          <input class="contact-modal__input" type="email" id="contact-email" name="email" placeholder="you@company.com" autocomplete="email" required aria-required="true">
+        </div>
+
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="contact-subject">Subject</label>
+          <select class="contact-modal__input contact-modal__select" id="contact-subject" name="service">
+            <option value="New project">New project</option>
+            <option value="Consulting">Consulting</option>
+            <option value="Collaboration">Collaboration</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="contact-message">Message</label>
+          <textarea class="contact-modal__input contact-modal__textarea" id="contact-message" name="message" placeholder="What are you building? What do you need help with?" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary contact-modal__submit">
+          Send message <i class="ph ph-paper-plane-tilt"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('contact-modal');
+    if (!modal) return;
+
+    const closeBtn = modal.querySelector('.modal-close');
+
+    document.querySelectorAll('[data-contact-trigger]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        const emailField = modal.querySelector('#contact-email');
+        if (emailField) {
+          window.setTimeout(function () { emailField.focus(); }, 100);
+        }
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+  });
+</script>

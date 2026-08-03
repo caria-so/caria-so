@@ -1,0 +1,41 @@
+{% set desktop = project.desktop_cover or project.image %}
+{% set mobile = project.mobile_cover %}
+{% set patterns = ['lr-pattern-dots', 'lr-pattern-grid-wide', 'lr-pattern-paper-dot', 'lr-pattern-crosshatch'] %}
+{% set pattern_idx = project.slug|length % patterns|length %}
+{% set pattern_class = project.pattern or patterns[pattern_idx] %}
+{% set accent_var = project.accent or 'hatch-neutral' %}
+
+{% if desktop or mobile %}
+<div
+    class="project-visual {{ pattern_class }}"
+    style="--hatch-color: var(--{{ accent_var }}); --pattern-opacity: 0.35;"
+>
+    <div class="project-visual-stage">
+        {% if desktop %}
+        <div class="project-mock project-mock--desktop">
+            <div class="project-mock-frame">
+                <div class="project-mock-bar" aria-hidden="true">
+                    <span class="project-mock-dot"></span>
+                    <span class="project-mock-dot"></span>
+                    <span class="project-mock-dot"></span>
+                </div>
+                <div class="project-mock-screen">
+                    <img src="{{ desktop }}" alt="{{ project.title }} — desktop">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if mobile %}
+        <div class="project-mock project-mock--phone">
+            <div class="project-mock-bezel">
+                <div class="project-mock-screen">
+                    <div class="project-mock-island" aria-hidden="true"></div>
+                    <img src="{{ mobile }}" alt="{{ project.title }} — mobile">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

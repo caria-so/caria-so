@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project-detail.css') }}">
+{% endblock %}
+
+{% block title %}{{ project.title }} — Federico Caria{% endblock %}
+
+{% block content %}
+
+<div class="proj-page" style="--proj-accent: var(--{{ project.accent or 'hatch-neutral' }});">
+
+    {# ════════════════════════════════════
+       HERO
+       ════════════════════════════════════ #}
+    <header class="proj-hero">
+        <div class="proj-hero-meta">
+            <a href="{{ url_for('blog.projects') }}" class="proj-back txt-mono txt-xsmall uppercase">
+                <i class="ph ph-arrow-left"></i> Projects
+            </a>
+            {% if project.status %}
+            <span class="proj-status txt-mono txt-xsmall uppercase" style="--status-color: {{ 'var(--hatch-ecommerce)' if project.status == 'live' else 'var(--hatch-ai)' if project.status == 'active' else 'var(--hatch-neutral)' }};">
+                <span class="proj-status-dot"></span>
+                {{ project.status }}
+            </span>
+            {% endif %}
+        </div>
+
+        <h1 class="proj-hero-title txt-xbold">{{ project.title }}</h1>
+
+        {% if project.summary %}
+        <p class="proj-hero-summary">{{ project.summary }}</p>
+        {% endif %}
+
+        <div class="proj-hero-actions">
+            {% if project.live_link %}
+            <a href="{{ project.live_link }}" target="_blank" class="btn btn-primary txt-mono uppercase">
+                View Live <i class="ph ph-arrow-square-out"></i>
+            </a>
+            {% endif %}
+            {% if project.github_link %}
+            <a href="{{ project.github_link }}" target="_blank" class="btn btn-secondary txt-mono uppercase">
+                <i class="ph ph-github-logo"></i> Source
+            </a>
+            {% endif %}
+        </div>
+    </header>
+
+
+    {# ════════════════════════════════════
+        META STRIP — compact inline + tech tags
+        ════════════════════════════════════ #}
+     <div class="proj-meta-strip">
+         <div class="proj-meta-inline">
+             {% if project.role %}
+             <span class="proj-meta-val txt-bold">{{ project.role }}</span>
+             {% endif %}
+             {% if project.client %}
+             <span class="proj-meta-sep">·</span>
+             <span class="proj-meta-val">{{ project.client }}</span>
+             {% endif %}
+             {% if project.date %}
+             <span class="proj-meta-sep">·</span>
+             <span class="proj-meta-val">{{ project.date }}</span>
+             {% endif %}
+             {% if project.status %}
+             <span class="proj-meta-sep">·</span>
+             <span class="proj-meta-status" style="--status-color: {{ 'var(--hatch-ecommerce)' if project.status == 'live' else 'var(--hatch-ai)' if project.status == 'active' else 'var(--hatch-neutral)' }};">
+                 <span class="proj-status-dot"></span>
+                 {{ project.status }}
+             </span>
+             {% endif %}
+         </div>
+         {% if project.technologies %}
+         <div class="hiw-tags">
+             {% for tech in project.technologies %}
+             <span class="hiw-tag">{{ tech }}</span>
+             {% endfor %}
+         </div>
+         {% endif %}
+     </div>
+
+
+    {# ════════════════════════════════════
+       COVER IMAGE
+       ════════════════════════════════════ #}
+    {% if project.image %}
+    <div class="proj-cover">
+        <div class="proj-cover-img">
+            <img src="{{ project.image }}" alt="{{ project.title }}">
+        </div>
+    </div>
+    {% endif %}
+
+
+    {# ════════════════════════════════════
+       BODY — flexible content blocks
+       Render from project.sections list:
+       each section has .type, .title, .content
+       ════════════════════════════════════ #}
+    <div class="proj-body">
+
+        {% if project.sections %}
+            {% for section in project.sections %}
+
+                {# ── Text block ── #}
+                {% if section.type == 'text' %}
+                <div class="proj-block proj-block--text">
+                    {% if section.title %}
+                    <h2 class="proj-block-title txt-xbold">{{ section.title }}</h2>
+                    {% endif %}
+                    <div class="proj-prose">
+                        {{ section.content | safe }}
+                    </div>
+                </div>
+
+                {# ── Two-column: text + image ── #}
+                {% elif section.type == 'split' %}
+                <div class="proj-block proj-block--split {% if section.reverse %}proj-block--reverse{% endif %}">
+                    <div class="proj-split-text">
+                        {% if section.title %}
+                        <h3 class="txt-xbold">{{ section.title }}</h3>
+                        {% endif %}
+                        <div class="proj-prose">
+                            {{ section.content | safe }}
+                        </div>
+                    </div>
+                    {% if section.image %}
+                    <div class="proj-split-media">
+                        <div class="proj-media-frame glass-panel">
+                            <img src="{{ section.image }}" alt="{{ section.title or '' }}">
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {# ── Full-width image ── #}
+                {% elif section.type == 'image' %}
+                <div class="proj-block proj-block--image">
+                    {% if section.title %}
+                    <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
+                    {% endif %}
+                    <div class="proj-media-frame glass-panel">
+                        <img src="{{ section.image }}" alt="{{ section.title or '' }}">
+                    </div>
+                </div>
+
+                {# ── Code block ── #}
+                {% elif section.type == 'code' %}
+                <div class="proj-block proj-block--code">
+                    {% if section.title %}
+                    <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
+                    {% endif %}
+                    <div class="proj-code-frame">
+                        <div class="proj-code-bar">
+                            <span class="proj-code-dot"></span>
+                            <span class="proj-code-dot"></span>
+                            <span class="proj-code-dot"></span>
+                            {% if section.filename %}
+                            <span class="proj-code-filename txt-mono">{{ section.filename }}</span>
+                            {% endif %}
+                        </div>
+                        <pre class="proj-code-body"><code>{{ section.content }}</code></pre>
+                    </div>
+                </div>
+
+                {# ── Callout / highlight box ── #}
+                {% elif section.type == 'callout' %}
+                <div class="proj-block proj-block--callout">
+                    {% if section.title %}
+                    <h4 class="proj-callout-title txt-mono txt-xsmall uppercase">{{ section.title }}</h4>
+                    {% endif %}
+                    <div class="proj-prose">
+                        {{ section.content | safe }}
+                    </div>
+                </div>
+
+                {# ── Metrics row ── #}
+                {% elif section.type == 'metrics' %}
+                <div class="proj-block proj-block--metrics">
+                    {% for metric in section['items'] %}
+                    <div class="proj-metric">
+                        <span class="proj-metric-num txt-xbold">{{ metric.value }}</span>
+                        <span class="proj-metric-label txt-mono txt-xsmall uppercase hiw-muted">{{ metric.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% elif section.type == 'metrics-pills' %}
+                <div class="proj-block proj-block--metrics proj-metrics--pills">
+                    {% for metric in section['items'] %}
+                    <div class="proj-metric">
+                        <span class="proj-metric-num txt-mono">{{ metric.value }}</span>
+                        <span class="proj-metric-label">{{ metric.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {# ── Gallery ── #}
+                {% elif section.type == 'gallery' %}
+                <div class="proj-block proj-block--gallery">
+                    {% if section.title %}
+                    <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
+                    {% endif %}
+                    <div class="proj-gallery-grid">
+                        {% for img in section.images %}
+                        <div class="proj-media-frame glass-panel">
+                            <img src="{{ img.src }}" alt="{{ img.alt or '' }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# ── Inline diagram (SVG/HTML, self-contained in md) ── #}
+                {% elif section.type == 'diagram' %}
+                <div class="proj-block proj-block--diagram">
+                    {% if section.title %}
+                    <h2 class="proj-block-title txt-xbold">{{ section.title }}</h2>
+                    {% endif %}
+                    {% if section.caption %}
+                    <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.caption }}</p>
+                    {% endif %}
+                    <div class="proj-diagram glass-panel">
+                        {{ section.content | safe }}
+                    </div>
+                </div>
+
+                {% endif %}
+            {% endfor %}
+
+        {% else %}
+            {# Fallback: render markdown body if no sections #}
+            {% if project.body %}
+            <div class="proj-block proj-block--text">
+                <div class="proj-prose">
+                    {{ project.body | safe }}
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+
+    {# ════════════════════════════════════
+       FOOTER — related + nav
+       ════════════════════════════════════ #}
+    <div class="proj-footer">
+        {% if project.related_posts %}
+        <div class="proj-related">
+            <h4 class="txt-mono txt-xsmall uppercase hiw-muted">Related Writing</h4>
+            <div class="proj-related-links">
+                {% for post in project.related_posts %}
+                <a href="{{ url_for('blog.post_detail', slug=post.slug) }}" class="proj-related-link">
+                    {{ post.title }} <i class="ph ph-arrow-right"></i>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="proj-nav">
+            <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
+                <i class="ph ph-arrow-left"></i> All Projects
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

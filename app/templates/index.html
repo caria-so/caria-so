@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project-cards.css') }}">
+{% endblock %}
+
+{% block title %}Federico Caria{% endblock %}
+
+{% block content %}
+
+{# Flash Messages #}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+          <span class="flash-text">{{ message }}</span>
+          <button class="flash-close" onclick="this.parentElement.style.display='none'">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+{# ════════════════════════════════════
+   HERO
+   ════════════════════════════════════ #}
+<section class="idx-hero-v2 lr-pattern-paper-dot">
+    <div class="idx-hero-v2-shell">
+        <div class="sec-inner idx-hero-v2-stage">
+            <div class="idx-hero-v2-copy">
+                <div class="idx-hero-name">Federico Caria</div>
+                <h1 class="idx-hero-thesis">Experience Engineering</h1>
+                <p class="idx-hero-subtitle">Knowledge shorts twice: Once in the tools. Once in the humans.</p>
+                <p class="idx-hero-body">
+                    I build tools for complex knowledge and test whether they work.
+                    From user research through working code — end to end.
+                </p>
+                <div class="idx-hero-cta">
+                    <a href="{{ url_for('blog.impossible_papers') }}" class="btn btn-primary txt-mono uppercase">See What I do</a>
+                    <a href="#impossible-papers" class="btn btn-secondary txt-mono uppercase">Get in touch</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="idx-hero-v2-logos">
+            <div class="sec-inner">
+                <div class="idx-logo-carousel-track">
+                    {# First set — accessible #}
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/eu_commission.png') }}" alt="European Commission"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/marie_curie.png') }}" alt="Marie Skłodowska-Curie Actions"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/cologne_uni.png') }}" alt="University of Cologne"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/sapienza_uni.png') }}" alt="Sapienza University of Rome"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/baymard_institute.png') }}" alt="Baymard Institute"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/conicet.png') }}" alt="CONICET"></div>
+                    <div class="idx-logo"><img src="{{ url_for('static', filename='assets/icons/customers/cicus.png') }}" alt="CICUS"></div>
+
+                    {# Duplicate set — decorative, for seamless translateX(-50%) loop #}
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/eu_commission.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/marie_curie.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/cologne_uni.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/sapienza_uni.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/baymard_institute.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/conicet.png') }}" alt=""></div>
+                    <div class="idx-logo" aria-hidden="true"><img src="{{ url_for('static', filename='assets/icons/customers/cicus.png') }}" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+    SERVICES
+    ════════════════════════════════════ #}
+<section class="sec idx-section--services lr-pattern-paper-dot" id="services">
+    <div class="sec-inner">
+
+        <div class="rx-ip-grid">
+
+            <div class="rx-ip-grid-left-inner">
+                <div class="sec-header">
+                    <span class="eyebrow">Services</span>
+                    <h2 class="txt-xbold">Research & Development</h2>
+                </div>
+
+                <div class="rx-ip-main prose">
+                    <p>
+                        The problem is always the same: complex information that people
+                        can't use well enough. Sometimes that's a researcher drowning in
+                        literature. Sometimes it's a checkout flow losing customers at step 3.
+                        Sometimes it's an organization sitting on data nobody can find.
+                    </p>
+
+                    <div class="rx-ip-proof" data-proof-carousel>
+                        <span class="rx-ip-proof-label">Endorsements</span>
+                        <div class="rx-ip-proof-slides" aria-live="polite">
+                            {% for e in endorsements %}
+                            <blockquote class="rx-ip-proof-slide{% if loop.first %} is-active{% endif %}"{% if not loop.first %} aria-hidden="true"{% endif %}>
+                                <p>{{ e.quote }}</p>
+                                <footer class="rx-ip-proof-attr">
+                                    {% if e.logo %}
+                                    <img src="{{ url_for('static', filename=e.logo) }}" alt="" class="rx-ip-proof-logo">
+                                    {% endif %}
+                                    <span>
+                                        <span class="rx-ip-proof-name">{{ e.name }}</span>
+                                        <span class="rx-ip-proof-role">{{ e.role }}</span>
+                                    </span>
+                                </footer>
+                            </blockquote>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('blog.projects') }}" class="rx-ip-link">
+                        About me <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="rx-programs">
+                <div class="rx-program-card" style="--prog-color: var(--hatch-ecommerce);">
+                    <span class="rx-program-domain">UX Audits & Usability Testing</span>
+                    <div class="rx-program-title">Find what's broken, prove it matters</div>
+                    <div class="rx-program-note">Heuristic audits against 700+ guidelines, moderated usability testing, funnel teardowns, competitive analysis</div>
+                </div>
+
+                <div class="rx-program-card" style="--prog-color: var(--hatch-ai);">
+                    <span class="rx-program-domain">Prototyping & Development</span>
+                    <div class="rx-program-title">From concept to working product in days</div>
+                    <div class="rx-program-note">Interactive MVPs, e-commerce platforms, research dashboards, landing pages — Flask, WooCommerce, FastAPI, whatever fits</div>
+                </div>
+
+                <div class="rx-program-card" style="--prog-color: var(--hatch-ux);">
+                    <span class="rx-program-domain">AI & NLP</span>
+                    <div class="rx-program-title">Pipelines that work on your data</div>
+                    <div class="rx-program-note">LLM integration, search and retrieval, entity resolution, OCR — wired into your workflow, not a demo</div>
+                </div>
+
+                <div class="rx-program-card" style="--prog-color: var(--hatch-libraries);">
+                    <span class="rx-program-domain">Knowledge Infrastructure</span>
+                    <div class="rx-program-title">Make complex information findable</div>
+                    <div class="rx-program-note">Graph databases, semantic search, metadata architecture, dataset curation — for research labs and businesses alike</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   PROJECTS (THE LAB)
+   ════════════════════════════════════ #}
+<section class="sec idx-section--projects lr-pattern-noise">
+    <div class="sec-inner">
+        <div class="sec-header">
+            <span class="eyebrow">The Lab</span>
+            <h2 class="txt-xbold">Most recent projects</h2>
+        </div>
+
+        <div class="idx-scroll-row">
+            {% for project in recent_projects %}
+            {% with card_index=loop.index %}
+            {% include 'partials/_project_card.html' %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+
+        <div class="flex justcenter mt-l">
+            <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
+                View All Projects <i class="ph ph-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   ABOUT — background
+   ════════════════════════════════════ #}
+<section class="sec idx-section--arc lr-pattern-noise">
+    <div class="sec-inner">
+        <div class="sec-header">
+            <span class="eyebrow">Background</span>
+            <h2 class="txt-xbold">One thread, many domains</h2>
+        </div>
+
+        <div class="rx-arc-layout">
+            <div class="rx-arc-narrative prose">
+                <p>
+                    The throughline has always been one thing: <strong>rigorous evaluation of how
+                    humans interact with complex information systems, and building better ones.</strong>
+                </p>
+                <p>
+                    It started with classical philology — close reading as a contemplative
+                    discipline, sitting with a text until it reveals what it actually says
+                    rather than what you wanted it to say. My MA thesis traced the arc from
+                    Roberto Busa's Index Thomisticus to modern computational text analysis.
+                </p>
+                <p>
+                    Then HCI research at Sapienza and Cologne, funded by a Marie Curie fellowship:
+                    are digital scholarly editions actually serving their users? (Usually not —
+                    scholars preferred the PDF.) Three papers, lectures from Berlin to Tokyo to
+                    Buenos Aires, a PhD formalizing evaluation frameworks for knowledge tools.
+                </p>
+                <p>
+                    Then eight years at Baymard Institute — the same question applied at scale.
+                    700+ usability heuristics. Fortune 500 checkout flows. Empirical proof,
+                    over and over, that the tools fail and the humans fail harder.
+                </p>
+                <p>
+                    Impossible Papers is where it all converges: a system that attacks both
+                    failure modes simultaneously. The tooling problem (multi-agent pipeline,
+                    automated literature, adversarial review) and the human problem (the system
+                    is the furnace, not the alchemist — human judgment stays exactly where it
+                    belongs, and gets removed everywhere it breaks things).
+                </p>
+            </div>
+
+            <div class="rx-arc-credentials">
+                <div class="rx-credential">
+                    <div class="rx-credential-year">2018 — present</div>
+                    <div class="rx-credential-text">Senior UX Researcher</div>
+                    <div class="rx-credential-org">Baymard Institute</div>
+                </div>
+                <div class="rx-credential">
+                    <div class="rx-credential-year">2015 — 2017</div>
+                    <div class="rx-credential-text">Ph.D. Human-Computer Interaction</div>
+                    <div class="rx-credential-org">Universität zu Köln</div>
+                </div>
+                <div class="rx-credential">
+                    <div class="rx-credential-year">2014 — 2017</div>
+                    <div class="rx-credential-text">Marie Skłodowska-Curie Fellow</div>
+                    <div class="rx-credential-org">European Commission</div>
+                </div>
+                <div class="rx-credential">
+                    <div class="rx-credential-year">2014 — 2015</div>
+                    <div class="rx-credential-text">UX Researcher</div>
+                    <div class="rx-credential-org">Digilab, La Sapienza</div>
+                </div>
+                <div class="rx-credential">
+                    <div class="rx-credential-year">3 papers</div>
+                    <div class="rx-credential-text">CHI, CSCW, Springer LNCS</div>
+                    <div class="rx-credential-org">First author</div>
+                </div>
+                <div class="rx-credential" style="border-color: var(--hatch-ai);">
+                    <div class="rx-credential-year">2024 — present</div>
+                    <div class="rx-credential-text">Impossible Papers</div>
+                    <div class="rx-credential-org">Multi-agent scientific discovery</div>
+                </div>
+
+                <a href="{{ url_for('blog.about') }}" class="rx-ip-link" style="margin-top: 0.5rem;">
+                    About me <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   CONTACT
+   ════════════════════════════════════ #}
+<section class="rx-contact">
+    <div
+        class="sec-inner rx-contact-inner rx-contact-inner--visual"
+        style="--rx-contact-bg: url('{{ url_for('static', filename='assets/images/home/knowbridge.png') }}')"
+    >
+        <span class="eyebrow">Collaborate</span>
+        <h2 class="txt-xbold">The interesting problems are ultradisciplinary.</h2>
+        <p>
+            If you're working on something where the knowledge infrastructure
+            is the bottleneck — whether that's a research lab, a scientific
+            competition, or a business drowning in its own data — I'd like to hear about it.
+        </p>
+        <a href="mailto:hello@federicocaria.com" class="btn btn-primary txt-mono uppercase" data-contact-trigger>
+            <i class="ph ph-envelope-simple"></i> Get in touch
+        </a>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-proof-carousel]').forEach(function (root) {
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.rx-ip-proof-slide'));
+        if (slides.length < 2) return;
+
+        var i = 0;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var interval = reduce ? 9000 : 5500;
+
+        setInterval(function () {
+            slides[i].classList.remove('is-active');
+            slides[i].setAttribute('aria-hidden', 'true');
+            i = (i + 1) % slides.length;
+            slides[i].classList.add('is-active');
+            slides[i].removeAttribute('aria-hidden');
+        }, interval);
+    });
+});
+</script>
+
+{% endblock %}

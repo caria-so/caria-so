@@ -1,0 +1,72 @@
+{% set accent = project.accent or 'hatch-neutral' %}
+{% set status = (project.status or 'completed') | lower | replace(' ', '_') %}
+{% set live_url = project.live_link or project.demo_link %}
+{% set has_duo = project.cover_desktop and project.cover_mobile %}
+<article class="proj-card" style="--proj-accent: var(--{{ accent }});">
+    <a href="{{ url_for('blog.project_detail', slug=project.slug) }}"
+       class="proj-card-cover{% if has_duo %} proj-card-cover--duo{% endif %}{% if not project.cover_url %} proj-card-cover--empty{% endif %}"
+       aria-label="{{ project.title }}">
+        {% if has_duo %}
+        <img class="proj-cover-desktop" src="{{ project.cover_desktop }}" alt="{{ project.title }} — desktop" loading="lazy">
+        <img class="proj-cover-mobile" src="{{ project.cover_mobile }}" alt="{{ project.title }} — mobile" loading="lazy">
+        {% elif project.cover_url %}
+        <img class="proj-cover-single" src="{{ project.cover_url }}" alt="{{ project.title }}" loading="lazy">
+        {% else %}
+        <span class="proj-cover-placeholder">{{ '%02d' | format(card_index|default(1)) }}</span>
+        {% endif %}
+    </a>
+
+    <div class="proj-card-body">
+        <div class="proj-card-meta">
+            <span class="proj-status proj-status--{{ status }}">{{ project.status or 'Completed' }}</span>
+            {% if project.client %}
+            <span class="proj-meta-item">{{ project.client }}</span>
+            {% endif %}
+            {% if project.date %}
+            <span class="proj-meta-item">{{ project.date }}</span>
+            {% endif %}
+        </div>
+
+        <h2 class="proj-card-title">
+            <a href="{{ url_for('blog.project_detail', slug=project.slug) }}" style="color: inherit; text-decoration: none;">
+                {{ project.title }}
+            </a>
+        </h2>
+
+        {% if project.summary %}
+        <p class="proj-card-summary">{{ project.summary }}</p>
+        {% endif %}
+
+        {% if project.technologies %}
+        <div class="proj-tech">
+            {% for tech in project.technologies[:6] %}
+            <span>{{ tech }}</span>
+            {% endfor %}
+            {% if project.technologies | length > 6 %}
+            <span>+{{ project.technologies | length - 6 }}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="proj-card-foot">
+            <a href="{{ url_for('blog.project_detail', slug=project.slug) }}" class="proj-cta">
+                View case study <i class="ph ph-arrow-right"></i>
+            </a>
+
+            {% if live_url or project.github_link %}
+            <div class="proj-ext-links">
+                {% if live_url %}
+                <a href="{{ live_url }}" class="proj-ext-link" target="_blank" rel="noopener noreferrer" title="Live site" aria-label="Live site">
+                    <i class="ph ph-arrow-square-out"></i>
+                </a>
+                {% endif %}
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" class="proj-ext-link" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+                    <i class="ph ph-github-logo"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</article>

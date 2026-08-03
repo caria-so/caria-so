@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/404.css') }}">
+{% endblock %}
+
+{% block title %}404 — Page not found{% endblock %}
+
+{% block content %}
+<section class="err-page">
+    <div class="err-content">
+        <img src="{{ url_for('static', filename='assets/images/404/404-fish.png') }}"
+             alt=""
+             class="err-fish"
+             width="320"
+             height="480">
+        <p class="err-code txt-mono">404</p>
+        <h1 class="err-title">Page not found</h1>
+        <p class="err-body">Whatever you were looking for swam off into the deep.</p>
+        <a href="{{ url_for('blog.index') }}" class="btn btn-secondary">
+            <i class="ph ph-house"></i> Return home
+        </a>
+    </div>
+</section>
+{% endblock %}

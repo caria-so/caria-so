@@ -1,0 +1,35 @@
+# Thread registry — columns for the notes board.
+# Frontmatter: thread (slug), keywords (list). Empty thread → NER+keywords → inbox.
+
+threads:
+
+  - slug: ip
+    title: Impossible Papers
+    color: hatch-ip
+    order: 1
+
+  - slug: ux
+    title: UX & Product
+    color: hatch-ux
+    order: 2
+
+  - slug: hai
+    title: Human–AI Interaction
+    color: hatch-libraries
+    order: 3
+
+  - slug: extravagantia
+    title: Extravagantia
+    color: hatch-data
+    order: 4
+
+  - slug: tyling
+    title: Tyling
+    color: hatch-ecommerce
+    order: 5
+
+  - slug: inbox
+    title: Inbox
+    color: hatch-neutral
+    order: 99
+    fallback: true

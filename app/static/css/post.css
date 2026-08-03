@@ -1,0 +1,542 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* ══ POST — paper-like reading surface ══ */
+
+:root {
+    --post-paper-bg: color-mix(in srgb, var(--c-background) 92%, #ece8e0);
+    --post-paper-body: var(--c-text-body);
+    --post-paper-heading: var(--c-text-primary);
+    --post-paper-muted: var(--c-text-secondary);
+    --post-paper-border: var(--c-border);
+    --post-quote-border: color-mix(in srgb, var(--c-border) 80%, #a8a29e);
+    --post-quote-bg: color-mix(in srgb, var(--c-background-gray) 65%, transparent);
+    --post-table-head: var(--c-background-gray);
+    --post-table-stripe: color-mix(in srgb, var(--c-background-gray) 50%, transparent);
+    --post-code-bg: #2b3038;
+    --post-code-text: #e8edf4;
+    --post-inline-code-bg: var(--c-background-gray);
+    --post-inline-code-text: var(--c-accent-dark);
+}
+
+[data-theme="dark"] {
+    --post-paper-bg: var(--c-background);
+    --post-paper-body: var(--c-text-body);
+    --post-paper-heading: var(--c-text-primary);
+    --post-paper-muted: var(--c-text-secondary);
+    --post-paper-border: var(--c-border);
+    --post-quote-border: var(--c-border);
+    --post-quote-bg: color-mix(in srgb, var(--c-background-gray) 80%, transparent);
+    --post-table-head: var(--c-background-gray);
+    --post-table-stripe: color-mix(in srgb, var(--c-background-gray) 45%, transparent);
+    --post-code-bg: #1a1d22;
+    --post-code-text: #dce3ec;
+    --post-inline-code-bg: var(--c-background-gray);
+    --post-inline-code-text: #f0a8ae;
+}
+
+#theme-wrapper {
+    padding: 0;
+    height: 100%;
+}
+
+#theme-wrapper > * {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* ── Post header — same treatment as projects hero ── */
+
+.post-header {
+    position: relative;
+    padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 2rem);
+    border-bottom: 1px solid var(--c-border);
+    --hatch-color: var(--hatch-data);
+    --pattern-opacity: 0.28;
+    background:
+        radial-gradient(ellipse 70% 55% at 8% 25%, color-mix(in srgb, var(--hatch-data) 9%, transparent), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 92% 75%, color-mix(in srgb, var(--hatch-ux) 7%, transparent), transparent 50%),
+        var(--c-background);
+    overflow: hidden;
+}
+
+.post-header-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+/* Cover image header — uses frontmatter `image` (same as archive cards) */
+.post-header--cover {
+    min-height: clamp(260px, 36vw, 400px);
+    justify-content: flex-end;
+    background: var(--c-background);
+}
+
+.post-header--cover .post-header-cover {
+    position: absolute;
+    inset: 0;
+    background-image: var(--post-cover-image);
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.03);
+}
+
+.post-header--cover .post-header-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--c-background) 18%, transparent) 0%,
+            color-mix(in srgb, var(--c-background) 52%, transparent) 42%,
+            color-mix(in srgb, var(--c-background) 90%, transparent) 100%
+        ),
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--post-header-accent, var(--hatch-neutral)) 14%, transparent) 0%,
+            transparent 58%
+        );
+}
+
+[data-theme="dark"] .post-header--cover .post-header-overlay {
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--c-background) 30%, transparent) 0%,
+            color-mix(in srgb, var(--c-background) 68%, transparent) 48%,
+            color-mix(in srgb, var(--c-background) 94%, transparent) 100%
+        ),
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--post-header-accent, var(--hatch-neutral)) 20%, transparent) 0%,
+            transparent 62%
+        );
+}
+
+.post-content-wrapper {
+    min-width: 0;
+}
+
+/* ── Keywords (distinct from thread tag-link) ── */
+
+.post-keywords {
+    gap: 0.35rem;
+}
+
+.post-keyword {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: lowercase;
+    line-height: 1.2;
+    color: var(--c-text-secondary);
+    background: var(--c-background-gray);
+    border: none;
+    border-radius: 0;
+}
+
+.post-keyword i {
+    font-size: 0.72rem;
+    color: var(--c-text-tertiary);
+}
+
+/* ── Thread + tag badges in post header ── */
+
+.post-header .post-tags {
+    gap: 0.4rem;
+}
+
+.post-header .post-tags .tag-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.22rem 0.75rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+    text-decoration: none;
+    line-height: 1.3;
+    border: 1px solid color-mix(in srgb, var(--tag-accent, var(--c-border)) 45%, var(--c-border));
+    color: var(--tag-accent, var(--c-text-secondary));
+    background: color-mix(in srgb, var(--tag-accent, var(--c-border)) 10%, var(--c-background));
+    box-shadow: none;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.post-header .post-tags a.tag-link:hover {
+    color: var(--tag-accent, var(--c-text-primary));
+    background: color-mix(in srgb, var(--tag-accent, var(--c-border)) 16%, var(--c-background));
+    border-color: color-mix(in srgb, var(--tag-accent, var(--c-border)) 60%, var(--c-border));
+    transform: translateY(-1px);
+}
+
+.post-header .post-tags .tag-link--muted {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.post-header .post-tags .tag-link--muted:hover {
+    transform: none;
+}
+
+/* ── Article body ── */
+
+.post-content {
+    padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 100%;
+    font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.78;
+    letter-spacing: 0.01em;
+    color: var(--post-paper-body);
+    background: var(--post-paper-bg);
+}
+
+.post-content > *:first-child {
+    margin-top: 0;
+}
+
+.post-content > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Headings — sans for contrast ── */
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    font-family: "Host Grotesk", system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--post-paper-heading);
+}
+
+.post-content h1 {
+    font-size: clamp(1.75rem, 3vw, 2.125rem);
+    margin: 2.5rem 0 1rem;
+}
+
+.post-content h2 {
+    font-size: clamp(1.4rem, 2.5vw, 1.65rem);
+    margin: 2.25rem 0 0.85rem;
+    padding-bottom: 0.35rem;
+    max-width: none;
+}
+
+@media (min-width: 1001px) {
+    .post-content p {
+        max-width: none;
+    }
+}
+
+.post-content h3 {
+    font-size: clamp(1.2rem, 2vw, 1.35rem);
+    margin: 1.75rem 0 0.65rem;
+}
+
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    font-size: 1.05rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.post-content h6 {
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+}
+
+/* ── Body text ── */
+
+.post-content p {
+    margin: 0 0 1.35rem;
+    max-width: 100%;
+    font-size: 1.0625rem;
+    color: var(--c-text-body);
+}
+
+@media (min-width: 1001px) {
+    .post-content p {
+        max-width: 70%;
+    }
+}
+
+.post-content strong {
+    font-weight: 600;
+    color: var(--post-paper-heading);
+}
+
+.post-content em {
+    font-style: italic;
+}
+
+.post-content a {
+    color: var(--c-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.post-content a:hover {
+    color: var(--c-link-hover);
+}
+
+.post-content hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid var(--post-paper-border);
+}
+
+/* ── Lists ── */
+/* ── Lists — fix indent, nesting, marker position ── */
+
+.post-content ul,
+.post-content ol {
+    margin: 0 0 1.35rem;
+    padding-left: 1.75rem;
+    max-width: none;
+    list-style-position: outside;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem !important;
+    color: var(--c-text-body);
+}
+
+.post-content ul li {
+    list-style-type: disc;
+}
+
+.post-content ol li {
+    list-style-type: decimal;
+}
+
+/* Nested lists */
+.post-content ul ul,
+.post-content ol ol,
+.post-content ul ol,
+.post-content ol ul {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    padding-left: 1.5rem;
+}
+
+.post-content ul ul li {
+    list-style-type: circle;
+}
+
+.post-content ul ul ul li {
+    list-style-type: square;
+}
+
+/* ── Code ── */
+
+.post-content pre {
+    margin: 1.75rem 0;
+    padding: 1.25rem 1.35rem;
+    max-width: none;
+    overflow-x: auto;
+    font-family: "Fira Code", ui-monospace, monospace;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--post-code-text);
+    background: var(--post-code-bg);
+    border: 1px solid var(--post-paper-border);
+    border-radius: 6px;
+}
+
+.post-content code {
+    font-family: "Fira Code", ui-monospace, monospace;
+    font-size: 0.88em;
+}
+
+.post-content :not(pre) > code {
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    background: var(--post-inline-code-bg);
+    color: var(--post-inline-code-text);
+}
+
+/* ── Blockquotes ── */
+
+.post-content blockquote {
+    margin: 1.75rem 0;
+    padding: 1rem 1.15rem 1rem 1.25rem;
+    max-width: none;
+    font-size: 1.02em;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--post-paper-muted);
+    background: var(--post-quote-bg);
+    border: 1px solid var(--post-paper-border);
+    border-left: 3px solid var(--post-quote-border);
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.post-content blockquote::before {
+    content: none;
+}
+
+.post-content blockquote p {
+    margin: 0 0 0.75rem;
+}
+
+.post-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Tables ── */
+
+.post-content table {
+    width: 100%;
+    max-width: 100%;
+    margin: 1.75rem 0;
+    border-collapse: collapse;
+    font-family: "Host Grotesk", system-ui, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border: 1px solid var(--post-paper-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: none;
+}
+
+.post-content table th,
+.post-content table td {
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--post-paper-border);
+    word-wrap: break-word;
+}
+
+.post-content table th {
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--post-paper-muted);
+    background: var(--post-table-head);
+    border-bottom: 2px solid var(--post-paper-border);
+}
+
+.post-content table tr:last-child td {
+    border-bottom: none;
+}
+
+.post-content table tbody tr:nth-child(even) td {
+    background: var(--post-table-stripe);
+}
+
+.post-content table tr:hover td {
+    background: color-mix(in srgb, var(--post-table-head) 70%, var(--post-paper-bg));
+}
+
+.post-content table td:first-child {
+    font-weight: 500;
+}
+
+/* ── Images ── */
+
+.post-image {
+    margin: 2rem 0;
+    width: 100%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    border: 1px solid var(--post-paper-border);
+}
+
+.post-image-caption {
+    margin-top: 0.65rem;
+    font-family: "Host Grotesk", system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: var(--post-paper-muted);
+    text-align: center;
+}
+
+.post-image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+/* ── ASCII art ── */
+
+.post-content .ascii-art {
+    background: var(--post-code-bg);
+    color: var(--post-code-text);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin: 1.75rem 0;
+    font-family: "Fira Code", "Consolas", monospace;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    overflow-x: auto;
+    white-space: pre;
+    border: 1px solid var(--post-paper-border);
+    box-shadow: none;
+}
+
+.post-content .ascii-art .phase-header {
+    color: var(--c-accent);
+    font-weight: bold;
+}
+
+.post-content .ascii-art .decision {
+    color: #e8c547;
+}
+
+.post-content .ascii-art .action {
+    color: #8ecae6;
+}
+
+.post-content .ascii-art .loop {
+    color: #95d5a8;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+    .post-content {
+        padding: 1.35rem 1.15rem;
+        font-size: 1rem;
+        line-height: 1.72;
+        border-radius: 4px;
+    }
+
+    .post-image-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .post-content table {
+        font-size: 0.82rem;
+    }
+
+    .post-content table th,
+    .post-content table td {
+        padding: 0.55rem 0.65rem;
+    }
+}

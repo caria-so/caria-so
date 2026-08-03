@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "meta": {
+    "description": "Collaborator endorsements — used by about marquee and index rx-ip-proof carousel."
+  },
+  "endorsements": [
+    {
+      "quote": "His ability to bridge rigorous research methodology with practical, implementation-ready insights made him uniquely effective. Any organization working at the intersection of UX research and e-commerce will benefit greatly from his experience.",
+      "name": "Mila Kosa",
+      "role": "Chief of Staff, Baymard Institute",
+      "logo": "assets/images/about/bi_logo.png"
+    },
+    {
+      "quote": "Dr. Caria has proved to be a precious collaborator, responsible as well as reliable. His most noticeable quality lies in his individual and cultured approach to problems.",
+      "name": "On. Fabrizio Marcelli",
+      "role": "Ambassador in Lebanon, Italian Ministry of Foreign Affairs",
+      "logo": "assets/images/about/mae_logo.png"
+    },
+    {
+      "quote": "Working with Federico transformed our e-commerce conversion rate by 47%. His data-driven approach combined with deep UX expertise delivered results beyond our expectations.",
+      "name": "Barbara Dante",
+      "role": "Director, Libreria Rotondi",
+      "logo": "assets/images/about/rotondi_logo.png"
+    },
+    {
+      "quote": "One thing I'll remember from working with Fede is the combination of his entrepreneurial mindset and his technical background. That combination is quite rare in the UX community.",
+      "name": "Meltem Nam Kazo",
+      "role": "Professor, Universität zu Köln",
+      "logo": null
+    },
+    {
+      "quote": "Federico bridges academic rigor and product velocity better than anyone I've worked with — from mixed-methods research to shipping functional prototypes in days, not months.",
+      "name": "Brigitte Mathiak",
+      "role": "CEO, Paramashop",
+      "logo": "assets/images/about/parama_logo.png"
+    }
+  ]
+}

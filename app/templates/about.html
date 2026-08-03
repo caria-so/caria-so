@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+
+<style>
+/* ══ ABOUT — hero (same pattern as projects) ══ */
+
+.abt-hero {
+    position: relative;
+    margin-inline: calc(-1 * var(--page-gutter, 2rem));
+    padding: clamp(4rem, 9vw, 6.5rem) var(--page-gutter, 2rem) clamp(3rem, 6vw, 4.5rem);
+    --hatch-color: var(--hatch-ux);
+    --pattern-opacity: 0.28;
+    background:
+        radial-gradient(ellipse 70% 55% at 8% 25%, color-mix(in srgb, var(--hatch-ux) 9%, transparent), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 92% 75%, color-mix(in srgb, var(--hatch-ai) 7%, transparent), transparent 50%),
+        var(--c-background);
+    overflow: hidden;
+}
+
+.abt-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.abt-hero-eyebrow {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.abt-hero-title {
+    font-size: clamp(2rem, 4.5vw, 2.85rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: var(--c-text-primary);
+    margin: 0;
+}
+
+.abt-hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.35;
+    margin: 0.65rem 0 0;
+}
+
+.abt-hero-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 42rem;
+    margin: 1.25rem 0 0;
+}
+
+.abt-portrait {
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-background-gray);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.abt-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.abt-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 720px) {
+    .abt-hero {
+        margin: 0;
+        padding: clamp(3rem, 8vh, 4.5rem) 0 clamp(2.5rem, 5vh, 3.5rem);
+    }
+
+    .abt-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .abt-portrait {
+        max-width: 220px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block title %}About — Federico Caria{% endblock %}
+
+{% block content %}
+
+<section class="abt-hero lr-pattern-noise">
+    <div class="abt-hero-grid">
+        <div class="abt-portrait">
+            <img src="{{ url_for('static', filename='assets/images/about/fede_deadhead.png') }}"
+                 alt="Federico Caria">
+        </div>
+
+        <div class="abt-hero-copy">
+            <span class="abt-hero-eyebrow">About me</span>
+            <h1 class="abt-hero-title">Federico Caria</h1>
+            <p class="abt-hero-subtitle">Experience engineer</p>
+            <p class="abt-hero-body">
+                I build working prototypes from complex research concepts. Over a decade translating
+                scientific and technical ideas into interactive tools people can actually test — from
+                scholarly edition interfaces (PhD, Marie Curie Fellow) to e-commerce optimization
+                systems (Baymard Institute, Fortune 500 clients) to multi-agent AI research pipelines.
+            </p>
+
+            <div class="hiw-tags about-tags">
+                <span class="hiw-tag">prototype</span>
+                <span class="hiw-tag">visualization</span>
+                <span class="hiw-tag">hci</span>
+                <span class="hiw-tag">ai</span>
+                <span class="hiw-tag">ux research</span>
+            </div>
+
+            {% if cv_available %}
+            <div class="abt-hero-actions">
+                <a href="{{ cv_url }}" class="btn btn-secondary" download>
+                    <i class="ph ph-file-pdf"></i> Download CV
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="about-endorsements idx-section" aria-label="Endorsements">
+    <div class="about-endorsements-head idx-section-inner idx-section-header">
+        <span class="rx-eyebrow">Endorsements</span>
+        <h2>What collaborators say</h2>
+    </div>
+
+    <div class="about-carousel">
+        <div class="about-carousel-track">
+            {% for _ in range(2) %}
+            {% set is_duplicate = loop.index == 2 %}
+            {% for e in endorsements %}
+            <blockquote class="about-endorsement-card"{% if is_duplicate %} aria-hidden="true"{% endif %}>
+                <p class="about-endorsement-quote">{{ e.quote }}</p>
+                <footer class="about-endorsement-author">
+                    {% if e.logo %}
+                    <img class="about-endorsement-logo" src="{{ url_for('static', filename=e.logo) }}" alt="">
+                    {% endif %}
+                    <div>
+                        <p class="about-endorsement-name">{{ e.name }}</p>
+                        <p class="about-endorsement-role">{{ e.role }}</p>
+                    </div>
+                </footer>
+            </blockquote>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+{# ════════════════════════════════════
+    INDUSTRIES
+    ════════════════════════════════════ #}
+ <section class="idx-band idx-band--sectors lr-pattern-paper-plus lr-material-dither-plus">
+     <div class="idx-section-inner">
+         <div class="idx-section-header centered">
+             <span class="txt-mono txt-xsmall uppercase hiw-muted">Sectors</span>
+             <h2 class="txt-xbold">Industries I Specialize In</h2>
+         </div>
+         <div class="industry-tags-container">
+             <span class="industry-badge"><i class="ph ph-storefront"></i> D2C E-Commerce</span>
+             <span class="industry-badge"><i class="ph ph-buildings"></i> B2B E-Commerce</span>
+             <span class="industry-badge"><i class="ph ph-shopping-cart"></i> Marketplaces</span>
+             <span class="industry-badge"><i class="ph ph-package"></i> Retail & Fashion</span>
+             <span class="industry-badge"><i class="ph ph-flask"></i> Health & Beauty</span>
+             <span class="industry-badge"><i class="ph ph-book-open"></i> Digital Products & SaaS</span>
+             <span class="industry-badge"><i class="ph ph-device-mobile"></i> Food & Beverage</span>
+             <span class="industry-badge"><i class="ph ph-house-line"></i> Home & Furniture</span>
+             <span class="industry-badge"><i class="ph ph-graduation-cap"></i> Education & Learning</span>
+             <span class="industry-badge"><i class="ph ph-suitcase-rolling"></i> Travel & Accommodations</span>
+             <span class="industry-badge"><i class="ph ph-asclepius"></i> Healthcare & Wellness</span>
+         </div>
+     </div>
+ </section>
+ 
+ 
+ {# ════════════════════════════════════
+    STACK BENTO
+    ════════════════════════════════════ #}
+ <section class="idx-section idx-section--stack lr-pattern-grid-wide">
+     <div class="idx-section-inner">
+         <div class="idx-section-header centered">
+             <span class="txt-mono txt-xsmall uppercase hiw-muted">Stack</span>
+             <h2 class="txt-xbold">Technologies & Tools</h2>
+         </div>
+ 
+         <div class="stack-bento">
+             <div class="sb-filters" role="tablist" aria-label="Filter stack by category">
+                 <button type="button" class="sb-filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+                 <button type="button" class="sb-filter" data-filter="ai" role="tab" aria-selected="false" style="--zone: var(--hatch-ai);">AI & NLP</button>
+                 <button type="button" class="sb-filter" data-filter="backend" role="tab" aria-selected="false" style="--zone: var(--hatch-ux);">Backend</button>
+                 <button type="button" class="sb-filter" data-filter="ecommerce" role="tab" aria-selected="false" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
+                 <button type="button" class="sb-filter" data-filter="frontend" role="tab" aria-selected="false" style="--zone: var(--hatch-libraries);">Frontend</button>
+                 <button type="button" class="sb-filter" data-filter="ux" role="tab" aria-selected="false" style="--zone: var(--hatch-neutral);">UX</button>
+             </div>
+ 
+             <div class="stack-bento-grid">
+                 <article class="sb-zone sb-ai" data-cat="ai" style="--zone: var(--hatch-ai);">
+                     <header class="sb-zone-head">
+                         <span class="sb-zone-dot"></span>
+                         <span class="sb-zone-title txt-mono txt-xsmall uppercase">AI & NLP</span>
+                     </header>
+                     <div class="sb-chips">
+                         <span class="sb-chip sb-chip-xl">Claude / Anthropic</span>
+                         <span class="sb-chip sb-chip-xl">OpenAI API</span>
+                         <span class="sb-chip sb-chip-lg">Hugging Face</span>
+                         <span class="sb-chip sb-chip-lg">LangChain</span>
+                         <span class="sb-chip sb-chip-lg">RAG Pipelines</span>
+                         <span class="sb-chip">LaBSE</span>
+                         <span class="sb-chip">E5</span>
+                         <span class="sb-chip">spaCy</span>
+                         <span class="sb-chip">Vector Search</span>
+                         <span class="sb-chip">Transkribus</span>
+                         <span class="sb-chip">Tesseract OCR</span>
+                         <span class="sb-chip">Prompt Eng.</span>
+                     </div>
+                 </article>
+ 
+                 <article class="sb-zone sb-backend" data-cat="backend" style="--zone: var(--hatch-ux);">
+                     <header class="sb-zone-head">
+                         <span class="sb-zone-dot"></span>
+                         <span class="sb-zone-title txt-mono txt-xsmall uppercase">Backend & Data</span>
+                     </header>
+                     <div class="sb-chips">
+                         <span class="sb-chip sb-chip-xl">Python</span>
+                         <span class="sb-chip sb-chip-lg">Django</span>
+                         <span class="sb-chip sb-chip-lg">FastAPI</span>
+                         <span class="sb-chip sb-chip-lg">PostgreSQL</span>
+                         <span class="sb-chip">Celery / Redis</span>
+                         <span class="sb-chip">pgvector</span>
+                         <span class="sb-chip">Qdrant</span>
+                         <span class="sb-chip">Neo4j</span>
+                         <span class="sb-chip">Supabase</span>
+                         <span class="sb-chip">R2</span>
+                     </div>
+                 </article>
+ 
+                 <article class="sb-zone sb-ecommerce" data-cat="ecommerce" style="--zone: var(--hatch-ecommerce);">
+                     <header class="sb-zone-head">
+                         <span class="sb-zone-dot"></span>
+                         <span class="sb-zone-title txt-mono txt-xsmall uppercase">E-Commerce</span>
+                     </header>
+                     <div class="sb-chips">
+                         <span class="sb-chip sb-chip-xl">WordPress</span>
+                         <span class="sb-chip sb-chip-xl">WooCommerce</span>
+                         <span class="sb-chip sb-chip-lg">PHP</span>
+                         <span class="sb-chip">ACF</span>
+                         <span class="sb-chip">ATUM</span>
+                         <span class="sb-chip">Nexi XPay</span>
+                         <span class="sb-chip">PayPal</span>
+                         <span class="sb-chip">SG</span>
+                         <span class="sb-chip">HPOS</span>
+                     </div>
+                 </article>
+ 
+                 <article class="sb-zone sb-frontend" data-cat="frontend" style="--zone: var(--hatch-libraries);">
+                     <header class="sb-zone-head">
+                         <span class="sb-zone-dot"></span>
+                         <span class="sb-zone-title txt-mono txt-xsmall uppercase">Frontend & Design</span>
+                     </header>
+                     <div class="sb-chips">
+                         <span class="sb-chip sb-chip-lg">HTML / CSS</span>
+                         <span class="sb-chip sb-chip-lg">JavaScript</span>
+                         <span class="sb-chip">React</span>
+                         <span class="sb-chip">Vite</span>
+                         <span class="sb-chip">Figma</span>
+                         <span class="sb-chip">Miro</span>
+                     </div>
+                 </article>
+ 
+                 <article class="sb-zone sb-ux" data-cat="ux" style="--zone: var(--hatch-neutral);">
+                     <header class="sb-zone-head">
+                         <span class="sb-zone-dot"></span>
+                         <span class="sb-zone-title txt-mono txt-xsmall uppercase">UX & Research</span>
+                     </header>
+                     <div class="sb-chips">
+                         <span class="sb-chip sb-chip-lg">Baymard</span>
+                         <span class="sb-chip">GA4</span>
+                         <span class="sb-chip">Hotjar</span>
+                         <span class="sb-chip">A/B</span>
+                         <span class="sb-chip">Usability</span>
+                     </div>
+                 </article>
+             </div>
+         </div>
+     </div>
+ </section>
+ 
+
+ {# ════════════════════════════════════
+    CONTACT
+    ════════════════════════════════════ #}
+ <section class="rx-contact">
+     <div
+         class="sec-inner rx-contact-inner rx-contact-inner--visual"
+         style="--rx-contact-bg: url('{{ url_for('static', filename='assets/images/home/knowbridge.png') }}')"
+     >
+         <span class="eyebrow">Collaborate</span>
+         <h2 class="txt-xbold">The interesting problems are ultradisciplinary.</h2>
+         <p>
+             If you're working on something where the knowledge infrastructure
+             is the bottleneck — whether that's a research lab, a scientific
+             competition, or a business drowning in its own data — I'd like to hear about it.
+         </p>
+         <a href="mailto:hello@federicocaria.com" class="btn btn-primary txt-mono uppercase" data-contact-trigger>
+             <i class="ph ph-envelope-simple"></i> Get in touch
+         </a>
+     </div>
+ </section>
+
+{% endblock %}

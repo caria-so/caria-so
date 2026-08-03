@@ -1,0 +1,1039 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+
+<style>
+/* ══ PAPER DETAIL — content + review form + open reviews ══ */
+
+.paper-detail-header {
+    padding: clamp(2.5rem, 6vh, 4rem) 0 clamp(1rem, 2vh, 1.5rem);
+    max-width: 1200px;
+}
+
+.paper-detail-domain {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--domain-color, var(--hatch-ai));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.paper-detail-domain::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--domain-color, var(--hatch-ai));
+}
+
+.paper-detail-header h1 {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.paper-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.paper-meta-item {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--c-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* ── Content body ── */
+
+.paper-body {
+    max-width: 720px;
+    padding-bottom: 3rem;
+}
+
+.paper-body h2, .paper-body h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.paper-body p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--c-text-primary);
+}
+
+.paper-fingerprint-stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+    background: var(--c-background-gray);
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    flex-wrap: wrap;
+}
+
+/* ── Report grid mock ── */
+
+.ip-report-mock-badge {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    border: 1px dashed var(--c-border);
+    border-radius: 4px;
+    padding: 0.35rem 0.6rem;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.ip-report {
+    max-width: 1200px;
+    padding-bottom: 2rem;
+}
+
+.ip-report-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--c-border);
+    align-items: start;
+}
+
+.ip-report-section:first-of-type {
+    border-top: none;
+}
+
+.ip-report-prose h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
+
+.ip-report-eyebrow {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.ip-report-prose p,
+.ip-report-prose li {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--c-text-secondary);
+}
+
+.ip-report-viz {
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    background: var(--c-background);
+    min-height: 120px;
+}
+
+.ip-viz-empty,
+.ip-viz-note {
+    font-size: 0.78rem;
+    color: var(--c-text-tertiary);
+    line-height: 1.5;
+}
+
+.ip-viz-note { margin-bottom: 0.75rem; }
+
+.ip-claim-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.ip-claim-item {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-background-gray);
+}
+
+.ip-claim-head {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+
+.ip-claim-id {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.ip-claim-type,
+.ip-claim-status {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+}
+
+.ip-claim-type { background: color-mix(in srgb, var(--domain-color) 12%, transparent); color: var(--domain-color); }
+.ip-claim-status--mixed { color: var(--hatch-ux); }
+.ip-claim-status--falsified { color: #993C1D; }
+.ip-claim-status--untested { color: var(--c-text-tertiary); }
+.ip-claim-status--supported { color: var(--hatch-ecommerce); }
+
+.ip-claim-text {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--c-text-primary);
+}
+
+.ip-regime-chart { display: flex; flex-direction: column; gap: 0.5rem; }
+.ip-regime-row { display: grid; grid-template-columns: 2rem 1fr 3rem; gap: 0.5rem; align-items: center; }
+.ip-regime-label { font-family: "Geist Mono", monospace; font-size: 0.72rem; font-weight: 600; }
+.ip-regime-bar-bg { height: 6px; background: var(--c-border); border-radius: 3px; overflow: hidden; grid-column: 2; }
+.ip-regime-bar-fill { height: 100%; border-radius: 3px; }
+.ip-regime-val { font-family: "Geist Mono", monospace; font-size: 0.65rem; color: var(--c-text-tertiary); }
+.ip-regime-hint { grid-column: 2 / -1; font-size: 0.65rem; color: var(--c-text-tertiary); line-height: 1.4; }
+
+.ip-novelty-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
+.ip-novelty-chip {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.62rem;
+  padding: 0.25rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid var(--c-border);
+}
+.ip-novelty-chip--a { border-color: var(--hatch-ai); color: var(--hatch-ai); }
+.ip-novelty-chip--b { border-color: var(--hatch-ux); color: var(--hatch-ux); }
+.ip-novelty-chip--c { border-color: var(--c-text-tertiary); }
+.ip-novelty-chip--d { border-color: var(--c-border); color: var(--c-text-tertiary); }
+
+.ip-rd-element { display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.5rem; font-size: 0.72rem; line-height: 1.45; }
+.ip-rd-level {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  width: 1.25rem;
+  text-align: center;
+}
+.ip-rd-level--a { color: var(--hatch-ai); }
+.ip-rd-level--b { color: var(--hatch-ux); }
+.ip-rd-text { color: var(--c-text-secondary); }
+
+.ip-loop-block { margin-bottom: 1rem; }
+.ip-loop-label {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--domain-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.ip-loop-step {
+    padding: 0.4rem 0;
+    border-left: 2px solid var(--c-border);
+    padding-left: 0.75rem;
+    margin-left: 0.25rem;
+}
+.ip-loop-step-head { display: flex; justify-content: space-between; font-size: 0.82rem; }
+.ip-loop-elapsed { font-family: "Geist Mono", monospace; font-size: 0.65rem; color: var(--c-text-tertiary); }
+.ip-loop-meta { font-size: 0.68rem; color: var(--c-text-tertiary); }
+
+.ip-gradient-mini { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--c-border); }
+.ip-gradient-title { font-size: 0.68rem; color: var(--c-text-tertiary); display: block; margin-bottom: 0.5rem; }
+.ip-gradient-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; margin-bottom: 0.25rem; }
+.ip-gradient-track { flex: 1; height: 4px; background: var(--c-border); border-radius: 2px; overflow: hidden; }
+.ip-gradient-fill { height: 100%; background: var(--domain-color); border-radius: 2px; }
+.ip-gradient-dir { font-family: "Geist Mono", monospace; color: var(--c-text-tertiary); min-width: 4rem; }
+
+.ip-sim-card {
+    padding: 0.5rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--c-border);
+    margin-bottom: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+}
+.ip-sim-id { font-family: "Geist Mono", monospace; font-size: 0.68rem; font-weight: 600; }
+.ip-sim-verdict { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.ip-sim-stat { font-size: 0.65rem; color: var(--c-text-tertiary); }
+
+.ip-survived { color: var(--hatch-ecommerce); }
+.ip-died { color: #993C1D; text-decoration: line-through; opacity: 0.85; }
+
+#paper-genealogy { border: none; padding: 0; background: transparent; }
+
+@media (max-width: 900px) {
+    .ip-report-section { grid-template-columns: 1fr; }
+}
+
+.paper-fp-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.paper-fp-stat-val {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--c-text-primary);
+    line-height: 1;
+}
+
+.paper-fp-stat-label {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+}
+
+.paper-genealogy-section {
+    max-width: 720px;
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--c-border);
+}
+
+.paper-genealogy-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.paper-genealogy-sub {
+    font-size: 0.85rem;
+    color: var(--c-text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+#paper-genealogy {
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+    padding: 1rem;
+    background: var(--c-background);
+}
+
+.paper-body code {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.88em;
+    background: var(--inline-code-bg);
+    color: var(--inline-code-text);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+}
+
+.paper-body pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1.25rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.paper-body pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+}
+
+
+/* ── Aggregate scores strip ── */
+
+.paper-scores-strip {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem!important;
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+    background: var(--c-background-gray);
+    margin-bottom: 2rem;
+    max-width: 720px;
+    margin: 2rem;
+}
+
+.paper-score-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.paper-score-dim {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+}
+
+.paper-score-val {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--c-text-primary);
+    line-height: 1;
+}
+
+.paper-score-val span {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--c-text-tertiary);
+}
+
+.paper-score-bar {
+    height: 4px;
+    background: var(--c-border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+}
+
+.paper-score-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--domain-color, var(--hatch-ai));
+}
+
+.paper-score-count {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--c-text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    border-left: 1px solid var(--c-border);
+}
+
+
+/* ── Review form ── */
+
+.review-section {
+    max-width: 720px;
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--c-border);
+}
+
+.review-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.review-section-sub {
+    font-size: 0.85rem;
+    color: var(--c-text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.review-dimension {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.review-dim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.review-dim-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-text-primary);
+}
+
+.review-dim-hint {
+    font-size: 0.7rem;
+    color: var(--c-text-tertiary);
+    font-style: italic;
+}
+
+.review-likert {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.review-likert input[type="radio"] {
+    display: none;
+}
+
+.review-likert label {
+    flex: 1;
+    text-align: center;
+    padding: 0.55rem 0;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--c-text-secondary);
+    cursor: pointer;
+    border-right: 1px solid var(--c-border);
+    transition: background 0.15s ease, color 0.15s ease;
+    user-select: none;
+}
+
+.review-likert label:last-of-type {
+    border-right: none;
+}
+
+.review-likert label:hover {
+    background: color-mix(in srgb, var(--domain-color, var(--hatch-ai)) 8%, transparent);
+    color: var(--c-text-primary);
+}
+
+.review-likert input[type="radio"]:checked + label {
+    background: color-mix(in srgb, var(--domain-color, var(--hatch-ai)) 15%, transparent);
+    color: var(--domain-color, var(--hatch-ai));
+    font-weight: 700;
+}
+
+.review-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.review-text-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-text-primary);
+}
+
+.review-text-group .optional {
+    font-weight: 400;
+    color: var(--c-text-tertiary);
+    font-size: 0.75rem;
+}
+
+.review-textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-background);
+    color: var(--c-text-primary);
+    font-size: 0.88rem;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.2s ease;
+}
+
+.review-textarea:focus {
+    outline: none;
+    border-color: var(--domain-color, var(--hatch-ai));
+}
+
+.review-inline-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.review-input {
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-background);
+    color: var(--c-text-primary);
+    font-size: 0.85rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.review-input:focus {
+    outline: none;
+    border-color: var(--domain-color, var(--hatch-ai));
+}
+
+.review-submit {
+    align-self: flex-start;
+    padding: 0.65rem 1.75rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--c-background);
+    background: var(--c-text-primary);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.review-submit:hover {
+    background: var(--c-link);
+    color: #fff;
+}
+
+
+/* ── Open reviews list ── */
+
+.reviews-list {
+    max-width: 720px;
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--c-border);
+}
+
+.reviews-list h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.review-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--c-border);
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-item-scores {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.review-item-score {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--c-text-secondary);
+}
+
+.review-item-score strong {
+    color: var(--c-text-primary);
+    font-weight: 700;
+}
+
+.review-item-comment {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--c-text-primary);
+    margin-top: 0.5rem;
+}
+
+.review-item-footer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.62rem;
+    color: var(--c-text-tertiary);
+    letter-spacing: 0.04em;
+}
+
+
+@media (max-width: 600px) {
+    .paper-scores-strip {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .paper-score-count {
+        border-left: none;
+        border-top: 1px solid var(--c-border);
+        padding-left: 0;
+        padding-top: 0.75rem;
+        justify-content: flex-start;
+    }
+
+    .review-inline-fields {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block title %}{{ paper.title }} — Impossible Papers{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+          <span class="flash-text">{{ message }}</span>
+          <button class="flash-close" onclick="this.parentElement.style.display='none'">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% set domain = paper.get('domain', 'general') %}
+{% set domain_colors = {
+    'astrophysics': 'var(--hatch-ecommerce)',
+    'biology': 'var(--hatch-ecommerce)',
+    'origin_of_life': 'var(--hatch-ai)',
+    'ai': 'var(--hatch-ai)',
+    'number_theory': 'var(--hatch-libraries)',
+    'mathematics': 'var(--hatch-libraries)',
+    'neuroscience': 'var(--hatch-ux)',
+    'neurorehabilitation': 'var(--hatch-ux)',
+} %}
+{% set dcolor = domain_colors.get(domain, 'var(--hatch-ai)') %}
+
+
+{# ── Header ── #}
+<div class="paper-detail-header" style="--domain-color: {{ dcolor }};">
+    <span class="paper-detail-domain">{{ domain | replace('_', ' ') }}</span>
+    <h1>{{ paper.title }}</h1>
+
+    <div class="paper-detail-meta">
+        {% if paper.date %}
+        <span class="paper-meta-item">
+            <i class="ph ph-calendar"></i> {{ paper.date }}
+        </span>
+        {% endif %}
+        {% if paper.get('run_id') %}
+        <span class="paper-meta-item">
+            run {{ paper.run_id }}
+        </span>
+        {% endif %}
+        {% if paper.get('run_path') and paper.get('iteration_count', 0) > 1 %}
+        <a class="paper-meta-item" href="{{ url_for('blog.regime_diversity', run=paper.run_path) }}" style="color: var(--domain-color, var(--hatch-ai)); text-decoration: none;">
+            <i class="ph ph-radar"></i> Regime diversity ({{ paper.iteration_count }} iterations)
+        </a>
+        {% endif %}
+        {% if paper.get('status') %}
+        <span class="paper-meta-item">
+            {{ paper.status | replace('_', ' ') }}
+        </span>
+        {% endif %}
+    </div>
+</div>
+
+
+{# ── Aggregate scores ── #}
+{% if paper.ratings and paper.ratings.count > 0 %}
+<div class="paper-scores-strip" style="--domain-color: {{ dcolor }};">
+    {% for dim in ['novelty', 'rigor', 'significance'] %}
+    <div class="paper-score-block">
+        <span class="paper-score-dim">{{ dim }}</span>
+        <span class="paper-score-val">
+            {{ paper.ratings[dim] }}<span>/7</span>
+        </span>
+        <div class="paper-score-bar">
+            <div class="paper-score-fill" style="width: {{ (paper.ratings[dim] / 7 * 100) | round }}%"></div>
+        </div>
+    </div>
+    {% endfor %}
+    <span class="paper-score-count">
+        {{ paper.ratings.count }} review{{ 's' if paper.ratings.count != 1 }}
+    </span>
+</div>
+{% endif %}
+
+
+{# ── Fingerprint stats ── #}
+<div class="paper-fingerprint-stats" style="--domain-color: {{ dcolor }};">
+    <div class="paper-fp-stat">
+        <span class="paper-fp-stat-val">{{ paper.claim_count }}</span>
+        <span class="paper-fp-stat-label">Claims tested</span>
+    </div>
+    <div class="paper-fp-stat">
+        <span class="paper-fp-stat-val">{{ paper.literature_count }}</span>
+        <span class="paper-fp-stat-label">Papers analyzed</span>
+    </div>
+    {% if paper.verdict %}
+    <div class="paper-fp-stat">
+        <span class="paper-fp-stat-val" style="color: {{ dcolor }};">{{ paper.verdict | replace('_', ' ') }}</span>
+        <span class="paper-fp-stat-label">Verdict</span>
+    </div>
+    {% endif %}
+</div>
+
+
+{# ── Mock report layout ── #}
+{% set r = paper.report %}
+<div class="ip-report-mock-badge">Layout preview — structure follows neurorehab fingerprint; sections appear when data exists</div>
+
+<div class="ip-report" style="--domain-color: {{ dcolor }};">
+
+  {# 1. Seed #}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Seed{% if r.seed_id %} · {{ r.seed_id }}{% endif %}</span>
+      <h2>Hypothesis</h2>
+      <p>{{ r.seed_text or paper.summary }}</p>
+      {% if r.scope %}
+      <p style="margin-top:1rem;font-size:0.82rem;">{{ r.scope[:500] }}{% if r.scope|length > 500 %}…{% endif %}</p>
+      {% endif %}
+    </div>
+    <div class="ip-report-viz">
+      <span class="ip-report-eyebrow">Run snapshot</span>
+      <div class="paper-fingerprint-stats" style="margin:0;max-width:none;border:none;background:transparent;padding:0;">
+        <div class="paper-fp-stat"><span class="paper-fp-stat-val">{{ r.loops_completed }}</span><span class="paper-fp-stat-label">Loops</span></div>
+        <div class="paper-fp-stat"><span class="paper-fp-stat-val">{{ paper.claim_count }}</span><span class="paper-fp-stat-label">Claims</span></div>
+        <div class="paper-fp-stat"><span class="paper-fp-stat-val">{{ r.references_count }}</span><span class="paper-fp-stat-label">Refs</span></div>
+        {% if paper.verdict %}<div class="paper-fp-stat"><span class="paper-fp-stat-val" style="color:{{ dcolor }}">{{ paper.verdict | replace('_', ' ') }}</span><span class="paper-fp-stat-label">Verdict</span></div>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  {# 2. Pipeline history #}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Pipeline · {{ r.loops_completed }} loop{{ 's' if r.loops_completed != 1 }}</span>
+      <h2>Refinement history</h2>
+      <p>Each loop runs formalize → literature → reassess (and friends). Checkpoints bounce state forward until verdict stabilizes.</p>
+    </div>
+    <div class="ip-report-viz" id="viz-pipeline"></div>
+  </section>
+
+  {# 3. Claims + genealogy / evidence #}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Claims</span>
+      <h2>Structured thesis</h2>
+      <ul class="ip-claim-list">
+        {% for c in r.claims[:6] %}
+        <li class="ip-claim-item">
+          <div class="ip-claim-head">
+            <span class="ip-claim-id">{{ c.id }}</span>
+            <span class="ip-claim-type">{{ c.type }}</span>
+            {% if c.status and c.status != 'unknown' %}
+            <span class="ip-claim-status ip-claim-status--{{ c.status }}">{{ c.status }}</span>
+            {% endif %}
+          </div>
+          <div class="ip-claim-text">{{ c.statement }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="ip-report-viz">
+      <span class="ip-report-eyebrow">{% if r.has_genealogy %}Concept genealogy{% else %}Literature map{% endif %}</span>
+      <div id="paper-genealogy"></div>
+    </div>
+  </section>
+
+  {# 4. Regime residual — innovation measure #}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Regime residual</span>
+      <h2>Innovation distance</h2>
+      <p>How far each claim sits from the literature centroid. High residual = territory the field hasn't mapped — the core IP product (~80% of value in compact fingerprints).</p>
+      {% if r.interpreted_direction %}
+      <p>Evidential direction: <strong>{{ r.interpreted_direction }}</strong></p>
+      {% endif %}
+    </div>
+    <div class="ip-report-viz" id="viz-regime"></div>
+  </section>
+
+  {# 5. Simulations #}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Experiments</span>
+      <h2>Simulations run against claims</h2>
+      {% for sim in r.simulations %}
+      <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--c-border);">
+        <strong style="font-size:0.82rem;">{{ sim.simulation_id }}</strong>
+        <span style="font-family:Geist Mono,monospace;font-size:0.65rem;margin-left:0.5rem;color:var(--c-text-tertiary);">{{ sim.gap_id }} · {{ sim.verdict }}</span>
+        <p style="margin-top:0.35rem;">{{ sim.interpretation[:320] }}{% if sim.interpretation|length > 320 %}…{% endif %}</p>
+      </div>
+      {% else %}
+      <p>Design-only run — no computational validation wired (see seed data_policy).</p>
+      {% endfor %}
+    </div>
+    <div class="ip-report-viz" id="viz-sims"></div>
+  </section>
+
+  {# 6. Review / breakthrough #}
+  {% if r.review_summary and (r.review_summary.what_survived or r.review_summary.what_died) %}
+  <section class="ip-report-section">
+    <div class="ip-report-prose">
+      <span class="ip-report-eyebrow">Adversarial review</span>
+      <h2>What survived stress-testing</h2>
+      <ul class="ip-claim-list">
+        {% for item in r.review_summary.what_survived %}
+        <li class="ip-claim-item ip-survived" style="border-color:color-mix(in srgb,var(--hatch-ecommerce) 30%,var(--c-border));">{{ item[:200] }}{% if item|length > 200 %}…{% endif %}</li>
+        {% endfor %}
+      </ul>
+      <h2 style="margin-top:1.5rem;">What died</h2>
+      <ul class="ip-claim-list">
+        {% for item in r.review_summary.what_died %}
+        <li class="ip-claim-item ip-died">{{ item[:200] }}{% if item|length > 200 %}…{% endif %}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="ip-report-viz">
+      <span class="ip-report-eyebrow">Synthesis</span>
+      <p>{{ r.review_summary.summary or 'No summary.' }}</p>
+    </div>
+  </section>
+  {% endif %}
+
+</div>
+
+
+{# ── Summary removed — now in report sections above ── #}
+
+
+{# ── Review form ── #}
+<div class="review-section" style="--domain-color: {{ dcolor }};">
+    <h2>Review this finding</h2>
+    <p class="review-section-sub">
+        Rate on three dimensions. Leave a comment if you want to
+        explain your reasoning, point out errors, or suggest follow-up.
+        No account needed.
+    </p>
+
+    <form class="review-form"
+          action="{{ url_for('blog.submit_paper_review', slug=paper.slug) }}"
+          method="POST">
+
+        {% for dim, hint in [
+            ('novelty', '1 = well known, 7 = genuinely new'),
+            ('rigor', '1 = fundamentally flawed, 7 = airtight'),
+            ('significance', '1 = trivial, 7 = field-altering'),
+        ] %}
+        <div class="review-dimension">
+            <div class="review-dim-header">
+                <span class="review-dim-label">{{ dim | capitalize }}</span>
+                <span class="review-dim-hint">{{ hint }}</span>
+            </div>
+            <div class="review-likert">
+                {% for n in range(1, 8) %}
+                <input type="radio" name="{{ dim }}" value="{{ n }}"
+                       id="{{ dim }}-{{ n }}" required>
+                <label for="{{ dim }}-{{ n }}">{{ n }}</label>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="review-text-group">
+            <label>Comment <span class="optional">— optional but encouraged</span></label>
+            <textarea class="review-textarea" name="comment"
+                      placeholder="What's wrong with this? What would you check next?"></textarea>
+        </div>
+
+        <div class="review-inline-fields">
+            <div class="review-text-group">
+                <label>Email <span class="optional">— optional, for follow-up only</span></label>
+                <input class="review-input" type="email" name="email"
+                       placeholder="Not displayed publicly">
+            </div>
+            <div class="review-text-group">
+                <label>Affiliation <span class="optional">— optional</span></label>
+                <input class="review-input" type="text" name="affiliation"
+                       placeholder="Institution or field">
+            </div>
+        </div>
+
+        <button type="submit" class="review-submit">Submit review</button>
+    </form>
+</div>
+
+
+{# ── Open reviews ── #}
+{% if paper.reviews %}
+<div class="reviews-list" style="--domain-color: {{ dcolor }};">
+    <h2>{{ paper.reviews | length }} Review{{ 's' if paper.reviews | length != 1 }}</h2>
+
+    {% for review in paper.reviews %}
+    <div class="review-item">
+        <div class="review-item-scores">
+            <span class="review-item-score">novelty <strong>{{ review.novelty }}</strong>/7</span>
+            <span class="review-item-score">rigor <strong>{{ review.rigor }}</strong>/7</span>
+            <span class="review-item-score">significance <strong>{{ review.significance }}</strong>/7</span>
+        </div>
+
+        {% if review.comment %}
+        <div class="review-item-comment">{{ review.comment }}</div>
+        {% endif %}
+
+        <div class="review-item-footer">
+            {% if review.affiliation %}
+            <span>{{ review.affiliation }}</span>
+            {% endif %}
+            <span>{{ review.created_at[:10] }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{# ── Back link ── #}
+<div style="padding: 1rem 0 3rem;">
+    <a href="{{ url_for('blog.papers_index') }}"
+       style="font-family:'Geist Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--c-text-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;">
+        <i class="ph ph-arrow-left"></i> All findings
+    </a>
+</div>
+
+<script src="{{ url_for('static', filename='js/concept_genealogy.js') }}"></script>
+<script src="{{ url_for('static', filename='js/paper_report.js') }}"></script>
+<script>
+  (function () {
+    var fp = {{ paper.fingerprint | tojson }};
+    var report = {{ paper.report | tojson }};
+
+    if (typeof renderGenealogy === 'function' && report.has_genealogy) {
+      renderGenealogy('paper-genealogy', fp);
+    } else {
+      var gEl = document.getElementById('paper-genealogy');
+      if (gEl) gEl.innerHTML = '<p class="ip-viz-empty">No concept genealogy — use regime residual below for literature positioning.</p>';
+    }
+
+    if (typeof renderPipelineLoops === 'function') {
+      renderPipelineLoops('viz-pipeline', report.pipeline_loops, report.gradient_history);
+    }
+    if (typeof renderRegimeDiversity === 'function' && report.regime_diversity) {
+      renderRegimeDiversity('viz-regime', report.regime_diversity);
+    } else if (typeof renderRegimeResidual === 'function') {
+      renderRegimeResidual('viz-regime', report.regime_distances);
+    }
+    if (typeof renderSimulationStrip === 'function') {
+      renderSimulationStrip('viz-sims', report.simulations);
+    }
+  })();
+</script>
+
+{% endblock %}

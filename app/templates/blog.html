@@ -1,0 +1,140 @@
+{# templates/blog.html #}
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/archive.css') }}">
+{% endblock %}
+
+{% block title %}{% if view == 'thread' and thread_meta %}{{ thread_meta.title }} — {% endif %}Notes — Federico Caria{% endblock %}
+
+{% block content %}
+
+<div class="arc-page">
+    <div class="arc-layout">
+
+        <aside class="arc-sidebar">
+            <div class="arc-sidebar-sticky">
+            <header class="arc-sidebar-head">
+                <span class="arc-eyebrow">Writing</span>
+                <h1 class="arc-title">{% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Notes{% endif %}</h1>
+                <p class="arc-subtitle">
+                    {% if view == 'thread' and thread_meta %}
+                    Thread · {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}
+                    {% else %}
+                    Notes grouped into threads — set <code>thread:</code> in frontmatter, or auto-placed via NER.
+                    {% endif %}
+                </p>
+            </header>
+
+            <div class="arc-search">
+                <span class="arc-search-label">Search</span>
+                <form action="{% if view == 'thread' and current_thread %}{{ url_for('blog.thread_detail', thread_slug=current_thread) }}{% else %}{{ url_for('blog.archive_index') }}{% endif %}" method="get" class="arc-search-form">
+                    <input type="text"
+                           name="q"
+                           class="arc-search-input"
+                           placeholder="Title or keyword…"
+                           value="{{ query or '' }}"
+                           aria-label="Search notes">
+                    <button type="submit" class="arc-search-btn" aria-label="Search">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+            {% if registry %}
+            <nav class="arc-filters" aria-label="Threads">
+                <span class="arc-filters-label">Threads</span>
+                <ul class="arc-filter-list">
+                    <li>
+                        <a href="{{ url_for('blog.archive_index', q=query or none) }}"
+                           class="arc-filter-link arc-filter-link--all{% if not current_thread %} is-active{% endif %}">
+                            <span class="arc-filter-name">All threads</span>
+                            <span class="arc-filter-count">{{ total_count|default(posts|length) }}</span>
+                        </a>
+                    </li>
+                    {% for thread in registry %}
+                    {% set count = thread_counts.get(thread.slug, 0) if thread_counts is defined else 0 %}
+                    <li>
+                        <a href="{{ url_for('blog.thread_detail', thread_slug=thread.slug, q=query or none) }}"
+                           class="arc-filter-link{% if current_thread == thread.slug %} is-active{% endif %}"
+                           style="--filter-color: var(--{{ thread.color or 'hatch-neutral' }});">
+                            <span class="arc-filter-name">{{ thread.title }}</span>
+                            <span class="arc-filter-count">{{ count }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            {% if view == 'thread' and current_thread %}
+            <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">← All threads</a>
+            {% elif query %}
+            <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">Clear search</a>
+            {% endif %}
+            </div>
+        </aside>
+
+        <main class="arc-main">
+            <div class="arc-results-bar">
+                <span class="arc-results-count">
+                    {% if view == 'thread' %}
+                    {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}{% if query %} · filtered{% endif %}
+                    {% else %}
+                    {{ registry|length }} thread{{ 's' if registry|length != 1 else '' }} · {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}{% if query %} · filtered{% endif %}
+                    {% endif %}
+                </span>
+            </div>
+
+            {% if view == 'board' %}
+            <div class="notes-board-scroll">
+            <div class="notes-board">
+                {% for column in columns %}
+                <section class="notes-column" style="--col-color: var(--{{ column.color or 'hatch-neutral' }});">
+                    <header class="notes-column-head">
+                        <a href="{{ url_for('blog.thread_detail', thread_slug=column.slug) }}" class="notes-column-title">
+                            {{ column.title }}
+                        </a>
+                        <span class="notes-column-count">{{ column.count }}</span>
+                    </header>
+                    <div class="notes-column-cards">
+                        {% for post in column.posts[:5] %}
+                        {% include 'partials/_note_board_card.html' %}
+                        {% else %}
+                        <p class="notes-column-empty">No notes yet.</p>
+                        {% endfor %}
+                    </div>
+                    {% if column.count > 5 %}
+                    <a href="{{ url_for('blog.thread_detail', thread_slug=column.slug) }}" class="notes-column-more">
+                        +{{ column.count - 5 }} more
+                    </a>
+                    {% endif %}
+                </section>
+                {% else %}
+                <div class="arc-empty">
+                    <p>No notes found.</p>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+            {% else %}
+            <div class="arc-list">
+                {% for post in posts %}
+                {% with card_index=loop.index %}
+                {% include 'partials/_archive_post_row.html' %}
+                {% endwith %}
+                {% else %}
+                <div class="arc-empty">
+                    <p>No notes in this thread.</p>
+                    <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">All threads</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </main>
+
+    </div>
+</div>
+
+{% endblock %}

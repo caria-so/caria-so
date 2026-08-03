@@ -1,0 +1,154 @@
+{# templates/blog/post.html #}
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+{% endblock %}
+
+{% block title %}{{ post.title }} - My Blog{% endblock %}
+
+{% block content %}
+
+<div class="post-body">
+    <div class="post-content-wrapper">
+        <header class="post-header {% if post.image %}post-header--cover{% else %}lr-pattern-noise{% endif %} flex vertical gap-m"
+                {% if post.image %}style="--post-cover-image: url('{{ post.image }}'); --post-header-accent: var(--{{ post.thread_color or 'hatch-neutral' }});"{% endif %}>
+            {% if post.image %}
+            <div class="post-header-cover" aria-hidden="true"></div>
+            <div class="post-header-overlay" aria-hidden="true"></div>
+            {% endif %}
+            <div class="post-header-inner flex vertical gap-m">
+            <div class="post-meta flex horizontal gap-m wrap">
+                {% if post.date %}
+                <span class="meta-item">
+                    <i class="ph ph-calendar"></i>
+                    {{ post.date }}
+                </span>
+                {% endif %}
+                {% if post.author %}
+                <span class="meta-item">
+                    <i class="ph ph-user"></i>
+                    {{ post.author }}
+                </span>
+                {% endif %}
+            </div> 
+            <h1 class="post-title txt-bold">{{ post.title }}</h1>    
+            {% if post.summary %}
+            <p class="post-summary txt-light">{{ post.summary }}</p>
+            {% endif %}
+            {% if post.thread %}
+            <div class="post-tags flex horizontal gap-xs wrap mt-s">
+                <a href="{{ url_for('blog.thread_detail', thread_slug=post.thread) }}"
+                   class="tag-link"
+                   style="--tag-accent: var(--{{ post.thread_color or 'hatch-neutral' }});">
+                    {{ post.thread_title or post.thread }}
+                </a>
+                {% if post.thread_source and post.thread_source != 'manual' %}
+                <span class="tag-link tag-link--muted" style="--tag-accent: var(--hatch-neutral);">suggested placement</span>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if post.keywords %}
+            <div class="post-keywords flex horizontal gap-xs wrap mt-s">
+                {% for keyword in post.keywords %}
+                <span class="post-keyword">
+                    <i class="ph ph-tag" aria-hidden="true"></i>
+                    {{ keyword }}
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if post.tags %}
+            <div class="post-tags flex horizontal gap-xs wrap mt-s">
+                {% for tag in post.tags %}
+                <span class="tag-link"
+                      style="--tag-accent: {{ tag_colors.get(tag, '#CCCCCC') }}; cursor: default;">
+                    {{ tag }}
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            </div>
+        </header>
+        <article class="post-content">
+            {{ post.content|safe }}
+        </article>
+    </div>
+
+    <aside>
+        {% if post.toc %}
+        <div class="toc-container">
+          <h5>Table of Contents</h5>
+          {{ post.toc|safe }}
+        </div>
+        {% endif %}
+      </aside>
+</div>
+
+{# Related Posts #}
+{% if related_posts %}
+<section class="related-posts">
+    <h3>Related Posts</h3>
+    <div class="grid-3 my-m">
+        {% for related in related_posts %}
+        <article class="project-card">
+            <div class="project-content flex vertical gap-s">
+                <div class="flex vertical gap-s">
+                    <span class="post-meta flex horizontal gap-xs aligncenter">
+                        <i class="ph ph-calendar txt-xsmall"></i>
+                        <p class="txt-xsmall">{{ related.date }}</p>
+                    </span>
+                    <h6>
+                        {% if is_vitriol|default(false) %}
+                            <a class="txt-bold" href="{{ url_for('blog.vitriol_post', slug=related.slug) }}">{{ related.title }}</a>
+                        {% else %}
+                            <a class="txt-bold" href="{{ url_for('blog.post_detail', slug=related.slug) }}">{{ related.title }}</a>
+                        {% endif %}
+                    </h6>
+                </div>
+                {% if post.tags %}
+                <div class="tag-indicators flex horizontal gap-xs wrap">
+                    {% for tag in post.tags %}
+                    <a href="{{ url_for('blog.tag_posts', tag=tag) }}" 
+                    class="tag-dot" 
+                    style="background-color: {{ tag_colors[tag] }}"
+                    title="{{ tag }}"></a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if related.summary %}
+                <p class="summary-text">{{ related.summary }}</p>
+                {% endif %}
+                {% if is_vitriol|default(false) %}
+                    <a href="{{ url_for('blog.vitriol_post', slug=related.slug) }}" 
+                    class="read-more flex horizontal gap-xs aligncenter mt-s">
+                    Read More
+                    <i class="ph ph-arrow-square-out" style="font-weight:700;"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('blog.post_detail', slug=related.slug) }}" 
+                    class="read-more flex horizontal gap-xs aligncenter mt-s">
+                    Read More
+                    <i class="ph ph-arrow-square-out" style="font-weight:700;"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+
+
+{# Post Navigation #}
+<div class="post-footer flex horizontal gap-s">
+    <a href="{{ url_for('blog.index') }}" class="back-link">
+        <i class="ph ph-arrow-left"></i>
+        Back to Posts
+    </a>
+</div>
+{% endblock %}
+

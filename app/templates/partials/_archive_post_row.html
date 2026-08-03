@@ -1,0 +1,53 @@
+{% set post_accent = 'var(--' ~ (post.thread_color or 'hatch-neutral') ~ ')' %}
+<article class="arc-post" style="--post-accent: {{ post_accent }};">
+    <a href="{{ url_for('blog.post_detail', slug=post.slug) }}"
+       class="arc-post-visual"
+       aria-label="{{ post.title }}">
+        {% if post.image %}
+        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+        {% else %}
+        <span class="arc-post-placeholder">{{ '%02d' | format(card_index|default(1)) }}</span>
+        {% endif %}
+    </a>
+
+    <div class="arc-post-body">
+        <div class="arc-post-meta">
+            {% if post.date %}
+            <span class="arc-post-date">
+                <i class="ph ph-calendar-blank"></i>
+                {{ post.date }}
+            </span>
+            {% endif %}
+            {% if post.thread %}
+            <a href="{{ url_for('blog.thread_detail', thread_slug=post.thread) }}"
+               class="arc-post-tag"
+               style="--tag-color: {{ post_accent }};">{{ post.thread_title or post.thread }}</a>
+            {% endif %}
+            {% if post.thread_source and post.thread_source != 'manual' %}
+            <span class="arc-post-tag arc-post-tag--muted">suggested</span>
+            {% endif %}
+        </div>
+
+        <h2 class="arc-post-title">
+            <a href="{{ url_for('blog.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+        </h2>
+
+        {% if post.summary %}
+        <p class="arc-post-summary">{{ post.summary }}</p>
+        {% endif %}
+
+        {% if post.keywords %}
+        <div class="arc-post-tags">
+            {% for keyword in post.keywords[:4] %}
+            <span class="arc-post-tag arc-post-tag--muted">{{ keyword }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="arc-post-foot">
+            <a href="{{ url_for('blog.post_detail', slug=post.slug) }}" class="arc-post-cta">
+                Read note <i class="ph ph-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</article>

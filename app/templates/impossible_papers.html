@@ -1,0 +1,803 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+
+<style>
+/* ══ IMPOSSIBLE PAPERS — service landing ══ */
+
+/* ── Hero ── */
+.ip-hero {
+    padding: clamp(4rem, 10vh, 7rem) 0 clamp(2rem, 4vh, 3rem);
+    max-width: 680px;
+}
+
+.ip-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+}
+
+.ip-hero-sub {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--c-text-secondary);
+    max-width: 560px;
+}
+
+.ip-hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* ── Section shared ── */
+.ip-section {
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    position: relative;
+}
+
+.ip-section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ip-eyebrow {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.ip-section h2 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Stats strip ── */
+.ip-stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+    background: var(--c-background-gray);
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.ip-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.ip-stat-val {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--c-text-primary);
+}
+
+.ip-stat-label {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+}
+
+.ip-stat-divider {
+    width: 1px;
+    background: var(--c-border);
+    align-self: stretch;
+}
+
+/* ── Evidence board ── */
+.ip-evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.ip-claim-card {
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--c-border);
+    border-left: 3px solid var(--claim-color, var(--c-border));
+    border-radius: 0 8px 8px 0;
+    background: var(--c-background);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.ip-claim-id {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--claim-color, var(--c-text-tertiary));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ip-claim-status {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--claim-color) 12%, transparent);
+    color: var(--claim-color);
+    font-weight: 600;
+}
+
+.ip-claim-text {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--c-text-primary);
+    font-weight: 500;
+}
+
+.ip-claim-confidence {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.58rem;
+    color: var(--c-text-tertiary);
+    margin-top: 0.15rem;
+}
+
+/* Status colors */
+.ip-claim-card[data-status="mixed"]     { --claim-color: var(--hatch-ai); }
+.ip-claim-card[data-status="falsified"] { --claim-color: #ef4444; }
+.ip-claim-card[data-status="untested"]  { --claim-color: var(--c-text-tertiary); }
+.ip-claim-card[data-status="supported"] { --claim-color: var(--hatch-ecommerce); }
+
+/* ── Regime chart ── */
+.ip-regime-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.ip-regime-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 45px;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.ip-regime-label {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.65rem;
+    color: var(--c-text-secondary);
+    text-align: right;
+}
+
+.ip-regime-bar-bg {
+    height: 6px;
+    background: var(--c-border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.ip-regime-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--hatch-ux);
+    transition: width 0.5s ease;
+}
+
+.ip-regime-val {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.6rem;
+    color: var(--c-text-tertiary);
+}
+
+/* ── Findings blocks ── */
+.ip-findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.ip-finding-block {
+    padding: 1.25rem;
+    border: 1px solid var(--c-border);
+    border-radius: 10px;
+    background: var(--c-background);
+}
+
+.ip-finding-block h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ip-finding-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.ip-finding-item {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--c-text-secondary);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-border) 50%, transparent);
+}
+
+.ip-finding-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* ── Services grid ── */
+.ip-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.ip-service-card {
+    padding: 1.5rem;
+    border: 1px solid var(--c-border);
+    border-top: 3px solid var(--svc-color, var(--hatch-ai));
+    border-radius: 0 0 12px 12px;
+    background: var(--c-background);
+}
+
+.ip-service-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.ip-service-card p {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--c-text-secondary);
+}
+
+.ip-service-output {
+    margin-top: 0.75rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--svc-color, var(--hatch-ai));
+}
+
+/* ── How it works ── */
+.ip-pipeline {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.ip-pipe-step {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem;
+    border: 1px solid var(--c-border);
+    border-right: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    position: relative;
+    background: var(--c-background);
+}
+
+.ip-pipe-step:first-child { border-radius: 8px 0 0 8px; }
+.ip-pipe-step:last-child { border-right: 1px solid var(--c-border); border-radius: 0 8px 8px 0; }
+
+.ip-pipe-step::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--c-text-tertiary);
+    z-index: 1;
+}
+
+.ip-pipe-step:last-child::after { display: none; }
+
+.ip-pipe-num {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.55rem;
+    color: var(--c-text-tertiary);
+    letter-spacing: 0.1em;
+}
+
+.ip-pipe-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--c-text-primary);
+}
+
+.ip-pipe-desc {
+    font-size: 0.68rem;
+    color: var(--c-text-secondary);
+    line-height: 1.45;
+}
+
+/* ── Request form ── */
+.ip-request {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 5vw, 4rem);
+    border-radius: 20px;
+    border: 1px solid var(--c-border);
+    background:
+        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--hatch-ai) 8%, transparent) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--hatch-ux) 6%, transparent) 0%, transparent 50%),
+        var(--c-background-gray);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.ip-request-info h2 {
+    margin-bottom: 0.75rem;
+}
+
+.ip-request-info p {
+    color: var(--c-text-secondary);
+    line-height: 1.75;
+    font-size: 0.95rem;
+}
+
+.ip-request-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ip-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.ip-form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--c-text-primary);
+}
+
+.ip-form-label .optional {
+    font-weight: 400;
+    color: var(--c-text-tertiary);
+    font-size: 0.72rem;
+}
+
+.ip-form-input,
+.ip-form-textarea,
+.ip-form-select {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-background);
+    color: var(--c-text-primary);
+    font-size: 0.88rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.ip-form-input:focus,
+.ip-form-textarea:focus,
+.ip-form-select:focus {
+    outline: none;
+    border-color: var(--hatch-ai);
+}
+
+.ip-form-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+.ip-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.ip-form-submit {
+    align-self: flex-start;
+    padding: 0.65rem 1.75rem;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--c-background);
+    background: var(--c-text-primary);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.ip-form-submit:hover {
+    background: var(--c-link);
+    color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .ip-findings-grid { grid-template-columns: 1fr; }
+    .ip-request { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+@media (max-width: 600px) {
+    .ip-stats { flex-direction: column; gap: 1rem; }
+    .ip-stat-divider { width: 100%; height: 1px; }
+    .ip-evidence-grid { grid-template-columns: 1fr; }
+    .ip-pipeline { flex-direction: column; }
+    .ip-pipe-step { border-right: 1px solid var(--c-border); border-bottom: none; border-radius: 0; }
+    .ip-pipe-step:first-child { border-radius: 8px 8px 0 0; }
+    .ip-pipe-step:last-child { border-radius: 0 0 8px 8px; }
+    .ip-pipe-step::after { display: none; }
+    .ip-form-row { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block title %}Impossible Papers — Automated Scientific Discovery{% endblock %}
+
+{% block content %}
+
+
+{# ── Hero ── #}
+<section class="ip-hero">
+    <span class="ip-eyebrow">Impossible Papers</span>
+    <h1>Stress-test any scientific hypothesis against real evidence.</h1>
+    <p class="ip-hero-sub">
+        A multi-agent system that takes an audacious hypothesis through iterative
+        literature discovery, claim evolution, computational simulation, and adversarial
+        review. It doesn't confirm ideas — it tries to kill them. What survives is
+        worth publishing.
+    </p>
+    <div class="ip-hero-cta">
+        <a href="#request" class="btn btn-primary txt-mono uppercase">Request an analysis</a>
+        <a href="#fingerprint" class="btn btn-secondary txt-mono uppercase">See a live fingerprint</a>
+    </div>
+</section>
+
+
+{# ── How it works ── #}
+<section class="ip-section" style="border-top: 1px solid var(--c-border);">
+    <div class="ip-section-inner">
+        <span class="ip-eyebrow">Pipeline</span>
+        <h2>Seed → Run → Findings</h2>
+
+        <div class="ip-pipeline">
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">01</span>
+                <span class="ip-pipe-name">Seed</span>
+                <span class="ip-pipe-desc">Your hypothesis, structured as testable claims</span>
+            </div>
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">02</span>
+                <span class="ip-pipe-name">Literature</span>
+                <span class="ip-pipe-desc">OpenAlex, PubMed, Patents — exhaustive search</span>
+            </div>
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">03</span>
+                <span class="ip-pipe-name">Claims</span>
+                <span class="ip-pipe-desc">Iterative refinement, convergence testing, claim killing</span>
+            </div>
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">04</span>
+                <span class="ip-pipe-name">Simulation</span>
+                <span class="ip-pipe-desc">Computational tests against real datasets</span>
+            </div>
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">05</span>
+                <span class="ip-pipe-name">Review</span>
+                <span class="ip-pipe-desc">4-stage adversarial review loop</span>
+            </div>
+            <div class="ip-pipe-step">
+                <span class="ip-pipe-num">06</span>
+                <span class="ip-pipe-name">Fingerprint</span>
+                <span class="ip-pipe-desc">Structured output — what survived, what died, why</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   LIVE FINGERPRINT — Run 025h
+   ════════════════════════════════════ #}
+<section class="ip-section lr-pattern-paper-dot" id="fingerprint" style="--hatch-color: var(--hatch-ai); --pattern-opacity: 0.2;">
+    <div class="ip-section-inner">
+        <span class="ip-eyebrow">Live fingerprint · Run 025h</span>
+        <h2>Emergent RNA-Amino Acid Coding System</h2>
+
+        {# ── Stats ── #}
+        <div class="ip-stats">
+            <div class="ip-stat">
+                <span class="ip-stat-val">8</span>
+                <span class="ip-stat-label">Claims tested</span>
+            </div>
+            <div class="ip-stat-divider"></div>
+            <div class="ip-stat">
+                <span class="ip-stat-val">3</span>
+                <span class="ip-stat-label">Simulations</span>
+            </div>
+            <div class="ip-stat-divider"></div>
+            <div class="ip-stat">
+                <span class="ip-stat-val">187</span>
+                <span class="ip-stat-label">Papers analyzed</span>
+            </div>
+            <div class="ip-stat-divider"></div>
+            <div class="ip-stat">
+                <span class="ip-stat-val" style="color: var(--hatch-ai);">Residual</span>
+                <span class="ip-stat-label">Verdict</span>
+            </div>
+        </div>
+
+        {# ── Evidence board ── #}
+        <span class="ip-eyebrow">Evidence status</span>
+        <div class="ip-evidence-grid">
+            <div class="ip-claim-card" data-status="mixed">
+                <span class="ip-claim-id">c1 · foundational <span class="ip-claim-status">mixed</span></span>
+                <span class="ip-claim-text">RNA aptamers exist for all 8 target amino acids, but multiplexed SELEX from a single library is undemonstrated</span>
+                <span class="ip-claim-confidence">confidence: moderate · 8/8 aptamers found, 0/3 codon enrichment significant</span>
+            </div>
+            <div class="ip-claim-card" data-status="mixed">
+                <span class="ip-claim-id">c2 · foundational <span class="ip-claim-status">mixed</span></span>
+                <span class="ip-claim-text">Selection mechanism is theoretically powerful (2x→33x enrichment) but occupancy differential at 1 mM is only 1.25x</span>
+                <span class="ip-claim-confidence">confidence: moderate · bottleneck identified</span>
+            </div>
+            <div class="ip-claim-card" data-status="untested">
+                <span class="ip-claim-id">c3 · derived <span class="ip-claim-status">untested</span></span>
+                <span class="ip-claim-text">Allosteric aptazyme coupling — the mechanistic heart — remains entirely unaddressed by simulations</span>
+                <span class="ip-claim-confidence">confidence: low · critical gap</span>
+            </div>
+            <div class="ip-claim-card" data-status="untested">
+                <span class="ip-claim-id">c4 · derived <span class="ip-claim-status">untested</span></span>
+                <span class="ip-claim-text">Spontaneous emergence of multi-ligand architectures from random pools is the most speculative component</span>
+                <span class="ip-claim-confidence">confidence: low · no direct test</span>
+            </div>
+            <div class="ip-claim-card" data-status="untested">
+                <span class="ip-claim-id">c5 · derived <span class="ip-claim-status">untested</span></span>
+                <span class="ip-claim-text">32-state Shannon threshold (≥5 bits) has no empirical grounding — entirely a forward-looking research target</span>
+                <span class="ip-claim-confidence">confidence: low · framework sound, target ungrounded</span>
+            </div>
+            <div class="ip-claim-card" data-status="falsified">
+                <span class="ip-claim-id">c6 · speculative <span class="ip-claim-status">falsified</span></span>
+                <span class="ip-claim-text">No sequence convergence detected across independent selections for the same ligand (p=0.935–1.0)</span>
+                <span class="ip-claim-confidence">confidence: moderate · sequence-level only, structural convergence untested</span>
+            </div>
+            <div class="ip-claim-card" data-status="mixed">
+                <span class="ip-claim-id">c7 · speculative <span class="ip-claim-status">mixed</span></span>
+                <span class="ip-claim-text">M1 feasible, M2/M3 face quantitative barrier — ≥2-fold catalytic modulation required but undemonstrated</span>
+                <span class="ip-claim-confidence">confidence: moderate · bottleneck sharpened</span>
+            </div>
+            <div class="ip-claim-card" data-status="falsified">
+                <span class="ip-claim-id">c8 · foundational <span class="ip-claim-status">falsified</span></span>
+                <span class="ip-claim-text">Stereochemical theory not supported — 0/3 per-amino-acid codon enrichments significant, no convergence signal</span>
+                <span class="ip-claim-confidence">confidence: moderate · two independent analyses converge on null</span>
+            </div>
+        </div>
+
+        {# ── Regime distances ── #}
+        <span class="ip-eyebrow" style="margin-top: 1.5rem;">Regime distance · similarity to literature centroid</span>
+        <div class="ip-regime-chart">
+            {% set regimes = [
+                ('c4', 0.7985), ('c7', 0.7899), ('c8', 0.7888),
+                ('c3', 0.7696), ('c1', 0.7676), ('c6', 0.7665),
+                ('c2', 0.7459), ('c5', 0.6379)
+            ] %}
+            {% for label, val in regimes %}
+            <div class="ip-regime-row">
+                <span class="ip-regime-label">{{ label }}</span>
+                <div class="ip-regime-bar-bg">
+                    <div class="ip-regime-bar-fill" style="width: {{ (val * 100) | round }}%;
+                        background: {{ 'var(--hatch-ecommerce)' if val > 0.78 else ('var(--hatch-ux)' if val > 0.74 else 'var(--hatch-ai)') }};"></div>
+                </div>
+                <span class="ip-regime-val">{{ val }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <p style="font-size: 0.72rem; color: var(--c-text-tertiary); line-height: 1.5; max-width: 560px;">
+            Higher = closer to known literature. c5 (Shannon compliance) sits farthest from established work — the
+            most novel territory. c4 (modular RNA architectures) is closest — well-grounded in riboswitch literature.
+        </p>
+
+        {# ── Convergences, contradictions, surprises ── #}
+        <div class="ip-findings-grid" style="margin-top: 2rem;">
+            <div class="ip-finding-block">
+                <h4><span class="ip-finding-dot" style="background: var(--hatch-ecommerce);"></span> Convergences</h4>
+                <div class="ip-finding-item">
+                    Two independent simulations both find quantitative requirements for selection-driven enrichment are not met under default assumptions (c2, c3)
+                </div>
+                <div class="ip-finding-item">
+                    Two independent analyses both fail to detect stereochemical determinism in RNA-amino acid recognition (c6, c8)
+                </div>
+            </div>
+            <div class="ip-finding-block">
+                <h4><span class="ip-finding-dot" style="background: #ef4444;"></span> Contradictions</h4>
+                <div class="ip-finding-item">
+                    Aptamers exist for all 8 targets (supporting feasibility), but occupancy differential at working concentration is only 1.25x (insufficient for selection)
+                </div>
+                <div class="ip-finding-item">
+                    Simulation interpretation text claims "convergence significantly greater than random" but p-values (0.935–1.0) show the opposite — internal pipeline inconsistency caught
+                </div>
+            </div>
+            <div class="ip-finding-block">
+                <h4><span class="ip-finding-dot" style="background: var(--hatch-ai);"></span> Surprises</h4>
+                <div class="ip-finding-item">
+                    All four riboswitch families show p≈1.0 for sequence convergence — even natural riboswitches with billions of years of evolution show no sequence-level determinism
+                </div>
+                <div class="ip-finding-item">
+                    The bottleneck isn't selection power (5x→905K enrichment after 10 rounds) — it's generating sufficient functional differential in the first place
+                </div>
+            </div>
+            <div class="ip-finding-block">
+                <h4><span class="ip-finding-dot" style="background: var(--hatch-ux);"></span> What survived</h4>
+                <div class="ip-finding-item">
+                    The conceptual inversion: amino acid IS the compartment selector — genuinely novel logical structure with no prior art
+                </div>
+                <div class="ip-finding-item">
+                    Thermodynamic partitioning as a third explanatory category for code origin, distinct from stereochemical determinism and frozen accident
+                </div>
+                <div class="ip-finding-item">
+                    The falsifiable core: I(AA; partition | length, GC) > 0.05 bits — a clean, testable prediction
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ── Services ── #}
+<section class="ip-section" style="border-top: 1px solid var(--c-border);">
+    <div class="ip-section-inner">
+        <span class="ip-eyebrow">What you get</span>
+        <h2>Research services</h2>
+
+        <div class="ip-services-grid">
+            <div class="ip-service-card" style="--svc-color: var(--hatch-ux);">
+                <h4>Literature analysis</h4>
+                <p>
+                    Exhaustive structured search across OpenAlex, PubMed, and Google Patents.
+                    Regime distance mapping shows where your hypothesis sits relative to
+                    established literature and where the gaps are.
+                </p>
+                <div class="ip-service-output">→ structured bibliography + regime map + gap analysis</div>
+            </div>
+            <div class="ip-service-card" style="--svc-color: var(--hatch-ai);">
+                <h4>Hypothesis stress-test</h4>
+                <p>
+                    Full pipeline: claim decomposition, iterative refinement, computational simulation
+                    against real datasets, 4-stage adversarial review. The system tries to kill your
+                    idea. What survives is what matters.
+                </p>
+                <div class="ip-service-output">→ research fingerprint + evidence board + verdict</div>
+            </div>
+            <div class="ip-service-card" style="--svc-color: var(--hatch-ecommerce);">
+                <h4>Concept genealogy</h4>
+                <p>
+                    Trace the evolution of a concept across the literature. Claim lineage trees,
+                    citation networks, and semantic drift analysis. Visualize how ideas mutate,
+                    merge, and die across decades of research.
+                </p>
+                <div class="ip-service-output">→ genealogy graph + lineage visualization + drift report</div>
+            </div>
+            <div class="ip-service-card" style="--svc-color: var(--hatch-libraries);">
+                <h4>Dataset discovery</h4>
+                <p>
+                    Find and verify public datasets relevant to your hypothesis.
+                    40+ datasets across biology, astronomy, chemistry, number theory,
+                    and more. API verification and feasibility check included.
+                </p>
+                <div class="ip-service-output">→ curated dataset list + API docs + feasibility notes</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ── Request ── #}
+<section class="ip-section" id="request">
+    <div class="ip-request lr-material-riso" style="--pattern-opacity: 0.3;">
+        <div class="ip-request-info">
+            <span class="ip-eyebrow">Get started</span>
+            <h2>Submit a hypothesis</h2>
+            <p>
+                Describe the hypothesis you want stress-tested.
+                Include the domain, the core claim, and what you expect to find.
+                I'll assess feasibility and scope the analysis.
+            </p>
+            <p style="margin-top: 1rem;">
+                Outputs are delivered as structured YAML fingerprints,
+                with full simulation code, literature references, and a
+                human-readable research report.
+            </p>
+        </div>
+
+        <form class="ip-request-form" action="{{ url_for('blog.contact') }}" method="POST">
+            <div class="ip-form-row">
+                <div class="ip-form-group">
+                    <label class="ip-form-label">Name</label>
+                    <input class="ip-form-input" type="text" name="name" required>
+                </div>
+                <div class="ip-form-group">
+                    <label class="ip-form-label">Email</label>
+                    <input class="ip-form-input" type="email" name="email" required>
+                </div>
+            </div>
+
+            <div class="ip-form-row">
+                <div class="ip-form-group">
+                    <label class="ip-form-label">Affiliation <span class="optional">— optional</span></label>
+                    <input class="ip-form-input" type="text" name="company" placeholder="Institution or lab">
+                </div>
+                <div class="ip-form-group">
+                    <label class="ip-form-label">Domain</label>
+                    <select class="ip-form-select" name="service">
+                        <option value="">Select a field</option>
+                        <option value="biology">Biology</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="physics">Physics</option>
+                        <option value="astrophysics">Astrophysics</option>
+                        <option value="neuroscience">Neuroscience</option>
+                        <option value="computer_science">Computer Science</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="earth_science">Earth Science</option>
+                        <option value="medicine">Medicine</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="social_science">Social Science</option>
+                        <option value="interdisciplinary">Interdisciplinary</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="ip-form-group">
+                <label class="ip-form-label">Hypothesis</label>
+                <textarea class="ip-form-textarea" name="message" required
+                          placeholder="Describe the hypothesis you want stress-tested. What is the core claim? What would falsify it? What datasets might be relevant?"></textarea>
+            </div>
+
+            <input type="hidden" name="budget" value="ip-analysis">
+            <button type="submit" class="ip-form-submit">Submit for review</button>
+        </form>
+    </div>
+</section>
+
+
+{# ── Back ── #}
+<div style="padding: 1rem 0 3rem;">
+    <a href="{{ url_for('blog.index') }}"
+       style="font-family:'Geist Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--c-text-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;">
+        <i class="ph ph-arrow-left"></i> Home
+    </a>
+</div>
+
+{% endblock %}

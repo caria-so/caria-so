@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tooling/methods_finder.css') }}">
+{% endblock %}
+
+{% block title %}Method Finder — Federico Caria{% endblock %}
+
+{% block content %}
+
+<div class="tool-page">
+    {% set hero_eyebrow = 'Method Finder' %}
+    {% set hero_title = 'Research & design toolkit builder' %}
+    {% set hero_body = catalog.meta.description ~ ' Pick methods by what you need to learn, what you can spend, and where you are in the product lifecycle — not by habit.' %}
+    {% include 'tooling/partials/_hero.html' %}
+
+    {% include 'tooling/methods_finder/_explorer.html' %}
+    {% include 'tooling/methods_finder/_drawer.html' %}
+</div>
+
+<script type="application/json" id="mtd-data">{{ {
+    'meta': catalog.meta,
+    'methods': catalog.methods,
+    'methods_by_id': catalog.methods_by_id
+} | tojson }}</script>
+<script src="{{ url_for('static', filename='js/tooling/methods_finder.js') }}" defer></script>
+
+{% endblock %}

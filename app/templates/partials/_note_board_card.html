@@ -1,0 +1,14 @@
+<article class="note-card" style="--note-accent: var(--{{ post.thread_color or 'hatch-neutral' }});">
+    <a href="{{ url_for('blog.post_detail', slug=post.slug) }}" class="note-card-link">
+        <span class="note-card-title">{{ post.title }}</span>
+        {% if post.date %}
+        <span class="note-card-date">{{ post.date }}</span>
+        {% endif %}
+        {% if post.summary %}
+        <span class="note-card-summary">{{ post.summary }}</span>
+        {% endif %}
+    </a>
+    {% if post.thread_source and post.thread_source != 'manual' %}
+    <span class="note-card-badge" title="Auto-placed via {{ post.thread_source }}">suggested</span>
+    {% endif %}
+</article>

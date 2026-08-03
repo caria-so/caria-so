@@ -1,0 +1,501 @@
+/* ════════════════════════════════════════
+   PROJECT DETAIL PAGE
+   
+   Append to pages.css or import separately.
+   Requires: glass-panel, hatch system, hiw-tags,
+   hiw-muted from the shared design system.
+   ════════════════════════════════════════ */
+
+
+/* ── Page shell ── */
+
+.proj-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 0 4rem;
+    --proj-accent: var(--hatch-neutral);
+}
+
+
+/* ── Hero ── */
+
+.proj-hero {
+    padding: 3rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.proj-hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.proj-back {
+    color: var(--c-text-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color 0.2s ease;
+}
+
+.proj-back:hover {
+    color: var(--c-text-primary);
+}
+
+.proj-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--status-color);
+}
+
+.proj-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--status-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-color) 20%, transparent);
+    animation: sb-dot-pulse 2.5s ease-in-out infinite;
+}
+
+.proj-hero-title {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.proj-hero-summary {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--c-text-secondary);
+    max-width: 640px;
+}
+
+.proj-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+
+/* ── Meta strip — compact inline ── */
+
+.proj-meta-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--c-border);
+    border-bottom: 1px solid var(--c-border);
+    margin-bottom: 2rem;
+}
+
+.proj-meta-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--c-text-secondary);
+}
+
+.proj-meta-val {
+    color: var(--c-text-primary);
+}
+
+.proj-meta-sep {
+    color: var(--c-text-tertiary);
+    font-size: 0.75rem;
+}
+
+.proj-meta-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--status-color);
+    font-weight: 500;
+}
+
+
+/* ── Cover image ── */
+
+.proj-cover {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--c-border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--c-background-gray);
+}
+
+.proj-cover-img {
+    flex: 1;
+    min-height: 280px;
+    max-height: 480px;
+    overflow: hidden;
+    background: var(--c-background-gray);
+}
+
+.proj-cover-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* ── Body — content blocks ── */
+
+.proj-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.proj-block-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+/* Prose */
+.proj-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--c-text-secondary);
+}
+
+.proj-prose p + p {
+    margin-top: 1rem;
+}
+
+.proj-prose a {
+    color: var(--c-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.proj-prose ul,
+.proj-prose ol {
+    padding-left: 1.25rem;
+    margin-top: 0.75rem;
+}
+
+.proj-prose li {
+    list-style: disc;
+    margin-bottom: 0.35rem;
+    color: var(--c-text-secondary);
+    line-height: 1.7;
+}
+
+.proj-prose strong {
+    color: var(--c-text-primary);
+    font-weight: 600;
+}
+
+/* Inline diagrams — self-contained SVG in project md */
+.proj-block--diagram {
+    margin: 2.5rem 0;
+}
+
+.proj-diagram {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.proj-diagram-svg {
+    width: 100%;
+    min-width: 280px;
+    height: auto;
+    display: block;
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+}
+
+.proj-diagram-svg .diag-box {
+    fill: var(--c-chip-bkg);
+    stroke: var(--c-border);
+    stroke-width: 1.5;
+}
+
+.proj-diagram-svg .diag-box--accent {
+    stroke: var(--proj-accent, var(--c-accent));
+    stroke-width: 2;
+}
+
+.proj-diagram-svg .diag-label {
+    fill: var(--c-text-primary);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.proj-diagram-svg .diag-sublabel {
+    fill: var(--c-text-secondary);
+    font-size: 11px;
+}
+
+.proj-diagram-svg .diag-arrow {
+    stroke: var(--c-text-tertiary);
+    stroke-width: 1.5;
+    fill: none;
+    marker-end: url(#diag-arrowhead);
+}
+
+.proj-diagram-svg .diag-divider {
+    stroke: var(--c-border);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+}
+
+
+/* Split — text + image */
+.proj-block--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.proj-block--reverse {
+    direction: rtl;
+}
+
+.proj-block--reverse > * {
+    direction: ltr;
+}
+
+.proj-split-text h3 {
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+}
+
+
+/* Media frames */
+.proj-media-frame {
+    border: 1px solid var(--c-border);
+    border-radius: 18px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.proj-media-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.proj-caption {
+    margin-bottom: 0.75rem;
+}
+
+
+/* Code */
+.proj-code-frame {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0D1117;
+    border: 1px solid color-mix(in srgb, var(--proj-accent) 15%, #30363D);
+}
+
+.proj-code-bar {
+    height: 32px;
+    background: #161B22;
+    border-bottom: 1px solid #30363D;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+}
+
+.proj-code-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #30363D;
+}
+
+.proj-code-dot:nth-child(1) { background: #F85149; }
+.proj-code-dot:nth-child(2) { background: #D29922; }
+.proj-code-dot:nth-child(3) { background: #3FB950; }
+
+.proj-code-filename {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: #8B949E;
+    letter-spacing: 0.03em;
+}
+
+.proj-code-body {
+    padding: 1.25rem;
+    margin: 0;
+    overflow-x: auto;
+    font-family: "Geist Mono", monospace;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: #E6EDF3;
+    tab-size: 4;
+}
+
+.proj-code-body code {
+    font-family: inherit;
+}
+
+
+/* Callout */
+.proj-block--callout {
+    padding: 1.5rem 1.75rem;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 22%, var(--c-border));
+    border-left: 3px solid var(--proj-accent, var(--hatch-ux));
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 9%, var(--c-background)) 0%,
+            color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 3%, var(--c-background)) 100%
+        );
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.proj-callout-title {
+    color: var(--proj-accent, var(--hatch-ux));
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.12em;
+}
+
+.proj-block--callout .proj-prose p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ── Metrics B — quiet cards ── */
+/* ── Metrics — quiet cards (replaces old border-top/bottom strip) ── */
+
+.proj-block--metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+    padding: 0;
+    border: none;
+}
+
+.proj-metric {
+    background: var(--c-background-gray);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.proj-metric-num {
+    font-size: 1.15rem;
+    line-height: 1.2;
+    color: var(--c-text-primary);
+}
+
+.proj-metric-label {
+    font-size: 0.7rem;
+    line-height: 1.3;
+}
+
+/* ── Metrics — pills variant ── */
+
+.proj-metrics--pills {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.proj-metrics--pills .proj-metric {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--c-border);
+}
+
+.proj-metrics--pills .proj-metric-num {
+    font-size: 0.85rem;
+}
+
+.proj-metrics--pills .proj-metric-label {
+    font-size: 0.75rem;
+}
+
+
+/* Gallery */
+.proj-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+
+/* ── Footer ── */
+
+.proj-footer {
+    padding-top: 3rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--c-border);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.proj-related-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.proj-related-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--c-text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.proj-related-link:hover {
+    color: var(--c-accent);
+    gap: 0.75rem;
+}
+
+.proj-nav {
+    display: flex;
+}
+
+
+/* ── Responsive ── */
+
+@media (max-width: 700px) {
+    .proj-block--split {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .proj-block--reverse {
+        direction: ltr;
+    }
+
+    .proj-cover-img {
+        min-height: 200px;
+    }
+
+    .proj-meta-strip {
+        gap: 1.25rem;
+    }
+
+    .proj-block--metrics {
+        gap: 1.5rem;
+    }
+}

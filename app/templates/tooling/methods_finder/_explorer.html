@@ -1,0 +1,69 @@
+<div class="mtd-explorer" id="mtd-explorer">
+    <aside class="mtd-filters" aria-label="Filter methods">
+        <button type="button" class="mtd-clear" id="mtd-clear" hidden>Clear filters</button>
+
+        <div class="mtd-filter-group">
+            <label class="mtd-filter-label" for="mtd-search">Search</label>
+            <input type="search" id="mtd-search" class="mtd-search" placeholder="Name, description…" autocomplete="off">
+        </div>
+
+        <div class="mtd-filter-group">
+            <span class="mtd-filter-label">Phase</span>
+            <div class="mtd-chip-list" id="mtd-phase" data-filter="phase"></div>
+        </div>
+
+        <div class="mtd-filter-group">
+            <span class="mtd-filter-label">Question</span>
+            <div class="mtd-chip-list" id="mtd-answers" data-filter="answers"></div>
+        </div>
+
+        <div class="mtd-filter-group">
+            <span class="mtd-filter-label">Category</span>
+            <div class="mtd-chip-list" id="mtd-category" data-filter="category"></div>
+        </div>
+
+        <div class="mtd-filter-group">
+            <label class="mtd-filter-label" for="mtd-effort">Effort</label>
+            <select id="mtd-effort" class="mtd-select" data-filter="effort">
+                <option value="">Any</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+
+        <div class="mtd-filter-group">
+            <label class="mtd-filter-label" for="mtd-budget">Budget</label>
+            <select id="mtd-budget" class="mtd-select" data-filter="budget">
+                <option value="">Any</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+
+        <div class="mtd-filter-group">
+            <label class="mtd-filter-label" for="mtd-participants">Participants</label>
+            <select id="mtd-participants" class="mtd-select" data-filter="participants">
+                <option value="">Any</option>
+                <option value="none">None</option>
+                <option value="few">Few (1–5)</option>
+                <option value="moderate">Moderate (6–15)</option>
+                <option value="many">Many (15+)</option>
+            </select>
+        </div>
+
+        <label class="mtd-toggle">
+            <input type="checkbox" id="mtd-ai-only" data-filter="ai_specific">
+            AI-specific methods only
+        </label>
+    </aside>
+
+    <div class="mtd-results">
+        <div class="mtd-results-head">
+            <span class="mtd-results-count" id="mtd-count">{{ catalog.count }} methods</span>
+        </div>
+
+        <div class="mtd-grid" id="mtd-grid" role="list"></div>
+    </div>
+</div>

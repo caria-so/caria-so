@@ -1,0 +1,1951 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://flowws.io/UXontology.owl"
+         xmlns="http://flowws.io/UXontology.owl#">
+
+<owl:Ontology rdf:about="http://flowws.io/UXontology.owl"/>
+
+
+<!-- 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+// Annotation Properties
+//
+///////////////////////////////////////////////////////////////////////////////////////
+-->
+<owl:AnnotationProperty rdf:about="#database_id">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unique identifier for an entity in the database.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#platform">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The platform or system where the entity is applicable (e.g., web, mobile).</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#importance_score">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A numerical score representing the importance or priority of the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#severity_weight">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A weight indicating the severity or impact of an issue associated with the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#frequency_weight">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A weight indicating how frequently the issue or behavior occurs.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#estimated_cost">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Estimated cost associated with addressing the issue or implementing the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#issue">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Description of the issue or problem associated with the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#advice">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recommended action or advice to resolve the issue or improve the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#author">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The author or creator of the entity or related content.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#source">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The source or origin of the data associated with the entity.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#created_date">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The date when the entity or issue was created.</rdfs:comment>
+</owl:AnnotationProperty>
+
+<owl:AnnotationProperty rdf:about="#updated_date">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The date when the entity or issue was last updated.</rdfs:comment>
+</owl:AnnotationProperty>
+
+
+<!-- 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+// Object Properties
+//
+///////////////////////////////////////////////////////////////////////////////////////
+-->
+<owl:ObjectProperty rdf:about="#foundOnPage">
+  <rdfs:domain rdf:resource="#UIComponent"/>
+  <rdfs:range rdf:resource="#PageType"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Indicates the page type on which a UI component is found.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasIssue">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <owl:Class rdf:about="#UserAction"/>
+        <owl:Class rdf:about="#Outcome"/>
+        <owl:Class rdf:about="#SystemBehavior"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#Issue"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Indicates that a user action, outcome, or system behavior is associated with a specific UX issue.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isCausedBy">
+  <rdfs:domain rdf:resource="#Outcome"/>
+  <rdfs:range rdf:resource="#Cause"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Links outcomes or effects to their underlying causes.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#impacts">
+  <rdfs:domain rdf:resource="#Cause"/>
+  <rdfs:range rdf:resource="#Effect"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Describes how a cause or issue affects business or user outcomes.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#solves">
+  <rdfs:domain rdf:resource="#Solution"/>
+  <rdfs:range rdf:resource="#Issue"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Indicates that a solution resolves a specific UX issue.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#requires">
+  <rdfs:domain rdf:resource="#Solution"/>
+  <rdfs:range rdf:resource="#Requirement"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Describes dependencies or requirements for implementing a solution.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#implements">
+  <rdfs:domain rdf:resource="#Solution"/>
+  <rdfs:range rdf:resource="#ImplementationDetail"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Links a solution to its implementation details or supporting elements.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isRelevantToIndustry">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <owl:Class rdf:about="#UIComponent"/>
+        <owl:Class rdf:about="#PageType"/>
+        <owl:Class rdf:about="#UXGuideline"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#IndustryType"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Indicates the industry or industries relevant to this entity.
+  </rdfs:comment>
+</owl:ObjectProperty>
+
+
+
+<!-- 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+// Classes
+//
+///////////////////////////////////////////////////////////////////////////////////////
+-->
+<owl:Class rdf:about="#UIComponent">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Represents a user interface component, such as buttons, links, images, or other elements visible on a page.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#PageType">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Represents a type of page in a system, such as a homepage, product page, or checkout page.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#UXGuideline">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Represents a UX design guideline or pattern.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#UserAction">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    User behaviors and interactions with the interface to achieve specific goals.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Outcome">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Direct system responses and interface behaviors resulting from user actions.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Cause">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Underlying technical, design, or UX issues that create problems.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Effect">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Business and user impacts resulting from UX issues.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Solution">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Approaches and implementations to address identified UX issues.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Issue">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Specific problems or issues observed in the UX process that need to be resolved.
+  </rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#IndustryType">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+    Represents different industries, such as E-Commerce, Healthcare, and more.
+  </rdfs:comment>
+  <owl:oneOf rdf:parseType="Collection">
+    <owl:NamedIndividual rdf:about="#AllIndustries">
+      <rdfs:label>All Industries</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#ApparelAndAccessories">
+      <rdfs:label>Apparel and Accessories</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Automotive">
+      <rdfs:label>Automotive</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#B2BComponentsAndMachinery">
+      <rdfs:label>B2B Components and Machinery</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#B2BConstruction">
+      <rdfs:label>B2B Construction</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#B2BMedicalAndPharma">
+      <rdfs:label>B2B Medical and Pharma</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Banking">
+      <rdfs:label>Banking</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#DigitalSubscriptionsAndSaaS">
+      <rdfs:label>Digital Subscriptions and SaaS</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Electronics">
+      <rdfs:label>Electronics</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Furniture">
+      <rdfs:label>Furniture</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Groceries">
+      <rdfs:label>Groceries</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#HealthAndBeauty">
+      <rdfs:label>Health and Beauty</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Hobbies">
+      <rdfs:label>Hobbies</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#HomeDecor">
+      <rdfs:label>Home Decor</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#HomeImprovementAndHardware">
+      <rdfs:label>Home Improvement and Hardware</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Insurance">
+      <rdfs:label>Insurance</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#MassMerchant">
+      <rdfs:label>Mass Merchant</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#MealKitSubscriptions">
+      <rdfs:label>Meal Kit Subscriptions</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#MerchandiseAndPrintToOrder">
+      <rdfs:label>Merchandise and Print-to-Order</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Office">
+      <rdfs:label>Office</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#OnlineLearning">
+      <rdfs:label>Online Learning</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Sports">
+      <rdfs:label>Sports</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#TakeoutAndFoodDelivery">
+      <rdfs:label>Takeout and Food Delivery</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Telco">
+      <rdfs:label>Telco</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#Toys">
+      <rdfs:label>Toys</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#TravelAccommodations">
+      <rdfs:label>Travel Accommodations</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#TravelToursAndExperiences">
+      <rdfs:label>Travel Tours and Experiences</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#TravelTransportation">
+      <rdfs:label>Travel Transportation</rdfs:label>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#VitaminsAndSupplements">
+      <rdfs:label>Vitamins and Supplements</rdfs:label>
+    </owl:NamedIndividual>
+  </owl:oneOf>
+</owl:Class>
+
+<!-- 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+// Instances
+//
+///////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!-- // Page Types// -->
+<owl:NamedIndividual rdf:about="#homepage">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#onsitesearch">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#productlist">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#filtering">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#productpage">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cart">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#checkout">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#formdesign">
+  <rdf:type rdf:resource="#PageType"/>
+</owl:NamedIndividual>
+
+
+<!-- // UI Components// -->
+<owl:NamedIndividual rdf:about="#AboutUsLink">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">About Us Link</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchAutocomplete">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Autocomplete</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#productlistItem">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product List Item</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductTitle">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Title</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#NameFields">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <foundOnPage rdf:resource="#cart"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Name Fields</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AccessibilityFeaturesLink">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Accessibility Features / Link</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DesktopFilterInterfaces">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Desktop Filter Interfaces</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductImages">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Images</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#StreetAddressFields">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Street Address Fields</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AffiliatePartnerSiteLinks">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Affiliate / Partner Site Links</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchButton">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search. Button</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ComparisonTool">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Comparison Tool</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductPrice">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Price</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CityField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">City Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AppDownloadIconBanner">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">App Download Icon / Banner</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchQueryTypes">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Query Types</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MobileFilterInterfaces">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mobile Filter Interfaces</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductDescription">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Description</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#StateProvinceDropdown">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">State/Province Dropdown</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#B2BPortal">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">B2B Portal</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchQueryErrorHandling">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Query Error Handling</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SortingDropdown">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sorting Dropdown</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductVariations">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Variations</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ZipPostalCodeField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zip/Postal Code Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BlogEducationalContent">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Blog / Educational Content</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Breadcrumbs">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Breadcrumbs</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductAvailability">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Availability</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CountryDropdown">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Country Dropdown</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BreadcrumbNavigation">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Breadcrumb Navigation</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Facetedsearch">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Faceted search</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductThumbnails">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Thumbnails</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#UserReviews">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User Reviews</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PhoneNumberField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Phone Number Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BrowserBackButton">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Browser Back Button</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Sorting(Search)">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sorting (Search)</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AddtoCartButton">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Add to Cart Button</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#EmailAddressField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Email Address Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CalltoAction(CTA)Buttons">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Call to Action (CTA) Buttons</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchResultsPage">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Results Page</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#WishlistButton">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <foundOnPage rdf:resource="#cart"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wishlist Button</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ShippingMethodSelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <foundOnPage rdf:resource="#cart"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Shipping Method Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CarouselControls">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Carousel Controls</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchListItems">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search List Items</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DiscountBadges">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Discount Badges</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cross-Sells">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cross-Sells</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PaymentMethodSelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Payment Method Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CarouselSlides">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Carousel Slides</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#NoResultsPage(Search)">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">No Results Page (Search)</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RatingsSummary">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ratings Summary</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CreditCardNumberField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Credit Card Number Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Carousel">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Carousel</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchBreadcrumbs">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Breadcrumbs</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductImageZoom">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Image Zoom</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CardholderNameField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cardholder Name Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CartIcon">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cart Icon</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchResultsNavigation">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Results Navigation</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductVideos">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Videos</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CardExpirationDateFields">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Card Expiration Date Fields</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CategoryNavigation">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Category Navigation</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Non-ProductSearch">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Non-Product Search</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Quickview">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Quickview</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ReturnPolicy">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Return Policy</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CardSecurityCodeFields">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Card Security Code Fields</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CategoryTaxonomy">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Category Taxonomy</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchLoading">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Loading</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Pagination">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pagination</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ShippingInformation">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Shipping Information</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CouponField">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <foundOnPage rdf:resource="#cart"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Coupon Field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CountryFlagIconCountrySelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Country Flag Icon / Country Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchPerformance">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Performance</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#NumberofProductsDisplayed">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Number of Products Displayed</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductFAQs">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product FAQs</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PasswordFields">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Password Fields</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CustomerSupportLinks">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Customer Support Links</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SearchRelevancy">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search Relevancy</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LoadMoreButton">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Load More Implementation</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CompletetheLook">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Complete the Look</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ErrorMessages">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Error Messages</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FeaturedBrands">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Featured Brands</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PromotionsinSearch">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#onsitesearch"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Promotions in Search</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#VariationSelectors">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variation Selectors</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Imagegallery">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Image gallery</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BusinessNamefield">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Business Name field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FeaturedProducts">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Featured Products</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SizeFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Size Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#QuantitySelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Quantity Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PONumberorReferenceNumberfield">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PO Number or Reference Number field</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Footer">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Footer</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BrandFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Brand Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductRating">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Rating</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#VATnumber">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VAT number</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HamburgerMenu">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hamburger Menu</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AppliedFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Applied Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SpecificationsSheet">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Specifications Sheet</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SidebarCartSummary">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#cart"/>
+  <foundOnPage rdf:resource="#checkout"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sidebar Cart Summary</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HeroSection">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hero Section</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CategoryFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Category Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SizeGuide">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Size Guide</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HomepageBanner">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Homepage Banner</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PriceFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Price Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SizeSelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Size Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#InspirationalContent">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inspirational Content</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ColorFilters">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Color Filters</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductPageLayout">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Page Layout</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#InternalAds">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Internal Ads</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#productlistlayout">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productlist"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product list layout</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#StickyTableofContents">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sticky Table of Contents</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LanguageSelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Language Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SubscriptionOptions">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#productpage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Subscription Options</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LocationSelector">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Location Selector</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LoyaltyProgramAccessLink">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Loyalty Program Access Link</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MainNavigationMenu">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Main Navigation Menu</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Microcopy">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Microcopy</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MobileGestures">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mobile Gestures</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#NavigationLinks">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Navigation Links</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#NewArrivals">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">New Arrivals</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Newslettersignup">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Newsletter signup</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#On-SiteSearchBar">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">On-Site Search Bar</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Overlays">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Overlays</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PersonalizedGreeting">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Personalized Greeting</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PopularProducts">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Popular Products</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductCarousel">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Carousel</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductCategories">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Categories</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FeaturedCategories">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Featured Categories</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductGuides">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Guides</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductImagery">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Imagery</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductLinks">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Links</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductSubcategories">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Subcategories</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductRecommendations">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Recommendations</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProductWizards">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product Wizards</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PromotionalBannerAnnouncementBar">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Promotional Banner / Announcement Bar</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PromotionalContentCallouts">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Promotional Content / Callouts</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SaleCountdownClock">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sale Countdown Clock</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SalesDeals">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sales / Deals</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ScopedPath">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Scoped Path</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SecondaryNavigation">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Secondary Navigation</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ShippingInfo">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Shipping Info</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ShoptheLook">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Shop the Look</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SiteBranding">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Branding</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SiteLogo">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Logo</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SiteSpeed">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Speed</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SocialMediaContent">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Social Media Content</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SplashPage">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Splash Page</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#StoreLocator">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Store Locator</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ThematicContent">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thematic Content</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#TrackOrdersLink">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Track Orders Link</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#UserAccountAccess">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User Account Access</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ViewAllLinks">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">View All Links</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#WishlistIcon">
+  <rdf:type rdf:resource="#UIComponent"/>
+  <foundOnPage rdf:resource="#homepage"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wishlist Icon</rdfs:label>
+</owl:NamedIndividual>
+
+
+
+
+<owl:NamedIndividual rdf:about="#Guideline_333">
+    <rdf:type rdf:resource="#UXGuideline"/>
+    <xref>baymard:333</xref>
+    <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+    <importance_score>7.0</importance_score>
+    <severity_weight>9.0</severity_weight>
+    <frequency_weight>4.0</frequency_weight>
+    <platform>desktop_web</platform>
+    <estimated_cost>pending</estimated_cost>
+</owl:NamedIndividual>
+            <owl:NamedIndividual rdf:about="#UserAction_SubmitsExactSearch_b9eb">
+                <rdf:type rdf:resource="#UserAction"/>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Submits exact search query</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_CopiesAndPastes_95bd">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Copies and pastes product title or model number</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_SearchesBySku_452c">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Searches by SKU</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_UsesSpecialCharacters_cc8c">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Uses special characters in search terms</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_EntersModelNumber_e50d">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Enters model number</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_ViewsProductDetails_6bfe">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Views product details</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_ProductDoesntAppear_3fa4">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Product doesn't appear at top of search results</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_ExactMatchNot_2442">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Exact match not displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_MatchingProductRedirect_c670">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Matching product redirect fails</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_NoResultsDisplayed_fc5c">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">No results displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_CorrectProductPage_7311">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Correct product page loaded</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_SearchAlgorithmMisconfigured_f85b">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search algorithm misconfigured</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_ExactMatchesNot_d785">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Exact matches not prioritized</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_SpecialCharactersNot_6bd2">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Special characters not handled</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_SiteDoesntSupport_c5f0">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site doesn't support SKU search</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_LocalizationCausesTitle_d506">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Localization causes title mismatch</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserAssumesItem_123c">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User assumes item not in stock</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserOrdersIncorrect_50f5">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User orders incorrect product</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserAbandonsSite_9595">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User abandons site</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserFrustrationIncreases_8b39">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User frustration increases</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_SiteIsIgnored_a896">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site is ignored for comparison shopping</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_ProvideRelevantResults_c956">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Provide relevant results at top for exact queries</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_HighlightExactMatches_3e70">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Highlight exact matches</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_SupportSpecialCharacter_936e">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Support special character handling</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_SupportSkuAnd_de27">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Support SKU and model number search</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_RedirectToCorrect_04f5">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Redirect to correct product page if clear match is found</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_OfferOptionTo_aa75">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Offer option to view regular search results</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+        <rdf:Description rdf:about="#UserAction_SubmitsExactSearch_b9eb">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_ProductDoesntAppear_3fa4"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_SearchAlgorithmMisconfigured_f85b">
+            <RelationType.CAUSES rdf:resource="#Outcome_ExactMatchNot_2442"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Outcome_ExactMatchNot_2442">
+            <RelationType.IMPACTS rdf:resource="#Effect_UserAssumesItem_123c"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Effect_UserAssumesItem_123c">
+            <RelationType.IMPACTS rdf:resource="#Effect_UserAbandonsSite_9595"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_ProvideRelevantResults_c956">
+            <RelationType.SOLVES rdf:resource="#Outcome_ProductDoesntAppear_3fa4"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_HighlightExactMatches_3e70">
+            <RelationType.SOLVES rdf:resource="#Outcome_ExactMatchNot_2442"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_SupportSpecialCharacter_936e">
+            <RelationType.SOLVES rdf:resource="#Outcome_NoResultsDisplayed_fc5c"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_SupportSkuAnd_de27">
+            <RelationType.SOLVES rdf:resource="#Cause_SiteDoesntSupport_c5f0"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_RedirectToCorrect_04f5">
+            <RelationType.SOLVES rdf:resource="#Outcome_MatchingProductRedirect_c670"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#UserAction_CopiesAndPastes_95bd">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_ProductDoesntAppear_3fa4"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_LocalizationCausesTitle_d506">
+            <RelationType.CAUSES rdf:resource="#Outcome_NoResultsDisplayed_fc5c"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Effect_UserFrustrationIncreases_8b39">
+            <RelationType.IMPACTS rdf:resource="#Effect_SiteIsIgnored_a896"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_SupportSkuAnd_de27">
+            <RelationType.SOLVES rdf:resource="#Outcome_CorrectProductPage_7311"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_OfferOptionTo_aa75">
+            <RelationType.SOLVES rdf:resource="#Solution_RedirectToCorrect_04f5"/>
+        </rdf:Description>
+        
+<owl:NamedIndividual rdf:about="#Guideline_2730">
+    <rdf:type rdf:resource="#UXGuideline"/>
+    <xref>baymard:2730</xref>
+    <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+    <importance_score>8.0</importance_score>
+    <severity_weight>9.0</severity_weight>
+    <frequency_weight>8.0</frequency_weight>
+    <platform>desktop_web</platform>
+    <estimated_cost>pending</estimated_cost>
+</owl:NamedIndividual>
+            <owl:NamedIndividual rdf:about="#UserAction_SubmitProductType_0a44">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Submit Product Type Query</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_NavigateCategory_c96a">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Navigate Category</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_UseFilters_856d">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Use Filters</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_AutoredirectToCategory_1ce1">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Autoredirect to Category Page</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_RefineSearchBy_b189">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Refine Search by Query</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_SelectSubcategoryScope_b389">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Select Subcategory Scope</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_RelevantResultsDisplayed_e568">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Relevant Results Displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_IrrelevantResultsDisplayed_c677">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Irrelevant Results Displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_LimitedResultsDisplayed_3a2b">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Limited Results Displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_EasySelectionOf_333e">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Easy Selection of Subcategory</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_AssumedUnavailabilityOf_ce4a">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Assumed Unavailability of Products</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_FrustratedAndLeave_8922">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Frustrated and Leave Site</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_TooBroadQueries_1ccb">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Too Broad Queries</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_LackOfCategory_c339">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lack of Category Alignment</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_PoorSearchAlgorithm_27c0">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Poor Search Algorithm</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_MissingSynonyms_0afc">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Missing Synonyms</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserFrustrationIncreases_8a6e">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User Frustration Increases</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserAbandonsProcess_f2be">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User Abandons Process</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_ProductsOverlooked_1ab5">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Products Overlooked</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_ReducedTrustIn_9703">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reduced Trust in Search</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                  <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_AutoredirectToCategory_1ce1">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Autoredirect to Category Page</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_MirrorCategoryProduct_9070">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mirror Category Product List</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_ProvideCategorySuggestions_3085">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Provide Category Suggestions</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_EnableMultiwordQueries_ab61">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Enable Multiword Queries</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_ImproveSearchAlgorithm_d7d6">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Improve Search Algorithm</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+        <rdf:Description rdf:about="#UserAction_SubmitProductType_0a44">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_RelevantResultsDisplayed_e568"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_AutoredirectToCategory_1ce1">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_EasySelectionOf_333e"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Outcome_IrrelevantResultsDisplayed_c677">
+            <RelationType.IMPACTS rdf:resource="#Effect_ReducedTrustIn_9703"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#UserAction_RefineSearchBy_b189">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_RelevantResultsDisplayed_e568"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_LackOfCategory_c339">
+            <RelationType.CAUSES rdf:resource="#Outcome_LimitedResultsDisplayed_3a2b"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_TooBroadQueries_1ccb">
+            <RelationType.CAUSES rdf:resource="#Outcome_IrrelevantResultsDisplayed_c677"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_ProvideCategorySuggestions_3085">
+            <RelationType.SOLVES rdf:resource="#Cause_TooBroadQueries_1ccb"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_EnableMultiwordQueries_ab61">
+            <RelationType.SOLVES rdf:resource="#Outcome_LimitedResultsDisplayed_3a2b"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_ImproveSearchAlgorithm_d7d6">
+            <RelationType.SOLVES rdf:resource="#Outcome_IrrelevantResultsDisplayed_c677"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_MirrorCategoryProduct_9070">
+            <RelationType.SOLVES rdf:resource="#Cause_LackOfCategory_c339"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Effect_UserFrustrationIncreases_8a6e">
+            <RelationType.IMPACTS rdf:resource="#Effect_UserAbandonsProcess_f2be"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#UserAction_SelectSubcategoryScope_b389">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_RelevantResultsDisplayed_e568"/>
+        </rdf:Description>
+        
+<owl:NamedIndividual rdf:about="#Guideline_340">
+    <rdf:type rdf:resource="#UXGuideline"/>
+    <xref>baymard:340</xref>
+    <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+    <importance_score>12.25</importance_score>
+    <severity_weight>9.0</severity_weight>
+    <frequency_weight>5.0</frequency_weight>
+    <platform>desktop_web</platform>
+    <estimated_cost>pending</estimated_cost>
+</owl:NamedIndividual>
+            <owl:NamedIndividual rdf:about="#UserAction_UserSubmitsFeature_08bb">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User submits feature search query</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_UserAddsFeature_3dd9">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User adds feature keyword to original search</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_UserCombinesFeature_84fe">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User combines feature search with category search</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#UserAction_UserMonitorsSearch_3972">
+                <rdf:type rdf:resource="#UserAction"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User monitors search results for suitable items</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_SearchResultsAre_fd4c">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search results are filtered to match feature attributes</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_ListOfPotentially_282a">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">List of potentially suitable items displayed</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_DistrustInSearch_a972">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Distrust in search function when results are irrelevant</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Outcome_OverwhelmingSearchResults_e65b">
+                <rdf:type rdf:resource="#Outcome"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Overwhelming search results when feature filtering is absent</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_FeatureSearchLogic_3ad5">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Feature search logic is complex</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_InadequateFeatureSearch_95e0">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inadequate feature search configuration</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_SearchEngineCannot_ae3a">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search engine cannot process natural language effectively</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Cause_SearchAlgorithmReturns_b0d7">
+                <rdf:type rdf:resource="#Cause"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Search algorithm returns every product in category</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserFrustrationIncreases_8b39">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User frustration increases</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UsersAbandonThe_eb01">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Users abandon the site</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserSatisfactionDecreases_798e">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User satisfaction decreases</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Effect_UserTrustIn_976b">
+                <rdf:type rdf:resource="#Effect"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User trust in search functionality reduced</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_ImplementSupportFor_a11c">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Implement support for feature search queries</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_LeverageStructuredProduct_e6e6">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leverage structured product data including colors, styles, and specs</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_MonitorSearchLogs_68ca">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monitor search logs for feature search behavior</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+            <owl:NamedIndividual rdf:about="#Solution_ImproveSearchAlgorithm_fd81">
+                <rdf:type rdf:resource="#Solution"/>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Improve search algorithm to understand natural language</rdfs:label>
+                <hasCatalogTheme>On-Site Search</hasCatalogTheme>
+                <foundOnPage rdf:resource="#onsitesearch"/>
+            </owl:NamedIndividual>
+            
+        <rdf:Description rdf:about="#UserAction_UserSubmitsFeature_08bb">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_SearchResultsAre_fd4c"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_InadequateFeatureSearch_95e0">
+            <RelationType.CAUSES rdf:resource="#Outcome_DistrustInSearch_a972"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_ImplementSupportFor_a11c">
+            <RelationType.SOLVES rdf:resource="#Outcome_DistrustInSearch_a972"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#UserAction_UserAddsFeature_3dd9">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_ListOfPotentially_282a"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#UserAction_UserCombinesFeature_84fe">
+            <RelationType.LEADS_TO rdf:resource="#Outcome_SearchResultsAre_fd4c"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Outcome_OverwhelmingSearchResults_e65b">
+            <RelationType.IMPACTS rdf:resource="#Effect_UserFrustrationIncreases_8b39"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_FeatureSearchLogic_3ad5">
+            <RelationType.CAUSES rdf:resource="#Cause_SearchEngineCannot_ae3a"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Solution_ImproveSearchAlgorithm_fd81">
+            <RelationType.SOLVES rdf:resource="#Cause_SearchEngineCannot_ae3a"/>
+        </rdf:Description>
+        
+        <rdf:Description rdf:about="#Cause_SearchAlgorithmReturns_b0d7">
+            <RelationType.CAUSES rdf:resource="#Outcome_OverwhelmingSearchResults_e65b"/>
+        </rdf:Description>
+</rdf:RDF>

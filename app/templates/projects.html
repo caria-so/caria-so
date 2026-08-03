@@ -1,0 +1,499 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project-cards.css') }}">
+
+<style>
+/* Full-bleed hero breaks out of theme-wrapper gutter — clip on main like index */
+main:has(.proj-hero) {
+    overflow-x: clip;
+}
+
+/* ══ PROJECTS — hero ══ */
+
+.proj-hero {
+    position: relative;
+    margin-inline: calc(-1 * var(--page-gutter));
+    padding: clamp(4.5rem, 10vw, 7rem) var(--page-gutter) clamp(3.5rem, 6vw, 5rem);
+    --hatch-color: var(--hatch-data);
+    --pattern-opacity: 0.28;
+    background:
+        radial-gradient(ellipse 70% 55% at 8% 25%, color-mix(in srgb, var(--hatch-data) 9%, transparent), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 92% 75%, color-mix(in srgb, var(--hatch-ux) 7%, transparent), transparent 50%),
+        var(--c-background);
+    overflow: hidden;
+}
+
+/* .proj-hero .idx-section-inner {
+    padding-inline: var(--page-gutter);
+} */
+
+.proj-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+}
+
+@media (max-width: 1230px) {
+    .proj-hero .idx-section-inner {
+        padding-inline: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .proj-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .proj-hero-viz {
+        display: none;
+    }
+}
+
+.proj-hero-eyebrow {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    margin-bottom: 1.25rem;
+    display: block;
+}
+
+.proj-hero-title {
+    font-size: clamp(2.25rem, 5.5vw, 3.25rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: var(--c-text-primary);
+    margin: 0;
+}
+
+.proj-hero-subtitle {
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    margin: 0.85rem 0 0;
+}
+
+.proj-hero-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 1.25rem 0 0;
+}
+
+/* git log visualization */
+
+.proj-hero-viz {
+    position: relative;
+    min-height: clamp(300px, 36vh, 400px);
+}
+
+.proj-git-panel {
+    background: #14131a;
+    border: 1px solid color-mix(in srgb, var(--c-border) 80%, #2a2930);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.22),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    font-family: "Geist Mono", monospace;
+}
+
+.proj-git-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.85rem;
+    background: #1e1d26;
+    border-bottom: 1px solid #2a2930;
+}
+
+.proj-git-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.proj-git-dot--r { background: #ff5f57; }
+.proj-git-dot--y { background: #febc2e; }
+.proj-git-dot--g { background: #28c840; }
+
+.proj-git-title {
+    margin-left: 0.35rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    color: #7a7885;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proj-git-body {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0;
+    padding: 0.65rem 0.75rem 0.75rem 0.35rem;
+    max-height: 360px;
+    overflow: hidden;
+}
+
+.proj-git-graph-col {
+    flex-shrink: 0;
+}
+
+.proj-git-svg {
+    width: 52px;
+    height: 100%;
+    min-height: 240px;
+    display: block;
+}
+
+.proj-git-line {
+    fill: none;
+    stroke: #3d3b48;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+    animation: git-line-draw 1.2s ease forwards;
+}
+
+.proj-git-node {
+    fill: #14131a;
+    stroke: var(--node-accent, var(--hatch-data));
+    stroke-width: 2;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: git-node-pop 0.45s ease backwards;
+}
+
+.proj-git-node--head {
+    fill: var(--node-accent, var(--hatch-data));
+    stroke: #fff;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--node-accent, var(--hatch-data)) 55%, transparent));
+}
+
+.proj-git-node--active {
+    fill: var(--node-accent, var(--hatch-data));
+    stroke: #fff;
+}
+
+.proj-git-head-ring {
+    fill: none;
+    stroke: var(--node-accent, var(--hatch-data));
+    stroke-width: 1;
+    opacity: 0.45;
+    animation: git-head-pulse 2.4s ease-in-out infinite;
+}
+
+.proj-git-log {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    padding-top: 0.15rem;
+}
+
+.proj-git-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    padding: 0.28rem 0.45rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.68rem;
+    line-height: 1.45;
+    opacity: 0;
+    transform: translateX(8px);
+    animation: git-row-in 0.5s ease forwards;
+    transition: background 0.2s ease;
+}
+
+.proj-git-row:hover,
+.proj-git-row--active {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.proj-git-row--head .proj-git-msg {
+    color: #e8e6f0;
+    font-weight: 600;
+}
+
+.proj-git-glyphs {
+    color: #5c5a68;
+    flex-shrink: 0;
+}
+
+.proj-git-hash {
+    color: var(--hatch-data);
+    flex-shrink: 0;
+}
+
+.proj-git-msg {
+    color: #a8a6b3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    flex: 1;
+    min-width: 0;
+}
+
+.proj-git-tag {
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    border: 1px solid #3d3b48;
+    color: #7a7885;
+    flex-shrink: 0;
+}
+
+.proj-git-cursor-line {
+    margin-top: 0.35rem;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.62rem;
+    color: #5c5a68;
+}
+
+.proj-git-prompt { color: var(--hatch-ecommerce); margin-right: 0.35rem; }
+
+.proj-git-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 0.9em;
+    margin-left: 2px;
+    background: var(--hatch-data);
+    vertical-align: text-bottom;
+    animation: git-cursor-blink 1.1s step-end infinite;
+}
+
+@keyframes git-line-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes git-node-pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes git-head-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.45; }
+    50% { transform: scale(1.35); opacity: 0.12; }
+}
+
+@keyframes git-row-in {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes git-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .proj-git-line,
+    .proj-git-node,
+    .proj-git-row,
+    .proj-git-head-ring,
+    .proj-git-cursor {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+        stroke-dashoffset: 0;
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block title %}Projects — Federico Caria{% endblock %}
+
+{% block content %}
+
+<section class="idx-section proj-hero lr-pattern-noise">
+    <div class="idx-section-inner">
+        <div class="proj-hero-grid">
+            <div class="proj-hero-copy">
+                <span class="proj-hero-eyebrow">Projects</span>
+                <h1 class="proj-hero-title">What I've Built</h1>
+                <p class="proj-hero-body">
+                    End to end — problem, constraints, stack, what actually worked.
+                    Each project is the full story, not a portfolio gloss.
+                </p>
+            </div>
+
+            {% if git_commits %}
+            <div class="proj-hero-viz" id="proj-git-viz"></div>
+            <script type="application/json" id="proj-git-data">{{ {
+                'commits': git_commits,
+                'detailBase': url_for('blog.project_detail', slug='').rstrip('/') + '/'
+            } | tojson }}</script>
+            <script src="{{ url_for('static', filename='js/proj_git_graph.js') }}"></script>
+            {% endif %}
+        </div>
+    </div>    
+</section>
+
+<section class="idx-section">
+    <div class="idx-section-inner">
+        <div class="proj-list">
+            {% for project in projects %}
+            {% with card_index=loop.index %}
+            {% include 'partials/_project_card.html' %}
+            {% endwith %}
+            {% else %}
+            <div class="proj-empty">
+                <p>No projects found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   STACK
+   ════════════════════════════════════ #}
+<section class="idx-section idx-section--stack lr-pattern-grid-wide">
+    <div class="idx-section-inner">
+        <div class="idx-section-header centered">
+            <span class="txt-mono txt-xsmall uppercase hiw-muted">Infrastructure</span>
+            <h2 class="txt-xbold">What I Work With</h2>
+        </div>
+
+        <div class="stack-bento lr-material-glass">
+            <div class="sb-filters" role="tablist" aria-label="Filter stack by category">
+                <button type="button" class="sb-filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+                <button type="button" class="sb-filter" data-filter="ai" role="tab" aria-selected="false" style="--zone: var(--hatch-ai);">AI & NLP</button>
+                <button type="button" class="sb-filter" data-filter="backend" role="tab" aria-selected="false" style="--zone: var(--hatch-ux);">Backend</button>
+                <button type="button" class="sb-filter" data-filter="ecommerce" role="tab" aria-selected="false" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
+                <button type="button" class="sb-filter" data-filter="frontend" role="tab" aria-selected="false" style="--zone: var(--hatch-libraries);">Frontend</button>
+                <button type="button" class="sb-filter" data-filter="ux" role="tab" aria-selected="false" style="--zone: var(--hatch-neutral);">Research</button>
+            </div>
+
+            <div class="stack-bento-grid">
+                <article class="sb-zone sb-ai" data-cat="ai" style="--zone: var(--hatch-ai);">
+                    <header class="sb-zone-head">
+                        <span class="sb-zone-dot"></span>
+                        <span class="sb-zone-title txt-mono txt-xsmall uppercase">AI & NLP</span>
+                    </header>
+                    <div class="sb-chips">
+                        <span class="sb-chip sb-chip-xl">Claude / Anthropic</span>
+                        <span class="sb-chip sb-chip-xl">OpenAI API</span>
+                        <span class="sb-chip sb-chip-lg">Hugging Face</span>
+                        <span class="sb-chip sb-chip-lg">LangChain</span>
+                        <span class="sb-chip sb-chip-lg">RAG Pipelines</span>
+                        <span class="sb-chip">LaBSE</span>
+                        <span class="sb-chip">E5</span>
+                        <span class="sb-chip">spaCy</span>
+                        <span class="sb-chip">Vector Search</span>
+                        <span class="sb-chip">Tesseract OCR</span>
+                        <span class="sb-chip">PaddleOCR</span>
+                        <span class="sb-chip">Prompt Eng.</span>
+                    </div>
+                </article>
+
+                <article class="sb-zone sb-backend" data-cat="backend" style="--zone: var(--hatch-ux);">
+                    <header class="sb-zone-head">
+                        <span class="sb-zone-dot"></span>
+                        <span class="sb-zone-title txt-mono txt-xsmall uppercase">Backend & Data</span>
+                    </header>
+                    <div class="sb-chips">
+                        <span class="sb-chip sb-chip-xl">Python</span>
+                        <span class="sb-chip sb-chip-lg">Django</span>
+                        <span class="sb-chip sb-chip-lg">FastAPI</span>
+                        <span class="sb-chip sb-chip-lg">Flask</span>
+                        <span class="sb-chip sb-chip-lg">PostgreSQL</span>
+                        <span class="sb-chip">DuckDB</span>
+                        <span class="sb-chip">Neo4j</span>
+                        <span class="sb-chip">SQLite</span>
+                        <span class="sb-chip">Supabase</span>
+                        <span class="sb-chip">Celery / Redis</span>
+                        <span class="sb-chip">BigQuery</span>
+                    </div>
+                </article>
+
+                <article class="sb-zone sb-ecommerce" data-cat="ecommerce" style="--zone: var(--hatch-ecommerce);">
+                    <header class="sb-zone-head">
+                        <span class="sb-zone-dot"></span>
+                        <span class="sb-zone-title txt-mono txt-xsmall uppercase">E-Commerce</span>
+                    </header>
+                    <div class="sb-chips">
+                        <span class="sb-chip sb-chip-xl">WooCommerce</span>
+                        <span class="sb-chip sb-chip-lg">WordPress</span>
+                        <span class="sb-chip sb-chip-lg">PHP</span>
+                        <span class="sb-chip">Nexi XPay</span>
+                        <span class="sb-chip">PayPal</span>
+                        <span class="sb-chip">HPOS</span>
+                        <span class="sb-chip">ACF</span>
+                    </div>
+                </article>
+
+                <article class="sb-zone sb-frontend" data-cat="frontend" style="--zone: var(--hatch-libraries);">
+                    <header class="sb-zone-head">
+                        <span class="sb-zone-dot"></span>
+                        <span class="sb-zone-title txt-mono txt-xsmall uppercase">Frontend</span>
+                    </header>
+                    <div class="sb-chips">
+                        <span class="sb-chip sb-chip-lg">HTML / CSS</span>
+                        <span class="sb-chip sb-chip-lg">JavaScript</span>
+                        <span class="sb-chip sb-chip-lg">D3.js</span>
+                        <span class="sb-chip">Jinja2</span>
+                        <span class="sb-chip">Figma</span>
+                    </div>
+                </article>
+
+                <article class="sb-zone sb-ux" data-cat="ux" style="--zone: var(--hatch-neutral);">
+                    <header class="sb-zone-head">
+                        <span class="sb-zone-dot"></span>
+                        <span class="sb-zone-title txt-mono txt-xsmall uppercase">Research</span>
+                    </header>
+                    <div class="sb-chips">
+                        <span class="sb-chip sb-chip-lg">Baymard (700+)</span>
+                        <span class="sb-chip">Usability Testing</span>
+                        <span class="sb-chip">GA4</span>
+                        <span class="sb-chip">Hotjar</span>
+                        <span class="sb-chip">A/B Testing</span>
+                        <span class="sb-chip">OpenAlex API</span>
+                        <span class="sb-chip">PubMed API</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ════════════════════════════════════
+   CONTACT
+   ════════════════════════════════════ #}
+<section class="rx-contact">
+    <div
+        class="sec-inner rx-contact-inner rx-contact-inner--visual"
+        style="--rx-contact-bg: url('{{ url_for('static', filename='assets/images/home/knowbridge.png') }}')"
+    >
+        <span class="eyebrow">Collaborate</span>
+        <h2 class="txt-xbold">The interesting problems are ultradisciplinary.</h2>
+        <p>
+            If you're working on something where the knowledge infrastructure
+            is the bottleneck — whether that's a research lab, a scientific
+            competition, or a business drowning in its own data — I'd like to hear about it.
+        </p>
+        <a href="mailto:hello@federicocaria.com" class="btn btn-primary txt-mono uppercase" data-contact-trigger>
+            <i class="ph ph-envelope-simple"></i> Get in touch
+        </a>
+    </div>
+</section>
+
+{% endblock %}
