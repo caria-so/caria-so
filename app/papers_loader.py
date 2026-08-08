@@ -5,7 +5,7 @@ import os
 import re
 from datetime import datetime
 
-PAPERS_ROOT = os.path.join(os.path.dirname(__file__), 'papers')
+PAPERS_ROOT = os.path.join(os.path.dirname(__file__), 'data', 'fingerprints')
 FP_RE = re.compile(r'^fingerprint_(?P<ts>\d{8}T\d{6}Z)\.json$')
 
 

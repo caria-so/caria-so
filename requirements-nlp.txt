@@ -1,0 +1,7 @@
+# Optional: named-entity extraction for notes/archive.
+# Without these, notes_nlp falls back to token matching (see get_nlp()).
+# Install locally with:
+#   pip install -r requirements-nlp.txt
+#   python -m spacy download en_core_web_sm
+-r requirements.txt
+spacy>=3.7.0

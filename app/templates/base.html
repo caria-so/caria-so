@@ -81,7 +81,9 @@
 				<h4>Pages</h4>
 				<ul>
 				<li><a href="{{ url_for('blog.index') }}">Home</a></li>
+				{% if config.ENABLE_PAPERS %}
 				<li><a href="{{ url_for('blog.papers_index') }}">Impossible Papers</a></li>
+				{% endif %}
 				<li><a href="{{ url_for('blog.archive_index') }}">Archive</a></li>
 				<li><a href="{{ url_for('blog.about') }}">About</a></li>
 				<li><a href="{{ url_for('blog.projects') }}">Projects</a></li>

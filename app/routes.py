@@ -4,6 +4,7 @@ import os
 import yaml
 from flask import Blueprint, render_template, request, abort, current_app, session, redirect, url_for, flash
 from datetime import datetime
+from functools import wraps
 
 from app.markdown_utils import convert_markdown, create_markdown_parser
 
@@ -51,7 +52,7 @@ LEGACY_PROJECT_SLUGS = {
     'tooling__benchmark-qa': 'qa-tool',
     'data__scidata-hub': 'scidata-hub',
 }
-PAPERS_DIR = os.path.join(os.path.dirname(__file__), 'papers')
+PAPERS_DIR = os.path.join(os.path.dirname(__file__), 'data', 'fingerprints')
 STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static')
 VITRIOL_DIR = os.path.join(os.path.dirname(__file__), 'blog', 'vitriol')
 CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'hello@caria.so')
@@ -986,7 +987,18 @@ def contact():
 
 # ── Papers listing ──────────────────────────────────────
 
+def papers_enabled(view):
+    """404 the fingerprint-backed pages unless ENABLE_PAPERS is set."""
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if not current_app.config.get('ENABLE_PAPERS'):
+            abort(404)
+        return view(*args, **kwargs)
+    return wrapper
+
+
 @blog_bp.route('/papers')
+@papers_enabled
 def papers_index():
     """All findings with aggregate ratings."""
     papers = load_papers()
@@ -1010,6 +1022,7 @@ def papers_index():
 # ── Regime diversity (iteration radar) ──────────────────
 
 @blog_bp.route('/regime-diversity')
+@papers_enabled
 def regime_diversity():
     """Compare parent vs child fingerprint in a run folder."""
     run_path = request.args.get('run', 'neurosciences/neurorehab_run')
@@ -1032,6 +1045,7 @@ def regime_diversity():
 # ── Paper detail ────────────────────────────────────────
 
 @blog_bp.route('/papers/<path:slug>')
+@papers_enabled
 def paper_detail(slug):
     """Single finding with fingerprint viz, reviews, and review form."""
     iteration = request.args.get('iteration')
@@ -1053,6 +1067,7 @@ def paper_detail(slug):
 # ── Submit review ───────────────────────────────────────
 
 @blog_bp.route('/papers/<path:slug>/review', methods=['POST'])
+@papers_enabled
 def submit_paper_review(slug):
     """Handle review form submission."""
     try:
