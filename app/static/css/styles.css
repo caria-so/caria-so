@@ -1073,9 +1073,7 @@ footer {
 Header section 
 */
 
-header {
-  padding: 3rem 0;
-}
+/* Legacy page header helpers — do not pad all <header> elements globally */
   header .txt-light {
     color: var(--c-text-secondary);
   }
@@ -1803,9 +1801,11 @@ Contact Modal
   padding: 2rem 2rem 2.25rem;
 }
 
-.contact-modal__header {
+.contact-modal__header,
+header.contact-modal__header {
   margin-bottom: 1.5rem;
-  padding-right: 2.5rem;
+  padding-block: 0;
+  padding-inline: 0 2.5rem;
 }
 
 .contact-modal__eyebrow {
@@ -1821,6 +1821,7 @@ Contact Modal
 .contact-modal__header h2 {
   margin: 0 0 0.5rem;
   font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 700;
   line-height: 1.2;
   color: var(--c-text-primary);
 }
@@ -1933,12 +1934,49 @@ Contact Modal
 }
 
 @media (max-width: 520px) {
-  .modal-content {
-    padding: 1.5rem 1.35rem 1.75rem;
+  .modal-overlay {
+    padding: 0.65rem;
+    align-items: flex-end;
   }
 
-  .contact-modal__header {
-    padding-right: 2rem;
+  .modal-container {
+    max-height: calc(100dvh - 1.25rem);
+    border-radius: 16px 16px 12px 12px;
+  }
+
+  .modal-content {
+    padding: 1.25rem 1.15rem 1.35rem;
+  }
+
+  .contact-modal__header,
+  header.contact-modal__header {
+    margin-bottom: 0.75rem;
+    padding-block: 0;
+    padding-inline: 0 2rem;
+  }
+
+  .contact-modal__eyebrow {
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-modal__header h2 {
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-modal__social {
+    margin-bottom: 1rem;
+  }
+
+  .contact-modal__form {
+    gap: 0.75rem;
+  }
+
+  .contact-modal__textarea {
+    min-height: 5rem;
+  }
+
+  .contact-modal__submit {
+    margin-top: 0;
   }
 }
 
