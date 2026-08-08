@@ -296,26 +296,7 @@
 </section>
 
 
-{# ════════════════════════════════════
-   CONTACT
-   ════════════════════════════════════ #}
-<section class="rx-contact">
-    <div
-        class="sec-inner rx-contact-inner rx-contact-inner--visual"
-        style="--rx-contact-bg: url('{{ url_for('static', filename='assets/images/home/knowbridge.png') }}')"
-    >
-        <span class="eyebrow">Collaborate</span>
-        <h2 class="txt-xbold">The interesting problems are ultradisciplinary.</h2>
-        <p>
-            If you're working on something where the knowledge infrastructure
-            is the bottleneck — whether that's a research lab, a scientific
-            competition, or a business drowning in its own data — I'd like to hear about it.
-        </p>
-        <a href="mailto:hello@federicocaria.com" class="btn btn-primary txt-mono uppercase" data-contact-trigger>
-            <i class="ph ph-envelope-simple"></i> Get in touch
-        </a>
-    </div>
-</section>
+{% include 'partials/_rx_contact.html' %}
 
 <script src="{{ url_for('static', filename='js/ip_pipeline_hero.js') }}" defer></script>
 <script>
