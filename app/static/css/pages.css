@@ -1270,7 +1270,8 @@ main:has(.idx-hero-v2) {
     .idx-scroll-row::-webkit-scrollbar { display: none; }
 
     .idx-scroll-row > * {
-        flex: 0 0 55vw;
+        flex: 0 0 max(250px, 55vw);
+        min-width: 250px;
         scroll-snap-align: start;
         height: auto;
     }
