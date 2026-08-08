@@ -26,6 +26,7 @@ from app.notes_loader import (
 from app.notes_threads import build_thread_counts
 from app.tooling.methods_finder import load_catalog as load_methods_finder_catalog
 from app.endorsements_loader import load_endorsements
+from app.mail import MailConfigError, MailDeliveryError, send_contact_email
 from app.papers_db import (
     init_reviews_db,
     submit_review,
@@ -53,6 +54,35 @@ LEGACY_PROJECT_SLUGS = {
 PAPERS_DIR = os.path.join(os.path.dirname(__file__), 'papers')
 STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static')
 VITRIOL_DIR = os.path.join(os.path.dirname(__file__), 'blog', 'vitriol')
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'hello@caria.so')
+
+
+def _valid_email(value):
+    if not value or len(value) > 254 or '@' not in value:
+        return False
+    local, _, domain = value.partition('@')
+    return bool(local and domain and '.' in domain)
+
+
+def _build_contact_body(form_type, name, email, company, service, budget, message):
+    lines = [
+        f'New {form_type} from caria.so',
+        '',
+        f'Name: {name}',
+        f'Email: {email}',
+    ]
+    if company:
+        lines.append(f'Affiliation / company: {company}')
+    if service:
+        lines.append(f'Subject / domain: {service}')
+    if budget and budget != 'ip-analysis':
+        lines.append(f'Budget: {budget}')
+    lines.extend(['', 'Message:', message, ''])
+    return '\n'.join(lines)
+
+
+def _contact_redirect(fallback=None):
+    return redirect(request.referrer or fallback or url_for('blog.index'))
 
 
 def parse_date(date_str):
@@ -182,6 +212,20 @@ def _resolve_project_cover(project):
     return ''
 
 
+_DEV_COMMIT_MSGS = [
+    'fix: guard against empty response body',
+    'refactor: split config into modules',
+    'feat: add retry with exponential backoff',
+    'chore: bump dependencies',
+    'fix: race condition in worker pool',
+    'test: cover pagination edge cases',
+    'docs: clarify env var setup',
+    'perf: cache hot path lookups',
+    'fix: off-by-one in batch iterator',
+    'refactor: extract shared validation',
+]
+
+
 def _build_git_commits(projects, limit=7):
     """Commits for the projects hero git-graph viz."""
     lane_pattern = [0, 1, 1, 0, 0, 1, 0]
@@ -190,7 +234,7 @@ def _build_git_commits(projects, limit=7):
         slug = project.get('slug', '')
         commits.append({
             'hash': hashlib.sha1(slug.encode('utf-8')).hexdigest()[:7],
-            'msg': project.get('title', 'Untitled'),
+            'msg': _DEV_COMMIT_MSGS[i % len(_DEV_COMMIT_MSGS)],
             'slug': slug,
             'accent': project.get('accent') or 'hatch-neutral',
             'status': project.get('status') or '',
@@ -877,43 +921,68 @@ def impossible_papers():
 
 @blog_bp.route('/contact', methods=['POST'])
 def contact():
-    """Handle contact form submissions"""
+    """Handle contact form submissions — sends notification to CONTACT_EMAIL."""
+    fallback = request.referrer or url_for('blog.index')
+
     try:
-        # Get form data
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
         company = request.form.get('company', '').strip()
         service = request.form.get('service', '').strip()
         budget = request.form.get('budget', '').strip()
         message = request.form.get('message', '').strip()
-        
-        # Basic validation — email is required
+
         if not email or not message:
             flash('Please add your email and a message.', 'error')
-            return redirect(request.referrer or url_for('blog.index'))
-        
+            return _contact_redirect(fallback)
+
+        if not _valid_email(email):
+            flash('Please enter a valid email address.', 'error')
+            return _contact_redirect(fallback)
+
+        if len(message) > 10000:
+            flash('Message is too long. Please keep it under 10,000 characters.', 'error')
+            return _contact_redirect(fallback)
+
         if not name:
             name = 'Anonymous'
-        
-        # Here you would typically:
-        # 1. Save to database
-        # 2. Send email notification
-        # 3. Send confirmation email to user
-        # For now, we'll just log the submission and show success message
-        
-        current_app.logger.info(f"Contact form submission from {name} ({email})")
-        current_app.logger.info(f"Company: {company}")
-        current_app.logger.info(f"Service: {service}")
-        current_app.logger.info(f"Budget: {budget}")
-        current_app.logger.info(f"Message: {message}")
-        
+
+        recipient = current_app.config.get('CONTACT_EMAIL', CONTACT_EMAIL)
+        form_type = 'Impossible Papers request' if budget == 'ip-analysis' else 'contact form submission'
+        subject = f'[caria.so] {service or "General inquiry"} — {name}'
+
+        send_contact_email(
+            to=recipient,
+            reply_to=email,
+            subject=subject,
+            body=_build_contact_body(form_type, name, email, company, service, budget, message),
+        )
+
+        current_app.logger.info('Contact email sent for %s (%s)', name, email)
         flash('Thank you for your message! I\'ll get back to you within 24 hours.', 'success')
-        return redirect(url_for('blog.index'))
-        
-    except Exception as e:
-        current_app.logger.error(f"Error processing contact form: {str(e)}")
-        flash('Sorry, there was an error sending your message. Please try again or email me directly.', 'error')
-        return redirect(url_for('blog.index') + '#contact')
+        return _contact_redirect(fallback)
+
+    except MailConfigError as exc:
+        current_app.logger.error('Contact form misconfigured: %s', exc)
+        flash(
+            f'Sorry, the contact form is not configured yet. Email me directly at {CONTACT_EMAIL}.',
+            'error',
+        )
+        return _contact_redirect(fallback)
+    except MailDeliveryError as exc:
+        current_app.logger.error('Contact email delivery failed: %s', exc)
+        flash(
+            f'Sorry, there was an error sending your message. Please try again or email me directly at {CONTACT_EMAIL}.',
+            'error',
+        )
+        return _contact_redirect(fallback)
+    except Exception as exc:
+        current_app.logger.error('Error processing contact form: %s', exc)
+        flash(
+            f'Sorry, there was an error sending your message. Please try again or email me directly at {CONTACT_EMAIL}.',
+            'error',
+        )
+        return _contact_redirect(fallback)
 
 # ── Papers listing ──────────────────────────────────────
 

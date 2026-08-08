@@ -94,14 +94,45 @@ main:has(.proj-hero) {
 }
 
 .proj-git-panel {
-    background: #14131a;
-    border: 1px solid color-mix(in srgb, var(--c-border) 80%, #2a2930);
+    --git-bg: #f4f3f6;
+    --git-chrome-bg: #ebe9ef;
+    --git-border: color-mix(in srgb, var(--c-border) 90%, #c8c6d0);
+    --git-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+    --git-title: #8a8894;
+    --git-line: #c8c6d0;
+    --git-node-fill: #f4f3f6;
+    --git-node-head-stroke: var(--c-text-primary);
+    --git-glyphs: #9a98a4;
+    --git-msg: #5c5a68;
+    --git-msg-head: var(--c-text-primary);
+    --git-row-hover: rgba(0, 0, 0, 0.04);
+    --git-tag-border: #d4d2dc;
+    --git-tag-text: #8a8894;
+    --git-cursor-line: #9a98a4;
+    background: var(--git-bg);
+    border: 1px solid var(--git-border);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.22),
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    box-shadow: var(--git-shadow);
     font-family: "Geist Mono", monospace;
+}
+
+[data-theme="dark"] .proj-git-panel {
+    --git-bg: #14131a;
+    --git-chrome-bg: #1e1d26;
+    --git-border: color-mix(in srgb, var(--c-border) 80%, #2a2930);
+    --git-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    --git-title: #7a7885;
+    --git-line: #3d3b48;
+    --git-node-fill: #14131a;
+    --git-node-head-stroke: #fff;
+    --git-glyphs: #5c5a68;
+    --git-msg: #a8a6b3;
+    --git-msg-head: #e8e6f0;
+    --git-row-hover: rgba(255, 255, 255, 0.05);
+    --git-tag-border: #3d3b48;
+    --git-tag-text: #7a7885;
+    --git-cursor-line: #5c5a68;
 }
 
 .proj-git-chrome {
@@ -109,8 +140,8 @@ main:has(.proj-hero) {
     align-items: center;
     gap: 0.4rem;
     padding: 0.55rem 0.85rem;
-    background: #1e1d26;
-    border-bottom: 1px solid #2a2930;
+    background: var(--git-chrome-bg);
+    border-bottom: 1px solid var(--git-border);
 }
 
 .proj-git-dot {
@@ -128,7 +159,7 @@ main:has(.proj-hero) {
     margin-left: 0.35rem;
     font-size: 0.58rem;
     letter-spacing: 0.04em;
-    color: #7a7885;
+    color: var(--git-title);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -156,7 +187,7 @@ main:has(.proj-hero) {
 
 .proj-git-line {
     fill: none;
-    stroke: #3d3b48;
+    stroke: var(--git-line);
     stroke-width: 2;
     stroke-linecap: round;
     stroke-dasharray: 120;
@@ -165,7 +196,7 @@ main:has(.proj-hero) {
 }
 
 .proj-git-node {
-    fill: #14131a;
+    fill: var(--git-node-fill);
     stroke: var(--node-accent, var(--hatch-data));
     stroke-width: 2;
     transform-origin: center;
@@ -175,14 +206,14 @@ main:has(.proj-hero) {
 
 .proj-git-node--head {
     fill: var(--node-accent, var(--hatch-data));
-    stroke: #fff;
+    stroke: var(--git-node-head-stroke);
     stroke-width: 1.5;
     filter: drop-shadow(0 0 6px color-mix(in srgb, var(--node-accent, var(--hatch-data)) 55%, transparent));
 }
 
 .proj-git-node--active {
     fill: var(--node-accent, var(--hatch-data));
-    stroke: #fff;
+    stroke: var(--git-node-head-stroke);
 }
 
 .proj-git-head-ring {
@@ -220,16 +251,16 @@ main:has(.proj-hero) {
 
 .proj-git-row:hover,
 .proj-git-row--active {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--git-row-hover);
 }
 
 .proj-git-row--head .proj-git-msg {
-    color: #e8e6f0;
+    color: var(--git-msg-head);
     font-weight: 600;
 }
 
 .proj-git-glyphs {
-    color: #5c5a68;
+    color: var(--git-glyphs);
     flex-shrink: 0;
 }
 
@@ -239,7 +270,7 @@ main:has(.proj-hero) {
 }
 
 .proj-git-msg {
-    color: #a8a6b3;
+    color: var(--git-msg);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -254,8 +285,8 @@ main:has(.proj-hero) {
     text-transform: uppercase;
     padding: 0.1rem 0.35rem;
     border-radius: 3px;
-    border: 1px solid #3d3b48;
-    color: #7a7885;
+    border: 1px solid var(--git-tag-border);
+    color: var(--git-tag-text);
     flex-shrink: 0;
 }
 
@@ -263,7 +294,7 @@ main:has(.proj-hero) {
     margin-top: 0.35rem;
     padding: 0.2rem 0.45rem;
     font-size: 0.62rem;
-    color: #5c5a68;
+    color: var(--git-cursor-line);
 }
 
 .proj-git-prompt { color: var(--hatch-ecommerce); margin-right: 0.35rem; }

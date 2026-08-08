@@ -4,6 +4,7 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/project-cards.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ip-pipeline.css') }}">
 {% endblock %}
 
 {% block title %}Federico Caria{% endblock %}
@@ -33,17 +34,23 @@
 <section class="idx-hero-v2 lr-pattern-paper-dot">
     <div class="idx-hero-v2-shell">
         <div class="sec-inner idx-hero-v2-stage">
-            <div class="idx-hero-v2-copy">
-                <div class="idx-hero-name">Federico Caria</div>
-                <h1 class="idx-hero-thesis">Experience Engineering</h1>
-                <p class="idx-hero-subtitle">Knowledge shorts twice: Once in the tools. Once in the humans.</p>
-                <p class="idx-hero-body">
-                    I build tools for complex knowledge and test whether they work.
-                    From user research through working code — end to end.
-                </p>
-                <div class="idx-hero-cta">
-                    <a href="{{ url_for('blog.impossible_papers') }}" class="btn btn-primary txt-mono uppercase">See What I do</a>
-                    <a href="#impossible-papers" class="btn btn-secondary txt-mono uppercase">Get in touch</a>
+            <div class="idx-hero-v2-grid">
+                <div class="idx-hero-v2-copy">
+                    <div class="idx-hero-name">Federico Caria</div>
+                    <h1 class="idx-hero-thesis">Experience Engineering</h1>
+                    <p class="idx-hero-subtitle">Knowledge shorts twice: Once in the tools. Once in the humans.</p>
+                    <p class="idx-hero-body">
+                        I build tools for complex knowledge and test whether they work.
+                        From user research through working code — end to end.
+                    </p>
+                    <div class="idx-hero-cta">
+                        <a href="{{ url_for('blog.impossible_papers') }}" class="btn btn-primary txt-mono uppercase">See What I do</a>
+                        <a href="#" class="btn btn-secondary txt-mono uppercase" data-contact-trigger>Get in touch</a>
+                    </div>
+                </div>
+
+                <div class="idx-hero-v2-visual">
+                    {% include 'partials/_ip_pipeline_hero.html' %}
                 </div>
             </div>
         </div>
@@ -78,106 +85,135 @@
 {# ════════════════════════════════════
     SERVICES
     ════════════════════════════════════ #}
-<section class="sec idx-section--services lr-pattern-paper-dot" id="services">
-    <div class="sec-inner">
+<!-- 
 
-        <div class="rx-ip-grid">
-
-            <div class="rx-ip-grid-left-inner">
-                <div class="sec-header">
-                    <span class="eyebrow">Services</span>
-                    <h2 class="txt-xbold">Research & Development</h2>
-                </div>
-
-                <div class="rx-ip-main prose">
-                    <p>
-                        The problem is always the same: complex information that people
-                        can't use well enough. Sometimes that's a researcher drowning in
-                        literature. Sometimes it's a checkout flow losing customers at step 3.
-                        Sometimes it's an organization sitting on data nobody can find.
-                    </p>
-
-                    <div class="rx-ip-proof" data-proof-carousel>
-                        <span class="rx-ip-proof-label">Endorsements</span>
-                        <div class="rx-ip-proof-slides" aria-live="polite">
-                            {% for e in endorsements %}
-                            <blockquote class="rx-ip-proof-slide{% if loop.first %} is-active{% endif %}"{% if not loop.first %} aria-hidden="true"{% endif %}>
-                                <p>{{ e.quote }}</p>
-                                <footer class="rx-ip-proof-attr">
-                                    {% if e.logo %}
-                                    <img src="{{ url_for('static', filename=e.logo) }}" alt="" class="rx-ip-proof-logo">
-                                    {% endif %}
-                                    <span>
-                                        <span class="rx-ip-proof-name">{{ e.name }}</span>
-                                        <span class="rx-ip-proof-role">{{ e.role }}</span>
-                                    </span>
-                                </footer>
-                            </blockquote>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <a href="{{ url_for('blog.projects') }}" class="rx-ip-link">
-                        About me <i class="ph ph-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="rx-programs">
-                <div class="rx-program-card" style="--prog-color: var(--hatch-ecommerce);">
-                    <span class="rx-program-domain">UX Audits & Usability Testing</span>
-                    <div class="rx-program-title">Find what's broken, prove it matters</div>
-                    <div class="rx-program-note">Heuristic audits against 700+ guidelines, moderated usability testing, funnel teardowns, competitive analysis</div>
-                </div>
-
-                <div class="rx-program-card" style="--prog-color: var(--hatch-ai);">
-                    <span class="rx-program-domain">Prototyping & Development</span>
-                    <div class="rx-program-title">From concept to working product in days</div>
-                    <div class="rx-program-note">Interactive MVPs, e-commerce platforms, research dashboards, landing pages — Flask, WooCommerce, FastAPI, whatever fits</div>
-                </div>
-
-                <div class="rx-program-card" style="--prog-color: var(--hatch-ux);">
-                    <span class="rx-program-domain">AI & NLP</span>
-                    <div class="rx-program-title">Pipelines that work on your data</div>
-                    <div class="rx-program-note">LLM integration, search and retrieval, entity resolution, OCR — wired into your workflow, not a demo</div>
-                </div>
-
-                <div class="rx-program-card" style="--prog-color: var(--hatch-libraries);">
-                    <span class="rx-program-domain">Knowledge Infrastructure</span>
-                    <div class="rx-program-title">Make complex information findable</div>
-                    <div class="rx-program-note">Graph databases, semantic search, metadata architecture, dataset curation — for research labs and businesses alike</div>
-                </div>
-            </div>
+<div class="rx-ip-proof-container">
+    <div class="rx-ip-proof" data-proof-carousel>
+        <span class="rx-ip-proof-label">Endorsements</span>
+        <div class="rx-ip-proof-slides" aria-live="polite">
+            {% for e in endorsements %}
+            <blockquote class="rx-ip-proof-slide{% if loop.first %} is-active{% endif %}"{% if not loop.first %} aria-hidden="true"{% endif %}>
+                <p>{{ e.quote }}</p>
+                <footer class="rx-ip-proof-attr">
+                    {% if e.logo %}
+                    <img src="{{ url_for('static', filename=e.logo) }}" alt="" class="rx-ip-proof-logo">
+                    {% endif %}
+                    <span>
+                        <span class="rx-ip-proof-name">{{ e.name }}</span>
+                        <span class="rx-ip-proof-role">{{ e.role }}</span>
+                    </span>
+                </footer>
+            </blockquote>
+            {% endfor %}
         </div>
     </div>
-</section>
+
+    <a href="{{ url_for('blog.projects') }}" class="rx-ip-link">
+        About me <i class="ph ph-arrow-right"></i>
+    </a>
+</div> 
+            
+-->
 
 
 {# ════════════════════════════════════
-   PROJECTS (THE LAB)
-   ════════════════════════════════════ #}
-<section class="sec idx-section--projects lr-pattern-noise">
-    <div class="sec-inner">
-        <div class="sec-header">
-            <span class="eyebrow">The Lab</span>
-            <h2 class="txt-xbold">Most recent projects</h2>
-        </div>
+    SERVICES
+    ════════════════════════════════════ #}
+ <section class="sec idx-section--services lr-pattern-paper-dot" id="services">
+     <div class="sec-inner">
+        <div class="svc-header-grid">
+            <div class="sec-header">
+                <span class="eyebrow">Services</span>
+                <h2 class="txt-xbold">Research & <br> Development Services</h2>
+            </div>
 
-        <div class="idx-scroll-row">
-            {% for project in recent_projects %}
-            {% with card_index=loop.index %}
-            {% include 'partials/_project_card.html' %}
-            {% endwith %}
-            {% endfor %}
+            <p class="svc-intro">
+                The problem is always the same: complex information that people
+                can't use well enough. Sometimes that's a researcher drowning in
+                literature. Sometimes it's a checkout flow losing customers.
+                Sometimes it's an organization sitting on data nobody can find.
+            </p>
         </div>
+ 
+         <div class="svc-rows">
+             <a href="{{ url_for('blog.projects') }}" class="svc-row" style="--svc-color: var(--hatch-ecommerce);">
+                 <div class="svc-row-left">
+                     <span class="svc-row-dot"></span>
+                     <span class="svc-row-domain txt-mono">Product</span>
+                 </div>
+                 <div class="svc-row-right">
+                     <span class="svc-row-title">Find what's costing you conversions</span>
+                     <span class="svc-row-note">Heuristic audits against 700+ guidelines, moderated usability sessions, funnel teardowns with annotated recordings</span>
+                 </div>
+                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+             </a>
+ 
+             <a href="{{ url_for('blog.projects') }}" class="svc-row" style="--svc-color: var(--hatch-ux);">
+                 <div class="svc-row-left">
+                     <span class="svc-row-dot"></span>
+                     <span class="svc-row-domain txt-mono">Development</span>
+                 </div>
+                 <div class="svc-row-right">
+                     <span class="svc-row-title">Prototyping & development</span>
+                     <span class="svc-row-note">Interactive prototypes, e-commerce builds, research dashboards. Flask, FastAPI, WooCommerce — deployed, not handed off</span>
+                 </div>
+                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+             </a>
+ 
+             <a href="{{ url_for('blog.projects') }}" class="svc-row" style="--svc-color: var(--hatch-ai);">
+                 <div class="svc-row-left">
+                     <span class="svc-row-dot"></span>
+                     <span class="svc-row-domain txt-mono">Pipelines</span>
+                 </div>
+                 <div class="svc-row-right">
+                     <span class="svc-row-title">Wire AI into your actual workflow</span>
+                     <span class="svc-row-note">LLM orchestration, entity resolution, semantic search, OCR extraction. Production integrations, not a chatbot on a landing page</span>
+                 </div>
+                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+             </a>
+ 
+             <a href="{{ url_for('blog.projects') }}" class="svc-row" style="--svc-color: var(--hatch-libraries);">
+                 <div class="svc-row-left">
+                     <span class="svc-row-dot"></span>
+                     <span class="svc-row-domain txt-mono">Knowledge</span>
+                 </div>
+                 <div class="svc-row-right">
+                     <span class="svc-row-title">Make complex information findable</span>
+                     <span class="svc-row-note">Graph databases, semantic search, metadata architecture, dataset curation — for research labs and businesses alike</span>
+                 </div>
+                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+             </a>
+         </div>
+     </div>
+ </section>
 
-        <div class="flex justcenter mt-l">
-            <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
-                View All Projects <i class="ph ph-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</section>
+
+
+{# ════════════════════════════════════
+    PROJECTS (THE LAB)
+    ════════════════════════════════════ #}
+ <section class="sec idx-section--projects lr-pattern-noise">
+     <div class="sec-inner">
+         <div class="sec-header">
+             <span class="eyebrow">The Lab</span>
+             <h2 class="txt-xbold">Most recent projects</h2>
+         </div>
+ 
+         <div class="idx-scroll-row">
+             {% for project in recent_projects %}
+             {% with card_index=loop.index %}
+             {% include 'partials/_project_card.html' %}
+             {% endwith %}
+             {% endfor %}
+         </div>
+ 
+         <div class="flex justcenter mt-l">
+             <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
+                 View All Projects <i class="ph ph-arrow-right"></i>
+             </a>
+         </div>
+     </div>
+ </section> 
 
 
 {# ════════════════════════════════════
@@ -284,6 +320,7 @@
     </div>
 </section>
 
+<script src="{{ url_for('static', filename='js/ip_pipeline_hero.js') }}" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-proof-carousel]').forEach(function (root) {

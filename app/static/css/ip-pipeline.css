@@ -1,0 +1,359 @@
+/* ══ Impossible Papers — evaluation-driven agent reassembly ══ */
+
+.ipx-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.ipx {
+    /* background: var(--c-background);
+    border: 1px solid var(--c-border); */
+    border-radius: 14px;
+    /* padding: 1rem; */
+    /* box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06); */
+}
+
+/* [data-theme="dark"] .ipx {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+} */
+
+/* ── Fixed IO rows (seed / fingerprint) ── */
+
+.ipx-io {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    background: var(--c-background-gray);
+    border: 1px solid var(--c-border);
+    transition: border-color 0.45s ease, background 0.45s ease;
+}
+
+.ipx-io-tag {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    flex: 0 0 auto;
+    transition: color 0.45s ease;
+}
+
+.ipx-io-text {
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: var(--c-text-secondary);
+}
+
+.ipx-io--seed.is-on {
+    border-color: color-mix(in srgb, var(--hatch-ux) 45%, var(--c-border));
+    background: color-mix(in srgb, var(--hatch-ux) 7%, var(--c-background-gray));
+}
+
+.ipx-io--seed.is-on .ipx-io-tag {
+    color: var(--hatch-ux);
+}
+
+.ipx-io--print.is-on {
+    border-color: color-mix(in srgb, var(--hatch-ip) 55%, var(--c-border));
+    background: color-mix(in srgb, var(--hatch-ip) 10%, var(--c-background-gray));
+}
+
+.ipx-io--print.is-on .ipx-io-tag {
+    color: var(--c-text-primary);
+}
+
+/* ── Agent config block ── */
+
+.ipx-config {
+    margin: 0.7rem 0;
+    padding: 0.7rem;
+    border: 1px dashed color-mix(in srgb, var(--c-border) 90%, transparent);
+    border-radius: 10px;
+    transition: border-color 0.45s ease;
+}
+
+.ipx-config.is-rebuilding {
+    border-color: color-mix(in srgb, var(--hatch-ux) 40%, var(--c-border));
+}
+
+.ipx-config-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.ipx-eyebrow,
+.ipx-phase {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.ipx-eyebrow {
+    color: var(--c-text-tertiary);
+}
+
+.ipx-phase {
+    color: var(--hatch-ux);
+    font-weight: 600;
+    flex: 0 1 auto;
+    min-width: 0;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ipx-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+/* ── Agent card ── */
+
+.ipx-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+        'slot name'
+        'slot desc'
+        'slot tag';
+    column-gap: 0.5rem;
+    row-gap: 0.12rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-background);
+    overflow: hidden;
+    opacity: 0.42;
+    transition:
+        border-color 0.45s ease,
+        box-shadow 0.45s ease,
+        opacity 0.5s ease;
+}
+
+.ipx-scan {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: color-mix(in srgb, var(--step-accent) 10%, transparent);
+    transition: width 0.6s ease;
+    pointer-events: none;
+}
+
+.ipx-slot,
+.ipx-name,
+.ipx-desc,
+.ipx-tag {
+    position: relative;
+    z-index: 1;
+}
+
+.ipx-slot {
+    grid-area: slot;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--c-text-tertiary);
+    min-width: 1.35rem;
+    text-align: center;
+    transition: color 0.45s ease;
+}
+
+.ipx-name {
+    grid-area: name;
+    font-size: 0.82rem;
+    font-weight: 650;
+    line-height: 1.2;
+    color: var(--c-text-primary);
+    text-transform: lowercase;
+}
+
+.ipx-desc {
+    grid-area: desc;
+    font-size: 0.65rem;
+    line-height: 1.35;
+    color: var(--c-text-secondary);
+}
+
+.ipx-tag {
+    grid-area: tag;
+    justify-self: start;
+    margin-top: 0.18rem;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    padding: 0.1rem 0.3rem;
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    transition: color 0.45s ease, border-color 0.45s ease;
+}
+
+/* Selected into this cycle's config */
+
+.ipx-step.is-active {
+    opacity: 1;
+    border-color: color-mix(in srgb, var(--step-accent) 55%, var(--c-border));
+}
+
+.ipx-step.is-active .ipx-slot {
+    color: var(--step-accent);
+}
+
+.ipx-step.is-active .ipx-tag {
+    color: var(--step-accent);
+    border-color: color-mix(in srgb, var(--step-accent) 40%, var(--c-border));
+}
+
+/* Currently executing */
+
+.ipx-step.is-lit {
+    border-color: var(--step-accent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--step-accent) 20%, transparent);
+}
+
+.ipx-step.is-lit .ipx-scan {
+    width: 100%;
+}
+
+/* Finished this run */
+
+.ipx-step.is-done .ipx-scan {
+    width: 100%;
+    background: color-mix(in srgb, var(--step-accent) 5%, transparent);
+}
+
+/* ── Evaluation row ── */
+
+.ipx-eval {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.65rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--c-border);
+    background: var(--c-background);
+    transition: border-color 0.45s ease, background 0.45s ease;
+}
+
+.ipx-eval.is-on {
+    border-color: color-mix(in srgb, var(--c-accent) 40%, var(--c-border));
+    background: color-mix(in srgb, var(--c-accent) 5%, var(--c-background));
+}
+
+.ipx-eval-tag {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    transition: color 0.45s ease;
+}
+
+.ipx-eval.is-on .ipx-eval-tag {
+    color: var(--c-accent);
+}
+
+.ipx-deltas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ipx-delta {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.36rem;
+    border-radius: 999px;
+    border: 1px solid var(--c-border);
+    color: var(--c-text-secondary);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(3px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ipx-delta.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+.ipx-delta--up {
+    color: var(--hatch-ecommerce);
+    border-color: color-mix(in srgb, var(--hatch-ecommerce) 45%, var(--c-border));
+}
+
+.ipx-delta--down {
+    color: var(--c-accent);
+    border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
+}
+
+.ipx-next {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-text-tertiary);
+    flex: 0 0 auto;
+}
+
+.ipx-next b {
+    color: var(--c-accent);
+    font-weight: 700;
+}
+
+.ipx-caption {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--c-text-tertiary);
+}
+
+@media (max-width: 960px) {
+    .ipx-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Only show agents picked for this cycle — not all 8 slots */
+    .ipx-step:not(.is-active) {
+        display: none;
+    }
+}
+
+@media (max-width: 620px) {
+    .ipx-caption {
+        font-size: 0.54rem;
+        letter-spacing: 0.05em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ipx-step,
+    .ipx-scan,
+    .ipx-delta,
+    .ipx-io,
+    .ipx-eval {
+        transition: none;
+    }
+}

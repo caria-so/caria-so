@@ -1,10 +1,17 @@
 import os
 from flask import Flask, render_template
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key')
+    app.config['CONTACT_EMAIL'] = os.environ.get('CONTACT_EMAIL', 'hello@caria.so')
 
     from app.routes import blog_bp
     app.register_blueprint(blog_bp)

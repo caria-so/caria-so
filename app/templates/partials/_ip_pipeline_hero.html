@@ -1,0 +1,66 @@
+{% set ip_agents = [
+  ('literature', 'coverage',      'Exhaustive search across sources',  'hatch-data'),
+  ('formalize',  'novelty',       'Claims into testable form',         'hatch-libraries'),
+  ('simulate',   'evidence',      'Computational tests on real data',  'hatch-ai'),
+  ('dataset',    'evidence',      'Build the corpus it needs',         'hatch-ecommerce'),
+  ('rederive',   'corroboration', 'Independent path to the result',    'hatch-ux'),
+  ('counter',    'corroboration', 'Steelman the rival model',          'c-accent'),
+  ('stress',     'review',        'Break it on edge cases',            'hatch-ai'),
+  ('review',     'review',        'Adversarial verdict loop',          'hatch-libraries')
+] %}
+
+<div class="ipx-wrap" data-ip-pipeline>
+  <div class="ipx">
+
+    {# ── Fixed input — not an agent ── #}
+    <!-- <div class="ipx-io ipx-io--seed" data-ipx-seed>
+      <span class="ipx-io-tag">seed</span>
+      <span class="ipx-io-text">hypothesis, as testable claims</span>
+    </div> -->
+
+    {# ── Evaluation — decides the next config ── #}
+    <div class="ipx-eval" data-ipx-eval>
+      <span class="ipx-eval-tag">evaluate</span>
+      <span class="ipx-deltas" data-ipx-deltas></span>
+      <span class="ipx-next">next <b data-ipx-next>—</b></span>
+    </div>
+
+    {# ── Agent config block — reassembles every cycle ── #}
+    <div class="ipx-config">
+      <div class="ipx-config-head">
+        <span class="ipx-eyebrow">agent config</span>
+        <span class="ipx-phase" data-ipx-phase>idle</span>
+      </div>
+
+      <div class="ipx-grid" data-ipx-grid>
+        {% for name, dim, desc, accent in ip_agents %}
+        <div class="ipx-step"
+             data-ipx-agent="{{ name }}"
+             data-ipx-dim="{{ dim }}"
+             style="--step-accent: var(--{{ accent }});">
+          <span class="ipx-scan" aria-hidden="true"></span>
+          <span class="ipx-slot" data-ipx-slot>—</span>
+          <span class="ipx-name">{{ name }}</span>
+          <span class="ipx-desc">{{ desc }}</span>
+          <span class="ipx-tag">{{ dim }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# ── Evaluation — decides the next config ── #}
+    <!-- <div class="ipx-eval" data-ipx-eval>
+      <span class="ipx-eval-tag">evaluate</span>
+      <span class="ipx-deltas" data-ipx-deltas></span>
+      <span class="ipx-next">next <b data-ipx-next>—</b></span>
+    </div> -->
+
+    {# ── Fixed output — not an agent ── #}
+    <div class="ipx-io ipx-io--print" data-ipx-print>
+      <span class="ipx-io-tag">fingerprint</span>
+      <span class="ipx-io-text">what survived, what died, and why</span>
+    </div>
+  </div>
+
+  <!-- <p class="ipx-caption">Evaluation picks the weakest dimension · the config rebuilds around it</p> -->
+</div>
