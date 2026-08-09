@@ -42,7 +42,7 @@ sections:
     title: Payment Rework
     content: |
       <p>Migrated from PayPal PPCP (silent <code>onApprove</code> failures) to
-      Nexi XPay Build v3 with iframe styling, fallback flow, and proper error capture.</p>
+      Nexi XPay Build v3 with iframe styling, fallback flow, and proper error capture. Il checkout è stato completamente ridisegnato con un plugin per overw</p>
     image: /static/images/projects/rotondi-payment.jpg
     reverse: false
 

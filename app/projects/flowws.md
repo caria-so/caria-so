@@ -1,7 +1,7 @@
 ---
 title: Flowws MCP
 summary: A computable UX knowledge system — HCI research encoded as a graph with every citation verified against its source, exposed to Claude Code through an MCP server so evidence lands in a developer's context window exactly when they need it.
-status: live
+status: internal product
 date: 2025-present
 role: Solo developer
 client: Internal product

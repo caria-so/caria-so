@@ -367,29 +367,157 @@
 }
 
 
-/* Callout */
+/* Callout — modern highlight panel */
 .proj-block--callout {
-    padding: 1.5rem 1.75rem;
-    border-radius: 14px;
-    border: 1px solid color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 22%, var(--c-border));
-    border-left: 3px solid var(--proj-accent, var(--hatch-ux));
+    --callout-accent: var(--proj-accent, var(--hatch-ux));
+    --callout-glow: color-mix(in srgb, var(--callout-accent) 14%, transparent);
+    position: relative;
+    font-family: var(--font-sans);
+    padding: clamp(1.35rem, 3vw, 1.85rem);
+    border-radius: 20px;
+    border: 1px solid color-mix(in srgb, var(--callout-accent) 16%, var(--c-border));
     background:
-        linear-gradient(
-            135deg,
-            color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 9%, var(--c-background)) 0%,
-            color-mix(in srgb, var(--proj-accent, var(--hatch-ux)) 3%, var(--c-background)) 100%
-        );
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        radial-gradient(ellipse 90% 70% at 100% -10%, var(--callout-glow), transparent 58%),
+        radial-gradient(ellipse 60% 50% at 0% 100%, color-mix(in srgb, var(--callout-accent) 6%, transparent), transparent 50%),
+        color-mix(in srgb, var(--callout-accent) 4%, var(--c-background));
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--callout-accent) 8%, transparent) inset,
+        0 16px 40px color-mix(in srgb, var(--callout-accent) 7%, transparent);
+    overflow: hidden;
 }
 
-.proj-callout-title {
-    color: var(--proj-accent, var(--hatch-ux));
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.12em;
+.proj-block--callout::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 2px;
+    border-radius: 0 0 4px 4px;
+    background: linear-gradient(
+        90deg,
+        var(--callout-accent),
+        color-mix(in srgb, var(--callout-accent) 35%, transparent)
+    );
+    opacity: 0.9;
+}
+
+.proj-callout-kicker {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 0.75rem;
+    font-family: var(--font-sans);
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--c-text-primary);
+}
+
+.proj-callout-body {
+    position: relative;
+    z-index: 1;
+}
+
+.proj-block--callout .proj-prose {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 1.8vw, 1.02rem);
+    line-height: 1.65;
+    color: var(--c-text-secondary);
+}
+
+.proj-block--callout .proj-prose p + p {
+    margin-top: 0.85rem;
 }
 
 .proj-block--callout .proj-prose p:last-child {
     margin-bottom: 0;
+}
+
+.proj-block--callout .proj-prose strong {
+    color: var(--c-text-primary);
+    font-weight: 600;
+}
+
+.proj-block--callout .proj-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 0.12rem 0.4rem;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--callout-accent) 8%, var(--c-background-gray));
+    border: 1px solid color-mix(in srgb, var(--callout-accent) 14%, var(--c-border));
+    color: var(--c-text-primary);
+}
+
+.proj-block--callout .proj-prose a:not([data-contact-trigger]):not(.btn) {
+    color: var(--c-link);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.proj-block--callout .proj-prose a:not([data-contact-trigger]):not(.btn):hover {
+    color: var(--c-link-hover);
+}
+
+.proj-block--callout .proj-prose a[data-contact-trigger],
+.proj-block--callout .proj-prose a.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: var(--c-text-primary);
+    color: var(--c-background);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--callout-accent) 22%, transparent);
+}
+
+.proj-block--callout .proj-prose a[data-contact-trigger]:hover,
+.proj-block--callout .proj-prose a.btn:hover {
+    background: var(--callout-accent);
+    border-color: color-mix(in srgb, var(--callout-accent) 70%, var(--c-text-primary));
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--callout-accent) 28%, transparent);
+}
+
+.proj-block--callout .proj-prose p:has(> a[data-contact-trigger]),
+.proj-block--callout .proj-prose p:has(> a.btn) {
+    margin-top: 1.15rem;
+}
+
+@media (max-width: 700px) {
+    .proj-block--callout {
+        border-radius: 16px;
+        padding: 1.2rem 1.15rem 1.25rem;
+    }
+
+    .proj-block--callout::before {
+        left: 1rem;
+        right: 1rem;
+    }
+
+    .proj-block--callout .proj-prose a[data-contact-trigger],
+    .proj-block--callout .proj-prose a.btn {
+        width: 100%;
+    }
 }
 
 

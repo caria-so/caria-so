@@ -29,16 +29,14 @@ sections:
   - type: text
     title: The Problem
     content: |
-      <p>Most OCR tools are built for clean, modern documents. Feed them a 17th-century
-      manuscript, a scanned esoteric treatise, or a book with drop capitals, margin notes,
-      and decorative borders — and they produce garbage. They flatten the structure,
-      lose the footnotes, and have no concept of reading order.</p>
-      <p>DeepOCR is built for the documents everyone else ignores.</p>
+      <p>Most OCR tools are built for clean, modern documents. Feed them a 16th-century
+      manuscript, a scanned esoteric treatise, or a book with drop capitals, margin notes, and decorative borders — and they likely give you garbage. They flatten the structure, lose the footnotes, and oftne have little concept of reading order.</p>
+      <p>DeepOCR is built for the hardest layout and scripts most OCR ignores</p>.
 
   # ── 2. METRICS ──
   - type: metrics-pills
     items:
-      - value: "2"
+      - value: "10"
         label: OCR engines
       - value: "37"
         label: Layout region types

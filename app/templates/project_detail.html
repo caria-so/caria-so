@@ -171,9 +171,9 @@
                 {% elif section.type == 'callout' %}
                 <div class="proj-block proj-block--callout">
                     {% if section.title %}
-                    <h4 class="proj-callout-title txt-mono txt-xsmall uppercase">{{ section.title }}</h4>
+                    <p class="proj-callout-kicker">{{ section.title }}</p>
                     {% endif %}
-                    <div class="proj-prose">
+                    <div class="proj-callout-body proj-prose">
                         {{ section.content | safe }}
                     </div>
                 </div>

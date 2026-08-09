@@ -368,6 +368,9 @@ main:has(.idx-hero-v2) {
     padding: 1.25rem var(--page-gutter) 1.5rem;
     --hatch-color: var(--hatch-ecommerce);
     --pattern-opacity: 0.28;
+    background: color-mix(in srgb, var(--c-background-gray) 76%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .idx-logo-carousel-track {
@@ -478,11 +481,31 @@ main:has(.idx-hero-v2) {
 .idx-section--services,
 .rx-ip {
     --hatch-color: var(--hatch-ai);
-    --pattern-opacity: 0.25;
+    --pattern-opacity: 0.32;
     background:
-        radial-gradient(ellipse 65% 50% at 80% 20%, color-mix(in srgb, var(--hatch-ai) 8%, transparent), transparent 55%),
-        radial-gradient(ellipse 45% 40% at 12% 85%, color-mix(in srgb, var(--hatch-ux) 5%, transparent), transparent 50%),
+        radial-gradient(ellipse 70% 55% at 85% 15%, color-mix(in srgb, var(--hatch-ai) 11%, transparent), transparent 58%),
+        radial-gradient(ellipse 50% 45% at 10% 90%, color-mix(in srgb, var(--hatch-ux) 7%, transparent), transparent 52%),
+        radial-gradient(ellipse 40% 35% at 50% 100%, color-mix(in srgb, var(--hatch-libraries) 4%, transparent), transparent 50%),
         var(--c-background);
+}
+
+.idx-section--services {
+    margin-inline: calc(-1 * var(--page-gutter));
+    padding-inline: var(--page-gutter);
+    overflow: hidden;
+    padding-top: clamp(4.5rem, 10vw, 6.5rem);
+    padding-bottom: clamp(2.75rem, 7vw, 4.25rem);
+}
+
+.idx-section--services .eyebrow {
+    color: color-mix(in srgb, var(--hatch-ai) 85%, var(--c-text-primary));
+    letter-spacing: 0.2em;
+}
+
+.idx-section--services .sec-header h2 {
+    font-size: clamp(2rem, 4.8vw, 2.85rem);
+    letter-spacing: -0.035em;
+    line-height: 1.08;
 }
 
 .idx-section--projects {
@@ -530,7 +553,8 @@ main:has(.idx-hero-v2) {
 
 .idx-band--sectors {
     --hatch-color: var(--hatch-libraries);
-    --pattern-opacity: 0.45;
+    --pattern-opacity: 0.38;
+    padding-top: clamp(1.75rem, 5vw, 2.75rem);
     background:
         radial-gradient(ellipse 90% 70% at 50% 50%, color-mix(in srgb, var(--hatch-libraries) 5%, transparent), transparent 65%),
         color-mix(in srgb, var(--hatch-libraries) 2%, var(--c-background));
@@ -713,10 +737,10 @@ main:has(.idx-hero-v2) {
 
 .svc-header-grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: clamp(2rem, 4vw, 3.5rem);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 4vw, 3.75rem);
     align-items: end;
-    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
 .svc-header-grid .sec-header {
@@ -725,112 +749,179 @@ main:has(.idx-hero-v2) {
 
 .svc-intro {
     color: var(--c-text-secondary);
-    line-height: 1.75;
-    font-size: 0.95rem;
+    line-height: 1.72;
+    font-size: clamp(1rem, 1.85vw, 1.12rem);
     margin: 0;
     align-self: end;
+    max-width: 36rem;
+}
+
+.svc-intro-lead {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-family: var(--font-sans);
+    font-size: clamp(1.08rem, 2vw, 1.22rem);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--c-text-primary);
 }
 
 .svc-rows {
     display: flex;
     flex-direction: column;
     gap: 0;
+    border: 1px solid var(--c-border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--c-background) 88%, var(--c-background-gray));
+    box-shadow:
+        0 1px 0 color-mix(in srgb, var(--c-background) 60%, transparent) inset,
+        0 24px 56px color-mix(in srgb, var(--hatch-ai) 7%, transparent);
 }
 
 .svc-row {
     display: grid;
-    grid-template-columns: 148px 1fr auto;
+    grid-template-columns: 156px 1fr auto;
     gap: 0;
     align-items: center;
-    padding: 1.35rem 0.85rem;
+    padding: 1.55rem 1.35rem;
     border-bottom: 1px solid var(--c-border);
     text-decoration: none;
     color: inherit;
-    transition: background 0.2s ease, padding-left 0.2s ease;
+    transition:
+        background 0.22s ease,
+        padding-left 0.22s ease,
+        border-color 0.22s ease;
 }
 
 .svc-row:first-child {
-    border-top: 1px solid var(--c-border);
+    border-top: none;
+}
+
+.svc-row:last-child {
+    border-bottom: none;
 }
 
 .svc-row:hover {
-    background: color-mix(in srgb, var(--svc-color) 4%, var(--c-background));
-    padding-left: 1.1rem;
+    background: color-mix(in srgb, var(--svc-color) 6%, var(--c-background));
+    padding-left: 1.5rem;
 }
 
 .svc-row-left {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.65rem;
 }
 
 .svc-row-dot {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--svc-color);
     flex-shrink: 0;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--svc-color) 18%, transparent);
 }
 
 .svc-row-domain {
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--c-text-secondary);
+    color: var(--svc-color);
 }
 
 .svc-row-right {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    padding: 0 1rem;
+    gap: 0.35rem;
+    padding: 0 1.15rem;
+    min-width: 0;
 }
 
 .svc-row-title {
-    font-weight: 600;
-    font-size: 1.02rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    letter-spacing: -0.02em;
     color: var(--c-text-primary);
-    line-height: 1.35;
+    line-height: 1.3;
 }
 
 .svc-row-note {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: var(--c-text-secondary);
     line-height: 1.55;
 }
 
 .svc-row-arrow {
-    font-size: 2.5rem;
+    font-size: 1.65rem;
     color: var(--c-text-tertiary);
     flex-shrink: 0;
-    transition: color 0.2s ease, transform 0.2s ease;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .svc-row:hover .svc-row-arrow {
     color: var(--svc-color);
+    border-color: color-mix(in srgb, var(--svc-color) 25%, var(--c-border));
+    background: color-mix(in srgb, var(--svc-color) 8%, var(--c-background));
     transform: translate(2px, -2px);
+}
+
+.svc-industries {
+    margin-top: clamp(1.5rem, 10vw, 3.5rem);
+    padding-top: clamp(2.25rem, 4.5vw, 3.5rem);
+}
+
+.svc-industries .idx-section-header {
+    margin-bottom: 2rem;
 }
 
 @media (max-width: 900px) {
     .svc-header-grid {
         grid-template-columns: 1fr;
         align-items: start;
+        gap: 1.5rem;
     }
 
     .svc-intro {
         align-self: start;
+    }
+
+    .idx-section--services {
+        padding-top: clamp(2.75rem, 12vw, 3.75rem);
     }
 }
 
 @media (max-width: 700px) {
     .svc-row {
         grid-template-columns: 1fr auto;
-        gap: 0.5rem;
-        padding: 1.2rem 0.75rem;
+        gap: 0.65rem;
+        padding: 1.35rem 1rem;
     }
 
     .svc-row-left {
         grid-column: 1 / -1;
+    }
+
+    .svc-row-right {
+        padding: 0;
+        padding-right: 0.35rem;
+    }
+
+    .svc-row-arrow {
+        align-self: center;
     }
 }
 
@@ -1311,18 +1402,27 @@ main:has(.idx-hero-v2) {
     gap: 1.25rem;
 }
 
-/* Index projects — ≥1245: grid row; 701–1244: stacked; ≤700: horizontal scroll */
-@media (min-width: 701px) and (max-width: 1244px) {
-    .idx-section--projects .idx-scroll-row {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-    }
+/* Index projects — always inline horizontal scroll */
+.idx-section--projects .idx-scroll-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-top: 0.35rem;
+    padding-bottom: 0.75rem;
+    gap: 1.25rem;
+}
 
-    .idx-section--projects .idx-scroll-row > .proj-card {
-        min-width: 0;
-        width: 100%;
-    }
+.idx-section--projects .idx-scroll-row::-webkit-scrollbar {
+    display: none;
+}
+
+.idx-section--projects .idx-scroll-row > .proj-card {
+    flex: 0 0 min(340px, 72vw);
+    min-width: 280px;
+    scroll-snap-align: start;
+    height: auto;
 }
 
 @media (max-width: 700px) {
@@ -1332,7 +1432,8 @@ main:has(.idx-hero-v2) {
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding-bottom: 0.5rem;
+        padding-top: 0.35rem;
+        padding-bottom: 0.75rem;
     }
 
     .idx-scroll-row::-webkit-scrollbar { display: none; }
@@ -1342,6 +1443,11 @@ main:has(.idx-hero-v2) {
         min-width: 250px;
         scroll-snap-align: start;
         height: auto;
+    }
+
+    .idx-section--projects .idx-scroll-row > .proj-card {
+        flex: 0 0 max(250px, 55vw);
+        min-width: 250px;
     }
 }
 

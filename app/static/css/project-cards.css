@@ -4,6 +4,13 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.75rem;
+}
+
+.idx-scroll-row:has(> .proj-card) {
+    padding-top: 0.35rem;
+    padding-bottom: 0.75rem;
 }
 
 .idx-scroll-row .proj-card {
@@ -116,6 +123,16 @@
     user-select: none;
 }
 
+.proj-card-cover .proj-status {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
 .proj-card-body {
     display: flex;
     flex-direction: column;
@@ -123,13 +140,6 @@
     padding: 1.15rem 1.25rem 1.2rem;
     min-width: 0;
     flex: 1;
-}
-
-.proj-card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
 }
 
 .proj-status {
@@ -162,13 +172,6 @@
     background: var(--c-background-gray);
 }
 
-.proj-meta-item {
-    font-family: "Geist Mono", monospace;
-    font-size: 0.62rem;
-    color: var(--c-text-tertiary);
-    letter-spacing: 0.04em;
-}
-
 .proj-card-title {
     font-size: clamp(1rem, 2vw, 1.2rem);
     font-weight: 700;
@@ -182,10 +185,10 @@
     font-size: 0.84rem;
     line-height: 1.6;
     margin: 0;
-    max-height: calc(1.6em * 3);
+    max-height: calc(1.6em * 2);
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -193,20 +196,42 @@
 
 .proj-tech {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 0.35rem;
+    flex-wrap: nowrap;
+    min-width: 0;
     margin-top: 0.15rem;
 }
 
-.proj-tech span {
+.proj-tech-tags {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: visible;
+}
+
+.proj-tech-tags span,
+.proj-tech-more {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
     font-family: "Geist Mono", monospace;
     font-size: 0.58rem;
+    line-height: 1;
     letter-spacing: 0.03em;
-    padding: 0.18rem 0.45rem;
+    padding: 0.22rem 0.45rem;
     border-radius: 3px;
     border: 1px solid var(--c-border);
     color: var(--c-text-tertiary);
     background: var(--c-background-gray);
+}
+
+.proj-tech-more {
+    flex: 0 0 auto;
 }
 
 .proj-card-foot {

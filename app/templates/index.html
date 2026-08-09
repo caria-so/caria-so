@@ -124,17 +124,16 @@
         <div class="svc-header-grid">
             <div class="sec-header">
                 <span class="eyebrow">Services</span>
-                <h2 class="txt-xbold">Research & <br> Development Services</h2>
+                <h2 class="txt-xbold">Research &amp;<br>Development Services</h2>
             </div>
 
             <p class="svc-intro">
-                The problem is always the same: complex information that people
-                can't use well enough. Sometimes that's a researcher drowning in
-                literature. Sometimes it's a checkout flow losing customers.
-                Sometimes it's an organization sitting on data nobody can find.
+                <strong class="svc-intro-lead">Complex information people can't use well enough.</strong>
+                That's a researcher drowning in literature, a checkout flow losing customers,
+                or an organization sitting on data nobody can find. I help with all three.
             </p>
         </div>
- 
+
          <div class="svc-rows">
              <a href="{{ url_for('blog.projects') }}" class="svc-row" style="--svc-color: var(--hatch-ecommerce);">
                  <div class="svc-row-left">
@@ -185,9 +184,33 @@
              </a>
          </div>
      </div>
+
+     {# ════════════════════════════════════
+        INDUSTRIES
+        ════════════════════════════════════ #}
+
+     <div class="idx-section-inner svc-industries">
+        <div class="idx-section-header centered">
+            <span class="txt-mono txt-xsmall uppercase hiw-muted">Sectors</span>
+            <h2 class="txt-xbold">Industries I Specialize In</h2>
+        </div>
+        <div class="industry-tags-container">
+            <span class="industry-badge"><i class="ph ph-storefront"></i> D2C E-Commerce</span>
+            <span class="industry-badge"><i class="ph ph-buildings"></i> B2B E-Commerce</span>
+            <span class="industry-badge"><i class="ph ph-shopping-cart"></i> Marketplaces</span>
+            <span class="industry-badge"><i class="ph ph-package"></i> Retail & Fashion</span>
+            <span class="industry-badge"><i class="ph ph-flask"></i> Health & Beauty</span>
+            <span class="industry-badge"><i class="ph ph-book-open"></i> Digital Products & SaaS</span>
+            <span class="industry-badge"><i class="ph ph-device-mobile"></i> Food & Beverage</span>
+            <span class="industry-badge"><i class="ph ph-house-line"></i> Home & Furniture</span>
+            <span class="industry-badge"><i class="ph ph-graduation-cap"></i> Education & Learning</span>
+            <span class="industry-badge"><i class="ph ph-suitcase-rolling"></i> Travel & Accommodations</span>
+            <span class="industry-badge"><i class="ph ph-asclepius"></i> Healthcare & Wellness</span>
+        </div>
+    </div>
+
  </section>
-
-
+ 
 
 {# ════════════════════════════════════
     PROJECTS (THE LAB)
@@ -283,8 +306,8 @@
                 </div>
                 <div class="rx-credential" style="border-color: var(--hatch-ai);">
                     <div class="rx-credential-year">2024 — present</div>
-                    <div class="rx-credential-text">Impossible Papers</div>
-                    <div class="rx-credential-org">Multi-agent scientific discovery</div>
+                    <div class="rx-credential-text">Caria.so</div>
+                    <div class="rx-credential-org">Research and development Services</div>
                 </div>
 
                 <a href="{{ url_for('blog.about') }}" class="rx-ip-link" style="margin-top: 0.5rem;">

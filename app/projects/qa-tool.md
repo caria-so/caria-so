@@ -2,7 +2,7 @@
 title: Benchmark QA Tool
 summary: Turned a 3-day manual QA process into a 20-minute automated workflow for e-commerce UX datasets — built iteratively from Colab scripts to a full Flask application.
 date: 2024-02-24
-status: live
+status: internal product
 role: Solo developer
 client: Baymard Institute
 image: /static/assets/images/projects/qa_tool/desktop_cover.png

@@ -184,7 +184,75 @@
 		}
 
 		initMediaLoad(document);
+		initProjTechRows(document);
 	});
+
+	function initProjTechRows(root) {
+		root.querySelectorAll('.proj-tech').forEach(function (row) {
+			if (row.dataset.techBound) return;
+			row.dataset.techBound = '1';
+
+			var tagsWrap = row.querySelector('.proj-tech-tags');
+			var more = row.querySelector('.proj-tech-more');
+			if (!tagsWrap || !more) return;
+
+			var tags = Array.from(tagsWrap.children);
+
+			function layout() {
+				var rowWidth = row.clientWidth;
+				if (!rowWidth) return;
+
+				tags.forEach(function (tag) { tag.style.display = ''; });
+				more.style.display = 'none';
+				more.textContent = '';
+
+				var gap = parseFloat(getComputedStyle(row).gap) || 4;
+				more.textContent = '+99';
+				more.style.display = 'inline-flex';
+				var moreWidth = more.offsetWidth;
+				more.style.display = 'none';
+				more.textContent = '';
+
+				var used = 0;
+				var visible = 0;
+
+				for (var i = 0; i < tags.length; i++) {
+					var tagWidth = tags[i].offsetWidth;
+					var gapBefore = visible > 0 ? gap : 0;
+					var hiddenCount = tags.length - (visible + 1);
+					var reserveMore = hiddenCount > 0 ? moreWidth + gap : 0;
+
+					if (used + gapBefore + tagWidth + reserveMore > rowWidth) break;
+
+					used += gapBefore + tagWidth;
+					visible += 1;
+				}
+
+				if (visible < tags.length) {
+					tags.forEach(function (tag, index) {
+						tag.style.display = index < visible ? '' : 'none';
+					});
+					more.textContent = '+' + (tags.length - visible);
+					more.style.display = 'inline-flex';
+				}
+			}
+
+			var scheduleLayout = function () {
+				requestAnimationFrame(function () {
+					requestAnimationFrame(layout);
+				});
+			};
+
+			scheduleLayout();
+			if (typeof ResizeObserver !== 'undefined') {
+				new ResizeObserver(scheduleLayout).observe(row);
+			}
+			if (document.fonts && document.fonts.ready) {
+				document.fonts.ready.then(scheduleLayout);
+			}
+			window.addEventListener('load', scheduleLayout, { once: true });
+		});
+	}
 
 	function initMediaLoad(root) {
 		root.querySelectorAll('.media-load img').forEach(function (img) {

@@ -29,8 +29,8 @@ sections:
   - type: text
     title: The Problem
     content: |
-      <p>Independent bookshops run on WooCommerce but their catalogs are a disaster. Every new book means five minutes of manual data entry — publisher, year, page count, subjects, description, cover image — copy-pasted from wherever Google leads.</p>
-      <p>Libreria Rotondi in Rome has 18,000 published products with significant data gaps. 2,545 items filed under "Senza categoria." A category tree 280 nodes deep with no consistency. Adding a shelf of fifty new books is a full day gone.</p>
+      <p>Independent bookshops run on WooCommerce but their catalogs are a drama. Every new book means five minutes of manual data entry — publisher, year, page count, subjects, description, cover image — copy-pasted from wherever Google leads.</p>
+      <p>Libreria Rotondi in Rome has circa 20,000 published products with significant data gaps. 2,545 items filed under "Senza categoria." Author names inconsistent, many items with no image, no description, no sku. A category tree 280 nodes deep with no consistency. Adding a shelf of fifty new books is a full day gone.</p>
 
   # ── 2. METRICS ──
   - type: metrics-pills
@@ -56,8 +56,9 @@ sections:
   - type: split
     title: Works in the Shop
     content: |
-      <p>A mobile barcode scanner that works on an iPhone in a dimly lit bookshop is harder than it sounds. The solution: auto-zoom at 3.7×, capture-and-crop to the barcode area, server-side multi-pass decoding via pyzbar with grayscale, sharpen, and contrast enhancement. If the camera can see it, pyzbar reads it.</p>
-      <p>For counter setups, a standard laser scanner gun works natively — it emulates a keyboard, types the ISBN, hits Enter. Scan, beep, next book.</p>
+      <p>A mobile barcode scanner that works on any smartphone: auto-zoom at 3.7×, capture-and-crop to the barcode area, server-side multi-pass decoding via pyzbar with grayscale, sharpen, and contrast enhancement. If the camera can see it, pyzbar reads it.</p>
+      <p>For counter setups, a standard laser scanner gun works natively — it emulates a keyboard, types the ISBN, hits Enter. Scan, beep, next book.</p> 
+      <p>Multiple scans can be triggered by csv list or simply by typing isbn codes in a custom field. </p>
     image: /static/assets/images/projects/bookshelf/mobile_scan.png
     reverse: true
 
@@ -81,7 +82,7 @@ sections:
   - type: split
     title: Multi-Store, Profile-Driven
     content: |
-      <p>Every bookshop organizes differently. Rotondi uses a custom <code>autore</code> taxonomy with 11,000+ entries and a dozen <code>libro_*</code> meta keys. Another shop might use WooCommerce attributes, tags, or completely different field names.</p>
+      <p>Every bookshop organizes differently. My customer uses a custom <code>autore</code> taxonomy with 11,000+ entries and a dozen <code>libro_*</code> meta keys. Another shop might use WooCommerce attributes, tags, or completely different field names.</p>
       <p>Nothing is hardcoded. A JSON profile defines how each field maps to the store — native field, meta key, taxonomy term, or skip. Adding a new store means writing one JSON file. The metadata aggregation layer is designed to serve any application that needs bibliographic intelligence.</p>
     image: /static/assets/images/projects/bookshelf/mapping.png
     reverse: false
@@ -91,6 +92,8 @@ sections:
   - type: callout
     title: Built With a Real Shop
     content: |
-      <p>Every feature was tested on real hardware with real data — iPhone 14 in the shop, laser scanner at the counter, 18,000 products with real data gaps. Libreria Rotondi is an esoteric bookshop with one of the largest collections of occult, hermetic, and Eastern philosophy titles in Italy. If it works here, it works anywhere.</p>
-      <p>Bookshelf is in pilot with independent bookshops on board. If you run an online store and spend too much time on catalog data entry — <a href="#" data-contact-trigger>get in touch</a>.</p>
+      <p>Bookshelf is in pilot with independent bookshops on board. If you run an online store and spend too much time on catalog data entry, we can fix it.</p>
+      <p>
+        <a href="#" data-contact-trigger>get in touch</a>
+      </p>
 ---
