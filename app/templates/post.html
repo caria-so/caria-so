@@ -13,10 +13,11 @@
 
 <div class="post-body">
     <div class="post-content-wrapper">
+        {% if post.image %}{% set post_cover = media_variants(post.image) %}{% endif %}
         <header class="post-header {% if post.image %}post-header--cover{% else %}lr-pattern-noise{% endif %} flex vertical gap-m"
-                {% if post.image %}style="--post-cover-image: url('{{ post.image }}'); --post-header-accent: var(--{{ post.thread_color or 'hatch-neutral' }});"{% endif %}>
+                {% if post.image %}style="--post-cover-image: url('{{ post_cover.webp or post_cover.src }}'); --post-header-accent: var(--{{ post.thread_color or 'hatch-neutral' }});"{% endif %}>
             {% if post.image %}
-            <div class="post-header-cover" aria-hidden="true"></div>
+            <div class="post-header-cover media-load-bg" aria-hidden="true" data-cover-src="{{ post_cover.webp or post_cover.src }}"></div>
             <div class="post-header-overlay" aria-hidden="true"></div>
             {% endif %}
             <div class="post-header-inner flex vertical gap-m">

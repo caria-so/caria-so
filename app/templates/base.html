@@ -182,7 +182,36 @@
 				themeToggle.className = 'ph ph-sun';
 			}
 		}
+
+		initMediaLoad(document);
 	});
+
+	function initMediaLoad(root) {
+		root.querySelectorAll('.media-load img').forEach(function (img) {
+			var wrap = img.closest('.media-load');
+			if (!wrap || wrap.dataset.mediaBound) return;
+			wrap.dataset.mediaBound = '1';
+			var done = function () { wrap.classList.add('is-loaded'); };
+			if (img.complete && img.naturalWidth > 0) done();
+			else {
+				img.addEventListener('load', done, { once: true });
+				img.addEventListener('error', done, { once: true });
+			}
+		});
+
+		root.querySelectorAll('.media-load-bg[data-cover-src]').forEach(function (el) {
+			if (el.dataset.mediaBound) return;
+			el.dataset.mediaBound = '1';
+			var src = el.getAttribute('data-cover-src');
+			if (!src) {
+				el.classList.add('is-loaded');
+				return;
+			}
+			var preload = new Image();
+			preload.onload = preload.onerror = function () { el.classList.add('is-loaded'); };
+			preload.src = src;
+		});
+	}
 </script>
 
 </body>

@@ -145,7 +145,19 @@
     background: var(--c-background-gray);
 }
 
-.proj-cover-img img {
+.proj-cover-img .media-load {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+}
+
+.proj-cover-img .media-load picture,
+.proj-cover-img .media-load img {
+    width: 100%;
+    height: 100%;
+}
+
+.proj-cover-photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -292,6 +304,10 @@
     width: 100%;
     height: auto;
     display: block;
+}
+
+.proj-media-frame.media-load {
+    min-height: 120px;
 }
 
 .proj-caption {

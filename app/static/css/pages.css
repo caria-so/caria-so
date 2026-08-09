@@ -160,6 +160,12 @@
     pointer-events: none;
 }
 
+.rx-contact-art .media-load {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
 .rx-contact-art img {
     display: block;
     width: 100%;

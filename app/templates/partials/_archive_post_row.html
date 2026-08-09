@@ -1,10 +1,11 @@
+{% from 'partials/_media_picture.html' import picture %}
 {% set post_accent = 'var(--' ~ (post.thread_color or 'hatch-neutral') ~ ')' %}
 <article class="arc-post" style="--post-accent: {{ post_accent }};">
     <a href="{{ url_for('blog.post_detail', slug=post.slug) }}"
        class="arc-post-visual"
        aria-label="{{ post.title }}">
         {% if post.image %}
-        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+        {{ picture(post.image, post.title, 'arc-post-cover', 'lazy', '', 'media-load media-load--arc') }}
         {% else %}
         <span class="arc-post-placeholder">{{ '%02d' | format(card_index|default(1)) }}</span>
         {% endif %}

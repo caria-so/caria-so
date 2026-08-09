@@ -1,0 +1,26 @@
+{% macro picture(src, alt='', img_class='', loading='lazy', mobile_src='', wrap_class='') %}
+{% if src %}
+{% set primary = media_variants(src) %}
+{% set mobile = media_variants(mobile_src) if mobile_src else none %}
+<span class="media-load{% if wrap_class %} {{ wrap_class }}{% endif %}">
+    <picture>
+        {% if mobile_src and mobile.webp %}
+        <source media="(max-width: 700px)" srcset="{{ mobile.webp }}" type="image/webp">
+        {% endif %}
+        {% if mobile_src %}
+        <source media="(max-width: 700px)" srcset="{{ mobile.src }}">
+        {% endif %}
+        {% if primary.webp %}
+        <source srcset="{{ primary.webp }}" type="image/webp">
+        {% endif %}
+        <img
+            src="{{ primary.src }}"
+            alt="{{ alt }}"
+            {% if img_class %}class="{{ img_class }}"{% endif %}
+            loading="{{ loading }}"
+            decoding="async"
+        >
+    </picture>
+</span>
+{% endif %}
+{% endmacro %}

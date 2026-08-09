@@ -2014,6 +2014,63 @@ header.contact-modal__header {
 
 
 /* ────────────────────────────────────────
+   MEDIA LOAD — shimmer placeholder
+   ──────────────────────────────────────── */
+
+.media-load {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      110deg,
+      var(--c-background-gray) 0%,
+      color-mix(in srgb, var(--c-border) 55%, var(--c-background-gray)) 45%,
+      color-mix(in srgb, var(--c-border) 70%, var(--c-background-gray)) 50%,
+      color-mix(in srgb, var(--c-border) 55%, var(--c-background-gray)) 55%,
+      var(--c-background-gray) 100%
+    );
+  background-size: 220% 100%;
+  animation: media-shimmer 1.4s ease-in-out infinite;
+}
+
+.media-load picture {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.media-load img {
+  display: block;
+  max-width: 100%;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.media-load.is-loaded {
+  animation: none;
+  background: transparent;
+}
+
+.media-load.is-loaded img {
+  opacity: 1;
+}
+
+.media-load-bg {
+  animation: media-shimmer 1.4s ease-in-out infinite;
+}
+
+.media-load-bg.is-loaded {
+  animation: none;
+}
+
+@keyframes media-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+/* ────────────────────────────────────────
    REDUCED MOTION
    ──────────────────────────────────────── */
 

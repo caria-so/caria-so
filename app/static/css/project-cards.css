@@ -45,6 +45,36 @@
     border-radius: 10px;
 }
 
+.proj-card-cover .media-load--cover {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+}
+
+.proj-card-cover .media-load--cover picture {
+    display: contents;
+}
+
+.proj-cover-duo-img {
+    max-height: calc(100% - 1.5rem);
+    max-width: 68%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 4px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+    transition: transform 0.4s ease;
+    z-index: 1;
+}
+
+.proj-card:hover .proj-cover-duo-img {
+    transform: translateX(-3px);
+}
+
 .proj-cover-single {
     max-width: calc(100% - 2.5rem);
     max-height: calc(100% - 2rem);
@@ -68,38 +98,9 @@
     gap: 0;
 }
 
-.proj-cover-desktop {
-    max-height: calc(100% - 1.5rem);
-    max-width: 68%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 4px;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
-    transition: transform 0.4s ease;
-    z-index: 1;
-}
-
-.proj-cover-mobile {
-    max-height: calc(100% - 1rem);
-    max-width: 18%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    margin-left: -12%;
-    border-radius: 6px;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
-    transition: transform 0.4s ease;
-    z-index: 2;
-}
-
-.proj-card:hover .proj-cover-desktop {
-    transform: translateX(-3px);
-}
-
-.proj-card:hover .proj-cover-mobile {
-    transform: translateY(-4px);
+.proj-card-cover--duo .media-load--cover {
+    background: transparent;
+    animation: none;
 }
 
 .proj-card-cover--empty {
@@ -314,19 +315,11 @@
         margin-inline: auto;
     }
 
-    .proj-cover-desktop {
-        max-width: 58%;
+    .proj-cover-duo-img {
+        max-width: 78%;
         max-height: 100%;
         width: auto;
         height: auto;
-        margin-inline: 0;
-    }
-
-    .proj-cover-mobile {
-        max-width: 34%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        margin-left: 0;
+        margin-inline: auto;
     }
 }

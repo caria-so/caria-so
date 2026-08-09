@@ -9,6 +9,7 @@
 {% block title %}{{ project.title }} — Federico Caria{% endblock %}
 
 {% block content %}
+{% from 'partials/_media_picture.html' import picture %}
 
 <div class="proj-page" style="--proj-accent: var(--{{ project.accent or 'hatch-neutral' }});">
 
@@ -89,7 +90,7 @@
     {% if project.image %}
     <div class="proj-cover">
         <div class="proj-cover-img">
-            <img src="{{ project.image }}" alt="{{ project.title }}">
+            {{ picture(project.image, project.title, 'proj-cover-photo', 'eager', '', 'media-load media-load--hero') }}
         </div>
     </div>
     {% endif %}
@@ -130,7 +131,7 @@
                     {% if section.image %}
                     <div class="proj-split-media">
                         <div class="proj-media-frame glass-panel">
-                            <img src="{{ section.image }}" alt="{{ section.title or '' }}">
+                            {{ picture(section.image, section.title or '', '', 'lazy', '', 'media-load') }}
                         </div>
                     </div>
                     {% endif %}
@@ -143,7 +144,7 @@
                     <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
                     {% endif %}
                     <div class="proj-media-frame glass-panel">
-                        <img src="{{ section.image }}" alt="{{ section.title or '' }}">
+                        {{ picture(section.image, section.title or '', '', 'lazy', '', 'media-load') }}
                     </div>
                 </div>
 
@@ -206,7 +207,7 @@
                     <div class="proj-gallery-grid">
                         {% for img in section.images %}
                         <div class="proj-media-frame glass-panel">
-                            <img src="{{ img.src }}" alt="{{ img.alt or '' }}">
+                            {{ picture(img.src, img.alt or '', '', 'lazy', '', 'media-load') }}
                         </div>
                         {% endfor %}
                     </div>

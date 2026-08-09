@@ -1,12 +1,8 @@
+{% from 'partials/_media_picture.html' import picture %}
 <section class="rx-contact">
     <div class="sec-inner rx-contact-inner rx-contact-inner--visual">
         <figure class="rx-contact-art" aria-hidden="true">
-            <img
-                src="{{ url_for('static', filename='assets/images/home/knowbridge.png') }}"
-                alt=""
-                loading="lazy"
-                decoding="async"
-            >
+            {{ picture('/static/assets/images/home/knowbridge.png', '', '', 'lazy', '', 'media-load media-load--hero') }}
         </figure>
         <div class="rx-contact-body">
             <span class="eyebrow">Collaborate</span>

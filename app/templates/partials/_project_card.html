@@ -1,3 +1,4 @@
+{% from 'partials/_media_picture.html' import picture %}
 {% set accent = project.accent or 'hatch-neutral' %}
 {% set status = (project.status or 'completed') | lower | replace(' ', '_') %}
 {% set live_url = project.live_link or project.demo_link %}
@@ -7,10 +8,9 @@
        class="proj-card-cover{% if has_duo %} proj-card-cover--duo{% endif %}{% if not project.cover_url %} proj-card-cover--empty{% endif %}"
        aria-label="{{ project.title }}">
         {% if has_duo %}
-        <img class="proj-cover-desktop" src="{{ project.cover_desktop }}" alt="{{ project.title }} — desktop" loading="lazy">
-        <img class="proj-cover-mobile" src="{{ project.cover_mobile }}" alt="{{ project.title }} — mobile" loading="lazy">
+        {{ picture(project.cover_desktop, project.title ~ ' — preview', 'proj-cover-duo-img', 'lazy', project.cover_mobile, 'media-load--cover') }}
         {% elif project.cover_url %}
-        <img class="proj-cover-single" src="{{ project.cover_url }}" alt="{{ project.title }}" loading="lazy">
+        {{ picture(project.cover_url, project.title, 'proj-cover-single', 'lazy', '', 'media-load--cover') }}
         {% else %}
         <span class="proj-cover-placeholder">{{ '%02d' | format(card_index|default(1)) }}</span>
         {% endif %}

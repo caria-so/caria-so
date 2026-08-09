@@ -50,4 +50,17 @@ def create_app():
     def page_not_found(e):
         return render_template('404.html'), 404
 
+    @app.context_processor
+    def inject_media_helpers():
+        from app.media import media_variants
+        return {'media_variants': media_variants}
+
+    @app.after_request
+    def static_cache_headers(response):
+        from flask import request
+        if request.path.startswith('/static/'):
+            response.cache_control.max_age = 31536000
+            response.cache_control.public = True
+        return response
+
     return app

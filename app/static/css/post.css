@@ -75,10 +75,17 @@
 .post-header--cover .post-header-cover {
     position: absolute;
     inset: 0;
-    background-image: var(--post-cover-image);
     background-size: cover;
     background-position: center;
     transform: scale(1.03);
+}
+
+.post-header--cover .post-header-cover.media-load-bg {
+    background-image: none;
+}
+
+.post-header--cover .post-header-cover.media-load-bg.is-loaded {
+    background-image: var(--post-cover-image);
 }
 
 .post-header--cover .post-header-overlay {
