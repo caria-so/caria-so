@@ -1,6 +1,6 @@
 ---
 title: "Anti-sycophancy Pattern × Domain Mapping"
-thread: ux
+thread: product
 keywords: [HCI, AI tooling, no-syncophancy]
 author: "Federico Caria"
 date: "2025-06-01"

@@ -368,7 +368,7 @@ main:has(.idx-hero-v2) {
     padding: 1.25rem var(--page-gutter) 1.5rem;
     --hatch-color: var(--hatch-ecommerce);
     --pattern-opacity: 0.28;
-    background: color-mix(in srgb, var(--c-background-gray) 76%, transparent);
+    background: color-mix(in srgb, var(--c-background-gray) 30%, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -511,9 +511,10 @@ main:has(.idx-hero-v2) {
 .idx-section--projects {
     --hatch-color: var(--hatch-libraries);
     --pattern-opacity: 0.3;
-    background:
+    /* background:
         radial-gradient(ellipse 70% 50% at 100% 0%, color-mix(in srgb, var(--hatch-libraries) 6%, transparent), transparent 60%),
-        var(--c-background);
+        var(--c-background); */
+    background-color: var(--c-background-gray);
 }
 
 .idx-section--stack {
