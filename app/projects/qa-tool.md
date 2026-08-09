@@ -5,6 +5,8 @@ date: 2024-02-24
 status: internal product
 role: Solo developer
 client: Baymard Institute
+services:
+  - product
 image: /static/assets/images/projects/qa_tool/desktop_cover.png
 desktop_cover: /static/assets/images/projects/qa_tool/desktop_cover.png
 mobile_cover:

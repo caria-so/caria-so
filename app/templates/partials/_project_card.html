@@ -3,7 +3,7 @@
 {% set status = (project.status or 'completed') | lower | replace(' ', '_') %}
 {% set live_url = project.live_link or project.demo_link %}
 {% set has_duo = project.cover_desktop and project.cover_mobile %}
-<article class="proj-card" style="--proj-accent: var(--{{ accent }});">
+<article class="proj-card"{% if project.services %} data-services="{{ project.services | join(' ') }}"{% endif %} style="--proj-accent: var(--{{ accent }});">
     <a href="{{ url_for('blog.project_detail', slug=project.slug) }}"
        class="proj-card-cover{% if has_duo %} proj-card-cover--duo{% endif %}{% if not project.cover_url %} proj-card-cover--empty{% endif %}"
        aria-label="{{ project.title }}">

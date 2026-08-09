@@ -5,6 +5,10 @@ status: internal product
 date: 2025-present
 role: Solo developer
 client: Internal product
+services:
+  - product
+  - pipelines
+  - knowledge
 image: /static/assets/images/projects/flowws-mcp/desktop_cover.png
 technologies:
   - Python

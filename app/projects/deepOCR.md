@@ -5,6 +5,9 @@ status: in_development
 date: 2025-present
 role: Solo developer
 client: Internal product
+services:
+  - pipelines
+  - development
 image: /static/assets/images/projects/deepocr/desktop_cover.png
 desktop_cover: /static/assets/images/projects/deepocr/desktop_cover.png
 mobile_cover:

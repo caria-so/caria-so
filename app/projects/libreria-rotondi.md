@@ -5,6 +5,9 @@ status: live
 date: 2024–present
 role: Solo developer
 client: Libreria Rotondi
+services:
+  - product
+  - development
 desktop_cover: /static/assets/images/projects/libreria_rotondi/desktop_cover.png
 mobile_cover: 
 pattern: lr-pattern-dots

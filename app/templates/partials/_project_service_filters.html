@@ -1,0 +1,36 @@
+{# Requires project_services (injected globally). Set client_filter=true for in-page filtering. #}
+{% if project_services %}
+<nav class="proj-service-filters{% if client_filter %} proj-service-filters--client{% endif %}"
+     aria-label="Filter projects by service"
+     {% if client_filter %}data-client-filter{% endif %}>
+    {% if client_filter %}
+    <button type="button"
+            class="proj-service-filter proj-service-filter--all is-active"
+            data-service=""
+            aria-pressed="true">
+        All
+    </button>
+    {% for slug, svc in project_services.items() %}
+    <button type="button"
+            class="proj-service-filter"
+            data-service="{{ slug }}"
+            aria-pressed="false"
+            style="--filter-color: var(--{{ svc.color }});">
+        {{ svc.label }}
+    </button>
+    {% endfor %}
+    {% else %}
+    <a href="{{ url_for('blog.projects') }}"
+       class="proj-service-filter proj-service-filter--all{% if not current_service and not highlight_services %} is-active{% endif %}">
+        All
+    </a>
+    {% for slug, svc in project_services.items() %}
+    <a href="{{ url_for('blog.projects', service=slug) }}"
+       class="proj-service-filter{% if current_service == slug or slug in (highlight_services or []) %} is-active{% endif %}"
+       style="--filter-color: var(--{{ svc.color }});">
+        {{ svc.label }}
+    </a>
+    {% endfor %}
+    {% endif %}
+</nav>
+{% endif %}

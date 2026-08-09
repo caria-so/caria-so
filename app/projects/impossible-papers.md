@@ -5,6 +5,9 @@ status: in_development
 date: 2025–present
 role: Solo developer
 client: Personal research
+services:
+  - pipelines
+  - knowledge
 image: /static/images/projects/impossible-papers-cover.jpg
 technologies:
   - Python

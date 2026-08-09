@@ -187,6 +187,8 @@
 		initProjTechRows(document);
 	});
 
+	window.initProjTechRows = initProjTechRows;
+
 	function initProjTechRows(root) {
 		root.querySelectorAll('.proj-tech').forEach(function (row) {
 			if (row.dataset.techBound) return;

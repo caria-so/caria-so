@@ -42,6 +42,36 @@ blog_bp = Blueprint('blog', __name__)
 POSTS_DIR = os.path.join(os.path.dirname(__file__), 'blog', 'posts')
 PROJECTS_DIR = os.path.join(os.path.dirname(__file__), 'projects')
 
+PROJECT_SERVICES = {
+    'product': {
+        'label': 'Product',
+        'title': 'Product research & audits',
+        'color': 'hatch-ecommerce',
+    },
+    'development': {
+        'label': 'Development',
+        'title': 'Prototyping & development',
+        'color': 'hatch-ux',
+    },
+    'pipelines': {
+        'label': 'Pipelines',
+        'title': 'AI & data pipelines',
+        'color': 'hatch-ai',
+    },
+    'knowledge': {
+        'label': 'Knowledge',
+        'title': 'Knowledge systems',
+        'color': 'hatch-libraries',
+    },
+}
+PROJECT_SERVICE_SLUGS = frozenset(PROJECT_SERVICES.keys())
+
+
+@blog_bp.context_processor
+def inject_project_services():
+    return {'project_services': PROJECT_SERVICES}
+
+
 LEGACY_PROJECT_SLUGS = {
     'project__bookshelf': 'bookshelf',
     'project__flowws': 'flowws',
@@ -103,6 +133,27 @@ def normalize_tags(raw):
     if isinstance(raw, str) and raw.strip():
         return [raw.strip()]
     return []
+
+
+def normalize_services(raw):
+    """Normalize project `service` / `services` frontmatter to valid service slugs."""
+    if raw is None:
+        return []
+    items = raw if isinstance(raw, list) else [raw]
+    services = []
+    for item in items:
+        if not item:
+            continue
+        slug = str(item).strip().lower().replace(' ', '_').replace('-', '_')
+        if slug in PROJECT_SERVICE_SLUGS and slug not in services:
+            services.append(slug)
+    return services
+
+
+def filter_projects_by_service(projects, service_slug):
+    if not service_slug or service_slug not in PROJECT_SERVICE_SLUGS:
+        return projects
+    return [p for p in projects if service_slug in p.get('services', [])]
 
 
 def parse_markdown_file(filepath, md):
@@ -293,6 +344,7 @@ def load_posts(directory):
                 'hover_video_device': meta.get('hover_video_device', meta.get('video_device', '')),
                 'sections': meta.get('sections', []),
                 'related_posts': meta.get('related_posts', []),
+                'services': normalize_services(meta.get('services') or meta.get('service')),
                 'body': html_content,
             })
 
@@ -784,11 +836,9 @@ def experience():
 
 @blog_bp.route('/projects')
 def projects():
-    """Projects page showing all project posts"""
-    # Load all project posts from the projects directory
+    """Projects page — all projects; service filtering is client-side."""
     projects = load_posts(PROJECTS_DIR)
 
-    # Ensure each project has all required fields
     for project in projects:
         # Ensure slug is available
         if 'slug' not in project:
@@ -812,6 +862,7 @@ def projects():
     return render_template(
         'projects.html',
         projects=projects,
+        all_projects_count=len(projects),
         tag_colors=tag_colors,
         git_commits=git_commits,
     )
@@ -842,7 +893,11 @@ def project_detail(slug):
     all_tags = sorted(set(tag for p in projects for tag in p.get('tags', [])))
     tag_colors = get_tag_colors(all_tags)
 
-    return render_template('project_detail.html', project=project, tag_colors=tag_colors)
+    return render_template(
+        'project_detail.html',
+        project=project,
+        tag_colors=tag_colors,
+    )
 
 
 @blog_bp.route('/vitriol', methods=['GET', 'POST'])

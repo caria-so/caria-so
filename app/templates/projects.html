@@ -352,13 +352,16 @@ main:has(.proj-hero) {
 
 {% block content %}
 
+<div data-proj-service-filter-root>
+<script type="application/json" id="proj-services-data">{{ project_services | tojson }}</script>
+
 <section class="idx-section proj-hero lr-pattern-noise">
     <div class="idx-section-inner">
         <div class="proj-hero-grid">
             <div class="proj-hero-copy">
-                <span class="proj-hero-eyebrow">Projects</span>
-                <h1 class="proj-hero-title">What I Build</h1>
-                <p class="proj-hero-body">
+                <span class="proj-hero-eyebrow" id="proj-hero-eyebrow" data-default-text="Projects">Projects</span>
+                <h1 class="proj-hero-title" id="proj-hero-title" data-default-text="What I Build">What I Build</h1>
+                <p class="proj-hero-body" id="proj-hero-body" data-default-text="End to end — problem, constraints, stack, what actually worked. Each project is the full story, not a portfolio gloss.">
                     End to end — problem, constraints, stack, what actually worked.
                     Each project is the full story, not a portfolio gloss.
                 </p>
@@ -378,6 +381,10 @@ main:has(.proj-hero) {
 
 <section class="idx-section">
     <div class="idx-section-inner">
+        {% with client_filter=true %}
+        {% include 'partials/_project_service_filters.html' %}
+        {% endwith %}
+
         <div class="proj-list">
             {% for project in projects %}
             {% with card_index=loop.index %}
@@ -389,8 +396,16 @@ main:has(.proj-hero) {
             </div>
             {% endfor %}
         </div>
+
+        <div class="proj-empty proj-empty--filter" hidden>
+            <p>No projects tagged under <span id="proj-empty-service-label">this service</span> yet.</p>
+            <button type="button" class="proj-service-filter proj-service-filter--all" data-service="">View all projects</button>
+        </div>
     </div>
 </section>
+</div>
+
+<script src="{{ url_for('static', filename='js/proj_service_filter.js') }}"></script>
 
 
 {# ════════════════════════════════════

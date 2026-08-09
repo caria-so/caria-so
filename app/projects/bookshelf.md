@@ -5,6 +5,9 @@ status: live
 date: 2025-present
 role: Solo developer
 client: Libreria Rotondi, Rome
+services:
+  - development
+  - knowledge
 image: /static/assets/images/projects/bookshelf/desktop_cover.png
 pattern: lr-pattern-dots
 technologies:

@@ -28,6 +28,10 @@
     height: 100%;
 }
 
+.proj-card.is-filtered-out {
+    display: none !important;
+}
+
 .proj-card:hover {
     border-color: color-mix(in srgb, var(--proj-accent, var(--hatch-neutral)) 40%, var(--c-border));
     box-shadow: 0 8px 28px color-mix(in srgb, var(--proj-accent, var(--hatch-neutral)) 10%, transparent);
@@ -292,6 +296,63 @@
     text-align: center;
     padding: 4rem 0;
     color: var(--c-text-secondary);
+}
+
+/* Project list — service filter pills */
+.proj-service-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.proj-page .proj-service-filters {
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.proj-service-filter {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--c-border);
+    background: var(--c-background);
+    color: var(--c-text-secondary);
+    font-family: "Geist Mono", monospace;
+    font-size: 0.765rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.proj-service-filter:hover {
+    border-color: color-mix(in srgb, var(--filter-color, var(--hatch-neutral)) 35%, var(--c-border));
+    color: var(--c-text-primary);
+}
+
+.proj-service-filter.is-active {
+    border-color: color-mix(in srgb, var(--filter-color, var(--hatch-neutral)) 45%, var(--c-border));
+    background: color-mix(in srgb, var(--filter-color, var(--hatch-neutral)) 8%, var(--c-background));
+    color: var(--c-text-primary);
+}
+
+.proj-service-filter--all {
+    --filter-color: var(--hatch-neutral);
+}
+
+.proj-service-filters--client .proj-service-filter {
+    cursor: pointer;
+    /* font: inherit; */
+}
+
+.proj-empty--filter {
+    margin-top: 1rem;
+}
+
+.proj-empty--filter .proj-service-filter {
+    margin-top: 0.75rem;
 }
 
 @media (max-width: 1100px) and (min-width: 701px) {

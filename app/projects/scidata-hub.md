@@ -5,6 +5,9 @@ status: live
 date: 2025-present
 role: Solo developer
 client: Impossible Papers
+services:
+  - pipelines
+  - knowledge
 image: /static/assets/images/projects/scidata-hub/desktop_cover.png
 pattern: lr-pattern-dots
 technologies:
