@@ -250,7 +250,7 @@
         {% if project.related_posts %}
         <div class="proj-related">
             <h4 class="txt-mono txt-xsmall uppercase hiw-muted">Related Writing</h4>
-            <div class="proj-related-links">
+            <div class="proj-related-links idx-scroll-row">
                 {% for post in project.related_posts %}
                 <a href="{{ url_for('blog.post_detail', slug=post.slug) }}" class="proj-related-link">
                     {{ post.title }} <i class="ph ph-arrow-right"></i>

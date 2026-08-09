@@ -540,3 +540,44 @@
         padding: 0.55rem 0.65rem;
     }
 }
+
+/* Related posts — horizontal scroll on narrow viewports */
+.related-posts {
+    overflow-x: clip;
+}
+
+.related-posts-row {
+    align-items: stretch;
+}
+
+.related-posts-row .project-card {
+    height: 100%;
+    min-width: 0;
+}
+
+.related-posts .summary-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    max-height: calc(1.5em * 4);
+}
+
+@media (max-width: 700px) {
+    .related-posts {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .related-posts-row.idx-scroll-row {
+        margin-inline: -0.15rem;
+        padding-inline: 0.15rem;
+    }
+
+    .related-posts-row.idx-scroll-row > .project-card {
+        flex: 0 0 min(82vw, 320px);
+        min-width: 260px;
+    }
+}
