@@ -152,9 +152,12 @@
 }
 
 .rx-contact-art {
+    --rx-art-lift: 0px;
     position: absolute;
-    inset: 0 0 auto;
-    height: clamp(11rem, 42vw, 18rem);
+    left: 0;
+    right: 0;
+    top: calc(-1 * var(--rx-art-lift));
+    height: calc(clamp(11rem, 42vw, 18rem) + var(--rx-art-lift));
     margin: 0;
     z-index: 0;
     pointer-events: none;
@@ -210,18 +213,30 @@
     color: var(--c-text-secondary);
 }
 
-@media (max-width: 600px) {
+@media (min-width: 701px) {
+    .rx-contact-art {
+        --rx-art-lift: clamp(2.5rem, 8vw, 7.5rem);
+    }
+
+    .rx-contact-body {
+        padding-top: clamp(2rem, 4vw, 2.75rem);
+    }
+}
+
+@media (max-width: 700px) {
     .rx-contact-inner--visual {
         min-height: auto;
     }
 
     .rx-contact-art {
+        --rx-art-lift: 0px;
+        top: 0;
         height: clamp(9.5rem, 38vw, 13rem);
     }
 
     .rx-contact-body {
         padding: 1.25rem 1.15rem 1.35rem;
-        padding-top: 5.35rem;
+        padding-top: 6.35rem;
     }
 }
 
@@ -1294,6 +1309,20 @@ main:has(.idx-hero-v2) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.25rem;
+}
+
+/* Index projects — ≥1245: grid row; 701–1244: stacked; ≤700: horizontal scroll */
+@media (min-width: 701px) and (max-width: 1244px) {
+    .idx-section--projects .idx-scroll-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .idx-section--projects .idx-scroll-row > .proj-card {
+        min-width: 0;
+        width: 100%;
+    }
 }
 
 @media (max-width: 700px) {

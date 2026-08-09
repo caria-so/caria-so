@@ -42,6 +42,9 @@ def create_app():
     from app.routes import blog_bp
     app.register_blueprint(blog_bp)
 
+    from app.media import media_variants
+    app.jinja_env.globals['media_variants'] = media_variants
+
     if app.config['ENABLE_PAPERS']:
         from app.papers_db import init_reviews_db
         init_reviews_db()
@@ -52,7 +55,6 @@ def create_app():
 
     @app.context_processor
     def inject_media_helpers():
-        from app.media import media_variants
         return {'media_variants': media_variants}
 
     @app.after_request
