@@ -889,6 +889,13 @@ main:has(.idx-hero-v2) {
     margin-bottom: 2rem;
 }
 
+@media (max-width: 975px) {
+    .idx-section--services {
+        margin-inline: 0;
+        padding-inline: var(--page-gutter);
+    }
+}
+
 @media (max-width: 900px) {
     .svc-header-grid {
         grid-template-columns: 1fr;
@@ -906,6 +913,19 @@ main:has(.idx-hero-v2) {
 }
 
 @media (max-width: 700px) {
+    .idx-section--services {
+        padding-bottom: clamp(2rem, 8vw, 3rem);
+    }
+
+    .idx-section--services .sec-inner,
+    .idx-section--services .svc-industries {
+        padding-inline: 0;
+    }
+
+    .svc-rows {
+        border-radius: 14px;
+    }
+
     .svc-row {
         grid-template-columns: 1fr auto;
         gap: 0.65rem;
