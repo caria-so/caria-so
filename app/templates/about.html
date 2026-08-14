@@ -87,8 +87,15 @@
 .abt-hero-actions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
+}
+
+.abt-hero-social {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
 }
 
 @media (max-width: 720px) {
@@ -130,21 +137,18 @@
                 systems (Baymard Institute, Fortune 500 clients) to multi-agent AI research pipelines.
             </p>
 
-            <div class="hiw-tags about-tags">
-                <span class="hiw-tag">prototype</span>
-                <span class="hiw-tag">visualization</span>
-                <span class="hiw-tag">hci</span>
-                <span class="hiw-tag">ai</span>
-                <span class="hiw-tag">ux research</span>
-            </div>
-
-            {% if cv_available %}
             <div class="abt-hero-actions">
+                {% if cv_available %}
                 <a href="{{ cv_url }}" class="btn btn-secondary" download>
                     <i class="ph ph-file-pdf"></i> Download CV
                 </a>
+                {% endif %}
+                <div class="abt-hero-social" aria-label="Social links">
+                    <a href="https://www.linkedin.com/in/federico-caria/" class="contact-social-btn contact-social-btn--linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="ph ph-linkedin-logo"></i>
+                    </a>
+                </div>
             </div>
-            {% endif %}
         </div>
     </div>
 </section>

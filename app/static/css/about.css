@@ -10,10 +10,6 @@ main:has(.abt-hero) {
     flex-direction: column;
 }
 
-.about-tags {
-    margin-top: 1.25rem;
-}
-
 /* ── Endorsements carousel ── */
 
 .about-endorsements {

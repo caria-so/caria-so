@@ -1,6 +1,7 @@
 import logging
 import os
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 try:
     from dotenv import load_dotenv
@@ -38,6 +39,23 @@ def create_app():
 
     if is_production:
         app.logger.setLevel(logging.INFO)
+        # Render terminates TLS at its proxy and forwards the original scheme.
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
+        @app.before_request
+        def force_https():
+            # Health checks reach the app without the header and must not be
+            # redirected, so only act when the proxy reports plain HTTP.
+            if request.headers.get('X-Forwarded-Proto') == 'http':
+                return redirect(request.url.replace('http://', 'https://', 1), code=301)
+
+        @app.after_request
+        def hsts_header(response):
+            response.headers.setdefault(
+                'Strict-Transport-Security',
+                'max-age=31536000; includeSubDomains',
+            )
+            return response
 
     from app.routes import blog_bp
     app.register_blueprint(blog_bp)
@@ -59,7 +77,6 @@ def create_app():
 
     @app.after_request
     def static_cache_headers(response):
-        from flask import request
         if request.path.startswith('/static/'):
             response.cache_control.max_age = 31536000
             response.cache_control.public = True
