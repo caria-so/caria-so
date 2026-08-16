@@ -41,7 +41,7 @@
             {% endif %}
             {% if post.thread %}
             <div class="post-tags flex horizontal gap-xs wrap mt-s">
-                <a href="{{ url_for('blog.thread_detail', thread_slug=post.thread) }}"
+                <a href="{{ url_for('blog.sketchboard_thread', thread_slug=post.thread) }}"
                    class="tag-link"
                    style="--tag-accent: var(--{{ post.thread_color or 'hatch-neutral' }});">
                     {{ post.thread_title or post.thread }}

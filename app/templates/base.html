@@ -26,7 +26,7 @@
 					<div id="menu" class="nav-links">
 						<a href="{{ url_for('blog.index') }}" class="link-mono">Home</a>
 						<a href="{{ url_for('blog.projects') }}" class="link-mono">Projects</a>
-						<a href="{{ url_for('blog.archive_index') }}" class="link-mono">Archive</a>
+						<a href="{{ url_for('blog.sketchboard_index') }}" class="link-mono">Sketchboard</a>
 						<div class="nav-dropdown{% if request.endpoint == 'blog.methods_finder' %} is-active is-open{% endif %}">
 							<button
 								type="button"
@@ -50,7 +50,7 @@
 				</div>
 				<div class="nav-right flex horizontal aligncenter gap-m">  
 					<div id="search-container" class="search-container">
-						<form action="{{ url_for('blog.archive_index') }}" method="get" class="search-form">
+						<form action="{{ url_for('blog.sketchboard_index') }}" method="get" class="search-form">
 							<input type="text" name="q" placeholder="Search..." aria-label="Search">
 						</form>
 					</div>       
@@ -84,7 +84,7 @@
 				{% if config.ENABLE_PAPERS %}
 				<li><a href="{{ url_for('blog.papers_index') }}">Impossible Papers</a></li>
 				{% endif %}
-				<li><a href="{{ url_for('blog.archive_index') }}">Archive</a></li>
+				<li><a href="{{ url_for('blog.sketchboard_index') }}">Sketchboard</a></li>
 				<li><a href="{{ url_for('blog.about') }}">About</a></li>
 				<li><a href="{{ url_for('blog.projects') }}">Projects</a></li>
 				<!-- <li><a href="{{ url_for('blog.vitriol') }}">95%</a></li> -->	

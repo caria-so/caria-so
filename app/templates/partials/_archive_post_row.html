@@ -20,7 +20,7 @@
             </span>
             {% endif %}
             {% if post.thread %}
-            <a href="{{ url_for('blog.thread_detail', thread_slug=post.thread) }}"
+            <a href="{{ url_for('blog.sketchboard_thread', thread_slug=post.thread) }}"
                class="arc-post-tag"
                style="--tag-color: {{ post_accent }};">{{ post.thread_title or post.thread }}</a>
             {% endif %}

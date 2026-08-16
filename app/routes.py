@@ -706,9 +706,9 @@ def index():
                          endorsements=load_endorsements())
 
 
-@blog_bp.route('/archive')
-def archive_index():
-    """Notes board — threads with aggregated cards; optional search."""
+@blog_bp.route('/sketchboard')
+def sketchboard_index():
+    """Sketchboard — threads with aggregated cards; optional search."""
     query = request.args.get('q', '').strip().lower()
     all_notes, registry = load_notes(POSTS_DIR, parse_date_fn=parse_date)
     notes = filter_notes_by_query(all_notes, query)
@@ -731,8 +731,8 @@ def archive_index():
     )
 
 
-@blog_bp.route('/archive/thread/<thread_slug>')
-def thread_detail(thread_slug):
+@blog_bp.route('/sketchboard/thread/<thread_slug>')
+def sketchboard_thread(thread_slug):
     """Single thread column — horizontal note list."""
     query = request.args.get('q', '').strip().lower()
     all_notes, registry = load_notes(POSTS_DIR, parse_date_fn=parse_date)
@@ -761,10 +761,22 @@ def thread_detail(thread_slug):
     )
 
 
+@blog_bp.route('/archive')
+def archive_redirect():
+    """Legacy URL — redirect to sketchboard."""
+    return redirect(url_for('blog.sketchboard_index', **request.args), code=301)
+
+
+@blog_bp.route('/archive/thread/<thread_slug>')
+def archive_thread_redirect(thread_slug):
+    """Legacy thread URL — redirect to sketchboard."""
+    return redirect(url_for('blog.sketchboard_thread', thread_slug=thread_slug, **request.args), code=301)
+
+
 @blog_bp.route('/blog')
 def blog_redirect():
-    """Legacy URL — redirect to archive."""
-    return redirect(url_for('blog.archive_index', **request.args), code=301)
+    """Legacy URL — redirect to sketchboard."""
+    return redirect(url_for('blog.sketchboard_index', **request.args), code=301)
 
 
 @blog_bp.route('/post/<slug>')
@@ -794,7 +806,7 @@ def post_detail(slug):
 @blog_bp.route('/tag/<tag>')
 def tag_posts(tag):
     """Legacy tag URL — search notes by tag keyword."""
-    return redirect(url_for('blog.archive_index', q=tag.lower()), code=301)
+    return redirect(url_for('blog.sketchboard_index', q=tag.lower()), code=301)
 
 
 

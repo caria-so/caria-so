@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/archive.css') }}">
 {% endblock %}
 
-{% block title %}{% if view == 'thread' and thread_meta %}{{ thread_meta.title }} — {% endif %}Notes — Federico Caria{% endblock %}
+{% block title %}{% if view == 'thread' and thread_meta %}{{ thread_meta.title }} — {% endif %}Sketchboard — Federico Caria{% endblock %}
 
 {% block content %}
 
@@ -16,20 +16,20 @@
         <aside class="arc-sidebar">
             <div class="arc-sidebar-sticky">
             <header class="arc-sidebar-head">
-                <span class="arc-eyebrow">Writing</span>
-                <h1 class="arc-title">{% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Notes{% endif %}</h1>
+                <span class="arc-eyebrow">Sketchboard</span>
+                <h1 class="arc-title">{% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Sketchboard{% endif %}</h1>
                 <p class="arc-subtitle">
                     {% if view == 'thread' and thread_meta %}
                     Thread · {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}
                     {% else %}
-                    Notes grouped into threads — set <code>thread:</code> in frontmatter, or auto-placed via NER.
+                    A thread board for notes — set <code>thread:</code> in frontmatter, or auto-placed via NER.
                     {% endif %}
                 </p>
             </header>
 
             <div class="arc-search">
                 <span class="arc-search-label">Search</span>
-                <form action="{% if view == 'thread' and current_thread %}{{ url_for('blog.thread_detail', thread_slug=current_thread) }}{% else %}{{ url_for('blog.archive_index') }}{% endif %}" method="get" class="arc-search-form">
+                <form action="{% if view == 'thread' and current_thread %}{{ url_for('blog.sketchboard_thread', thread_slug=current_thread) }}{% else %}{{ url_for('blog.sketchboard_index') }}{% endif %}" method="get" class="arc-search-form">
                     <input type="text"
                            name="q"
                            class="arc-search-input"
@@ -47,7 +47,7 @@
                 <span class="arc-filters-label">Threads</span>
                 <ul class="arc-filter-list">
                     <li>
-                        <a href="{{ url_for('blog.archive_index', q=query or none) }}"
+                        <a href="{{ url_for('blog.sketchboard_index', q=query or none) }}"
                            class="arc-filter-link arc-filter-link--all{% if not current_thread %} is-active{% endif %}">
                             <span class="arc-filter-name">All threads</span>
                             <span class="arc-filter-count">{{ total_count|default(posts|length) }}</span>
@@ -56,7 +56,7 @@
                     {% for thread in registry %}
                     {% set count = thread_counts.get(thread.slug, 0) if thread_counts is defined else 0 %}
                     <li>
-                        <a href="{{ url_for('blog.thread_detail', thread_slug=thread.slug, q=query or none) }}"
+                        <a href="{{ url_for('blog.sketchboard_thread', thread_slug=thread.slug, q=query or none) }}"
                            class="arc-filter-link{% if current_thread == thread.slug %} is-active{% endif %}"
                            style="--filter-color: var(--{{ thread.color or 'hatch-neutral' }});">
                             <span class="arc-filter-name">{{ thread.title }}</span>
@@ -69,9 +69,9 @@
             {% endif %}
 
             {% if view == 'thread' and current_thread %}
-            <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">← All threads</a>
+            <a href="{{ url_for('blog.sketchboard_index') }}" class="arc-clear-link">← All threads</a>
             {% elif query %}
-            <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">Clear search</a>
+            <a href="{{ url_for('blog.sketchboard_index') }}" class="arc-clear-link">Clear search</a>
             {% endif %}
             </div>
         </aside>
@@ -93,7 +93,7 @@
                 {% for column in columns %}
                 <section class="notes-column" style="--col-color: var(--{{ column.color or 'hatch-neutral' }});">
                     <header class="notes-column-head">
-                        <a href="{{ url_for('blog.thread_detail', thread_slug=column.slug) }}" class="notes-column-title">
+                        <a href="{{ url_for('blog.sketchboard_thread', thread_slug=column.slug) }}" class="notes-column-title">
                             {{ column.title }}
                         </a>
                         <span class="notes-column-count">{{ column.count }}</span>
@@ -106,7 +106,7 @@
                         {% endfor %}
                     </div>
                     {% if column.count > 5 %}
-                    <a href="{{ url_for('blog.thread_detail', thread_slug=column.slug) }}" class="notes-column-more">
+                    <a href="{{ url_for('blog.sketchboard_thread', thread_slug=column.slug) }}" class="notes-column-more">
                         +{{ column.count - 5 }} more
                     </a>
                     {% endif %}
@@ -127,7 +127,7 @@
                 {% else %}
                 <div class="arc-empty">
                     <p>No notes in this thread.</p>
-                    <a href="{{ url_for('blog.archive_index') }}" class="arc-clear-link">All threads</a>
+                    <a href="{{ url_for('blog.sketchboard_index') }}" class="arc-clear-link">All threads</a>
                 </div>
                 {% endfor %}
             </div>
