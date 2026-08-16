@@ -8,8 +8,8 @@ threads:
     color: hatch-ip
     order: 1
 
-  - slug: product
-    title: Product
+  - slug: usability
+    title: Usability
     color: hatch-ux
     order: 2
 
