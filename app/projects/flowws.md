@@ -20,7 +20,7 @@ technologies:
   - Claude AI (Vision)
   - Playwright
   - Lighthouse
-live_link: https://flowws.io
+live_link: 
 github_link:
 accent: hatch-data
 desktop_cover: /static/assets/images/projects/flowws-mcp/desktop_cover.png
