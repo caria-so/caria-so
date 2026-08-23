@@ -4318,6 +4318,11 @@ main:has(.idx-hero-v2) {
 }
 
 .sb-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
     font-family: var(--font-mono);
     font-size: var(--t-micro);
     letter-spacing: 0.02em;

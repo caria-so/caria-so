@@ -1,0 +1,96 @@
+{% from 'partials/_media_picture.html' import picture %}
+
+{% macro methodology(section) %}
+{% set cs = section.case_study or {} %}
+{% set fields = [
+    ('problem', 'Problem'),
+    ('role', 'My role'),
+    ('method', 'Method'),
+    ('decisions', 'Decisions & trade-offs'),
+    ('outcome', 'Outcome'),
+    ('lessons', 'Lessons'),
+    ('constraints', 'Constraints'),
+] %}
+{% set ns = namespace(has_detail=false) %}
+{% for key, label in fields %}
+    {% if cs[key] %}{% set ns.has_detail = true %}{% endif %}
+{% endfor %}
+{% if cs.metrics or cs.evidence or cs.extra %}{% set ns.has_detail = true %}{% endif %}
+
+<aside class="proj-block proj-block--methodology" aria-label="{{ section.title or 'Methodology' }}">
+    <div class="proj-methodology-head">
+        <span class="proj-methodology-icon" aria-hidden="true"><i class="ph ph-path"></i></span>
+        <span class="proj-methodology-label txt-mono txt-xsmall uppercase">{{ section.label or 'Methodology' }}</span>
+    </div>
+    {% if section.title %}
+    <h3 class="proj-methodology-title">{{ section.title }}</h3>
+    {% endif %}
+    {% if section.content %}
+    <div class="proj-methodology-body proj-prose">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+
+    {% if ns.has_detail %}
+    <details class="proj-methodology-detail">
+        <summary class="proj-methodology-toggle txt-mono txt-xsmall uppercase">
+            {{ section.detail_label or 'Process & decisions' }}
+            <i class="ph ph-caret-down" aria-hidden="true"></i>
+        </summary>
+        <div class="proj-case-study">
+            {% for key, label in fields %}
+            {% if cs[key] %}
+            <section class="proj-case-block">
+                <h4 class="proj-case-label txt-mono txt-xsmall uppercase">{{ label }}</h4>
+                <div class="proj-case-body proj-prose">{{ cs[key] | safe }}</div>
+            </section>
+            {% endif %}
+            {% endfor %}
+
+            {% if cs.metrics %}
+            <section class="proj-case-block">
+                <h4 class="proj-case-label txt-mono txt-xsmall uppercase">Before / after</h4>
+                <ul class="proj-case-metrics">
+                    {% for metric in cs.metrics %}
+                    <li class="proj-case-metric">
+                        <span class="proj-case-metric-label">{{ metric.label }}</span>
+                        <span class="proj-case-metric-values">
+                            {% if metric.before %}<span class="proj-case-metric-before">{{ metric.before }}</span>{% endif %}
+                            {% if metric.before and metric.after %}<i class="ph ph-arrow-right" aria-hidden="true"></i>{% endif %}
+                            {% if metric.after %}<span class="proj-case-metric-after">{{ metric.after }}</span>{% endif %}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if cs.evidence %}
+            <section class="proj-case-block">
+                <h4 class="proj-case-label txt-mono txt-xsmall uppercase">Evidence</h4>
+                <div class="proj-case-evidence">
+                    {% for item in cs.evidence %}
+                    <figure class="proj-case-figure">
+                        {{ picture(item.image, item.alt or item.caption or '', '', 'lazy', '', 'media-load') }}
+                        {% if item.caption %}
+                        <figcaption class="proj-figure-caption">{{ item.caption }}</figcaption>
+                        {% endif %}
+                    </figure>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if cs.extra %}
+            <section class="proj-case-block">
+                {% if cs.extra_title %}
+                <h4 class="proj-case-label txt-mono txt-xsmall uppercase">{{ cs.extra_title }}</h4>
+                {% endif %}
+                <div class="proj-case-body proj-prose">{{ cs.extra | safe }}</div>
+            </section>
+            {% endif %}
+        </div>
+    </details>
+    {% endif %}
+</aside>
+{% endmacro %}

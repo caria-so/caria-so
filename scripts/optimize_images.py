@@ -14,8 +14,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 IMAGES_ROOT = ROOT / "app" / "static" / "assets" / "images"
 
-WEBP_QUALITY = 82
+WEBP_QUALITY = 88
 PNG_OPTIMIZE = True
+JPEG_QUALITY = 90
 
 
 def max_width_for(path: Path) -> int:
@@ -27,15 +28,15 @@ def max_width_for(path: Path) -> int:
     if "mobile_cover" in name or name.startswith("mobile_"):
         return 520
     if "desktop_cover" in name:
-        return 960
+        return 1920
     if "/home/" in parts:
-        return 1200
+        return 1600
     if "/about/" in parts:
-        return 1000
+        return 1400
     if "/404/" in parts:
         return 800
     if "/projects/" in parts:
-        return 1400
+        return 1920
     return 1200
 
 
@@ -75,7 +76,7 @@ def optimize_file(path: Path) -> tuple[int, int]:
             img.save(path, "PNG", optimize=PNG_OPTIMIZE)
         elif ext in (".jpg", ".jpeg"):
             rgb = img.convert("RGB")
-            rgb.save(path, "JPEG", quality=85, optimize=True)
+            rgb.save(path, "JPEG", quality=JPEG_QUALITY, optimize=True)
 
     after = path.stat().st_size + webp_path.stat().st_size
     return before, after

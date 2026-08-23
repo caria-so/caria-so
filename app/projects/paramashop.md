@@ -1,15 +1,15 @@
 ---
 title: Parama Shop
-summary: Evidence-based product page redesign for a bathroom furniture brand transitioning from Amazon to their own e-commerce platform. Heuristic evaluation, competitive analysis, and iterative prototyping — shipped around a locked-down CMS.
+summary: Product page and product list redesign for a bathroom furniture brand moving off Amazon — heuristic evaluation, competitive benchmarking, and CSS-only implementation shipped around an uncooperative agency.
 status: completed
 date: 2024
-role: UX Researcher
+role: UX Researcher & Front-End
 client: Parama Shop
 services:
   - usability
   - front end
-image: /static/assets/images/projects/parama/desktop_cover.png
-desktop_cover: /static/assets/images/projects/parama/desktop_cover.png
+image: /static/assets/images/projects/paramashop/page_product-page_after.webp
+desktop_cover: /static/assets/images/projects/paramashop/page_product-page_after.webp
 mobile_cover: 
 pattern: lr-pattern-dots
 technologies:
@@ -29,88 +29,90 @@ sections:
   - type: text
     title: The Problem
     content: |
-      <p>Parama sells designer bathroom furniture. They'd built their brand on Amazon
-      and were transitioning to their own store — a Shopware site built by a local agency.
-      The result was a product page with a single image, one-line descriptions, a broken
-      specifications table, and no variant management for the dozens of size and color
-      combinations each product comes in.</p>
-      <p>The agency was unresponsive. The CMS was inflexible. The client needed someone
-      who could evaluate what was broken, design the fix, and ship it — without depending
-      on developers who wouldn't cooperate.</p>
+      <p>Parama sells designer bathroom furniture — products with dozens of size and color variants, high price points, and buyers who need to see every angle before committing. They'd built their brand on Amazon and were moving to their own Shopware store, built by a local agency. The result: single-image galleries, broken spec tables, no variant management, one-line descriptions. The agency went dark. The CMS was locked down. The client needed someone who could evaluate what was wrong, design the fix, and ship it — without waiting for developers who wouldn't pick up the phone.</p>
 
   # ── 2. METRICS ──
-  - type: metrics
+  - type: metrics-pills
     items:
       - value: "12"
         label: Competitors benchmarked
-      - value: "700+"
-        label: Heuristics evaluated against
-      - value: "3"
-        label: Iterative design rounds
+      - value: "48"
+        label: Heuristics evaluated
       - value: "0"
-        label: Backend changes required
+        label: Backend changes needed
+      - value: "1"
+        label: CSS + JS file to ship
 
-  # ── 3. SOLUTION ──
+  # ── 3. SOLUTION — two splits, short and salesy ──
   - type: split
-    title: Heuristic Evaluation & Competitive Analysis
+    title: Product Page
     content: |
-      <p>The redesign started with research, not wireframes. I evaluated the existing
-      product page against Baymard's heuristic guidelines for Home & Furniture
-      e-commerce — the same dataset I helped build over eight years. Every element
-      scored: gallery, buy section, product descriptions, variant selectors, delivery
-      information, trust signals.</p>
-      <p>Then a structured competitive analysis across twelve direct competitors —
-      Italian and international bathroom furniture brands — focused on the specific
-      problems Parama faced: variant management for products with many sizes and
-      colors, gallery requirements for high-consideration purchases, and information
-      hierarchy for complex product specifications.</p>
-      <p>The output wasn't a PDF of suggestions. It was a prioritized fix list where
-      every recommendation traced back to a heuristic, a competitor benchmark, or both.</p>
-    image: /static/assets/images/projects/parama/competitive_analysis.png
+      <p>Multi-angle gallery with thumbnail strip. Collapsible specification sections. Grid-based size selector replacing dropdowns. Visual color swatches. Stock indicators, savings callouts, split delivery options with estimated dates. Everything the original page was missing — built with CSS overrides and injected JavaScript, no backend access required.</p>
+    image: /static/assets/images/projects/paramashop/page_product-page_after.webp
     reverse: false
 
   - type: split
-    title: The Redesign
+    title: Product List
     content: |
-      <p><strong>Layout:</strong> replaced the flat single-page structure with
-      collapsible sections — optimal information hierarchy for complex products,
-      implementable with CSS and minimal JavaScript, no backend changes required.</p>
-      <p><strong>Gallery:</strong> moved from a single image to a multi-angle
-      gallery with vertical thumbnail strip. Research shows that for high-consideration
-      purchases like designer furniture, buyers need at minimum four angles plus
-      lifestyle context shots.</p>
-      <p><strong>Buy section:</strong> restructured the entire purchase area — stock
-      status indicator, price with savings callout, grid-based size selector instead
-      of dropdowns (lower error rates, faster selection), visual color swatches,
-      hybrid quantity controls, split delivery options with estimated dates, and
-      third-party payment integration.</p>
-    image: /static/assets/images/projects/parama/desktop_redesign.png
+      <p>Structured cards with variant previews, price ranges, and stock availability visible before click-through. Reduced the gap between what buyers see on the list and what they find on the page — fewer bounces, fewer surprises.</p>
+    image: /static/assets/images/projects/paramashop/page_product-list.png
     reverse: true
 
-  - type: split
-    title: Shipping Around a Locked CMS
+  # ── 4. METHODOLOGY — all the process detail lives here ──
+  - type: methodology
+    title: Evaluate, benchmark, ship around the agency
     content: |
-      <p>The agency wouldn't cooperate and the CMS was rigid. The strategy: do
-      everything through external CSS overrides and injected JavaScript. No backend
-      access needed, no database changes, no agency coordination for day-to-day work.</p>
-      <p>Collapsible sections — pure CSS with a few lines of JavaScript for the toggle.
-      Gallery — JavaScript image switcher overlaying the existing single-image container.
-      Variant selectors — CSS grid layout replacing the default dropdowns, with JavaScript
-      handling the state. The client's developers only needed to include one stylesheet
-      and one script file.</p>
-      <p>Every design decision was constrained by what could be shipped independently.
-      That constraint shaped the methodology: evaluate what's broken, design the fix
-      within what's buildable, prototype in the browser, iterate with the client, deliver
-      production CSS.</p>
-    image: /static/assets/images/projects/parama/mobile_redesign.png
+      <p>Started with heuristics, not wireframes. Benchmarked every element of the existing product page against Baymard's guidelines — the same dataset I helped build over eight years. Then a structured competitive analysis across twelve bathroom furniture brands to establish what good looks like in this specific vertical.</p>
+    detail_label: Process & decisions
+    case_study:
+      problem: |
+        <p>Product page with a single image, broken specifications, no variant management, and one-line descriptions. Agency unresponsive, CMS locked down — no backend access, no cooperation.</p>
+      role: |
+        <p>UX researcher and front-end — evaluation, design, prototyping, and production CSS/JS. Solo engagement, reporting directly to the owner.</p>
+      method: |
+        <p>Heuristic evaluation (Baymard Home & Furniture guidelines) → competitive analysis across 12 direct competitors → prioritized fix list → Figma prototypes → browser prototyping → production CSS/JS delivered as two injectable files.</p>
+      decisions: |
+        <p><strong>Ship via CSS overrides</strong> — agency wouldn't cooperate and CMS was rigid. Everything implemented through one stylesheet and one script file. No backend changes, no database access, no agency coordination for day-to-day work.</p>
+        <p><strong>Heuristics before wireframes</strong> — every recommendation traces back to a scored guideline or a competitor benchmark. No opinion-driven redesign; the evaluation document was the spec.</p>
+        <p><strong>Grid selectors over dropdowns</strong> — for products with 20+ size/color variants, grid layouts have lower error rates and faster selection times than dropdown menus. Research-backed, not a style preference.</p>
+      constraints: |
+        <p>No backend access. No agency cooperation. Shopware CMS with limited template flexibility. Every design decision constrained by what could be shipped independently as injected CSS and JavaScript.</p>
+      outcome: |
+        <p>Product page and product list redesigned and shipped. Client's developers include one stylesheet and one script file — everything else is maintainable without the agency.</p>
+      lessons: |
+        <p>When the CMS is locked and the agency won't cooperate, the constraint becomes the method: evaluate what's broken, design within what's buildable, prototype in the browser, deliver production code.</p>
+      metrics:
+        - label: Heuristics evaluated
+          before: "0"
+          after: "48"
+        - label: Competitors benchmarked
+          before: "—"
+          after: "12"
+        - label: Backend changes
+          before: "Blocked"
+          after: "0 needed"
+      evidence:
+        - image: /static/assets/images/projects/paramashop/competitors.webp
+          caption: Competitive analysis — structured comparison across twelve bathroom furniture brands on gallery, variant management, and specification hierarchy.
+        - image: /static/assets/images/projects/paramashop/page_product-page_before.webp
+          caption: Product page before — single image, broken spec table, dropdown variant selector, no trust signals.
+        - image: /static/assets/images/projects/paramashop/heuristic_evaluation.png
+          caption: Heuristic evaluation — each element scored against Baymard's Home & Furniture guidelines.
+        - image: /static/assets/images/projects/paramashop/desktop_cover.webp
+          caption: Figma iterations — variant selector and gallery explorations before browser prototyping.
+
+  - type: split
+    title: Taxonomy & Navigation
+    content: |
+      content: |
+      <p>Restructured the product taxonomy and surfaced it where it matters — categories in the main navigation for direct access, thumbnail cards on the homepage for browse entry points, and category badges on product list cards so buyers always know where they are. Same data, three touchpoints, zero ambiguity about what the store sells.</p>
+    image: /static/assets/images/projects/paramashop/taxonomy-navigation.webp
     reverse: false
 
-  # ── 4. RESULT ──
+  # ── 5. CALLOUT ──
   - type: callout
-    title: Research to Implementation, One Person
+    title: E-commerce page not converting the way it should?
     content: |
-      <p>No handoff between researcher and developer. The same person who ran the
-      heuristic evaluation against 700+ guidelines and benchmarked twelve competitors
-      wrote the CSS and JavaScript that shipped. The gap between "what the research
-      found" and "what the code does" was zero — because there was no gap to cross.</p>
+      <p>I redesign product pages and product lists based on research, not opinions — and I can ship the CSS myself.</p>
+    button: Get in touch
 ---

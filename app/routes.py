@@ -7,6 +7,7 @@ from datetime import datetime
 from functools import wraps
 
 from app.markdown_utils import convert_markdown, create_markdown_parser
+from app.media import normalize_static_url
 
 from app.papers_loader import (
     build_genealogy_viz_payload,
@@ -249,10 +250,39 @@ def _iter_markdown_files(directory, recursive=False):
 
 
 def _static_asset_exists(url):
+    url = normalize_static_url(url)
     if not url or not str(url).startswith('/static/'):
         return False
     rel = str(url)[len('/static/'):]
     return os.path.isfile(os.path.join(STATIC_DIR, rel))
+
+
+def _normalize_project_assets(project):
+    """Normalize image paths and section media URLs."""
+    for key in ('image', 'desktop_cover', 'mobile_cover'):
+        if project.get(key):
+            project[key] = normalize_static_url(project[key])
+
+    for section in project.get('sections') or []:
+        if section.get('image'):
+            section['image'] = normalize_static_url(section['image'])
+        if section.get('images'):
+            normalized = []
+            for img in section['images']:
+                if isinstance(img, dict) and img.get('src'):
+                    img = {**img, 'src': normalize_static_url(img['src'])}
+                elif isinstance(img, str):
+                    img = normalize_static_url(img)
+                normalized.append(img)
+            section['images'] = normalized
+        case_study = section.get('case_study')
+        if isinstance(case_study, dict) and case_study.get('evidence'):
+            case_study['evidence'] = [
+                {**item, 'image': normalize_static_url(item['image'])}
+                if isinstance(item, dict) and item.get('image') else item
+                for item in case_study['evidence']
+            ]
+    return project
 
 
 def _resolve_project_cover(project):
@@ -327,6 +357,7 @@ def load_posts(directory):
             post.update({
                 'description': meta.get('description', post.get('summary', '')),
                 'image': meta.get('image', ''),
+                'image_caption': meta.get('image_caption', ''),
                 'github_link': meta.get('github_link', ''),
                 'live_link': meta.get('live_link', ''),
                 'technologies': meta.get('technologies', []),
@@ -351,6 +382,7 @@ def load_posts(directory):
             if not post['summary'] and post.get('description'):
                 post['summary'] = post['description']
 
+            _normalize_project_assets(post)
             post['cover_url'] = _resolve_project_cover(post)
             post['cover_desktop'] = post.get('desktop_cover', '') if _static_asset_exists(post.get('desktop_cover', '')) else ''
             post['cover_mobile'] = post.get('mobile_cover', '') if _static_asset_exists(post.get('mobile_cover', '')) else ''

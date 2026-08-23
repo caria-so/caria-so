@@ -103,7 +103,7 @@ sections:
     reverse: false
 
   # ── 4. RESULT ──
-  - type: callout
+  - type: methodology
     title: Who This Is For
     content: |
       <p><strong>Developers</strong> who want UX evidence in the editor, cited, not in a
@@ -112,8 +112,11 @@ sections:
       need traceable sources, not opinions.</p>
       <p>Next: a screenshot pipeline that detects UI components on real sites, records
       bounding boxes keyed to the same component names the graph uses, and grounds
-      spatial reasoning in what real pages actually do. The bridge from knowledge base
-      to automated auditor.</p>
-      <p>Want your niche mapped — or your site benchmarked against the research?
-      <a href="#" data-contact-trigger>Let's talk</a>.</p>
+      spatial reasoning in what real pages actually do.</p>
+
+  - type: callout
+    title: Want your niche mapped?
+    content: |
+      <p>Benchmark your site against the research, or map a new domain into the graph.</p>
+    button: Let's talk
 ---

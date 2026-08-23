@@ -149,7 +149,7 @@ sections:
     image: /static/images/projects/impossible-papers-stack.jpg
     reverse: false
 
-  - type: callout
+  - type: methodology
     title: The First Hypothesis
     content: |
       <p>Level 1 consciousness is somatic, not cortical. The body receives
@@ -174,7 +174,7 @@ sections:
       - value: "JSON"
         label: Checkpoint format
 
-  - type: callout
+  - type: methodology
     title: Roadmap
     content: |
       <p><strong>V1 (current):</strong> Hypothesis refinement loop —

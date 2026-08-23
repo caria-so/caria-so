@@ -1,7 +1,7 @@
 ---
 title: DeepOCR
 summary: OCR pipeline for historical and esoteric texts. Two engines, transformer-based layout detection, structured output — built to read documents most tools ignore.
-status: in_development
+status: in development
 date: 2025-present
 role: Solo developer
 client: Internal product
@@ -33,8 +33,7 @@ sections:
     title: The Problem
     content: |
       <p>Most OCR tools are built for clean, modern documents. Feed them a 16th-century
-      manuscript, a scanned esoteric treatise, or a book with drop capitals, margin notes, and decorative borders — and they likely give you garbage. They flatten the structure, lose the footnotes, and oftne have little concept of reading order.</p>
-      <p>DeepOCR is built for the hardest layout and scripts most OCR ignores</p>.
+      manuscript, a scanned esoteric treatise, or a book with drop capitals, margin notes, and decorative borders — and they likely give you garbage. They flatten the structure, lose the footnotes, and oftne have little concept of reading order. DeepOCR is built for the hardest layout and scripts most OCR ignores.</p>
 
   # ── 2. METRICS ──
   - type: metrics-pills
@@ -91,7 +90,7 @@ sections:
     reverse: false
 
   # ── 4. RESULT ──
-  - type: callout
+  - type: methodology
     title: What It Can Read
     content: |
       <p>Tested on 17th-century printed books, esoteric and hermetic treatises, manuscripts

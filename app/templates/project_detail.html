@@ -10,13 +10,25 @@
 
 {% block content %}
 {% from 'partials/_media_picture.html' import picture %}
+{% from 'partials/_project_methodology.html' import methodology %}
 
-<div class="proj-page" style="--proj-accent: var(--{{ project.accent or 'hatch-neutral' }});">
+{% macro proj_figure(src, alt='', caption='', loading='lazy', img_class='') %}
+<figure class="proj-figure">
+    <div class="proj-media-frame glass-panel">
+        {{ picture(src, alt, img_class, loading, '', 'media-load') }}
+    </div>
+    {% if caption %}
+    <figcaption class="proj-figure-caption">{{ caption }}</figcaption>
+    {% endif %}
+</figure>
+{% endmacro %}
+
+<div class="proj-page" style="--proj-accent: var(--{{ project.accent or 'hatch-neutral' }}); --hatch-color: var(--{{ project.accent or 'hatch-neutral' }});">
 
     {# ════════════════════════════════════
        HERO
        ════════════════════════════════════ #}
-    <header class="proj-hero">
+    <header class="proj-hero {{ project.pattern or 'lr-pattern-noise' }}">
         <div class="proj-hero-meta">
             <a href="{{ url_for('blog.projects') }}" class="proj-back txt-mono txt-xsmall uppercase">
                 <i class="ph ph-arrow-left"></i> Projects
@@ -48,6 +60,23 @@
             {% endif %}
         </div>
     </header>
+
+
+
+    {# ════════════════════════════════════
+       COVER IMAGE
+       ════════════════════════════════════ #}
+    {% if project.image %}
+    <div class="proj-cover">
+        <div class="proj-cover-img">
+            {{ picture(project.image, project.title, 'proj-cover-photo', 'eager', '', 'media-load media-load--hero') }}
+        </div>
+        {% if project.image_caption %}
+        <figcaption class="proj-figure-caption proj-cover-caption">{{ project.image_caption }}</figcaption>
+        {% endif %}
+    </div>
+    {% endif %}
+
 
 
     {# ════════════════════════════════════
@@ -85,18 +114,6 @@
 
 
     {# ════════════════════════════════════
-       COVER IMAGE
-       ════════════════════════════════════ #}
-    {% if project.image %}
-    <div class="proj-cover">
-        <div class="proj-cover-img">
-            {{ picture(project.image, project.title, 'proj-cover-photo', 'eager', '', 'media-load media-load--hero') }}
-        </div>
-    </div>
-    {% endif %}
-
-
-    {# ════════════════════════════════════
        BODY — flexible content blocks
        Render from project.sections list:
        each section has .type, .title, .content
@@ -117,9 +134,9 @@
                     </div>
                 </div>
 
-                {# ── Two-column: text + image ── #}
+                {# ── Two-column: text + image or badge list ── #}
                 {% elif section.type == 'split' %}
-                <div class="proj-block proj-block--split {% if section.reverse %}proj-block--reverse{% endif %}">
+                <div class="proj-block proj-block--split {% if section.reverse %}proj-block--reverse{% endif %}{% if section.badges %} proj-block--split-badges{% endif %}">
                     <div class="proj-split-text">
                         {% if section.title %}
                         <h3 class="txt-xbold">{{ section.title }}</h3>
@@ -130,8 +147,14 @@
                     </div>
                     {% if section.image %}
                     <div class="proj-split-media">
-                        <div class="proj-media-frame glass-panel">
-                            {{ picture(section.image, section.title or '', '', 'lazy', '', 'media-load') }}
+                        {{ proj_figure(section.image, section.title or section.caption or '', section.caption) }}
+                    </div>
+                    {% elif section.badges %}
+                    <div class="proj-split-aside">
+                        <div class="proj-badge-grid">
+                            {% for badge in section.badges %}
+                            <span class="proj-ontology-badge"{% if badge.detail or badge.text %} title="{{ badge.detail or badge.text }}"{% endif %}>{{ badge.name or badge.label }}</span>
+                            {% endfor %}
                         </div>
                     </div>
                     {% endif %}
@@ -143,9 +166,7 @@
                     {% if section.title %}
                     <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
                     {% endif %}
-                    <div class="proj-media-frame glass-panel">
-                        {{ picture(section.image, section.title or '', '', 'lazy', '', 'media-load') }}
-                    </div>
+                    {{ proj_figure(section.image, section.title or section.caption or '', section.caption) }}
                 </div>
 
                 {# ── Code block ── #}
@@ -167,14 +188,30 @@
                     </div>
                 </div>
 
-                {# ── Callout / highlight box ── #}
+                {# ── Methodology infobox ── #}
+                {% elif section.type == 'methodology' %}
+                {{ methodology(section) }}
+
+                {# ── Contact callout — get in touch CTA ── #}
                 {% elif section.type == 'callout' %}
-                <div class="proj-block proj-block--callout">
-                    {% if section.title %}
-                    <p class="proj-callout-kicker">{{ section.title }}</p>
-                    {% endif %}
-                    <div class="proj-callout-body proj-prose">
-                        {{ section.content | safe }}
+                <div class="proj-block proj-block--contact">
+                    <div class="proj-contact-inner">
+                        <div class="proj-contact-copy">
+                            {% if section.title %}
+                            <p class="proj-contact-kicker">{{ section.title }}</p>
+                            {% endif %}
+                            {% if section.content %}
+                            <div class="proj-contact-body proj-prose">
+                                {{ section.content | safe }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="proj-contact-action">
+                            <button type="button" class="proj-contact-btn" data-contact-trigger>
+                                {{ section.button or 'Get in touch' }}
+                                <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -206,9 +243,7 @@
                     {% endif %}
                     <div class="proj-gallery-grid">
                         {% for img in section.images %}
-                        <div class="proj-media-frame glass-panel">
-                            {{ picture(img.src, img.alt or '', '', 'lazy', '', 'media-load') }}
-                        </div>
+                        {{ proj_figure(img.src, img.alt or img.caption or '', img.caption) }}
                         {% endfor %}
                     </div>
                 </div>
