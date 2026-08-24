@@ -131,7 +131,7 @@
         </div>
 
          <div class="svc-rows">
-             <a href="{{ url_for('blog.projects', service='product') }}" class="svc-row" style="--svc-color: var(--hatch-ecommerce);">
+             <a href="{{ url_for('blog.projects', service='product') }}" class="svc-row" style="--svc-color: var(--{{ project_services.product.color }});">
                  <div class="svc-row-left">
                      <span class="svc-row-dot"></span>
                      <span class="svc-row-domain txt-mono">Product Research</span>
@@ -143,7 +143,7 @@
                  <i class="ph ph-arrow-up-right svc-row-arrow"></i>
              </a>
  
-             <a href="{{ url_for('blog.projects', service='development') }}" class="svc-row" style="--svc-color: var(--hatch-ux);">
+             <a href="{{ url_for('blog.projects', service='development') }}" class="svc-row" style="--svc-color: var(--{{ project_services.development.color }});">
                  <div class="svc-row-left">
                      <span class="svc-row-dot"></span>
                      <span class="svc-row-domain txt-mono">Development</span>
@@ -155,7 +155,7 @@
                  <i class="ph ph-arrow-up-right svc-row-arrow"></i>
              </a>
  
-             <a href="{{ url_for('blog.projects', service='pipelines') }}" class="svc-row" style="--svc-color: var(--hatch-ai);">
+             <a href="{{ url_for('blog.projects', service='pipelines') }}" class="svc-row" style="--svc-color: var(--{{ project_services.pipelines.color }});">
                  <div class="svc-row-left">
                      <span class="svc-row-dot"></span>
                      <span class="svc-row-domain txt-mono">Pipelines</span>
@@ -167,7 +167,7 @@
                  <i class="ph ph-arrow-up-right svc-row-arrow"></i>
              </a>
  
-             <a href="{{ url_for('blog.projects', service='knowledge') }}" class="svc-row" style="--svc-color: var(--hatch-libraries);">
+             <a href="{{ url_for('blog.projects', service='knowledge') }}" class="svc-row" style="--svc-color: var(--{{ project_services.knowledge.color }});">
                  <div class="svc-row-left">
                      <span class="svc-row-dot"></span>
                      <span class="svc-row-domain txt-mono">Knowledge</span>

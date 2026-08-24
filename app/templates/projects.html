@@ -15,7 +15,7 @@ main:has(.proj-hero) {
 
 .proj-hero {
     position: relative;
-    margin-inline: calc(-1 * var(--page-gutter));
+    margin-inline: 0;
     padding: clamp(4.5rem, 10vw, 7rem) var(--page-gutter) clamp(3.5rem, 6vw, 5rem);
     --hatch-color: var(--hatch-data);
     --pattern-opacity: 0.28;
@@ -26,21 +26,15 @@ main:has(.proj-hero) {
     overflow: hidden;
 }
 
-/* .proj-hero .idx-section-inner {
-    padding-inline: var(--page-gutter);
-} */
+.proj-hero .idx-section-inner {
+    padding-inline: 0;
+}
 
 .proj-hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(2rem, 5vw, 4rem);
     align-items: center;
-}
-
-@media (max-width: 1230px) {
-    .proj-hero .idx-section-inner {
-        padding-inline: 1rem;
-    }
 }
 
 @media (max-width: 900px) {

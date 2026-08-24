@@ -686,7 +686,6 @@ main {
 .nav-container {
   padding: 0 2rem;
   height: 56px;
-  border-bottom: 1px solid var(--c-border);
 }
 
 .mobile-only {
@@ -989,7 +988,7 @@ footer {
 
 .footer-container {
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-gutter, 1.5rem);
 }
 
 .footer-main {
@@ -1094,8 +1093,7 @@ footer {
 }
 
 #theme-wrapper > * {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-inline: 0;
 }
 
 
@@ -1134,17 +1132,6 @@ Filters Blog
     color: var(--primary);
     text-decoration: none;
   }
-
-@media screen and (max-width: 975px) {
-  #theme-wrapper > * {
-      padding-left: 1rem;
-      padding-right: 1rem;
-  }
-
-  footer {
-    padding: 0 1rem;
-  }
-}
 
 @media (max-width: 768px) {
   .filters p {

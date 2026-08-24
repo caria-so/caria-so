@@ -142,6 +142,11 @@
         transparent;
 }
 
+.proj-page .proj-hero[class*="lr-pattern-"]::before {
+    -webkit-mask: linear-gradient(to bottom, #fff 0%, rgb(255 255 255 / 0.6) 100%) center / 100% 100% no-repeat;
+    mask: linear-gradient(to bottom, #fff 0%, rgb(255 255 255 / 0.6) 100%) center / 100% 100% no-repeat;
+}
+
 .proj-page .proj-hero > * {
     max-width: 960px;
     margin-inline: auto;

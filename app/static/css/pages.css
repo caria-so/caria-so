@@ -450,6 +450,8 @@ main:has(.idx-hero-v2) {
     max-width: var(--content-max);
     margin-inline: auto;
     width: 100%;
+    padding-inline: var(--page-gutter);
+    box-sizing: border-box;
 }
 
 .sec-header,
@@ -472,8 +474,6 @@ main:has(.idx-hero-v2) {
 .idx-band {
     position: relative;
     padding: var(--sec-y) 0;
-    margin-inline: calc(-1 * var(--page-gutter));
-    padding-inline: var(--page-gutter);
     overflow: hidden;
 }
 
@@ -490,8 +490,6 @@ main:has(.idx-hero-v2) {
 }
 
 .idx-section--services {
-    margin-inline: calc(-1 * var(--page-gutter));
-    padding-inline: var(--page-gutter);
     overflow: hidden;
     padding-top: clamp(4.5rem, 10vw, 6.5rem);
     padding-bottom: clamp(2.75rem, 7vw, 4.25rem);
@@ -889,13 +887,6 @@ main:has(.idx-hero-v2) {
     margin-bottom: 2rem;
 }
 
-@media (max-width: 975px) {
-    .idx-section--services {
-        margin-inline: 0;
-        padding-inline: var(--page-gutter);
-    }
-}
-
 @media (max-width: 900px) {
     .svc-header-grid {
         grid-template-columns: 1fr;
@@ -915,11 +906,6 @@ main:has(.idx-hero-v2) {
 @media (max-width: 700px) {
     .idx-section--services {
         padding-bottom: clamp(2rem, 8vw, 3rem);
-    }
-
-    .idx-section--services .sec-inner,
-    .idx-section--services .svc-industries {
-        padding-inline: 0;
     }
 
     .svc-rows {
@@ -2498,8 +2484,6 @@ main:has(.idx-hero-v2) {
     position: relative;
     isolation: isolate;
     display: block;
-    margin-inline: -2rem;
-    padding-inline: 2rem;
     padding-block: clamp(2.5rem, 7vw, 4rem);
     scroll-margin-top: 5rem;
     background:
@@ -2523,14 +2507,6 @@ main:has(.idx-hero-v2) {
     position: relative;
     z-index: 1;
 }
-
-@media screen and (max-width: 975px) {
-    .idx-svc-block {
-        margin-inline: -1rem;
-        padding-inline: 1rem;
-    }
-}
-
 
 /* ════════════════════════════════════════════════════════════
    DEMO ANIMATIONS — service page anim-canvas illustrations
