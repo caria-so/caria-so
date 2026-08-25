@@ -17,9 +17,9 @@
     position: relative;
     isolation: isolate;
     max-width: none;
-    width: calc(100% + 2 * var(--page-gutter, 2rem));
-    margin-inline: calc(-1 * var(--page-gutter, 2rem));
-    padding: 0 var(--page-gutter, 2rem) 4rem;
+    width: 100%;
+    margin-inline: 0;
+    padding: 0 0 4rem;
     min-width: 0;
     box-sizing: border-box;
     overflow: hidden;
@@ -117,7 +117,16 @@
     max-width: 960px;
     margin-inline: auto;
     width: 100%;
+    padding-inline: var(--page-gutter);
     box-sizing: border-box;
+}
+
+/* Cover: same inset as padded sections, without padding inside the card */
+.proj-page > .proj-cover {
+    padding-inline: 0;
+    width: calc(100% - 2 * var(--page-gutter));
+    max-width: calc(960px - 2 * var(--page-gutter));
+    margin-inline: auto;
 }
 
 
@@ -151,6 +160,7 @@
     max-width: 960px;
     margin-inline: auto;
     width: 100%;
+    padding-inline: var(--page-gutter);
     box-sizing: border-box;
 }
 
@@ -286,7 +296,7 @@
 }
 
 
-/* ── Cover image — native resolution, never upscale ── */
+/* ── Cover image — fill frame (object-fit cover) ── */
 
 .proj-cover {
     margin-bottom: 3rem;
@@ -299,31 +309,37 @@
 }
 
 .proj-cover-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: clamp(220px, 38vw, 440px);
+    flex-shrink: 0;
+    overflow: hidden;
     background: var(--c-background-gray);
 }
 
 .proj-cover-img .media-load {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
-    min-height: 0;
+    height: 100%;
 }
 
 .proj-cover-img .media-load picture {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    display: contents;
 }
 
 .proj-cover-img .media-load img,
-.proj-cover-photo {
-    width: auto;
-    max-width: 100%;
-    height: auto;
+.proj-cover-img .proj-cover-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: top;
     display: block;
-    margin: 0 auto;
 }
 
 

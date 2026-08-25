@@ -69,7 +69,7 @@
     {% if project.image %}
     <div class="proj-cover">
         <div class="proj-cover-img">
-            {{ picture(project.image, project.title, 'proj-cover-photo', 'eager', '', 'media-load media-load--hero') }}
+            {{ picture(project.image, project.title, 'proj-cover-photo', 'eager', '', 'media-load') }}
         </div>
         {% if project.image_caption %}
         <figcaption class="proj-figure-caption proj-cover-caption">{{ project.image_caption }}</figcaption>
