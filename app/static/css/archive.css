@@ -14,6 +14,13 @@
     --hatch-neutral: #71717A;
 }
 
+
+.nav-container {
+    border-bottom: 1px solid var(--c-border);
+}
+
+
+
 /* Full-bleed page: padding lives inside sections, not on theme-wrapper child */
 #theme-wrapper:has(> .arc-page) {
     flex: 1;

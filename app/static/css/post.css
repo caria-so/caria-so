@@ -46,6 +46,11 @@
 
 /* ── Post header — same treatment as projects hero ── */
 
+.nav-container {
+    border-bottom: 1px solid var(--c-border);
+}
+
+
 .post-header {
     position: relative;
     padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 2rem);

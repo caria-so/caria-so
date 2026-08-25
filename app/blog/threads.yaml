@@ -6,7 +6,7 @@ threads:
   - slug: ip
     title: Impossible Papers
     color: hatch-ip
-    order: 1
+    order: 3
 
   - slug: usability
     title: Usability
@@ -16,10 +16,10 @@ threads:
   - slug: hai
     title: Human–AI Interaction
     color: hatch-libraries
-    order: 3
+    order: 1
 
-  - slug: extravagantia
-    title: Extravagantia
+  - slug: engineering
+    title: Engineering
     color: hatch-data
     order: 4
 
