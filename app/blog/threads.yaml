@@ -6,12 +6,17 @@ threads:
   - slug: ip
     title: Impossible Papers
     color: hatch-ip
-    order: 3
+    order: 4
+
+  - slug: knowledge
+    title: Knowledge
+    color: hatch-ux
+    order: 2
 
   - slug: usability
     title: Usability
     color: hatch-ux
-    order: 2
+    order: 3
 
   - slug: hai
     title: Human–AI Interaction
@@ -21,12 +26,12 @@ threads:
   - slug: engineering
     title: Engineering
     color: hatch-data
-    order: 4
+    order: 5
 
   - slug: tyling
     title: Tyling
     color: hatch-ecommerce
-    order: 5
+    order: 6
 
   - slug: inbox
     title: Inbox
