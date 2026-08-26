@@ -10,7 +10,7 @@ threads:
 
   - slug: knowledge
     title: Knowledge
-    color: hatch-ux
+    color: hatch-ip
     order: 2
 
   - slug: usability
