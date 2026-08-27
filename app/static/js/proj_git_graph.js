@@ -146,16 +146,21 @@
     }
 
     setActive(0);
-    var tick = setInterval(function () {
-      setActive((active + 1) % commits.length);
-    }, 2800);
-
-    panel.addEventListener('mouseenter', function () { clearInterval(tick); });
-    panel.addEventListener('mouseleave', function () {
+    var reducedMotion = window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var tick;
+    if (!reducedMotion) {
       tick = setInterval(function () {
         setActive((active + 1) % commits.length);
       }, 2800);
-    });
+
+      panel.addEventListener('mouseenter', function () { clearInterval(tick); });
+      panel.addEventListener('mouseleave', function () {
+        tick = setInterval(function () {
+          setActive((active + 1) % commits.length);
+        }, 2800);
+      });
+    }
   }
 
   function init() {

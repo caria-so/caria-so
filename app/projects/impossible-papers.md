@@ -1,189 +1,141 @@
 ---
 title: Impossible Papers
-summary: Multi-agent research engine that takes an impossible hypothesis, stress-tests it against real academic literature, and produces papers that read like hard science.
-status: in_development
-date: 2025–present
-role: Solo developer
-client: Personal research
-services:
-  - pipelines
-  - knowledge
-image: /static/images/projects/impossible-papers-cover.jpg
+summary: A system that stress-tests scientific hypotheses against real literature, real data, and adversarial review. It doesn't confirm ideas — it tries to kill them. What survives is worth publishing.
+status: active
+date: 2024-present
+role: Solo researcher & developer
+client: Independent research
+image: /static/assets/images/projects/impossible-papers/desktop_cover.png
+desktop_cover: /static/assets/images/projects/impossible-papers/desktop_cover.png
+mobile_cover:
+pattern: lr-pattern-noise
 technologies:
   - Python
+  - Claude API
   - LangGraph
-  - Ollama
-  - Semantic Scholar API
-  - OpenAlex API
-  - Flask
-  - MathJax
-  - Matplotlib
-accent: hatch-data
+  - Neo4j
+  - FastAPI
+  - DuckDB
+  - D3.js
+  - spaCy
+  - OpenAlex
+  - PubMed
+live_link:
+github_link:
+accent: hatch-ai
+tags:
+  - AI
+  - Research
 related_posts:
 
 sections:
+
+  # ── 1. PROBLEM ──
   - type: text
     title: The Problem
     content: |
-      <p>There are ideas that sit at the edge of science — hypotheses too
-      speculative for a journal submission but too structured for a blog post.
-      Consciousness as a somatic field. Luminiferous ether revival. FTL
-      propulsion from first principles. Will-driven motion.</p>
-      <p>The trick is that these ideas can be explored with full scientific
-      rigor even when the premise is false. A good impossible paper commits
-      to internal consistency: it derives consequences, cites a real
-      intellectual lineage, shows its math, and states what would falsify it.
-      The reader's pleasure comes from watching a false premise handled with
-      completely straight-faced discipline.</p>
-      <p>Writing one by hand takes weeks of literature review, formal
-      derivation, and careful self-editing. Impossible Papers automates
-      the scaffolding so the human can focus on the idea.</p>
+      <p>Most scientific hypotheses die slowly. A researcher has an idea, finds
+      supporting literature, writes a paper, submits it, waits six months for
+      peer review, gets told the idea was already explored by a group in Kyoto
+      in 2019. Or worse — the idea survives review because nobody checked the
+      math, and it enters the literature carrying errors that take years to find.</p>
+      <p>Impossible Papers compresses that cycle. Take a hypothesis, decompose it
+      into testable claims, search the literature exhaustively, run computational
+      simulations against real datasets, subject everything to structured adversarial
+      review. The system doesn't care about the hypothesis — it cares about whether
+      the evidence supports it. What gets killed, stays dead. What survives is
+      genuinely worth pursuing.</p>
 
+  # ── 2. METRICS ──
   - type: metrics
     items:
-      - value: "3"
-        label: Agent pipeline steps
+      - value: "1"
+        label: Confirmed novel finding
+      - value: "618"
+        label: Papers analyzed (single run)
+      - value: "5"
+        label: Active research domains
       - value: "2"
-        label: Academic APIs searched
-      - value: "∞"
-        label: Impossible hypotheses
-      - value: "0"
-        label: Claims without citation
+        label: Hypotheses killed by the system
 
+  # ── 3. FINDINGS ──
   - type: split
-    title: The Refinement Loop
+    title: What It Has Found
     content: |
-      <p>Impossible Papers is not a paper generator. It's a <strong>hypothesis
-      refinement engine</strong>. A raw idea goes in fuzzy and comes out
-      battle-tested against real literature.</p>
-      <p><strong>Step 1 — Formalize:</strong> An LLM takes your shower thought,
-      conversation transcript, or one-line hypothesis and decomposes it into
-      a structured thesis with typed, dependency-linked claims. Foundational
-      axioms first, derived claims next, speculative leaps last.</p>
-      <p><strong>Step 2 — Literature:</strong> Semantic Scholar and OpenAlex
-      are queried for real academic papers. Each source is mapped against each
-      claim — supporting, challenging, or irrelevant. The agent identifies
-      structural gaps: where does the argument break without a source? Only
-      then are synthetic references generated to fill those gaps.</p>
-      <p><strong>Step 3 — Reassess:</strong> The hypothesis is stress-tested.
-      Which claims have real support? Which are hanging by invented bridges?
-      Did the literature reveal a better version of the idea? The system
-      returns a verdict — solid, revise, pivot, or abandon — and routes
-      back to whichever step needs work.</p>
-    image: /static/images/projects/impossible-papers-loop.jpg
+      <p><strong>Astrophysics.</strong> Run 022b computed the Bondi-Hoyle accretion
+      timescale for tidal dwarf galaxies in the superfluid dark matter framework:
+      ~1,280 Gyr — 93 times the age of the universe. TDGs cannot accrete superfluid
+      DM condensate. INAF astrophysicists confirmed this calculation is not in the
+      published literature and contradicts mainstream superfluid DM theory. The system
+      found something genuinely new, then killed its own broader hypothesis when the
+      numbers didn't work.</p>
+      <p><strong>Neurorehabilitation.</strong> Run neurorehab_001 analyzed 618 papers
+      and produced a structured research fingerprint for a university neuroscience
+      collaboration: 7 claims with dependency chains, 6 concept genealogies tracing
+      ideas across decades of literature, 7 cross-field gaps where cardiology and
+      neuroscience stopped talking to each other, and 2 ready-to-run experiment
+      protocols with feasibility assessments and dataset discovery.</p>
+      <p><strong>Origin of life.</strong> Run 025h stress-tested a hypothesis about
+      emergent RNA-amino acid coding systems for the $10M Evolution 2.0 Prize. 8
+      claims decomposed, 3 computationally simulated, 2 falsified. The system caught
+      its own pipeline producing a p-value interpretation that contradicted the actual
+      numbers — internal consistency checking working as designed.</p>
+    image: /static/assets/images/projects/impossible-papers/desktop_cover.png
     reverse: false
 
   - type: split
-    title: Literature That Earns Its Place
+    title: How It Works
     content: |
-      <p>The literature agent doesn't decorate — it diagnoses. Real papers
-      from Semantic Scholar and OpenAlex are searched, mapped against each
-      claim, and assessed for strength. The agent builds an argument map:
-      which sources support which claims, which challenge them, and where
-      the lineage breaks.</p>
-      <p>Invented references are structural, not cosmetic. They exist only
-      because gap analysis proved the argument can't stand without them.
-      A synthetic "Moretti 2008" paper fills a specific hole — the missing
-      link between IIT's information metric and field theory — published
-      in a real journal, with a plausible abstract and realistic authors.
-      Internally flagged <code>real: false</code>. In the published paper,
-      seamless.</p>
-    image: /static/images/projects/impossible-papers-literature.jpg
-    reverse: true
-
-  - type: code
-    title: Checkpoint System
-    filename: runs/run_006/
-    content: |
-      # Every step writes a JSON checkpoint.
-      # The pipeline can restart from any point.
-      
-      hypothesis.json    ← structured thesis + claims
-      literature.json    ← real sources, argument map, gaps, synthetics
-      reassessment.json  ← verdict, strength ratings, revisions
-      
-      # Resume from any checkpoint with a different model:
-      impossible-papers run --from runs/run_006/hypothesis.json \
-                            --step literature
-
-  - type: split
-    title: Model-Agnostic Per Step
-    content: |
-      <p>Every agent's LLM is configured independently via YAML. The
-      formalization step might run on Qwen 7B locally through Ollama.
-      The reassessment step might use Claude Sonnet for stronger reasoning.
-      The literature mapping might use a 70B model on a HuggingFace
-      endpoint spun up on demand.</p>
-      <p>Swap providers without touching code. Add a new provider by
-      implementing one method: <code>complete(system, user, temperature)</code>.
-      The config router handles the rest.</p>
-    image: /static/images/projects/impossible-papers-config.jpg
-    reverse: false
-
-  - type: split
-    title: Human in the Loop
-    content: |
-      <p>The pipeline pauses after every step. Each checkpoint is a
-      deliverable for human review. Is the thesis framing right? Are
-      these the claims you want to make? Are the real sources the right
-      ones? Are the gaps correctly identified?</p>
-      <p>Any step can be a restart point. Revise the seed, re-run
-      formalization with a different model, expand the literature search
-      with new queries. The system remembers its state; the human steers
-      the direction.</p>
-    image: /static/images/projects/impossible-papers-review.jpg
+      <p>A hypothesis enters as a seed — the core claim, the domain,
+      what would falsify it. The system decomposes it into testable sub-claims
+      (foundational, derived, speculative), then runs iterative loops:</p>
+      <p><strong>Literature.</strong> OpenAlex, PubMed, and Google Patents searched
+      exhaustively. Papers scored by relevance, clustered by concept, mapped into
+      a regime chart showing where the hypothesis sits relative to established work.</p>
+      <p><strong>Claims.</strong> Each loop refines the claims — strengthening what
+      the literature supports, weakening what it challenges, killing what it
+      contradicts. Claims that depend on killed claims die automatically.</p>
+      <p><strong>Simulation.</strong> Computational tests against real datasets
+      (NHANES, MIMIC-IV-ECG, WESAD, SPARC, Cremona ECDB — sourced from SciData Hub).
+      The system writes and executes simulation code, then evaluates whether the
+      results support or falsify each claim.</p>
+      <p><strong>Review.</strong> Four-stage adversarial review: regime diversity
+      check, rederivation from first principles, counter-model generation, and
+      stress testing. The review agents try to break what the research agents built.</p>
+    image: /static/assets/images/projects/impossible-papers/architecture.png
     reverse: true
 
   - type: split
-    title: Built on the Caria Stack
+    title: The Fingerprint
     content: |
-      <p>Impossible Papers lives in the <strong>caria</strong> monorepo.
-      Its academic search layer — Semantic Scholar, OpenAlex — is the same
-      infrastructure planned for Bookshelf's discovery features. Its
-      embedding pipeline will share LaBSE with Monsieur.lib's esoteric
-      catalog of 161,000 items.</p>
-      <p>For hypotheses that touch Western esotericism, consciousness, or
-      occult-adjacent domains, Monsieur.lib provides a unique source
-      catalog that no academic API covers. The literature agent can pull
-      from both peer-reviewed science and the hermetic tradition.</p>
-    image: /static/images/projects/impossible-papers-stack.jpg
+      <p>Every run produces a structured research fingerprint — not a paper, not a
+      report, a machine-readable record of everything the system found. Claims with
+      evidence status and dependency chains. Concept genealogies tracing ideas through
+      decades of literature with transition types (builds on, contradicts, converges
+      independently). Regime distances showing how far each claim sits from established
+      work. Convergences, contradictions, surprises. What survived, what died, why.</p>
+      <p>The fingerprint is designed to be read by humans and consumed by downstream
+      tools. The concept genealogy renders as an interactive graph. The evidence
+      status renders as a dashboard. The experiment proposals come with feasibility
+      scores and dataset links. A researcher receiving a fingerprint gets a structured
+      map of where they stand, not a wall of text.</p>
+    image: /static/assets/images/projects/impossible-papers/fingerprint.png
     reverse: false
 
-  - type: methodology
-    title: The First Hypothesis
+  # ── 4. RESULT ──
+  - type: callout
+    title: Active Programs
     content: |
-      <p>Level 1 consciousness is somatic, not cortical. The body receives
-      the full unfiltered data stream — all sensory, proprioceptive,
-      interoceptive input. The brain runs in parallel on a filtered subset.
-      What we call "gut feeling" is the soma having integrated information
-      the brain hasn't received yet. AI is structurally incapable of L1
-      consciousness because it only has the brain-analog.</p>
-      <p>Singer & Damasio (2025) argue that interoception constitutes
-      the foundational substrate of consciousness, grounded in core biology
-      rather than high-level cognition. The real literature supports
-      the hypothesis. Impossible Papers found it.</p>
-
-  - type: metrics
-    items:
-      - value: "LangGraph"
-        label: Agent orchestration
-      - value: "Ollama"
-        label: Local model inference
-      - value: "YAML"
-        label: Per-step model config
-      - value: "JSON"
-        label: Checkpoint format
-
-  - type: methodology
-    title: Roadmap
-    content: |
-      <p><strong>V1 (current):</strong> Hypothesis refinement loop —
-      formalize, literature review, reassess. Checkpoint-restart. YAML
-      model routing. CLI interface.</p>
-      <p><strong>V2:</strong> Formalization agent (equations, toy models),
-      visualization agent (figures, phase plots), editor agent (consistency
-      audit), falsifiability sub-loop. Flask renderer with MathJax.</p>
-      <p><strong>V3:</strong> SIA-style meta-learning across runs. Full-text
-      RAG over key papers. Monsieur.lib integration for esoteric sources.
-      Web UI for checkpoint review.</p>
+      <p><strong>TDG Superfluid DM Falsification</strong> — novel astrophysics finding,
+      paper draft in progress.</p>
+      <p><strong>Evolution 2.0 Prize</strong> ($10M) — emergent RNA-amino acid coding,
+      2 claims falsified, residual hypothesis worth pursuing.</p>
+      <p><strong>ARC Prize 2026</strong> ($450K) — biological harness patterns for
+      AGI architectures.</p>
+      <p><strong>BSD Conjecture</strong> — statistical anomaly hunting in elliptic
+      curve invariants using Cremona's 3M-curve dataset.</p>
+      <p><strong>Neurorehabilitation</strong> — HRV distributional shift in stroke
+      patients, collaboration with university neuroscience lab.</p>
+      <p>The system is domain-agnostic. The hypothesis is the input.
+      <a href="#" data-contact-trigger>Submit one</a>.</p>
 ---

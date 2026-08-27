@@ -10,7 +10,7 @@
 
 .abt-hero {
     position: relative;
-    margin-inline: calc(-1 * var(--page-gutter, 2rem));
+    margin-inline: 0;
     padding: clamp(4rem, 9vw, 6.5rem) var(--page-gutter, 2rem) clamp(3rem, 6vw, 4.5rem);
     --hatch-color: var(--hatch-ux);
     --pattern-opacity: 0.28;
@@ -64,6 +64,7 @@
 }
 
 .abt-portrait {
+    margin: 0;
     aspect-ratio: 4 / 5;
     border-radius: 18px;
     overflow: hidden;
@@ -100,8 +101,7 @@
 
 @media (max-width: 720px) {
     .abt-hero {
-        margin: 0;
-        padding: clamp(3rem, 8vh, 4.5rem) 0 clamp(2.5rem, 5vh, 3.5rem);
+        padding: clamp(3rem, 8vh, 4.5rem) var(--page-gutter, 1rem) clamp(2.5rem, 5vh, 3.5rem);
     }
 
     .abt-hero-grid {
@@ -120,15 +120,15 @@
 {% block content %}
 {% from 'partials/_media_picture.html' import picture %}
 
-<section class="abt-hero lr-pattern-noise">
+<section class="abt-hero lr-pattern-noise" aria-labelledby="abt-hero-heading">
     <div class="abt-hero-grid">
-        <div class="abt-portrait">
+        <figure class="abt-portrait">
             {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
-        </div>
+        </figure>
 
         <div class="abt-hero-copy">
             <span class="abt-hero-eyebrow">About me</span>
-            <h1 class="abt-hero-title">Federico Caria</h1>
+            <h1 id="abt-hero-heading" class="abt-hero-title">Federico Caria</h1>
             <p class="abt-hero-subtitle">Experience engineer</p>
             <p class="abt-hero-body">
                 I build working prototypes from complex research concepts. Over a decade translating
@@ -140,12 +140,12 @@
             <div class="abt-hero-actions">
                 {% if cv_available %}
                 <a href="{{ cv_url }}" class="btn btn-secondary" download>
-                    <i class="ph ph-file-pdf"></i> Download CV
+                    <i class="ph ph-file-pdf" aria-hidden="true"></i> Download CV
                 </a>
                 {% endif %}
                 <div class="abt-hero-social" aria-label="Social links">
                     <a href="https://www.linkedin.com/in/federico-caria/" class="contact-social-btn contact-social-btn--linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-                        <i class="ph ph-linkedin-logo"></i>
+                        <i class="ph ph-linkedin-logo" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -153,13 +153,13 @@
     </div>
 </section>
 
-<section class="about-endorsements idx-section" aria-label="Endorsements">
+<section class="about-endorsements idx-section" aria-labelledby="endorsements-heading">
     <div class="about-endorsements-head idx-section-inner idx-section-header">
         <span class="rx-eyebrow">Endorsements</span>
-        <h2>What collaborators say</h2>
+        <h2 id="endorsements-heading">What collaborators say</h2>
     </div>
 
-    <div class="about-carousel">
+    <div class="about-carousel" role="region" aria-label="Endorsement quotes">
         <div class="about-carousel-track">
             {% for _ in range(2) %}
             {% set is_duplicate = loop.index == 2 %}
@@ -168,7 +168,7 @@
                 <p class="about-endorsement-quote">{{ e.quote }}</p>
                 <footer class="about-endorsement-author">
                     {% if e.logo %}
-                    <img class="about-endorsement-logo" src="{{ url_for('static', filename=e.logo) }}" alt="">
+                    <img class="about-endorsement-logo" src="{{ url_for('static', filename=e.logo) }}" alt="" aria-hidden="true">
                     {% endif %}
                     <div>
                         <p class="about-endorsement-name">{{ e.name }}</p>
@@ -187,24 +187,24 @@
 {# ════════════════════════════════════
     INDUSTRIES
     ════════════════════════════════════ #}
- <section class="idx-band idx-band--sectors lr-pattern-paper-plus lr-material-dither-plus">
+ <section class="idx-band idx-band--sectors lr-pattern-paper-plus lr-material-dither-plus" aria-labelledby="abt-industries-heading">
      <div class="idx-section-inner">
          <div class="idx-section-header centered">
              <span class="txt-mono txt-xsmall uppercase hiw-muted">Sectors</span>
-             <h2 class="txt-xbold">Industries I Specialize In</h2>
+             <h2 id="abt-industries-heading" class="txt-xbold">Industries I Specialize In</h2>
          </div>
          <div class="industry-tags-container">
-             <span class="industry-badge"><i class="ph ph-storefront"></i> D2C E-Commerce</span>
-             <span class="industry-badge"><i class="ph ph-buildings"></i> B2B E-Commerce</span>
-             <span class="industry-badge"><i class="ph ph-shopping-cart"></i> Marketplaces</span>
-             <span class="industry-badge"><i class="ph ph-package"></i> Retail & Fashion</span>
-             <span class="industry-badge"><i class="ph ph-flask"></i> Health & Beauty</span>
-             <span class="industry-badge"><i class="ph ph-book-open"></i> Digital Products & SaaS</span>
-             <span class="industry-badge"><i class="ph ph-device-mobile"></i> Food & Beverage</span>
-             <span class="industry-badge"><i class="ph ph-house-line"></i> Home & Furniture</span>
-             <span class="industry-badge"><i class="ph ph-graduation-cap"></i> Education & Learning</span>
-             <span class="industry-badge"><i class="ph ph-suitcase-rolling"></i> Travel & Accommodations</span>
-             <span class="industry-badge"><i class="ph ph-asclepius"></i> Healthcare & Wellness</span>
+             <span class="industry-badge"><i class="ph ph-storefront" aria-hidden="true"></i> D2C E-Commerce</span>
+             <span class="industry-badge"><i class="ph ph-buildings" aria-hidden="true"></i> B2B E-Commerce</span>
+             <span class="industry-badge"><i class="ph ph-shopping-cart" aria-hidden="true"></i> Marketplaces</span>
+             <span class="industry-badge"><i class="ph ph-package" aria-hidden="true"></i> Retail & Fashion</span>
+             <span class="industry-badge"><i class="ph ph-flask" aria-hidden="true"></i> Health & Beauty</span>
+             <span class="industry-badge"><i class="ph ph-book-open" aria-hidden="true"></i> Digital Products & SaaS</span>
+             <span class="industry-badge"><i class="ph ph-device-mobile" aria-hidden="true"></i> Food & Beverage</span>
+             <span class="industry-badge"><i class="ph ph-house-line" aria-hidden="true"></i> Home & Furniture</span>
+             <span class="industry-badge"><i class="ph ph-graduation-cap" aria-hidden="true"></i> Education & Learning</span>
+             <span class="industry-badge"><i class="ph ph-suitcase-rolling" aria-hidden="true"></i> Travel & Accommodations</span>
+             <span class="industry-badge"><i class="ph ph-asclepius" aria-hidden="true"></i> Healthcare & Wellness</span>
          </div>
      </div>
  </section>
@@ -213,21 +213,21 @@
  {# ════════════════════════════════════
     STACK BENTO
     ════════════════════════════════════ #}
- <section class="idx-section idx-section--stack lr-pattern-grid-wide">
+ <section class="idx-section idx-section--stack lr-pattern-grid-wide" aria-labelledby="abt-stack-heading">
      <div class="idx-section-inner">
          <div class="idx-section-header centered">
              <span class="txt-mono txt-xsmall uppercase hiw-muted">Infrastructure</span>
-             <h2 class="txt-xbold">What I Work With</h2>
+             <h2 id="abt-stack-heading" class="txt-xbold">What I Work With</h2>
          </div>
  
          <div class="stack-bento">
-             <div class="sb-filters" role="tablist" aria-label="Filter stack by category">
-                 <button type="button" class="sb-filter active" data-filter="all" role="tab" aria-selected="true">All</button>
-                 <button type="button" class="sb-filter" data-filter="ai" role="tab" aria-selected="false" style="--zone: var(--hatch-ai);">AI & NLP</button>
-                 <button type="button" class="sb-filter" data-filter="backend" role="tab" aria-selected="false" style="--zone: var(--hatch-ux);">Backend</button>
-                 <button type="button" class="sb-filter" data-filter="ecommerce" role="tab" aria-selected="false" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
-                 <button type="button" class="sb-filter" data-filter="frontend" role="tab" aria-selected="false" style="--zone: var(--hatch-libraries);">Frontend</button>
-                 <button type="button" class="sb-filter" data-filter="ux" role="tab" aria-selected="false" style="--zone: var(--hatch-neutral);">Research</button>
+             <div class="sb-filters" role="group" aria-label="Filter stack by category">
+                 <button type="button" class="sb-filter active" data-filter="all">All</button>
+                 <button type="button" class="sb-filter" data-filter="ai" style="--zone: var(--hatch-ai);">AI & NLP</button>
+                 <button type="button" class="sb-filter" data-filter="backend" style="--zone: var(--hatch-ux);">Backend</button>
+                 <button type="button" class="sb-filter" data-filter="ecommerce" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
+                 <button type="button" class="sb-filter" data-filter="frontend" style="--zone: var(--hatch-libraries);">Frontend</button>
+                 <button type="button" class="sb-filter" data-filter="ux" style="--zone: var(--hatch-neutral);">Research</button>
              </div>
  
              <div class="stack-bento-grid">

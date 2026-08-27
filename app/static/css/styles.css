@@ -176,6 +176,30 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 10000;
+  padding: 0.65rem 1rem;
+  background: var(--c-text-primary);
+  color: var(--c-background);
+  text-decoration: none;
+  font-size: var(--t-body-sm);
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
 /* 5. Improve media defaults */
 img, picture, video, canvas, svg {
   display: block;
@@ -507,6 +531,12 @@ p {
   cursor: pointer;
 }
 
+button.btn {
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 .btn.btn-primary {
   background-color: var(--c-text-primary);
   color: var(--c-background-gray);
@@ -693,6 +723,36 @@ main {
 } 
 
 /* Logo Styling */
+.logo-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 0.9375rem;
+  margin-right: 1.25rem;
+  color: var(--c-text-primary);
+  text-decoration: none;
+}
+
+.logo-brand:hover {
+  color: var(--c-text-primary);
+}
+
+.nav-molecule {
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.nav-molecule svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
 .logo a {
   font-weight: bold;
   font-size: 0.9375rem;
@@ -853,7 +913,7 @@ main {
       display: flex;
   }
 
-  .logo a {
+  .logo-brand {
     margin: 0 1rem;
   }
 
@@ -1003,12 +1063,21 @@ footer {
 }
 
 
+.footer-logo-brand {
+  margin-right: 0;
+}
+
+.footer-molecule {
+  width: 3rem;
+  height: 3rem;
+}
+
 .footer-logo a {
   text-decoration: none;
 }
 
 .logo-text {
-  font-size: var(--t-title);
+  font-size: 23px;
   font-weight: 700;
   color: var(--c-text-primary);
 }

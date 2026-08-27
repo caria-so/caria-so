@@ -18,7 +18,7 @@
     </a>
 
     <div class="proj-card-body">
-        <h2 class="proj-card-title">
+        <h3 class="proj-card-title">
             <a href="{{ url_for('blog.project_detail', slug=project.slug) }}" style="color: inherit; text-decoration: none;">
                 {{ project.title }}
             </a>
@@ -41,19 +41,19 @@
 
         <div class="proj-card-foot">
             <a href="{{ url_for('blog.project_detail', slug=project.slug) }}" class="proj-cta">
-                View case study <i class="ph ph-arrow-right"></i>
+                View case study <i class="ph ph-arrow-right" aria-hidden="true"></i>
             </a>
 
             {% if live_url or project.github_link %}
             <div class="proj-ext-links">
                 {% if live_url %}
                 <a href="{{ live_url }}" class="proj-ext-link" target="_blank" rel="noopener noreferrer" title="Live site" aria-label="Live site">
-                    <i class="ph ph-arrow-square-out"></i>
+                    <i class="ph ph-arrow-square-out" aria-hidden="true"></i>
                 </a>
                 {% endif %}
                 {% if project.github_link %}
                 <a href="{{ project.github_link }}" class="proj-ext-link" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-                    <i class="ph ph-github-logo"></i>
+                    <i class="ph ph-github-logo" aria-hidden="true"></i>
                 </a>
                 {% endif %}
             </div>

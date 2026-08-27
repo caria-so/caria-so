@@ -349,7 +349,7 @@ main:has(.proj-hero) {
 <div data-proj-service-filter-root>
 <script type="application/json" id="proj-services-data">{{ project_services | tojson }}</script>
 
-<section class="idx-section proj-hero lr-pattern-noise">
+<section class="idx-section proj-hero lr-pattern-noise" aria-labelledby="proj-hero-title">
     <div class="idx-section-inner">
         <div class="proj-hero-grid">
             <div class="proj-hero-copy">
@@ -362,7 +362,7 @@ main:has(.proj-hero) {
             </div>
 
             {% if git_commits %}
-            <div class="proj-hero-viz" id="proj-git-viz"></div>
+            <div class="proj-hero-viz" id="proj-git-viz" role="region" aria-label="Recent project commits"></div>
             <script type="application/json" id="proj-git-data">{{ {
                 'commits': git_commits,
                 'detailBase': url_for('blog.project_detail', slug='').rstrip('/') + '/'
@@ -373,7 +373,7 @@ main:has(.proj-hero) {
     </div>    
 </section>
 
-<section class="idx-section">
+<section class="idx-section" aria-label="All projects">
     <div class="idx-section-inner">
         {% with client_filter=true %}
         {% include 'partials/_project_service_filters.html' %}
@@ -405,21 +405,21 @@ main:has(.proj-hero) {
 {# ════════════════════════════════════
    STACK
    ════════════════════════════════════ #}
-<section class="idx-section idx-section--stack lr-pattern-grid-wide">
+<section class="idx-section idx-section--stack lr-pattern-grid-wide" aria-labelledby="proj-stack-heading">
     <div class="idx-section-inner">
         <div class="idx-section-header centered">
             <span class="txt-mono txt-xsmall uppercase hiw-muted">Infrastructure</span>
-            <h2 class="txt-xbold">What I Work With</h2>
+            <h2 id="proj-stack-heading" class="txt-xbold">What I Work With</h2>
         </div>
 
         <div class="stack-bento">
-            <div class="sb-filters" role="tablist" aria-label="Filter stack by category">
-                <button type="button" class="sb-filter active" data-filter="all" role="tab" aria-selected="true">All</button>
-                <button type="button" class="sb-filter" data-filter="ai" role="tab" aria-selected="false" style="--zone: var(--hatch-ai);">AI & NLP</button>
-                <button type="button" class="sb-filter" data-filter="backend" role="tab" aria-selected="false" style="--zone: var(--hatch-ux);">Backend</button>
-                <button type="button" class="sb-filter" data-filter="ecommerce" role="tab" aria-selected="false" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
-                <button type="button" class="sb-filter" data-filter="frontend" role="tab" aria-selected="false" style="--zone: var(--hatch-libraries);">Frontend</button>
-                <button type="button" class="sb-filter" data-filter="ux" role="tab" aria-selected="false" style="--zone: var(--hatch-neutral);">Research</button>
+            <div class="sb-filters" role="group" aria-label="Filter stack by category">
+                <button type="button" class="sb-filter active" data-filter="all">All</button>
+                <button type="button" class="sb-filter" data-filter="ai" style="--zone: var(--hatch-ai);">AI & NLP</button>
+                <button type="button" class="sb-filter" data-filter="backend" style="--zone: var(--hatch-ux);">Backend</button>
+                <button type="button" class="sb-filter" data-filter="ecommerce" style="--zone: var(--hatch-ecommerce);">E-Commerce</button>
+                <button type="button" class="sb-filter" data-filter="frontend" style="--zone: var(--hatch-libraries);">Frontend</button>
+                <button type="button" class="sb-filter" data-filter="ux" style="--zone: var(--hatch-neutral);">Research</button>
             </div>
 
             <div class="stack-bento-grid">

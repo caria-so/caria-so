@@ -127,6 +127,7 @@
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
+    box-sizing: border-box;
 }
 
 .rx-contact-inner h2 {
@@ -397,6 +398,12 @@ main:has(.idx-hero-v2) {
     to { transform: translateX(-50%); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .idx-logo-carousel-track {
+        animation: none;
+    }
+}
+
 .idx-hero-title {
     font-size: var(--t-display);
     line-height: 1.05;
@@ -466,7 +473,8 @@ main:has(.idx-hero-v2) {
 }
 
 .sec-header h2,
-.idx-section-header h2 {
+.idx-section-header h2,
+.idx-section-header h3 {
     font-size: var(--t-title);
     line-height: 1.2;
 }

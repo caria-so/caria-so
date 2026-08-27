@@ -14,12 +14,12 @@
 {# Flash Messages #}
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <div class="flash-messages">
+    <div class="flash-messages" role="region" aria-label="Notifications">
       {% for category, message in messages %}
-        <div class="flash-message flash-{{ category }}">
+        <div class="flash-message flash-{{ category }}" role="alert">
           <span class="flash-text">{{ message }}</span>
-          <button class="flash-close" onclick="this.parentElement.style.display='none'">
-            <i class="ph ph-x"></i>
+          <button type="button" class="flash-close" aria-label="Dismiss message" onclick="this.parentElement.style.display='none'">
+            <i class="ph ph-x" aria-hidden="true"></i>
           </button>
         </div>
       {% endfor %}
@@ -31,17 +31,17 @@
 {# ════════════════════════════════════
    HERO
    ════════════════════════════════════ #}
-<section class="idx-hero-v2 lr-pattern-paper-dot">
+<section class="idx-hero-v2 lr-pattern-paper-dot" aria-labelledby="hero-heading">
     <div class="idx-hero-v2-shell">
         <div class="sec-inner idx-hero-v2-stage">
             <div class="idx-hero-v2-grid">
                 <div class="idx-hero-v2-copy">
                     <div class="idx-hero-name">caria.so</div>
-                    <h1 class="idx-hero-thesis">Experience Engineering</h1>
+                    <h1 id="hero-heading" class="idx-hero-thesis">Experience Engineering</h1>
                     <p class="idx-hero-subtitle">From user research through working code — end to end</p>
                     <div class="idx-hero-cta">
-                        <a href="" class="btn btn-primary txt-mono uppercase">See What I do</a>
-                        <a href="#" class="btn btn-secondary txt-mono uppercase" data-contact-trigger>Get in touch</a>
+                        <a href="#services" class="btn btn-primary txt-mono uppercase">See What I do</a>
+                        <button type="button" class="btn btn-secondary txt-mono uppercase" data-contact-trigger>Get in touch</button>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="idx-hero-v2-logos">
+        <div class="idx-hero-v2-logos" role="region" aria-label="Organizations I've worked with">
             <div class="sec-inner">
                 <div class="idx-logo-carousel-track">
                     {# First set — accessible #}
@@ -77,50 +77,12 @@
     </div>
 </section>
 
-
-{# ════════════════════════════════════
-    SERVICES
-    ════════════════════════════════════ #}
-<!-- 
-
-<div class="rx-ip-proof-container">
-    <div class="rx-ip-proof" data-proof-carousel>
-        <span class="rx-ip-proof-label">Endorsements</span>
-        <div class="rx-ip-proof-slides" aria-live="polite">
-            {% for e in endorsements %}
-            <blockquote class="rx-ip-proof-slide{% if loop.first %} is-active{% endif %}"{% if not loop.first %} aria-hidden="true"{% endif %}>
-                <p>{{ e.quote }}</p>
-                <footer class="rx-ip-proof-attr">
-                    {% if e.logo %}
-                    <img src="{{ url_for('static', filename=e.logo) }}" alt="" class="rx-ip-proof-logo">
-                    {% endif %}
-                    <span>
-                        <span class="rx-ip-proof-name">{{ e.name }}</span>
-                        <span class="rx-ip-proof-role">{{ e.role }}</span>
-                    </span>
-                </footer>
-            </blockquote>
-            {% endfor %}
-        </div>
-    </div>
-
-    <a href="{{ url_for('blog.projects') }}" class="rx-ip-link">
-        About me <i class="ph ph-arrow-right"></i>
-    </a>
-</div> 
-            
--->
-
-
-{# ════════════════════════════════════
-    SERVICES
-    ════════════════════════════════════ #}
- <section class="sec idx-section--services lr-pattern-paper-dot" id="services">
+ <section class="sec idx-section--services lr-pattern-paper-dot" id="services" aria-labelledby="services-heading">
      <div class="sec-inner">
         <div class="svc-header-grid">
             <div class="sec-header">
                 <span class="eyebrow">Services</span>
-                <h2 class="txt-xbold">Research &amp;<br>Development Services</h2>
+                <h2 id="services-heading" class="txt-xbold">Research &amp;<br>Development Services</h2>
             </div>
 
             <p class="svc-intro">
@@ -140,7 +102,7 @@
                      <span class="svc-row-title">Find what's costing you conversions</span>
                      <span class="svc-row-note">Heuristic evaluations against 700+ guidelines, moderated usability sessions, funnel teardowns with annotated recordings</span>
                  </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
              </a>
  
              <a href="{{ url_for('blog.projects', service='development') }}" class="svc-row" style="--svc-color: var(--{{ project_services.development.color }});">
@@ -152,7 +114,7 @@
                      <span class="svc-row-title">Prototyping & development</span>
                      <span class="svc-row-note">Interactive prototypes, e-commerce builds, research dashboards. Flask, FastAPI, WooCommerce.</span>
                  </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
              </a>
  
              <a href="{{ url_for('blog.projects', service='pipelines') }}" class="svc-row" style="--svc-color: var(--{{ project_services.pipelines.color }});">
@@ -164,7 +126,7 @@
                      <span class="svc-row-title">Wire AI into your actual workflow</span>
                      <span class="svc-row-note">LLM orchestration, entity resolution, semantic search, OCR extraction. Production integrations, not a chatbot on a landing page</span>
                  </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
              </a>
  
              <a href="{{ url_for('blog.projects', service='knowledge') }}" class="svc-row" style="--svc-color: var(--{{ project_services.knowledge.color }});">
@@ -176,49 +138,42 @@
                      <span class="svc-row-title">Make complex information findable</span>
                      <span class="svc-row-note">Graph databases, semantic search, metadata architecture, dataset curation — for research labs and businesses alike</span>
                  </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow"></i>
+                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
              </a>
          </div>
      </div>
 
-     {# ════════════════════════════════════
-        INDUSTRIES
-        ════════════════════════════════════ #}
-
-     <div class="idx-section-inner svc-industries">
+     <div class="idx-section-inner svc-industries" aria-labelledby="industries-heading">
         <div class="idx-section-header centered">
             <span class="txt-mono txt-xsmall uppercase hiw-muted">Sectors</span>
-            <h2 class="txt-xbold">Industries I Specialize In</h2>
+            <h3 id="industries-heading" class="txt-xbold">Industries I Specialize In</h3>
         </div>
         <div class="industry-tags-container">
-            <span class="industry-badge"><i class="ph ph-storefront"></i> D2C E-Commerce</span>
-            <span class="industry-badge"><i class="ph ph-buildings"></i> B2B E-Commerce</span>
-            <span class="industry-badge"><i class="ph ph-shopping-cart"></i> Marketplaces</span>
-            <span class="industry-badge"><i class="ph ph-package"></i> Retail & Fashion</span>
-            <span class="industry-badge"><i class="ph ph-flask"></i> Health & Beauty</span>
-            <span class="industry-badge"><i class="ph ph-book-open"></i> Digital Products & SaaS</span>
-            <span class="industry-badge"><i class="ph ph-device-mobile"></i> Food & Beverage</span>
-            <span class="industry-badge"><i class="ph ph-house-line"></i> Home & Furniture</span>
-            <span class="industry-badge"><i class="ph ph-graduation-cap"></i> Education & Learning</span>
-            <span class="industry-badge"><i class="ph ph-suitcase-rolling"></i> Travel & Accommodations</span>
-            <span class="industry-badge"><i class="ph ph-asclepius"></i> Healthcare & Wellness</span>
+            <span class="industry-badge"><i class="ph ph-storefront" aria-hidden="true"></i> D2C E-Commerce</span>
+            <span class="industry-badge"><i class="ph ph-buildings" aria-hidden="true"></i> B2B E-Commerce</span>
+            <span class="industry-badge"><i class="ph ph-shopping-cart" aria-hidden="true"></i> Marketplaces</span>
+            <span class="industry-badge"><i class="ph ph-package" aria-hidden="true"></i> Retail & Fashion</span>
+            <span class="industry-badge"><i class="ph ph-flask" aria-hidden="true"></i> Health & Beauty</span>
+            <span class="industry-badge"><i class="ph ph-book-open" aria-hidden="true"></i> Digital Products & SaaS</span>
+            <span class="industry-badge"><i class="ph ph-device-mobile" aria-hidden="true"></i> Food & Beverage</span>
+            <span class="industry-badge"><i class="ph ph-house-line" aria-hidden="true"></i> Home & Furniture</span>
+            <span class="industry-badge"><i class="ph ph-graduation-cap" aria-hidden="true"></i> Education & Learning</span>
+            <span class="industry-badge"><i class="ph ph-suitcase-rolling" aria-hidden="true"></i> Travel & Accommodations</span>
+            <span class="industry-badge"><i class="ph ph-asclepius" aria-hidden="true"></i> Healthcare & Wellness</span>
         </div>
     </div>
 
  </section>
  
 
-{# ════════════════════════════════════
-    PROJECTS (THE LAB)
-    ════════════════════════════════════ #}
- <section class="sec idx-section--projects lr-pattern-noise">
+ <section class="sec idx-section--projects lr-pattern-noise" aria-labelledby="projects-heading">
      <div class="sec-inner">
          <div class="sec-header">
              <span class="eyebrow">The Lab</span>
-             <h2 class="txt-xbold">Most recent projects</h2>
+             <h2 id="projects-heading" class="txt-xbold">Most recent projects</h2>
          </div>
  
-         <div class="idx-scroll-row">
+         <div class="idx-scroll-row" role="region" aria-label="Recent projects" tabindex="0">
              {% for project in recent_projects %}
              {% with card_index=loop.index %}
              {% include 'partials/_project_card.html' %}
@@ -228,21 +183,17 @@
  
          <div class="flex justcenter mt-l">
              <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
-                 View All Projects <i class="ph ph-arrow-right"></i>
+                 View All Projects <i class="ph ph-arrow-right" aria-hidden="true"></i>
              </a>
          </div>
      </div>
  </section> 
 
-
-{# ════════════════════════════════════
-   ABOUT — background
-   ════════════════════════════════════ #}
-<section class="sec idx-section--arc lr-pattern-noise">
+<section class="sec idx-section--arc lr-pattern-noise" aria-labelledby="arc-heading">
     <div class="sec-inner">
         <div class="sec-header">
             <span class="eyebrow">Background</span>
-            <h2 class="txt-xbold">Knowledge Shorts Twice: Once in the tools. </br> Once in the humans.</h2>
+            <h2 id="arc-heading" class="txt-xbold">Knowledge Shorts Twice: Once in the tools.<br>Once in the humans.</h2>
         </div>
 
         <div class="rx-arc-layout">
@@ -307,7 +258,7 @@
                 </div>
 
                 <a href="{{ url_for('blog.about') }}" class="rx-ip-link" style="margin-top: 0.5rem;">
-                    About me <i class="ph ph-arrow-right"></i>
+                    About me <i class="ph ph-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
         </div>

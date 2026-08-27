@@ -1,7 +1,7 @@
 ---
 title: "I put +30 scientific datasets on Hugging Face so you don't have to write another API wrapper"
 thread: knowledge
-keywords: [scidata-hub, datasets, hugging-face, duckdb]
+keywords: [scidata-hub, datasets]
 author: "Federico Caria"
 date: "2026-08-26"
 tags: [scientific datasets, open data, hugging face, duckdb, parquet, ontologies]

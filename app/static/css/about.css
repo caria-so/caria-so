@@ -24,7 +24,7 @@ main:has(.abt-hero) {
 
 .about-carousel {
     overflow: hidden;
-    margin-inline: calc(-1 * var(--page-gutter, 2rem));
+    margin-inline: 0;
     padding: 0.25rem var(--page-gutter, 2rem) 0.5rem;
 }
 
@@ -44,6 +44,12 @@ main:has(.abt-hero) {
 @keyframes about-endorse-scroll {
     to {
         transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-carousel-track {
+        animation: none;
     }
 }
 

@@ -62,11 +62,11 @@ sections:
   - type: methodology
     title: Evaluate, benchmark, ship around the agency
     content: |
-      <p>Started with heuristics, not wireframes. Benchmarked every element of the existing product page against Baymard's guidelines — the same dataset I helped build over eight years. Then a structured competitive analysis across twelve bathroom furniture brands to establish what good looks like in this specific vertical.</p>
+      <p>Started with heuristics. Benchmarked every element of the existing product page against established ecommerce heuristics. Then a structured competitive analysis across twelve bathroom furniture brands to establish what good looks like in this specific vertical.</p>
     detail_label: Process & decisions
     case_study:
       problem: |
-        <p>Product page with a single image, broken specifications, no variant management, and one-line descriptions. Agency unresponsive, CMS locked down — no backend access, no cooperation.</p>
+        <p>Product page with a single image, broken specifications, and one-line descriptions. Agency unresponsive, CMS locked down — no backend access, no cooperation.</p>
       role: |
         <p>UX researcher and front-end — evaluation, design, prototyping, and production CSS/JS. Solo engagement, reporting directly to the owner.</p>
       method: |

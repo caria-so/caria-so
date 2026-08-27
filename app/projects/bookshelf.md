@@ -32,7 +32,7 @@ sections:
   - type: text
     title: The Problem
     content: |
-      <p>Independent bookshops run on WooCommerce but their catalogs are a drama. Every new book means five minutes of manual data entry — publisher, year, page count, subjects, description, cover image — copy-pasted from wherever Google leads. <strong>Libreria Rotondi</strong> has circa 20,000 published products with significant data gaps. 2545 items filed under "Senza categoria." Author names inconsistent, many items with no image, no description, no sku. A category tree 280 nodes deep with no consistency. Adding a shelf of fifty new books is a full day gone.</p>
+      <p>Independent bookshops run on WooCommerce but their catalogs are a drama. Every new book means five minutes or more of manual data entry — publisher, year, page count, subjects, description, cover image — copy-pasted from wherever Google leads. <strong>Libreria Rotondi</strong> has circa 20,000 published products with significant data gaps. 2545 items filed under "Senza categoria." Author names inconsistent, many items with no image, no description, no sku. A category tree 280 nodes deep with no consistency. Adding a shelf of fifty new books is a full day gone.</p>
 
   # ── 2. METRICS ──
   - type: metrics-pills
