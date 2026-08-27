@@ -13,12 +13,19 @@
 {% from 'partials/_project_methodology.html' import methodology %}
 
 {% macro proj_figure(src, alt='', caption='', loading='lazy', img_class='') %}
-<figure class="proj-figure">
-    <div class="proj-media-frame glass-panel">
+<figure class="proj-figure{% if not src %} proj-figure--pending{% endif %}">
+    <div class="proj-media-frame glass-panel{% if not src %} proj-media-frame--empty{% endif %}">
+        {% if src %}
         {{ picture(src, alt, img_class, loading, '', 'media-load') }}
+        <span class="proj-media-shimmer" aria-hidden="true"></span>
+        {% else %}
+        <span class="proj-media-shimmer" aria-hidden="true"></span>
+        {% endif %}
     </div>
     {% if caption %}
     <figcaption class="proj-figure-caption">{{ caption }}</figcaption>
+    {% elif alt and not src %}
+    <figcaption class="proj-figure-caption proj-figure-caption--pending">{{ alt }}</figcaption>
     {% endif %}
 </figure>
 {% endmacro %}
@@ -145,17 +152,17 @@
                             {{ section.content | safe }}
                         </div>
                     </div>
-                    {% if section.image %}
-                    <div class="proj-split-media">
-                        {{ proj_figure(section.image, section.title or section.caption or '', section.caption) }}
-                    </div>
-                    {% elif section.badges %}
+                    {% if section.badges and not (section.image is defined) %}
                     <div class="proj-split-aside">
                         <div class="proj-badge-grid">
                             {% for badge in section.badges %}
                             <span class="proj-ontology-badge"{% if badge.detail or badge.text %} title="{{ badge.detail or badge.text }}"{% endif %}>{{ badge.name or badge.label }}</span>
                             {% endfor %}
                         </div>
+                    </div>
+                    {% elif section.image or section.image is defined %}
+                    <div class="proj-split-media">
+                        {{ proj_figure(section.image or '', '', section.caption) }}
                     </div>
                     {% endif %}
                 </div>
@@ -166,7 +173,7 @@
                     {% if section.title %}
                     <p class="proj-caption txt-mono txt-xsmall uppercase hiw-muted">{{ section.title }}</p>
                     {% endif %}
-                    {{ proj_figure(section.image, section.title or section.caption or '', section.caption) }}
+                    {{ proj_figure(section.image or '', section.title or section.caption or '', section.caption) }}
                 </div>
 
                 {# ── Code block ── #}
@@ -207,10 +214,10 @@
                             {% endif %}
                         </div>
                         <div class="proj-contact-action">
-                            <button type="button" class="proj-contact-btn" data-contact-trigger>
+                            <a href="mailto:{{ contact_email }}" class="proj-contact-btn" data-contact-trigger>
                                 {{ section.button or 'Get in touch' }}
                                 <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -243,7 +250,7 @@
                     {% endif %}
                     <div class="proj-gallery-grid">
                         {% for img in section.images %}
-                        {{ proj_figure(img.src, img.alt or img.caption or '', img.caption) }}
+                        {{ proj_figure(img.src or '', img.alt or img.caption or '', img.caption) }}
                         {% endfor %}
                     </div>
                 </div>

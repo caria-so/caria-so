@@ -17,6 +17,8 @@ services:
         generateValue: true
       - key: CONTACT_EMAIL
         value: hello@caria.so
+      - key: SITE_URL
+        value: https://caria.so
       - key: MAIL_FROM
         value: hello@caria.so
       # Impossible Papers pages read multi-MB fingerprint JSON per request.

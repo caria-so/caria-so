@@ -67,7 +67,7 @@ sections:
       element, or can't predict what it will do. GOMS operators from cognitive psychology
       model these as first-class nodes, so "users never noticed the map toggle" is captured
       as precisely as "users clicked submit."</p>
-    image: /static/images/projects/flowws-architecture.jpg
+    image: /static/assets/images/projects/flowws-mcp/flowws_unit-of-analysis.png
     reverse: false
 
   - type: split

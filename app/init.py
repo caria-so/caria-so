@@ -32,6 +32,7 @@ def create_app():
 
     app.config['SECRET_KEY'] = secret_key
     app.config['CONTACT_EMAIL'] = os.environ.get('CONTACT_EMAIL', 'hello@caria.so')
+    app.config['SITE_URL'] = os.environ.get('SITE_URL', 'https://caria.so').rstrip('/')
 
     # Impossible Papers reads multi-MB fingerprint JSON on request. Off by
     # default so the site can run lean until those pages are wanted.
@@ -73,7 +74,11 @@ def create_app():
 
     @app.context_processor
     def inject_media_helpers():
-        return {'media_variants': media_variants}
+        return {
+            'media_variants': media_variants,
+            'site_url': app.config['SITE_URL'],
+            'contact_email': app.config['CONTACT_EMAIL'],
+        }
 
     @app.after_request
     def static_cache_headers(response):

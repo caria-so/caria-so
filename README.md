@@ -29,6 +29,7 @@ Without the model the code falls back to token matching, so this is safe to skip
 | `SECRET_KEY` | in production | `your-secret-key` | Flask session signing. Startup **fails** if left at the default when `FLASK_ENV=production`. |
 | `FLASK_ENV` | no | — | Set to `production` to disable debug and enforce the secret check. |
 | `CONTACT_EMAIL` | no | `hello@caria.so` | Where contact form submissions are delivered. |
+| `SITE_URL` | no | `https://caria.so` | Canonical origin for `llms.txt`, `robots.txt`, and `sitemap.xml`. |
 | `MAIL_FROM` | no | falls back to `SMTP_USER` | From address on outgoing mail. |
 | `SMTP_HOST` | for the contact form | — | SMTP server hostname. |
 | `SMTP_PORT` | no | `587` | SMTP port. |

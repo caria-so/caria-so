@@ -72,7 +72,7 @@ sections:
       boundaries — not rectangles, but shapes that follow the actual curve of text on
       warped pages. Lines are assigned to their enclosing region by centroid. The result
       is a reading order that respects the page, not just its bounding box.</p>
-    image: /static/images/projects/deepocr-layout.jpg
+    image: 
     reverse: true
 
   - type: split
@@ -86,7 +86,7 @@ sections:
       consumer is <strong>monsieur.lib</strong> — a library reader that serves the OCR text
       next to the original scan, renders markdown, and inlines cropped figures. A single-page
       re-OCR button delegates back to DeepOCR without either system knowing the other's internals.</p>
-    image: /static/images/projects/deepocr-output.jpg
+    image: 
     reverse: false
 
   # ── 4. RESULT ──
@@ -102,10 +102,10 @@ sections:
   - type: gallery
     title: In Use
     images:
-      - src: /static/images/projects/deepocr-workspace.jpg
+      - src: 
         alt: Job workspace with document list and OCR settings
-      - src: /static/images/projects/deepocr-layout-preview.jpg
+      - src: 
         alt: Layout detection preview with region overlays
-      - src: /static/images/projects/deepocr-reader.jpg
+      - src: 
         alt: Split-screen reader with scan and transcription
 ---

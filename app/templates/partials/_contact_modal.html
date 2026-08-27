@@ -64,16 +64,21 @@
 
     const closeBtn = modal.querySelector('.modal-close');
 
+    function openContactModal() {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const emailField = modal.querySelector('#contact-email');
+      if (emailField) {
+        window.setTimeout(function () { emailField.focus(); }, 100);
+      }
+    }
+
     document.querySelectorAll('[data-contact-trigger]').forEach(function (trigger) {
       trigger.addEventListener('click', function (e) {
+        // Progressive enhancement: mailto links work without JS; with JS, open the modal instead.
         e.preventDefault();
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        const emailField = modal.querySelector('#contact-email');
-        if (emailField) {
-          window.setTimeout(function () { emailField.focus(); }, 100);
-        }
+        openContactModal();
       });
     });
 

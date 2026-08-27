@@ -7,6 +7,7 @@
     <a href="{{ url_for('blog.project_detail', slug=project.slug) }}"
        class="proj-card-cover{% if has_duo %} proj-card-cover--duo{% endif %}{% if not project.cover_url %} proj-card-cover--empty{% endif %}"
        aria-label="{{ project.title }}">
+        <span class="proj-cover-shimmer" aria-hidden="true"></span>
         <span class="proj-status proj-status--{{ status }}">{{ project.status or 'Completed' }}</span>
         {% if has_duo %}
         {{ picture(project.cover_desktop, project.title ~ ' — preview', 'proj-cover-duo-img', 'lazy', project.cover_mobile, 'media-load--cover') }}
@@ -22,7 +23,7 @@
             <a href="{{ url_for('blog.project_detail', slug=project.slug) }}" style="color: inherit; text-decoration: none;">
                 {{ project.title }}
             </a>
-        </h2>
+        </h3>
 
         {% if project.summary %}
         <p class="proj-card-summary">{{ project.summary }}</p>

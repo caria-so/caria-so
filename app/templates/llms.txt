@@ -1,0 +1,35 @@
+# caria.so
+
+> Experience engineer — research, UX, and full-stack development. End-to-end work from user research through working code.
+
+Federico Caria builds working prototypes from complex research concepts: scholarly tools, e-commerce optimization, and multi-agent AI pipelines. Primary contact: {{ contact_email }}.
+
+## Core pages
+
+- [Home]({{ base_url }}/): Services, recent projects, background, contact
+- [Projects]({{ base_url }}/projects): Full portfolio with client-side service filters
+- [About]({{ base_url }}/about): Profile, endorsements, technology stack
+
+## Services
+
+{% for slug, svc in project_services.items() %}
+- [{{ svc.label }}]({{ base_url }}/projects?service={{ slug }}): {{ svc.title }}
+{% endfor %}
+
+## Case studies
+
+{% for project in projects %}
+- [{{ project.title }}]({{ base_url }}/project/{{ project.slug }}): {{ project.summary or project.title }}
+{% endfor %}
+
+## Contact
+
+- [Email](mailto:{{ contact_email }}): Primary contact — works without JavaScript
+
+## Optional
+
+- [Sketchboard]({{ base_url }}/sketchboard): Notes, threads, and writing archive
+- [Method Finder]({{ base_url }}/methods): Filterable UX research methods toolkit
+{% if enable_papers %}
+- [Impossible Papers]({{ base_url }}/papers): Multi-agent research evaluation pipeline
+{% endif %}

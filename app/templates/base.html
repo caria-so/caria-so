@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Blog{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}caria.so — Experience engineering from user research through working code.{% endblock %}">
     {# Drop favicon.jpg into app/static/ when ready (square, ≥48px for Google) #}
     <link rel="icon" href="{{ url_for('static', filename='favicon.jpg') }}" type="image/jpeg">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -274,10 +275,14 @@
 			if (!wrap || wrap.dataset.mediaBound) return;
 			wrap.dataset.mediaBound = '1';
 			var done = function () { wrap.classList.add('is-loaded'); };
+			var failed = function () { wrap.classList.add('is-error'); };
 			if (img.complete && img.naturalWidth > 0) done();
 			else {
 				img.addEventListener('load', done, { once: true });
-				img.addEventListener('error', done, { once: true });
+				img.addEventListener('error', function () {
+					if (wrap.classList.contains('media-load--cover')) failed();
+					else done();
+				}, { once: true });
 			}
 		});
 

@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 import yaml
-from flask import Blueprint, render_template, request, abort, current_app, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, abort, current_app, session, redirect, url_for, flash, Response
 from datetime import datetime
 from functools import wraps
 
@@ -1017,6 +1017,66 @@ def how_i_work():
 def impossible_papers():
     """Impossible Papers — system overview and analysis requests."""
     return render_template('impossible_papers.html')
+
+
+def _site_base_url():
+    return current_app.config.get('SITE_URL', 'https://caria.so').rstrip('/')
+
+
+@blog_bp.route('/llms.txt')
+def llms_txt():
+    """Machine-readable site summary for AI agents (llmstxt.org)."""
+    projects = load_posts(PROJECTS_DIR)
+    body = render_template(
+        'llms.txt',
+        base_url=_site_base_url(),
+        project_services=PROJECT_SERVICES,
+        projects=projects,
+        enable_papers=current_app.config['ENABLE_PAPERS'],
+        contact_email=current_app.config['CONTACT_EMAIL'],
+    )
+    return Response(body, mimetype='text/plain')
+
+
+@blog_bp.route('/robots.txt')
+def robots_txt():
+    """Crawler directives and sitemap pointer."""
+    base = _site_base_url()
+    body = (
+        'User-agent: *\n'
+        'Allow: /\n\n'
+        f'Sitemap: {base}/sitemap.xml\n'
+    )
+    return Response(body, mimetype='text/plain')
+
+
+@blog_bp.route('/sitemap.xml')
+def sitemap_xml():
+    """XML sitemap for crawlers and agent discovery."""
+    base = _site_base_url()
+    static_pages = [
+        {'loc': f'{base}/', 'priority': '1.0'},
+        {'loc': f'{base}/about', 'priority': '0.9'},
+        {'loc': f'{base}/projects', 'priority': '0.9'},
+        {'loc': f'{base}/sketchboard', 'priority': '0.6'},
+        {'loc': f'{base}/methods', 'priority': '0.6'},
+    ]
+    for slug in PROJECT_SERVICES:
+        static_pages.append({
+            'loc': f'{base}/projects?service={slug}',
+            'priority': '0.7',
+        })
+
+    project_urls = [
+        {'loc': f'{base}/project/{p["slug"]}', 'priority': '0.8'}
+        for p in load_posts(PROJECTS_DIR)
+        if p.get('slug')
+    ]
+
+    return Response(
+        render_template('sitemap.xml', urls=static_pages + project_urls),
+        mimetype='application/xml',
+    )
 
 
 @blog_bp.route('/contact', methods=['POST'])

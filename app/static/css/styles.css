@@ -82,6 +82,9 @@
   --t-caption: 0.75rem;
   --t-label:   0.6875rem;
   --t-micro:   0.625rem;
+
+  /* Placeholder shimmer — slow, low contrast */
+  --shimmer-duration: 5s;
  
   
   /* Additional UI elements - Light */
@@ -2070,8 +2073,13 @@ header.contact-modal__header {
 
 
 /* ────────────────────────────────────────
-   MEDIA LOAD — shimmer placeholder
+   MEDIA LOAD — soft shimmer placeholder
    ──────────────────────────────────────── */
+
+@keyframes media-shimmer {
+  0%, 100% { background-position: 100% 50%; }
+  50% { background-position: 0% 50%; }
+}
 
 .media-load {
   display: block;
@@ -2079,15 +2087,13 @@ header.contact-modal__header {
   overflow: hidden;
   background:
     linear-gradient(
-      110deg,
+      100deg,
       var(--c-background-gray) 0%,
-      color-mix(in srgb, var(--c-border) 55%, var(--c-background-gray)) 45%,
-      color-mix(in srgb, var(--c-border) 70%, var(--c-background-gray)) 50%,
-      color-mix(in srgb, var(--c-border) 55%, var(--c-background-gray)) 55%,
-      var(--c-background-gray) 100%
+      color-mix(in srgb, var(--c-border) 18%, var(--c-background-gray)) 48%,
+      var(--c-background-gray) 96%
     );
-  background-size: 220% 100%;
-  animation: media-shimmer 1.4s ease-in-out infinite;
+  background-size: 200% 100%;
+  animation: media-shimmer var(--shimmer-duration, 5s) ease-in-out infinite;
 }
 
 .media-load picture {
@@ -2113,16 +2119,20 @@ header.contact-modal__header {
 }
 
 .media-load-bg {
-  animation: media-shimmer 1.4s ease-in-out infinite;
+  background:
+    linear-gradient(
+      100deg,
+      var(--c-background-gray) 0%,
+      color-mix(in srgb, var(--c-border) 18%, var(--c-background-gray)) 48%,
+      var(--c-background-gray) 96%
+    );
+  background-size: 200% 100%;
+  animation: media-shimmer var(--shimmer-duration, 5s) ease-in-out infinite;
 }
 
 .media-load-bg.is-loaded {
   animation: none;
-}
-
-@keyframes media-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  background: transparent;
 }
 
 
@@ -2136,5 +2146,19 @@ header.contact-modal__header {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .media-load,
+  .media-load-bg,
+  .proj-cover-shimmer,
+  .proj-media-shimmer {
+    animation: none !important;
+    background: color-mix(in srgb, var(--c-border) 22%, var(--c-background-gray));
+    background-size: 100% 100%;
+  }
+
+  .proj-cover-shimmer,
+  .proj-media-shimmer {
+    background: color-mix(in srgb, var(--proj-accent, var(--hatch-neutral)) 10%, var(--c-background-gray));
   }
 }
