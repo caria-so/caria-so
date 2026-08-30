@@ -1,5 +1,5 @@
 ---
-title: IP-beta
+title: IP-β
 summary: A graph-native multi-agent system for automated scientific discovery. Agents decompose hypotheses into testable claims, search the literature, run adversarial review, and produce structured research fingerprints. One confirmed novel finding. Several killed hypotheses. Most of the hard problems are still open.
 status: active
 date: 2024-present
