@@ -153,6 +153,14 @@
   --inline-code-text: #E75864;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -167,6 +175,11 @@ html, body {
   height: 100%;
 }
 
+html {
+  background-color: var(--c-background);
+  color: var(--c-text-primary);
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -176,6 +189,9 @@ body {
   font-family: var(--font-sans);
   background-color: var(--c-background);
   color: var(--c-text-primary);
+}
+
+html.theme-ready body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

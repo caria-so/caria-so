@@ -2,6 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+    (function () {
+        var theme = 'light';
+        try {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') theme = saved;
+        } catch (e) {}
+        var root = document.documentElement;
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        if (theme === 'dark') {
+            root.style.backgroundColor = '#0E0E10';
+            root.style.color = '#FAFAFA';
+        }
+    })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Blog{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}caria.so — Experience engineering from user research through working code.{% endblock %}">
@@ -160,25 +176,24 @@
 			});
 		});
 		
-		// Theme toggle functionality (existing script)
+		// Theme toggle — data-theme is set in <head> before first paint
 		const themeToggle = document.getElementById('theme-toggle');
 		const root = document.documentElement;
+		const currentTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
 
-		// Initialize the theme from local storage or set to light by default
-		const savedTheme = localStorage.getItem('theme');
-		if (savedTheme) {
-			root.dataset.theme = savedTheme;
-			updateThemeToggleIcon(savedTheme);
-		} else {
-			root.dataset.theme = 'light';
-			updateThemeToggleIcon('light');
-		}
+		updateThemeToggleIcon(currentTheme);
+		requestAnimationFrame(function () {
+			root.classList.add('theme-ready');
+		});
 
 		themeToggle.addEventListener('click', function() {
-			const currentTheme = root.dataset.theme;
-			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			const activeTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+			const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
 
 			root.dataset.theme = newTheme;
+			root.style.colorScheme = newTheme;
+			root.style.backgroundColor = '';
+			root.style.color = '';
 			localStorage.setItem('theme', newTheme);
 
 			updateThemeToggleIcon(newTheme);
