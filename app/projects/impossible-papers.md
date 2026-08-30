@@ -2,9 +2,9 @@
 title: IP-β
 summary: A graph-native multi-agent system for automated scientific discovery. Agents decompose hypotheses into testable claims, search the literature, run adversarial review, and produce structured research fingerprints. One confirmed novel finding. Several killed hypotheses. Most of the hard problems are still open.
 status: active
-date: 2024-present
+date: 2026-present
 role: Solo researcher & developer
-client: Independent research — ARC Prize 2026 Paper Track
+client: 
 image: /static/assets/images/projects/impossible-papers/desktop_cover.webp
 desktop_cover: /static/assets/images/projects/impossible-papers/desktop_cover.webp
 mobile_cover:
@@ -123,10 +123,6 @@ sections:
         ontologies hallucinates structure. These are not engineering
         problems — they are epistemic ones, and solving them wrong
         produces confident, plausible, wrong results.</p>
-      role: |
-        <p>Solo researcher — architecture, implementation, domain
-        validation with external collaborators (INAF for astrophysics,
-        University of Messina for neurorehabilitation).</p>
       method: |
         <p><strong>Credence firewall.</strong> Machine output is capped
         (MACHINE_CAP = 0.15) and topologically excluded from the scoring
@@ -243,43 +239,16 @@ sections:
     image: /static/assets/images/projects/impossible-papers/fingerprint.png
     reverse: false
 
-  # ── 7. SCIDATA HUB ──
-  - type: split
-    title: "SciData Hub — Companion Infrastructure"
-    content: |
-      <p>A federated scientific dataset and ontology layer on Hugging Face,
-      built to serve as the grounding backbone for Impossible Papers but
-      published as a standalone contribution. 22+ ontologies (MeSH, Gene
-      Ontology, ChEBI, DOID, UBERON, UAT, QUDT, and others) with enriched
-      schemas — parent hierarchies, cross-references, relationship
-      extraction, and a four-table structure (terms, relationships,
-      synonyms, properties) per ontology.</p>
-
-      <p>Experimental datasets: SPARC rotation curves, ANAIS-112 dark
-      matter direct detection, XENON1T, COSINE-100, Cremona elliptic
-      curve database (3M+ curves). Cross-ontology predicate map linking
-      22+ ontologies to canonical Relation Ontology CURIEs.</p>
-
-      <p>The design principle: the system discovers what's available
-      rather than being told. When a new ontology is pushed to the Hub,
-      the resolver picks it up with no code change.</p>
-    image:
-    reverse: true
 
   # ── 8. ACTIVE PROGRAMS ──
+    # ── 8. CTA ──
   - type: callout
-    title: Active Research Seeds
+    title: Struggling with a knowledge system?
     content: |
-      <p><strong>BSD conjecture</strong> — elliptic curve rank distributions
-      via LMFDB/Cremona. <strong>Cosmological lithium problem</strong> —
-      primordial nucleosynthesis discrepancy. <strong>Transactional entropic
-      gravity</strong> — TEG vs SPARC/DESI/neutron interferometry.
-      <strong>TMJ condylar regeneration</strong> — tissue engineering
-      approaches. <strong>Evolution 2.0 Prize</strong> — emergent
-      molecular coding systems.</p>
-
-      <p>Each seed is a YAML file that becomes a graph at ingest time.
-      The system doesn't care about the hypothesis — it cares about
-      whether the evidence supports it.</p>
+      <p>If you're working with scientific literature at scale —
+      structured review, ontology grounding, dataset discovery,
+      or agent architectures that need to not hallucinate their
+      results — I can help you design it.</p>
+    button: Get in touch
 
 ---
