@@ -36,8 +36,6 @@ sections:
       Can a machine find something genuinely new in science — not by
       generating plausible text, but by reading what exists, identifying
       what's missing, and testing whether the gap is real?
-      </p>
-      <p>
       Frontier labs are building research agents with hundreds of engineers
       and unrestricted compute. This project asks a narrower question:
       what is the minimum viable architecture that can survive contact
@@ -49,29 +47,27 @@ sections:
   # ── 2. METRICS ──
   - type: metrics
     items:
+      - value: "Prototype"
+        label: Current Stage
       - value: "1"
         label: Confirmed novel finding (validated by domain experts)
-      - value: "618"
+      - value: "+618"
         label: Papers analyzed in a single run
-      - value: "5"
-        label: Active research domains
-      - value: "2"
-        label: Hypotheses killed by the system itself
 
   # ── 3. WHAT IT FOUND ──
   - type: split
     title: What It Has Found
     content: |
-      <p><strong>Astrophysics — a real number nobody had computed.</strong>
-      Run 022b calculated the Bondi-Hoyle accretion timescale for tidal dwarf
+      <p><strong>Astrophysics — a real number nobody seems to have computed.</strong>
+      The Bondi-Hoyle accretion timescale for tidal dwarf
       galaxies in the superfluid dark matter framework: ~1,280 Gyr — 93 times
       the age of the universe. TDGs cannot accrete superfluid DM condensate.
       The system found this by following citation chains the seed didn't
       anticipate, then killed its own broader hypothesis when the numbers
-      contradicted it. Validated as novel by INAF astrophysicists.</p>
+      contradicted it. </p>
 
       <p><strong>Origin of life — catching its own mistake.</strong>
-      Run 025h stress-tested a hypothesis about emergent RNA-amino acid
+      Stress-tested a hypothesis about emergent RNA-amino acid
       coding for the Evolution 2.0 Prize. 8 claims decomposed, 3
       computationally simulated, 2 falsified. The system caught its own
       pipeline producing a p-value interpretation that contradicted
@@ -90,16 +86,11 @@ sections:
     content: |
       <p>Not a pipeline. A graph-native engine where agents communicate
       through a shared Neo4j knowledge graph, never through direct calls.
-      A hypothesis enters as a YAML seed. The system decomposes it into
-      testable claims, then a CLI-orchestrated loop runs agents in
-      data-dependency order:</p>
+      </p>
 
-      <p><strong>Literature search.</strong> OpenAlex and PubMed, searched
+      <p><strong>Literature search.</strong> OpenAlex, PubMed, Patents, etc. searched
       by citation frontier — depth (mining references of accepted papers)
-      before breadth (entering new topic areas). Breadth requires a
-      license: a hapax term from an accepted paper pointing at the new
-      territory. 618 papers in the largest run, with structured extraction
-      of entities, numeric thresholds, and MeSH-grounded concepts.</p>
+      before breadth (entering new topic areas). 618 papers in the largest run, with structured extraction of entities, numeric thresholds, wikidata, MeSH-grounded concepts.</p>
 
       <p><strong>Ontology grounding.</strong> Every extracted concept is
       resolved against 20+ scientific ontologies hosted on
@@ -111,8 +102,7 @@ sections:
       <p><strong>Adversarial review.</strong> Review agents attack the graph,
       not the text. Every objection arrives with its evidence attached —
       the missing edge, the contradicting quote, the numerical
-      inconsistency. Reviewers color findings; they do not kill them.
-      Adjudication is separate from generation, and always will be.</p>
+      inconsistency.</p>
     image: /static/assets/images/projects/impossible-papers/architecture.png
     reverse: true
 
@@ -122,9 +112,7 @@ sections:
     content: |
       <p>
       Each of these is both a design decision the system enforces and an
-      unsolved problem it surfaces. They are the project's contribution
-      whether or not the system produces another finding — because
-      naming these problems precisely is itself a result.
+      unsolved problem it surfaces. 
       </p>
     detail_label: Architecture & open questions
     case_study:
@@ -190,7 +178,7 @@ sections:
         raw Cypher writes. This was learned from a bug where an agent's
         inline SET wrote to the graph outside the transaction fence.</p>
 
-        <p><strong>CLI as conductor</strong> — agents never sequence each
+        <p><strong>First CLI as conductor</strong> — agents never sequence each
         other. Learned from a bug where evidence mapping ran before papers
         were persisted, raising on every missing endpoint.</p>
 
@@ -206,14 +194,13 @@ sections:
         papers (full-text gated on open access). 302 papers in the graph
         at current scale; corpus-relative metrics (Uzzi atypicality, CD
         index) require 10⁵–10⁶ and are structurally out of reach.</p>
-      issues: |
+      known issues: |
         <p>The operational layer (what to do next) exists. The evaluative
         layer (is the output any good) largely does not. Credence has a
         formula and no code. The numeric extractor reads scientific
         notation incorrectly (1.2e-3 parsed as 1.2 — a 1000× error
         written deterministically). 690 resolved concepts with ~15
-        spot-checked. These are not footnotes — they are the current
-        state of the system, reported as-is.</p>
+        spot-checked.</p>
       outcome: |
         <p>One confirmed novel finding. Two killed hypotheses. A set of
         architectural invariants learned from bugs, each one encoding a
