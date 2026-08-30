@@ -1,6 +1,6 @@
 ---
 title: "Champagne Website Audit"
-thread: usability
+thread: 
 keywords: [usability, heuristic evaluation]
 author: "Federico Caria"
 date: "2026-08-24"
