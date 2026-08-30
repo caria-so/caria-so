@@ -5,6 +5,9 @@ status: active
 date: 2026-present
 role: Solo researcher & developer
 client: 
+services:
+  - pipelines
+  - knowledge
 image: /static/assets/images/projects/impossible-papers/desktop_cover.webp
 desktop_cover: /static/assets/images/projects/impossible-papers/desktop_cover.webp
 mobile_cover:
