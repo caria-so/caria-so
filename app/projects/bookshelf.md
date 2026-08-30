@@ -8,7 +8,7 @@ client: Libreria Rotondi, Rome
 services:
   - development
   - knowledge
-image: /static/assets/images/projects/bookshelf/desktop_cover.png
+image: /static/assets/images/projects/bookshelf/desktop_cover.webp
 pattern: lr-pattern-dots
 technologies:
   - Python
@@ -22,7 +22,7 @@ technologies:
 live_link: https://bookshelf-app-xj01.onrender.com/
 github_link:
 accent: hatch-data
-desktop_cover: /static/assets/images/projects/bookshelf/desktop_cover.png
+desktop_cover: /static/assets/images/projects/bookshelf/desktop_cover.webp
 mobile_cover:
 related_posts:
 
@@ -52,7 +52,7 @@ sections:
     content: |
       <p>Point your phone at the barcode. Five sources are queried simultaneously — OPAC SBN (Italian national catalog), IBS.it, OpenLibrary, Maremagnum, and ViaLibri. Each returns different data. The system merges them intelligently: OPAC SBN for authoritative bibliographic records, IBS for Italian descriptions and cover images, OpenLibrary for English-language metadata. Authors are deduplicated across name variants ("Evola, Julius" and "Julius Evola" become one entry).</p>
       <p>One click pushes the enriched record to WooCommerce with field-level diff detection. Only changed fields are sent.</p>
-    image: /static/assets/images/projects/bookshelf/desktop_cover.png
+    image: /static/assets/images/projects/bookshelf/desktop_cover.webp
     caption: Importing a store's dataset from WooCommerce and recreating a listing table with stats. Users can filter to highlight missing information, inspect the page detail, plan batch enrichment.
     reverse: false
 
@@ -90,7 +90,7 @@ sections:
       <p>A mobile barcode scanner that works on any smartphone: auto-zoom at 3.7×, capture-and-crop to the barcode area, server-side multi-pass decoding via pyzbar with grayscale, sharpen, and contrast enhancement. If the camera can see it, pyzbar reads it.</p>
       <p>For counter setups, a standard laser scanner gun works natively — it emulates a keyboard, types the ISBN, hits Enter. Scan, beep, next book.</p>
       <p>Multiple scans can be triggered by csv list or simply by typing isbn codes in a custom field.</p>
-    image: /static/assets/images/projects/bookshelf/mobile_scan.png
+    image: /static/assets/images/projects/bookshelf/mobile_scan.webp
     caption: A scanner is a powerful way to shoot barcodes and load book data in a standardized way. Taxonomy dedup and a human-in-the-loop UI let the archivist approve before publish. Works with laser guns too.
     reverse: true
 
@@ -115,7 +115,7 @@ sections:
     content: |
       <p>Every bookshop organizes differently. My customer uses a custom <code>autore</code> taxonomy with 11,000+ entries and a dozen <code>libro_*</code> meta keys. Another shop might use WooCommerce attributes, tags, or completely different field names.</p>
       <p>Nothing is hardcoded. A JSON profile defines how each field maps to the store — native field, meta key, taxonomy term, or skip. Adding a new store means writing one JSON file. The metadata aggregation layer is designed to serve any application that needs bibliographic intelligence.</p>
-    image: /static/assets/images/projects/bookshelf/mapping.png
+    image: /static/assets/images/projects/bookshelf/mapping.webp
     caption: Importing a store's dataset from WooCommerce and recreating a listing table with stats. Users can filter to highlight missing information, inspect the page detail, plan batch enrichment.
     reverse: false
 

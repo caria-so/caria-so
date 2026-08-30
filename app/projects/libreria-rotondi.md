@@ -10,8 +10,8 @@ services:
   - UX
   - development
   - e-commerce
-image: /static/assets/images/projects/libreria_rotondi/desktop_cover.png
-desktop_cover: /static/assets/images/projects/libreria_rotondi/desktop_cover.png
+image: /static/assets/images/projects/libreria_rotondi/desktop_cover.webp
+desktop_cover: /static/assets/images/projects/libreria_rotondi/desktop_cover.webp
 mobile_cover:
 pattern: lr-pattern-dots
 technologies:
@@ -34,7 +34,7 @@ sections:
     title: The Problem
     content: |
       <p>Libreria Rotondi is one of Rome's oldest esoteric bookshops, with a catalog of more than 18,000 products spanning esotericism, Eastern philosophy, rare books and antiquarian texts. The existing WooCommerce store had grown around the needs of the catalog rather than the needs of the business: the product data was difficult to manage, the checkout created unnecessary friction, events required separate manual workflows, and online and in-store sales were not treated as one system. The technical environment was equally constrained. WordPress and WooCommerce had to remain in place because of existing supplier integrations, staff familiarity and the YITH POS setup. The site also ran on shared hosting with a small team responsible for day-to-day operations. The goal was therefore not simply to replace the storefront, but to turn an increasingly fragile e-commerce installation into a platform the owners could actually operate themselves.</p>
-    image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.png
+    image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.webp
     caption: |
       The checkout was redesigned around a clearer one-page flow, with delivery options and Nexi XPay integrated into the same experience.
 
@@ -53,7 +53,7 @@ sections:
     title: Full site rework
     content: |
       <p>The project became a full rebuild of the digital experience. I redesigned the information architecture, product taxonomy, navigation, archives, product cards and responsive layouts while removing unnecessary dependencies and replacing fragile third-party functionality with purpose-built systems. The new theme introduced a shared design system with light and dark modes, custom typography, namespaced components and a consistent visual language across books, events, courses and guided visits. Homepage and archive pages were rebuilt, togehter with product page and checkout to support both ordinary book purchases and mixed book-and-event carts.</p>
-    image: /static/assets/images/projects/libreria_rotondi/desktop_cover.png
+    image: /static/assets/images/projects/libreria_rotondi/desktop_cover.webp
     caption: |
       A custom theme and design system reorganise the experience around the bookshop's identity, content and program of events.
     reverse: true
@@ -62,7 +62,7 @@ sections:
     title: Payment Rework
     content: |
       <p>The checkout was rebuilt as a dedicated <code>rotondi-checkout</code> plugin. The new flow uses a one-step checkout layout with numbered sections, delivery or pickup selection, live order-summary updates and a payment step designed around Nexi XPay. Shipping is calculated dynamically from WooCommerce shipping zones. Event-only carts automatically remove the shipping section, while mixed carts retain the appropriate delivery flow. The order-pay page was also brought into the same visual system for redirect and retry scenarios.</p>
-    image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.png
+    image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.webp
     caption: |
       The payment form moves away from the standard WooCommerce pattern into a more usable one-page checkout with multiple payment methods and embedded Nexi XPay.
     reverse: false
@@ -101,7 +101,7 @@ sections:
     content: |
       <p>The previous event workflow was replaced with a custom event management system that connects an ACF-managed <code>eventi</code> post type directly to WooCommerce. Staff can create an event once and the system generates and maintains its corresponding product, including price, stock, categories and metadata.</p>
       <p>Multi-slot events are represented as variable products, giving each session its own capacity and price. Registrations are stored in a dedicated database table with attendee and check-in information, while custom WooCommerce emails handle confirmations, calendar attachments and slot-aware 24-hour reminders. The system also provides an admin dashboard, CSV exports, calendar views and frontend event carousels.</p>
-    image: /static/assets/images/projects/libreria_rotondi/page_corsi.png
+    image: /static/assets/images/projects/libreria_rotondi/page_corsi.webp
     caption: |
       The event and course experience gives the shop a dedicated frontend for its growing program of live activities.
     reverse: true
@@ -139,9 +139,9 @@ sections:
           before: "Disconnected"
           after: "Unified"
       evidence:
-        - image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.png
+        - image: /static/assets/images/projects/libreria_rotondi/page_checkout_payment.webp
           caption: Iterative checkout work — testing the complete purchase flow with the owners before refining the final interaction patterns.
-        - image: /static/assets/images/projects/libreria_rotondi/page_eventi.png
+        - image: /static/assets/images/projects/libreria_rotondi/page_eventi.webp
           caption: Event system iteration — translating operational requirements around sessions, capacity and registrations into a self-service interface.
 
   - type: split
@@ -149,7 +149,7 @@ sections:
     content: |
       <p>For the shop's 85th anniversary, I designed and built the <em>Gioco dell'Oca Iniziatico</em>, a six-tier loyalty game integrated directly into WooCommerce. Customers purchase a membership card and progress through a 24-square board based on their spending, unlocking discounts, rare books and exclusive experiences.</p>
       <p>The system tracks completed orders from both the online store and YITH POS, prevents duplicate credits, supports manual adjustments and provides a complete prize-fulfillment workflow. A universal <code>oca5</code> coupon is validated server-side against player status, allowing staff to apply the correct benefit in-store without managing individual customer coupon codes.</p>
-    image: /static/assets/images/projects/libreria_rotondi/dashboard.png
+    image: /static/assets/images/projects/libreria_rotondi/dashboard.webp
     caption: |
       Custom administrative tooling gives the team visibility over players, progress, prizes and fulfillment without exposing the underlying complexity.
     reverse: true
@@ -159,7 +159,7 @@ sections:
     content: |
       <p>The platform also includes a set of smaller systems designed around real operational problems: antiquarian books with no fixed price are converted into inquiry flows instead of allowing invalid €0 purchases; past Patreon-recorded events are protected from direct URL purchases; event managers can manually mark individual sessions as sold out; and stock indicators make capacity visible at a glance.</p>
       <p>SEO and infrastructure were treated as part of the product rather than an afterthought. Thin author taxonomy pages were removed from the sitemap, enriched author pages were retained, bot traffic was mitigated at the server level, GA4 e-commerce tracking was implemented behind consent management, and frontend dependencies such as Embla were consolidated into the theme.</p>
-    image: /static/assets/images/projects/libreria_rotondi/dashboard.png
+    image: /static/assets/images/projects/libreria_rotondi/dashboard.webp
     caption: |
       Administrative interfaces turn complex WooCommerce data into tools that staff can use during everyday operations.
     reverse: false
@@ -167,9 +167,9 @@ sections:
   - type: gallery
     title: Responsive experience
     images:
-      - src: /static/assets/images/projects/libreria_rotondi/page_autocomplete.png
+      - src: /static/assets/images/projects/libreria_rotondi/page_autocomplete.webp
         alt: Search autocomplete
-      - src: /static/assets/images/projects/libreria_rotondi/page_eventi.png
+      - src: /static/assets/images/projects/libreria_rotondi/page_eventi.webp
         alt: Events list
       - src: /static/assets/images/projects/libreria_rotondi/page_pdp.webp
         alt: Product page

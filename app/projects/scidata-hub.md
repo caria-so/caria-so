@@ -8,7 +8,7 @@ client: Impossible Papers
 services:
   - pipelines
   - knowledge
-image: /static/assets/images/projects/scidata-hub/desktop_cover.png
+image: /static/assets/images/projects/scidata-hub/desktop_cover.webp
 pattern: lr-pattern-dots
 technologies:
   - Python
@@ -64,7 +64,7 @@ sections:
       and live sources.</p>
       <p><strong>MCP server</strong> (coming) — LLM research agents discover, query,
       and join datasets through tools. No hand-written API code per hypothesis.</p>
-    image: /static/assets/images/projects/scidata-hub/desktop_cover.png
+    image: /static/assets/images/projects/scidata-hub/desktop_cover.webp
     caption: |
       Scidata Hub home
     reverse: false
@@ -127,7 +127,7 @@ sections:
       <ul>
         <li><strong>Cremona ECDB</strong> — 3,064,705 elliptic curves up to conductor 500,000. Curves, BSD data (L-ratio, regulator, analytic Sha), generators, modular degrees, isogeny matrices, big Sha</li>
       </ul>
-    image: /static/assets/images/projects/scidata-hub/viz_structure.png
+    image: /static/assets/images/projects/scidata-hub/viz_structure.webp
     caption: |
       The layer
     reverse: true
@@ -222,7 +222,7 @@ sections:
       <p>They stay where they are. SciData Hub's DuckDB views and join layer route to
       them, making them queryable and joinable alongside our own data — in the same
       SQL session, over the same httpfs connection. Federate, don't duplicate.</p>
-    image: /static/assets/images/projects/scidata-hub/datalake.png
+    image: /static/assets/images/projects/scidata-hub/datalake.webp
     caption: |
       The Datalake on Hugging Face
     reverse: true

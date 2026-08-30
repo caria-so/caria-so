@@ -8,8 +8,8 @@ client: Internal product
 services:
   - pipelines
   - development
-image: /static/assets/images/projects/deepocr/desktop_cover.png
-desktop_cover: /static/assets/images/projects/deepocr/desktop_cover.png
+image: /static/assets/images/projects/deepocr/desktop_cover.webp
+desktop_cover: /static/assets/images/projects/deepocr/desktop_cover.webp
 mobile_cover:
 pattern: lr-pattern-dots
 technologies:
@@ -58,7 +58,7 @@ sections:
       text layer directly as Markdown. No vision model, no API calls, no cost.</p>
       <p><strong>Auto mode</strong> samples the first five pages and picks the right engine.
       The pipeline assumes nothing about the input.</p>
-    image: /static/assets/images/projects/deepocr/desktop_cover.png
+    image: /static/assets/images/projects/deepocr/desktop_cover.webp
     reverse: false
 
   - type: split

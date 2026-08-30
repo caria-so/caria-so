@@ -55,7 +55,7 @@ sections:
     title: Product List
     content: |
       <p>Structured cards with variant previews, price ranges, and stock availability visible before click-through. Reduced the gap between what buyers see on the list and what they find on the page — fewer bounces, fewer surprises.</p>
-    image: /static/assets/images/projects/paramashop/page_product-list.png
+    image: /static/assets/images/projects/paramashop/page_product-list.webp
     reverse: true
 
   # ── 4. METHODOLOGY — all the process detail lives here ──
@@ -70,7 +70,7 @@ sections:
       role: |
         <p>UX researcher and front-end — evaluation, design, prototyping, and production CSS/JS. Solo engagement, reporting directly to the owner.</p>
       method: |
-        <p>Heuristic evaluation (Baymard Home & Furniture guidelines) → competitive analysis across 12 direct competitors → prioritized fix list → Figma prototypes → browser prototyping → production CSS/JS delivered as two injectable files.</p>
+        <p>Competitive analysis across 12 direct competitors → prioritized fix list → Figma prototypes → browser prototyping → production CSS/JS delivered as two injectable files.</p>
       decisions: |
         <p><strong>Ship via CSS overrides</strong> — agency wouldn't cooperate and CMS was rigid. Everything implemented through one stylesheet and one script file. No backend changes, no database access, no agency coordination for day-to-day work.</p>
         <p><strong>Heuristics before wireframes</strong> — every recommendation traces back to a scored guideline or a competitor benchmark. No opinion-driven redesign; the evaluation document was the spec.</p>
@@ -97,7 +97,7 @@ sections:
         - image: /static/assets/images/projects/paramashop/page_product-page_before.webp
           caption: Product page before — single image, broken spec table, dropdown variant selector, no trust signals.
         - image: /static/assets/images/projects/paramashop/heuristic_evaluation.png
-          caption: Heuristic evaluation — each element scored against Baymard's Home & Furniture guidelines.
+          caption: Heuristic evaluation — each element scored against established ecommerce heuristic.
         - image: /static/assets/images/projects/paramashop/desktop_cover.webp
           caption: Figma iterations — variant selector and gallery explorations before browser prototyping.
 

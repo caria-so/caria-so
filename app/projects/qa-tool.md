@@ -7,8 +7,8 @@ role: Solo developer
 client: Baymard Institute
 services:
   - product
-image: /static/assets/images/projects/qa_tool/desktop_cover.png
-desktop_cover: /static/assets/images/projects/qa_tool/desktop_cover.png
+image: /static/assets/images/projects/qa_tool/desktop_cover.webp
+desktop_cover: /static/assets/images/projects/qa_tool/desktop_cover.webp
 mobile_cover:
 pattern: lr-pattern-crosshatch
 github_link:
@@ -62,7 +62,7 @@ sections:
       <p><strong>Flask application</strong> — the production version. Proper pagination,
       role-based permissions, export pipelines, and a modular validation system where
       new checks plug in without touching the rest.</p>
-    image: /static/assets/images/projects/qa_tool/colab_prototype.png
+    image: /static/assets/images/projects/qa_tool/colab_prototype.webp
     caption: 
       Colab notebook — first iteration, automated consistency checks only. Useful to optimize pandas queries.
     reverse: false
@@ -74,7 +74,7 @@ sections:
       <p>The detail view shows the actual UI screenshot next to the data being reviewed.
       Exported images are automatically captioned with the evaluation judgment — feeding
       other departments with pre-labeled best practice examples without extra work.</p>
-    image: /static/assets/images/projects/qa_tool/page_guideline-detail.png
+    image: /static/assets/images/projects/qa_tool/page_guideline-detail.webp
     caption: 
       Pagination allows researcher to quickly check the evaluation against the target UI. Smart filtering was added to cross check performance across the same candidate, by themes, by topic, by platform to ensure consistency.
     reverse: true
@@ -112,9 +112,9 @@ sections:
           before: "—"
           after: "3"
       evidence:
-        - image: /static/assets/images/projects/qa_tool/colab_prototype.png
+        - image: /static/assets/images/projects/qa_tool/colab_prototype.webp
           caption: Iteration 1 — Colab checks, no UI. Proved the validation logic before any infrastructure.
-        - image: /static/assets/images/projects/qa_tool/page_guideline-detail.png
+        - image: /static/assets/images/projects/qa_tool/page_guideline-detail.webp
           caption: Production detail view — judgment text next to the actual checkout screenshot.
 
   - type: split
@@ -127,14 +127,18 @@ sections:
       <p>The final version: a proper API integration built in collaboration with the
       platform developers. Type the project IDs, reviews load in seconds. Solid,
       authenticated, handles any payload size.</p>
-    image: /static/assets/images/projects/qa_tool/option_merge-datasets.png
+    image: /static/assets/images/projects/qa_tool/option_merge-datasets.webp
     caption: 
       Pulling content from Bayamrd API fixed the most fragile seam. Additional functions like merging datasets gave researcher the option to quality check and compare implementation from different industries and across years.
     reverse: false
 
+    # ── 8. CTA ──
   - type: callout
-    title: Building internal tools from broken workflows?
+    title: Struggling with your knowledge system?
     content: |
-      <p>I prototype in notebooks, validate with the team, and ship to production — usually without a spec or sprint ticket.</p>
+      <p>If you're working with scientific literature at scale —
+      structured review, ontology grounding, dataset discovery,
+      or agent architectures that need to not hallucinate their
+      results — I can help you design it.</p>
     button: Get in touch
 ---

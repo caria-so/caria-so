@@ -9,7 +9,7 @@ services:
   - product
   - pipelines
   - knowledge
-image: /static/assets/images/projects/flowws-mcp/desktop_cover.png
+image: /static/assets/images/projects/flowws-mcp/desktop_cover.webp
 technologies:
   - Python
   - Django
@@ -23,7 +23,7 @@ technologies:
 live_link: 
 github_link:
 accent: hatch-data
-desktop_cover: /static/assets/images/projects/flowws-mcp/desktop_cover.png
+desktop_cover: /static/assets/images/projects/flowws-mcp/desktop_cover.webp
 related_posts:
   - ux__search-audit-methodology
   - ux__trust-signals-ecommerce
@@ -67,7 +67,7 @@ sections:
       element, or can't predict what it will do. GOMS operators from cognitive psychology
       model these as first-class nodes, so "users never noticed the map toggle" is captured
       as precisely as "users clicked submit."</p>
-    image: /static/assets/images/projects/flowws-mcp/flowws_unit-of-analysis.png
+    image: /static/assets/images/projects/flowws-mcp/flowws_unit-of-analysis.webp
     reverse: false
 
   - type: split
@@ -82,7 +82,7 @@ sections:
       Across 11,000+ candidate quotes: <strong>zero fabricated citations</strong> in the
       served graph. The verifier is deterministic and re-runnable — the guarantee is
       mechanical, not a matter of trusting the model.</p>
-    image: /static/assets/images/projects/flowws-mcp/citation_checked.jpg
+    image: /static/assets/images/projects/flowws-mcp/citation_checked.webp
     reverse: true
 
   - type: split
@@ -99,7 +99,7 @@ sections:
       cites the specific passage that applies — with a title and URL a reader can open.
       The design argument that used to end with "that's just best practice" now ends
       with a reference.</p>
-    image: /static/assets/images/projects/flowws-mcp/mcp_landing.png
+    image: /static/assets/images/projects/flowws-mcp/mcp_landing.webp
     reverse: false
 
   # ── 4. RESULT ──
