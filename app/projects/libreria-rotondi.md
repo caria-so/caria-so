@@ -8,8 +8,6 @@ client: Libreria Rotondi
 services:
   - product
   - UX
-  - development
-  - e-commerce
 image: /static/assets/images/projects/libreria_rotondi/desktop_cover.webp
 desktop_cover: /static/assets/images/projects/libreria_rotondi/desktop_cover.webp
 mobile_cover:
