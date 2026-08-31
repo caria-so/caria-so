@@ -10,6 +10,11 @@ main:has(.abt-hero) {
     flex-direction: column;
 }
 
+/* Direct child of #theme-wrapper — global rule zeros padding-inline */
+#theme-wrapper > .abt-hero {
+    padding-inline: var(--page-gutter);
+}
+
 /* ── Endorsements carousel ── */
 
 .about-endorsements {
