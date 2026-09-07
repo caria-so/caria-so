@@ -14,6 +14,17 @@
     <div class="arc-layout">
 
         <aside class="arc-sidebar">
+            <details class="arc-sidebar-panel">
+                <summary class="arc-sidebar-toggle">
+                    <span class="arc-sidebar-toggle-main">
+                        <span class="arc-eyebrow arc-sidebar-toggle-eyebrow">Sketchboard</span>
+                        <span class="arc-sidebar-toggle-title">
+                            {% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Search & threads{% endif %}
+                        </span>
+                    </span>
+                    <span class="arc-sidebar-toggle-hint" aria-hidden="true">Tap to expand</span>
+                    <i class="ph ph-caret-down arc-sidebar-toggle-icon" aria-hidden="true"></i>
+                </summary>
             <div class="arc-sidebar-sticky">
             <header class="arc-sidebar-head">
                 <span class="arc-eyebrow">Sketchboard</span>
@@ -22,7 +33,7 @@
                     {% if view == 'thread' and thread_meta %}
                     Thread · {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}
                     {% else %}
-                    A thread board for notes — set <code>thread:</code> in frontmatter, or auto-placed via NER.
+                    Rough notes, half-baked sketches, things still moving — lab diary energy, zero “10 tips” listicles.
                     {% endif %}
                 </p>
             </header>
@@ -74,6 +85,7 @@
             <a href="{{ url_for('blog.sketchboard_index') }}" class="arc-clear-link">Clear search</a>
             {% endif %}
             </div>
+            </details>
         </aside>
 
         <main class="arc-main">
@@ -136,5 +148,22 @@
 
     </div>
 </div>
+
+<script>
+(function () {
+    var panel = document.querySelector('.arc-sidebar-panel');
+    if (!panel) return;
+    var mq = window.matchMedia('(min-width: 961px)');
+    function sync() {
+        panel.open = mq.matches;
+    }
+    sync();
+    if (mq.addEventListener) {
+        mq.addEventListener('change', sync);
+    } else {
+        mq.addListener(sync);
+    }
+})();
+</script>
 
 {% endblock %}
