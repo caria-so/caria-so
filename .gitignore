@@ -68,6 +68,7 @@ app/static/assets/images/projects/qa_tool/video_cover.mov
 
 # Private / local-only — not published on public GitHub
 app/blog/vitriol/
+app/blog/posts/drafts/
 app/data/fingerprints/
 render.yaml
 gunicorn.conf.py
