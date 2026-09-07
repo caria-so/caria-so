@@ -1,0 +1,81 @@
+{# Athanor / Materia mark — unique id prefix when used twice on one page #}
+{% macro logo_mark(uid='logo') %}
+<svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="175 275 450 310" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true">
+  <defs>
+    {# Materia phases: nigredo → albedo → citrinitas → rubedo #}
+    {% set materia_cycle = '#111318;#F3F4F1;#F5C542;#F04B32;#111318' %}
+    {% set materia_times = '0;0.22;0.44;0.66;1' %}
+
+    <radialGradient id="{{ uid }}-sphereLight" cx="34%" cy="27%" r="72%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".72"/>
+      <stop offset="18%" stop-color="#FFFFFF" stop-opacity=".25"/>
+      <stop offset="52%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="82%" stop-color="#000000" stop-opacity=".16"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity=".48"/>
+    </radialGradient>
+
+    <filter id="{{ uid }}-softBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+
+    <filter id="{{ uid }}-smallBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+
+    <filter id="{{ uid }}-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-opacity=".14"/>
+    </filter>
+
+    <clipPath id="{{ uid }}-lowerHalf">
+      <rect x="185" y="400" width="430" height="220"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="400" cy="505" rx="205" ry="78"
+           fill="var(--logo-glow, #DDE2DF)" opacity=".35" filter="url(#{{ uid }}-softBlur)"/>
+
+  <path d="M180 400 H620 A220 220 0 0 1 180 400 Z"
+        fill="#FFFFFF" fill-opacity=".56"
+        stroke="#FFFFFF" stroke-opacity=".72" stroke-width="2"
+        filter="url(#{{ uid }}-shadow)"/>
+
+  <ellipse cx="400" cy="455" rx="155" ry="95"
+           fill="#FF704F" opacity=".23" filter="url(#{{ uid }}-softBlur)"/>
+
+  <circle cx="400" cy="400" r="132" fill="#111318" filter="url(#{{ uid }}-shadow)">
+    <animate attributeName="fill"
+             values="{{ materia_cycle }}"
+             keyTimes="{{ materia_times }}"
+             dur="14s"
+             repeatCount="indefinite"
+             calcMode="linear"/>
+  </circle>
+
+  <circle cx="400" cy="400" r="132" fill="url(#{{ uid }}-sphereLight)" pointer-events="none">
+    <animate attributeName="opacity"
+             values="0.88;0.42;0.55;0.72;0.88"
+             keyTimes="{{ materia_times }}"
+             dur="14s"
+             repeatCount="indefinite"
+             calcMode="linear"/>
+  </circle>
+
+  <ellipse cx="355" cy="345" rx="40" ry="23"
+           transform="rotate(-22 355 345)"
+           fill="#FFFFFF" opacity=".30"/>
+
+  <g clip-path="url(#{{ uid }}-lowerHalf)">
+    <path d="M180 400 H620 A220 220 0 0 1 180 400 Z"
+          fill="#FFFFFF" fill-opacity=".23"
+          stroke="#FFFFFF" stroke-opacity=".38" stroke-width="2"/>
+    <ellipse cx="400" cy="444" rx="145" ry="82"
+             fill="#FF5B3E" opacity=".12" filter="url(#{{ uid }}-smallBlur)"/>
+  </g>
+
+  <line x1="180" y1="400" x2="620" y2="400"
+        stroke="#FFFFFF" stroke-opacity=".62" stroke-width="2"/>
+
+  <circle cx="400" cy="400" r="136"
+          fill="none" stroke="var(--logo-ring, #1D2227)" stroke-opacity=".08" stroke-width="1"/>
+</svg>
+{% endmacro %}

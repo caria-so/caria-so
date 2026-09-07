@@ -1,3 +1,4 @@
+{% from 'partials/_logo_mark.html' import logo_mark %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +43,7 @@
 				<div class="nav-left flex horizontal aligncenter">
 					<div class="logo">
 						<a href="{{ url_for('blog.index') }}" class="logo-brand">
-							<span id="nav-molecule-logo" class="nav-molecule" data-caria-molecule aria-hidden="true"></span>
+							<span class="logo-mark-wrap" aria-hidden="true">{{ logo_mark('nav-logo') }}</span>
 							<span class="logo-text">caria.so</span>
 						</a>
 					</div>
@@ -90,14 +91,15 @@
 			<div class="footer-main">
 			<!-- Logo & Site Info -->
 			<div class="footer-brand">
-				<div class="footer-logo">
-				<a href="{{ url_for('blog.index') }}" class="logo-brand footer-logo-brand">
-					<span id="footer-molecule-logo" class="nav-molecule footer-molecule" data-caria-molecule aria-hidden="true"></span>
-					<span class="logo-text">caria.so</span>
-				</a>
+				<div class="footer-brand-lockup">
+					<a href="{{ url_for('blog.index') }}" class="footer-logo-link" aria-label="caria.so home">
+						<span class="logo-mark-wrap footer-logo-mark" aria-hidden="true">{{ logo_mark('footer-logo') }}</span>
+					</a>
+					<div class="footer-brand-copy">
+						<a href="{{ url_for('blog.index') }}" class="footer-brand-name">caria.so</a>
+						<p class="footer-tagline">Experience engineer</p>
+					</div>
 				</div>
-				<p class="footer-tagline">Experience engineer</p>
-				<!-- <p class="footer-description">Bridging between technology, humans and intuition.</p> -->
 			</div>
 			
 			<!-- Quick Links -->
@@ -315,9 +317,6 @@
 		});
 	}
 </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-<script src="{{ url_for('static', filename='js/logo.js') }}"></script>
 
 </body>
 
