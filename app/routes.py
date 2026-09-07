@@ -720,7 +720,7 @@ def index():
         'libreria-rotondi',
         'flowws',
         'bookshelf',
-        'impossible-papers',
+        'ip-β',
     ]
     
     # Get featured posts and projects (falls back to latest if slugs don't exist)
