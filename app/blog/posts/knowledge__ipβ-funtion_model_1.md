@@ -36,7 +36,6 @@ That boundary is a kind of a bet: I am designing the research *programme conduct
 
 
 # A-0 — Conduct a research programme
-
 This is the whole system in one box. The control side matters most here: the experiment is not *can an LLM write a review?* or *brute force a math prolem* but "can a **controlled** loop run literature acquisition, optional simulation, and adversarial review without confirming its own seed?" Heat, budget, mode, the manager, the architect, and the five *harness membranes* are how that control is supposed to work — even when most of them are still shadow or declared rather than live on the CLI path. 
 
 ```
@@ -61,21 +60,6 @@ This is the whole system in one box. The control side matters most here: the exp
 **Does.** Takes one person's hypothesis and returns a positioned, evidenced,
 adversarially reviewed account of where that hypothesis stands — plus the next
 hypotheses/claims worth running.
-
-**Hard part.** Three of them, and they are not implementation problems:
-
-1. **Knowing when to stop.** There is no bottom to a literature. Every stop rule
-   is a bet that the next paper would not have changed the answer, and the
-   system cannot see the paper it did not fetch. `_should_exit` is five signals
-   voting on that bet.
-2. **Not confirming itself.** Every mechanism that improves retrieval — scoping,
-   affinity maturation, anti-queries — improves it *toward the seed's own
-   framing*. Disconfirming evidence sits, by construction, where the seed is not
-   looking. Most of the specific protections in A1 exist for this one reason.
-3. **Closing the loop without laundering authorship.** A machine-written child
-   seed must re-enter as a machine claim. The origin firewall is what stops the
-   system from citing itself as a human source, and it is why the loop is open
-   today.
 
 **Input — seed.** A research idea: hypothesis, claims (test / pass /
 fail), heat, impact weights, mode, constraints, optional `[[n:]]` / `[[e:]]`
@@ -105,9 +89,23 @@ on escalation (stall, budget milestone, no affordable agent). Today both are
 Plus the Neo4j graph (canonical state), LLM providers, and
 `tools/compute_executor.py` (sandbox — Layer 1 of simulation, no caller yet).
 
+**The hard part.** Three of them, and they are not really implementation problems:
+
+1. **Knowing when to stop.** There is no bottom to a literature. Every stop rule
+   is a bet that the next paper would not have changed the answer, and the
+   system cannot see the paper it did not fetch. `_should_exit` is five signals
+   voting on that bet.
+2. **Not confirming itself.** Every mechanism that improves retrieval — scoping,
+   affinity maturation, anti-queries — improves it *toward the seed's own
+   framing*. Disconfirming evidence sits, by construction, where the seed is not
+   looking. Most of the specific protections in A1 exist for this one reason.
+3. **Closing the loop without laundering authorship.** A machine-written child
+   seed must re-enter as a machine claim. The origin firewall is what stops the
+   system from citing itself as a human source.
+
 ---
 
-# A0 — four phases
+# A0 — Four phases
 
 The parent decomposes into four sequential functions and one control function
 that sits above them for the whole run. The intended cycle is not a straight
@@ -167,7 +165,7 @@ External arrows into A0 (mechanisms used by more than one box):
 
 # A5 — Control and decide  *(zoom)*
 
-Not a phase. The function that *selects and constrains* A1–A4.
+Not a phase. Questo è il modulo di controllo che siede al di sopra, the set of functions that *selects and constrains* A1–A4.
 
 ```
      maturity vector · reward · budget remaining
@@ -295,7 +293,5 @@ Cross-check against the [Cambridge function-modelling notes](hai__cambridge_modu
 | **Morphological chart + weighted evaluation** | No table of alternative **concepts** (e.g. panel-first vs literature-first, graph store vs document store) with explicit trade-off weights. The A1-then-A4 cost structure is argued in prose, not scored. |
 | **Controllable vs uncontrollable parameters** | Controls name heat, budget, mode. **Uncontrollable** side not explicit: literature depth, source API gaps, model drift, human framing of the seed, disconfirming evidence off the query manifold. Sensitivity analysis belongs here before tuning knobs. |
 | **Envelope analysis** | Shadow `manage()` and GradientSensor logging are early computational experiment; there is no Wizard-of-Oz (human simulating A2/A3), no task-time model for the human reading a fingerprint, no parameter sweep doc like Parakeet's confusion network. Favourite next step once signal flows exist. |
-
-None of these block the A-0 shell; they mark where the model stops being a box diagram and starts being a design tool.
 
 ---

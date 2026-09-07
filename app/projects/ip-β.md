@@ -8,8 +8,8 @@ client:
 services:
   - pipelines
   - knowledge
-image: /static/assets/images/projects/impossible-papers/desktop_cover.webp
-desktop_cover: /static/assets/images/projects/impossible-papers/desktop_cover.webp
+image: /static/assets/images/projects/ip-beta/desktop_cover.webp
+desktop_cover: /static/assets/images/projects/ip-beta/desktop_cover.webp
 mobile_cover:
 pattern: lr-pattern-noise
 technologies:
@@ -80,7 +80,7 @@ sections:
       <p>The interesting pattern: both results came from the system
       <em>disagreeing with itself</em>, not from generating novelty.
       Generation is easy. Adjudication is the hard part.</p>
-    image: /static/assets/images/projects/impossible-papers/desktop_cover.webp
+    image: /static/assets/images/projects/ip-beta/desktop_cover.webp
     reverse: false
 
   # ── 4. ARCHITECTURE ──
@@ -106,7 +106,7 @@ sections:
       not the text. Every objection arrives with its evidence attached —
       the missing edge, the contradicting quote, the numerical
       inconsistency.</p>
-    image: /static/assets/images/projects/impossible-papers/architecture.png
+    image: /static/assets/images/projects/ip-beta/ontology_management.webp
     reverse: true
 
   # ── 5. METHODOLOGY — the hard problems ──
@@ -239,7 +239,7 @@ sections:
       a narrative; a fingerprint is a testable structure. The open research
       frontier is a Cypher query over unresolved ProblemStatement nodes —
       and that query is the architectural keystone of the whole system.</p>
-    image: /static/assets/images/projects/impossible-papers/fingerprint.png
+    image: /static/assets/images/projects/ip-beta/fingerprint.webp
     reverse: false
 
 
