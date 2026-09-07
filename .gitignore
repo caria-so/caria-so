@@ -65,3 +65,13 @@ node_modules/
 
 # Large media (exceeds GitHub 100MB limit)
 app/static/assets/images/projects/qa_tool/video_cover.mov
+
+# Private / local-only — not published on public GitHub
+app/blog/vitriol/
+app/data/fingerprints/
+render.yaml
+gunicorn.conf.py
+app/templates/impossible_papers.html
+app/templates/papers.html
+app/templates/paper_detail.html
+app/templates/regime_diversity.html
