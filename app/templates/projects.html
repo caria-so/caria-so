@@ -30,6 +30,16 @@ main:has(.proj-hero) {
     padding-inline: 0;
 }
 
+/* Match hero content width — avoid double page-gutter on inner */
+.idx-section:has(.proj-list) {
+    padding-inline: var(--page-gutter);
+    box-sizing: border-box;
+}
+
+.idx-section:has(.proj-list) .idx-section-inner {
+    padding-inline: 0;
+}
+
 .proj-hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
