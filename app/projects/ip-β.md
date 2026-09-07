@@ -81,6 +81,8 @@ sections:
       <em>disagreeing with itself</em>, not from generating novelty.
       Generation is easy. Adjudication is the hard part.</p>
     image: /static/assets/images/projects/ip-beta/desktop_cover.webp
+    caption: |
+      The neo4j knowledge graph is the system's topology. Agents move across a map where each research is positionedvia different techniques within disciplines, theories, methods, and tools.
     reverse: false
 
   # ── 4. ARCHITECTURE ──
@@ -107,6 +109,8 @@ sections:
       the missing edge, the contradicting quote, the numerical
       inconsistency.</p>
     image: /static/assets/images/projects/ip-beta/ontology_management.webp
+    caption: |
+      The greatest challenge is moving away from prose to allow the system to think using the graph. A system for extraction, triple selection, and grounding in existing ontologies resolves a certain percentage of cases; anything left unresolved is saved as a candidate in the ontology management section, where a "human-in-the-loop" process promotes terms. This is also the section where the commitments of each theory can be curated.
     reverse: true
 
   # ── 5. METHODOLOGY — the hard problems ──
@@ -240,6 +244,8 @@ sections:
       frontier is a Cypher query over unresolved ProblemStatement nodes —
       and that query is the architectural keystone of the whole system.</p>
     image: /static/assets/images/projects/ip-beta/fingerprint.webp
+    caption: |
+      Progress on the research process is tracked via a Trello-style board, which displays agent activity, results, and new hypotheses generated for further development. Each card can be expanded to view the details.
     reverse: false
 
 
