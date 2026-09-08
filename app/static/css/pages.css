@@ -392,6 +392,11 @@ main:has(.idx-hero-v2) {
     height: 100px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.35s ease;
+}
+
+.idx-hero-v2-logos .idx-logo:hover img {
+    transform: scale(1.05);
 }
 
 @keyframes idx-logo-scroll {
@@ -401,6 +406,11 @@ main:has(.idx-hero-v2) {
 @media (prefers-reduced-motion: reduce) {
     .idx-logo-carousel-track {
         animation: none;
+    }
+
+    .idx-logo:hover img,
+    .idx-hero-v2-logos .idx-logo:hover img {
+        transform: none;
     }
 }
 
@@ -1156,20 +1166,15 @@ main:has(.idx-hero-v2) {
     width: auto;
     object-fit: contain;
     opacity: 1;
-    transition: filter 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.35s ease;
 }
 
 .idx-logo:hover img {
-    opacity: 1;
+    transform: scale(1.05);
 }
 
 [data-theme="dark"] .idx-logo img {
     filter: invert(1);
-    opacity: 1;
-}
-
-[data-theme="dark"] .idx-logo:hover img {
-    filter: grayscale(0);
     opacity: 1;
 }
 
