@@ -71,7 +71,6 @@ app/blog/vitriol/
 app/blog/posts/drafts/
 app/data/fingerprints/
 render.yaml
-gunicorn.conf.py
 app/templates/impossible_papers.html
 app/templates/papers.html
 app/templates/paper_detail.html
