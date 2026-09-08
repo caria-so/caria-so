@@ -756,6 +756,7 @@ main {
   flex: 1 1 auto;
   min-width: 0;
   align-items: center;
+  justify-content: flex-start;
   column-gap: clamp(1rem, 2vw, 2rem);
   row-gap: 0;
 }
@@ -970,9 +971,13 @@ main {
       display: flex;
   }
 
+  .nav-container {
+    gap: 1rem;
+  }
+
   .nav-left {
     flex: 1 1 auto;
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 0;
   }
 
@@ -1082,10 +1087,6 @@ main {
 @media (max-width: 400px) {
   .search-container {
       display: none;
-  }
-
-  .nav-left {
-    justify-content: center;
   }
 }
 
