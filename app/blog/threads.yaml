@@ -4,7 +4,7 @@
 threads:
 
   - slug: ip
-    title: Impossible Papers
+    title: IP-β
     color: hatch-ip
     order: 4
 
