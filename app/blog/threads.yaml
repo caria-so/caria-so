@@ -3,10 +3,10 @@
 
 threads:
 
-  - slug: ip
-    title: IP-β
+  - slug: 
+    title: 
     color: hatch-ip
-    order: 4
+    order: 
 
   - slug: knowledge
     title: Knowledge
@@ -33,8 +33,8 @@ threads:
     color: hatch-ecommerce
     order: 6
 
-  - slug: inbox
-    title: Inbox
+  - slug: uncategorized
+    title: Uncategorized
     color: hatch-neutral
     order: 99
     fallback: true
