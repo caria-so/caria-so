@@ -708,6 +708,9 @@ def load_paper(slug, iteration_fn=None):
 @blog_bp.route('/')
 def index():
     """Landing page with recent posts and projects"""
+    if current_app.config.get('MAINTENANCE_MODE'):
+        return render_template('maintenance.html')
+
     # Define featured content - you can customize these lists
     featured_post_slugs = [
         'vibe__conscious_vibe',

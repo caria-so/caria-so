@@ -1,0 +1,47 @@
+{% from 'partials/_logo_mark.html' import logo_mark %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function () {
+        var theme = 'light';
+        try {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') theme = saved;
+        } catch (e) {}
+        var root = document.documentElement;
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        if (theme === 'dark') {
+            root.style.backgroundColor = '#0E0E10';
+            root.style.color = '#FAFAFA';
+        }
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>caria.so</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/maintenance.css') }}">
+</head>
+<body class="maintenance-page">
+    <main class="maintenance-stage">
+        <div class="maintenance-inner">
+            <div class="maintenance-logo" aria-hidden="true">
+                {{ logo_mark('maintenance-logo') }}
+            </div>
+            <div class="maintenance-copy">
+                <h1 class="maintenance-title">Maintenance mode</h1>
+                <p class="maintenance-lead">
+                    caria.so is getting a careful refresh. Something good is cooking; we will be back soon.
+                </p>
+                <p class="maintenance-contact">
+                    In the meantime, say hello at
+                    <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

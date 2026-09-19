@@ -38,8 +38,8 @@
             <div class="idx-hero-v2-grid">
                 <div class="idx-hero-v2-copy">
                     <div class="idx-hero-name">caria.so</div>
-                    <h1 id="hero-heading" class="idx-hero-thesis">From Research to Revenue</h1>
-                    <p class="idx-hero-subtitle">Research, AI pipelines, and production code — one person, no handoff.</p>
+                    <h1 id="hero-heading" class="idx-hero-thesis">Machines can read your words.<br>They don't know your trade.</h1>
+                    <p class="idx-hero-subtitle">I turn complex knowledge into things people and software can use.</p>
                     <div class="idx-hero-cta">
                         <a href="#services" class="btn btn-primary txt-mono uppercase">See What I do</a>
                         <a href="mailto:{{ contact_email }}" class="btn btn-secondary txt-mono uppercase" data-contact-trigger>Get in touch</a>
@@ -83,68 +83,66 @@
         <div class="svc-header-grid">
             <div class="sec-header">
                 <span class="eyebrow">Services</span>
-                <h2 id="services-heading" class="txt-xbold">Research &amp;<br>Development Services</h2>
+                <h2 id="services-heading" class="txt-xbold">Knowledge work,<br>shipped as code</h2>
             </div>
 
             <p class="svc-intro">
-                <strong class="svc-intro-lead">Complex information people can't use well enough.</strong>
-                That's a researcher drowning in literature, a checkout flow losing customers,
-                or an organization sitting on data nobody can find. That's where I come in.
+                <strong class="svc-intro-lead">I research, model and build systems </strong> for working with complex information.
             </p>
         </div>
 
          <div class="svc-rows">
-             <a href="{{ url_for('blog.projects', service='product') }}" class="svc-row" style="--svc-color: var(--{{ project_services.product.color }});">
-                 <div class="svc-row-left">
-                     <span class="svc-row-dot"></span>
-                     <span class="svc-row-domain txt-mono">Product Research</span>
-                 </div>
-                 <div class="svc-row-right">
-                     <span class="svc-row-title">Find what's costing you conversions</span>
-                     <span class="svc-row-note">Heuristic evaluations against 700+ guidelines, moderated usability sessions, funnel teardowns with annotated recordings</span>
-                 </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
-             </a>
+            <a href="{{ url_for('blog.projects', service='knowledge') }}" class="svc-row" style="--svc-color: var(--{{ project_services.knowledge.color }});">
+                <div class="svc-row-left">
+                    <span class="svc-row-dot"></span>
+                    <span class="svc-row-domain txt-mono">Vocabularies</span>
+                </div>
+                <div class="svc-row-right">
+                    <span class="svc-row-title">Write down what the fields know</span>
+                    <span class="svc-row-note"> Domain models, ontologies and controlled vocabularies built from expert knowledge, standards and literature.</span>
+                </div>
+                <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
+            </a>
  
-             <a href="{{ url_for('blog.projects', service='development') }}" class="svc-row" style="--svc-color: var(--{{ project_services.development.color }});">
-                 <div class="svc-row-left">
-                     <span class="svc-row-dot"></span>
-                     <span class="svc-row-domain txt-mono">Development</span>
-                 </div>
-                 <div class="svc-row-right">
-                     <span class="svc-row-title">Prototyping & development</span>
-                     <span class="svc-row-note">Interactive prototypes, e-commerce builds, research dashboards. Flask, FastAPI, WooCommerce.</span>
-                 </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
-             </a>
+            <a href="{{ url_for('blog.projects', service='pipelines') }}" class="svc-row" style="--svc-color: var(--{{ project_services.pipelines.color }});">
+                <div class="svc-row-left">
+                    <span class="svc-row-dot"></span>
+                    <span class="svc-row-domain txt-mono">Pipelines</span>
+                </div>
+                <div class="svc-row-right">
+                    <span class="svc-row-title">Turn information into something usable</span>
+                    <span class="svc-row-note">OCR and extraction, entity resolution, structured relations, knowledge graphs and semantic search.</span>
+                </div>
+                <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
+            </a>
  
-             <a href="{{ url_for('blog.projects', service='pipelines') }}" class="svc-row" style="--svc-color: var(--{{ project_services.pipelines.color }});">
-                 <div class="svc-row-left">
-                     <span class="svc-row-dot"></span>
-                     <span class="svc-row-domain txt-mono">Pipelines</span>
-                 </div>
-                 <div class="svc-row-right">
-                     <span class="svc-row-title">Wire AI into your actual workflow</span>
-                     <span class="svc-row-note">LLM orchestration, entity resolution, semantic search, OCR extraction. Production integrations, not a chatbot on a landing page</span>
-                 </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
-             </a>
+            <a href="{{ url_for('blog.projects', service='product') }}" class="svc-row" style="--svc-color: var(--{{ project_services.product.color }});">
+                <div class="svc-row-left">
+                    <span class="svc-row-dot"></span>
+                    <span class="svc-row-domain txt-mono">Audits</span>
+                </div>
+                <div class="svc-row-right">
+                    <span class="svc-row-title">Find what's costing you customers</span>
+                    <span class="svc-row-note">Eight years of UX research, now applied across interfaces, products and the information underneath them.</span>
+                </div>
+                <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
+            </a>
  
-             <a href="{{ url_for('blog.projects', service='knowledge') }}" class="svc-row" style="--svc-color: var(--{{ project_services.knowledge.color }});">
-                 <div class="svc-row-left">
-                     <span class="svc-row-dot"></span>
-                     <span class="svc-row-domain txt-mono">Knowledge</span>
-                 </div>
-                 <div class="svc-row-right">
-                     <span class="svc-row-title">Make complex information findable</span>
-                     <span class="svc-row-note">Graph databases, semantic search, metadata architecture, dataset curation — for research labs and businesses alike</span>
-                 </div>
-                 <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
-             </a>
+            <a href="{{ url_for('blog.projects', service='development') }}" class="svc-row" style="--svc-color: var(--{{ project_services.development.color }});">
+                <div class="svc-row-left">
+                    <span class="svc-row-dot"></span>
+                    <span class="svc-row-domain txt-mono">Development</span>
+                </div>
+                <div class="svc-row-right">
+                    <span class="svc-row-title">Build it</span>
+                    <span class="svc-row-note">Research and implementation by the same person — from prototype to working system, with no handoff or translation loss.</span>
+                </div>
+                <i class="ph ph-arrow-up-right svc-row-arrow" aria-hidden="true"></i>
+            </a>
          </div>
      </div>
 
-     <!-- <div class="idx-section-inner svc-industries" aria-labelledby="industries-heading">
+     <div class="idx-section-inner svc-industries" aria-labelledby="industries-heading">
         <div class="idx-section-header centered">
             <span class="txt-mono txt-xsmall uppercase hiw-muted">Sectors</span>
             <h3 id="industries-heading" class="txt-xbold">Industries I Specialize In</h3>
@@ -162,7 +160,7 @@
             <span class="industry-badge"><i class="ph ph-suitcase-rolling" aria-hidden="true"></i> Travel & Accommodations</span>
             <span class="industry-badge"><i class="ph ph-asclepius" aria-hidden="true"></i> Healthcare & Wellness</span>
         </div>
-    </div> -->
+    </div>
 
  </section>
  

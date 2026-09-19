@@ -3,9 +3,11 @@ import os
 from flask import Flask, redirect, render_template, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+_APP_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    load_dotenv(os.path.join(_APP_ROOT, '.env'))
 except ImportError:
     pass
 
@@ -37,6 +39,7 @@ def create_app():
     # Impossible Papers reads multi-MB fingerprint JSON on request. Off by
     # default so the site can run lean until those pages are wanted.
     app.config['ENABLE_PAPERS'] = _env_flag('ENABLE_PAPERS', default=False)
+    app.config['MAINTENANCE_MODE'] = _env_flag('MAINTENANCE_MODE', default=False)
 
     if is_production:
         app.logger.setLevel(logging.INFO)
@@ -60,6 +63,17 @@ def create_app():
 
     from app.routes import blog_bp
     app.register_blueprint(blog_bp)
+
+    if app.config['MAINTENANCE_MODE']:
+        from flask import url_for
+
+        @app.before_request
+        def maintenance_mode():
+            if request.path.startswith('/static/'):
+                return None
+            if request.endpoint == 'blog.index':
+                return None
+            return redirect(url_for('blog.index'))
 
     from app.media import media_variants
     app.jinja_env.globals['media_variants'] = media_variants
