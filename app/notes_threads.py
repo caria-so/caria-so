@@ -8,6 +8,17 @@ THREADS_PATH = os.path.join(os.path.dirname(__file__), 'blog', 'threads.yaml')
 INBOX_SLUG = 'inbox'
 
 
+def _thread_sort_order(thread):
+    """YAML `order:` with no value is null — treat as default."""
+    order = thread.get('order')
+    if order is None:
+        return 50
+    try:
+        return int(order)
+    except (TypeError, ValueError):
+        return 50
+
+
 def load_thread_registry():
     """Return ordered thread definitions from threads.yaml."""
     if not os.path.isfile(THREADS_PATH):
@@ -15,7 +26,8 @@ def load_thread_registry():
     with open(THREADS_PATH, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f) or {}
     threads = data.get('threads') or []
-    return sorted(threads, key=lambda t: t.get('order', 50))
+    threads = [t for t in threads if t and str(t.get('slug') or '').strip()]
+    return sorted(threads, key=_thread_sort_order)
 
 
 def get_thread(registry, slug):

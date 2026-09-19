@@ -3,11 +3,6 @@
 
 threads:
 
-  - slug: 
-    title: 
-    color: hatch-ip
-    order: 
-
   - slug: knowledge
     title: Knowledge
     color: hatch-ip
