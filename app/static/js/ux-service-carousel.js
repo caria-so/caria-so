@@ -73,8 +73,8 @@ class UXServiceCarousel {
                     <div class="card-badge-dot dot-pulse" style="background-color: #667eea; animation-delay: 0.3s;"></div>
                     <div class="card-badge-text txt-mono txt-light uppercase txt-xsmall">${currentSlideData.badge}</div>
                 </div>
-                <h3 class="txt-bold" style="margin: 0 0 16px 0; color: var(--c-text-primary)">${currentSlideData.title}</h2>
-                <h5 class="txt-light mb-m">${currentSlideData.subtitle}</h4>
+                <h3 class="txt-bold" style="margin: 0 0 16px 0; color: var(--c-text-primary)">${currentSlideData.title}</h3>
+                <h5 class="txt-light mb-m">${currentSlideData.subtitle}</h5>
                 <p class="txt-light mb-m">${currentSlideData.content}</p>
                 
                 <div class="carousel-controls" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--c-border); display: flex; justify-content: space-between; align-items: center;">

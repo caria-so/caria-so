@@ -487,6 +487,7 @@ main:has(.idx-hero-v2) {
 .idx-section-header h3 {
     font-size: var(--t-title);
     line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 .idx-band {
@@ -516,12 +517,6 @@ main:has(.idx-hero-v2) {
 .idx-section--services .eyebrow {
     color: color-mix(in srgb, var(--hatch-ai) 85%, var(--c-text-primary));
     letter-spacing: 0.2em;
-}
-
-.idx-section--services .sec-header h2 {
-    font-size: clamp(2rem, 4.8vw, 2.85rem);
-    letter-spacing: -0.035em;
-    line-height: 1.08;
 }
 
 .idx-section--projects {
@@ -760,6 +755,19 @@ main:has(.idx-hero-v2) {
     margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
+.svc-header-grid--center {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+.svc-header-grid--center .svc-intro {
+    align-self: center;
+    text-align: center;
+    max-width: 38rem;
+}
+
 .svc-header-grid .sec-header {
     margin-bottom: 0;
 }
@@ -896,13 +904,134 @@ main:has(.idx-hero-v2) {
     transform: translate(2px, -2px);
 }
 
-.svc-industries {
-    margin-top: clamp(1.5rem, 10vw, 3.5rem);
-    padding-top: clamp(2.25rem, 4.5vw, 3.5rem);
+.idx-tools-sec {
+    --hatch-color: var(--hatch-neutral);
+    --pattern-opacity: 0.24;
+    position: relative;
+    background:
+        radial-gradient(ellipse 75% 55% at 88% 12%, color-mix(in srgb, var(--hatch-ai) 9%, transparent), transparent 58%),
+        radial-gradient(ellipse 55% 48% at 8% 88%, color-mix(in srgb, var(--hatch-ux) 7%, transparent), transparent 52%),
+        radial-gradient(ellipse 45% 40% at 50% 50%, color-mix(in srgb, var(--hatch-libraries) 5%, transparent), transparent 55%),
+        linear-gradient(180deg, var(--c-background-gray) 0%, var(--c-background) 50%, var(--c-background-gray) 100%);
 }
 
-.svc-industries .idx-section-header {
-    margin-bottom: 2rem;
+.idx-tools-sec .eyebrow {
+    color: color-mix(in srgb, var(--hatch-neutral) 55%, var(--c-text-secondary));
+}
+
+.idx-tools-rows {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.75rem, 6vw, 4rem);
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.idx-tools-row {
+    position: relative;
+}
+
+.idx-tools-row h3 {
+    font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.85rem;
+}
+
+.idx-tool-media {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-background-gray);
+}
+
+.idx-tool-picture,
+.idx-tool-picture picture {
+    display: block;
+}
+
+.idx-tool-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+}
+
+.idx-industry-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+}
+
+.idx-industry-split--reverse {
+    direction: rtl;
+}
+
+.idx-industry-split--reverse > * {
+    direction: ltr;
+}
+
+.idx-industry-copy .eyebrow {
+    display: block;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.16em;
+}
+
+.idx-industry-copy h2 {
+    font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.85rem;
+}
+
+.idx-industry-copy h3 {
+    font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.85rem;
+}
+
+.idx-industry-body {
+    margin: 0;
+    max-width: 34rem;
+    font-family: var(--font-serif);
+    font-size: var(--t-body);
+    line-height: 1.7;
+    color: var(--c-text-body);
+}
+
+.idx-industry-actions {
+    margin: 1.35rem 0 0;
+}
+
+.idx-industry-viz {
+    --idx-industry-viz-height: clamp(280px, 34vw, 380px);
+    position: relative;
+    min-height: var(--idx-industry-viz-height);
+    width: 100%;
+}
+
+.idx-industry-viz--pipeline {
+    min-height: 0;
+    height: auto;
+}
+
+.idx-industry-viz--pipeline .ipx-wrap {
+    max-height: none;
+    overflow: visible;
+}
+
+@media (max-width: 820px) {
+    .idx-industry-split,
+    .idx-industry-split--reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+    }
+
+    .idx-industry-viz {
+        order: -1;
+    }
 }
 
 @media (max-width: 900px) {
@@ -4501,3 +4630,12 @@ main:has(.idx-hero-v2) {
         display: none;
     }
 }
+/* ── SOBER OVERRIDES (patch-sober.sh) ─────────────────────── */
+.idx-section--services, .rx-ip,
+.idx-section--projects, .idx-section--stack,
+.idx-section--blog, .rx-blog,
+.idx-section--arc, .rx-arc { background: var(--c-background); }
+[class*="lr-pattern-"]::before { display: none; }
+.rx-contact-inner { border-radius: 0; border: 0; background: var(--c-background-gray); }
+.rx-contact-inner h2 { font-weight: 600; }
+/* ── /SOBER OVERRIDES ─────────────────────────────────────── */

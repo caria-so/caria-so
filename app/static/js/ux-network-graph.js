@@ -6,7 +6,6 @@ class UXNetworkGraph {
             console.error('Container not found:', containerId);
             return;
         }
-        console.log('Container found:', this.container);
         
         this.owlData = owlData;
         this.width = 800; // Will be updated in setupContainer
@@ -46,90 +45,18 @@ class UXNetworkGraph {
     }
     
     setupContainer() {
-        // Clear container and set up as full screen section
         this.container.innerHTML = '';
-        this.container.style.position = 'relative';
-        this.container.style.width = '100vw';
-        this.container.style.height = '550px';
-        this.container.style.backgroundColor = 'var(--c-background)';
-        this.container.style.margin = '0';
-        this.container.style.padding = '0';
-        this.container.style.overflow = 'hidden';
-        
-        // Make parent section full screen too
-        const parentSection = this.container.closest('section');
-        if (parentSection) {
-            parentSection.style.margin = '0';
-            parentSection.style.padding = '0';
-            parentSection.style.width = '100vw';
-            parentSection.style.position = 'relative';
-            parentSection.style.left = '50%';
-            parentSection.style.right = '50%';
-            parentSection.style.marginLeft = '-50vw';
-            parentSection.style.marginRight = '-50vw';
-        }
-        
-        // Update dimensions
-        this.width = window.innerWidth;
-        this.height = 550;
-        
-        // Add service breakdown card
-        this.createServiceCard();
+        this.container.classList.add('idx-industry-graph--ready');
+        this.measureContainer();
     }
-    
-    createServiceCard() {
-        const card = document.createElement('div');
-        card.id = 'service-breakdown-card';
-        card.style.cssText = `
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 400px;
-            max-height: 450px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            overflow-y: auto;
-            font-size: 14px;
-        `;
-        
-        // Add dark theme glass effect
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            card.style.background = 'rgba(0, 0, 0, 0.3)';
-            card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-        }
-        
-        // Create carousel container
-        card.innerHTML = `<div id="ux-service-carousel"></div>`;
-        
-        this.container.appendChild(card);
-        
-        // Initialize carousel after card is added to DOM
-        setTimeout(() => {
-            if (window.UXServiceCarousel) {
-                new UXServiceCarousel('ux-service-carousel');
-            } else {
-                console.error('UXServiceCarousel not found');
-                // Fallback content
-                document.getElementById('ux-service-carousel').innerHTML = `
-                    <div class="card-badge flex horizontal gap-s aligncenter mb-m">
-                        <div class="card-badge-dot dot-pulse" style="background-color: #667eea; animation-delay: 0.3s;"></div>
-                        <div class="card-badge-text txt-mono txt-light uppercase txt-xsmall">UX & Product Strategy</div>
-                    </div>
-                    <h2 class="txt-bold" style="margin: 0 0 16px 0; color: var(--c-text-primary)">UX Uncovered</h2>
-                    <h4 class="txt-light mb-m">Combining Academic Rigor with AI</h4>
-                    <p class="txt-light mb-m">
-                        I can consult on every aspect of the UX process, from research to design to development.
-                    </p>
-                `;
-            }
-        }, 200);
+
+    measureContainer() {
+        const viz = this.container.closest('.idx-industry-viz');
+        const height = viz
+            ? parseInt(getComputedStyle(viz).getPropertyValue('--idx-industry-viz-height'), 10)
+            : 0;
+        this.width = this.container.clientWidth || (viz && viz.clientWidth) || 800;
+        this.height = height || this.container.clientHeight || 360;
     }
     
     parseOWLData() {
@@ -291,7 +218,8 @@ class UXNetworkGraph {
     }
     
     setupD3() {
-        // Use D3 for better force simulation
+        this.measureContainer();
+
         this.svg = d3.select(this.container)
             .append('svg')
             .attr('width', this.width)
@@ -299,7 +227,7 @@ class UXNetworkGraph {
             .style('position', 'absolute')
             .style('top', 0)
             .style('left', 0)
-            .style('background-color', 'var(--c-background)');
+            .style('background-color', 'transparent');
             
         // Add zoom behavior
         this.zoom = d3.zoom()
@@ -317,15 +245,20 @@ class UXNetworkGraph {
         this.backgroundRect = this.svg.insert('rect', ':first-child')
             .attr('width', this.width)
             .attr('height', this.height)
-            .attr('fill', 'var(--c-background)');
+            .attr('fill', 'transparent')
+            .style('pointer-events', 'none');
     }
     
     setupSimulation() {
         this.simulation = d3.forceSimulation(this.nodes)
-            .force('link', d3.forceLink(this.links).id(d => d.id).distance(100))
-            .force('charge', d3.forceManyBody().strength(-300))
+            .force('link', d3.forceLink(this.links).id(d => d.id).distance(130).strength(0.6))
+            .force('charge', d3.forceManyBody().strength(-420))
             .force('center', d3.forceCenter(this.width / 2, this.height / 2))
-            .force('collision', d3.forceCollide().radius(d => d.size + 5));
+            .force('collision', d3.forceCollide().radius(d => d.size + 8))
+            .force('x', d3.forceX(this.width / 2).strength(0.04))
+            .force('y', d3.forceY(this.height / 2).strength(0.04));
+
+        this.simulation.velocityDecay(0.35);
     }
     
     render() {
@@ -459,12 +392,17 @@ class UXNetworkGraph {
     }
     
     handleResize() {
-        this.width = window.innerWidth;
-        this.height = 550;
+        this.measureContainer();
         
         this.svg
             .attr('width', this.width)
             .attr('height', this.height);
+
+        if (this.backgroundRect) {
+            this.backgroundRect
+                .attr('width', this.width)
+                .attr('height', this.height);
+        }
         
         this.simulation
             .force('center', d3.forceCenter(this.width / 2, this.height / 2))
@@ -492,7 +430,7 @@ class UXNetworkGraph {
         }
         
         if (this.backgroundRect) {
-            this.backgroundRect.attr('fill', 'var(--c-background)');
+            this.backgroundRect.attr('fill', 'transparent');
         }
     }
 }
@@ -510,24 +448,27 @@ function loadD3AndInitialize() {
 }
 
 async function initializeGraph() {
+    const mount = document.getElementById('ux-exploration_owl');
+    if (!mount) {
+        return;
+    }
     try {
-        console.log('Initializing graph...');
         const response = await fetch('/static/js/datasets/ux_exploration.owl');
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         const owlData = await response.text();
-        console.log('OWL data loaded, length:', owlData.length);
         new UXNetworkGraph('ux-exploration_owl', owlData);
     } catch (error) {
         console.error('Failed to load UX ontology:', error);
-        // Create fallback with dummy data
         createFallbackVisualization();
     }
 }
 
 function createFallbackVisualization() {
-    console.log('Creating fallback visualization...');
+    if (!document.getElementById('ux-exploration_owl')) {
+        return;
+    }
     const dummyData = `<?xml version="1.0"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:owl="http://www.w3.org/2002/07/owl#"
@@ -556,6 +497,7 @@ function createFallbackVisualization() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing...');
-    loadD3AndInitialize();
+    if (document.getElementById('ux-exploration_owl')) {
+        loadD3AndInitialize();
+    }
 });

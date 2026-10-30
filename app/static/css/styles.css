@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css');
 
 /*------------------------------------*\
@@ -20,13 +20,13 @@
   --c-gray-100: #FAFAFA;
   
   /* Primary accent colors */
-  --c-accent: #D33F49;          
-  --c-accent-dark: #B02C35;     
-  --c-accent-light: #F8D9DB;    
+  --c-accent: #9A2B32;          
+  --c-accent-dark: #7A2227;     
+  --c-accent-light: #F3E3E4;    
   
   /* Complementary colors */
-  --c-link: #2D68C4;            /* Blue for links, distinct from accent */
-  --c-link-hover: #1E4C9A;      /* Darker blue for link hovers */
+  --c-link: #9A2B32;            /* Blue for links, distinct from accent */
+  --c-link-hover: #111214;      /* Darker blue for link hovers */
   --c-success: #34A853;         /* Green for success states */
   --c-warning: #FBBC05;         /* Yellow for warnings */
   --c-error: #EA4335;
@@ -38,24 +38,25 @@
  
   
   /* Theme variables - Light */
-  --c-background: var(--c-gray-100);
-  --c-background-gray: var(--c-gray-200);
+  --c-background: #FFFFFF;
+  --c-background-gray: #EEF0F2;
   --c-input-background: var(--c-gray-200);
   --c-chip-bkg: var(--c-gray-200);
-  --c-border: var(--c-gray-300);
-  --c-text-primary: var(--c-gray-900);
-  --c-text-subtitle: #3F3F46;
-  --c-text-body: var(--c-gray-700);
-  --c-text-secondary: var(--c-gray-600);
-  --c-text-tertiary: var(--c-gray-400);
+  --c-border: #D9DCE0;
+  --c-text-primary: #111214;
+  --c-text-subtitle: #34373C;
+  --c-text-body: #34373C;
+  --c-text-secondary: #5A5D63;
+  --c-text-tertiary: #5A5D63;
 
   --logo-glow: #DDE2DF;
   --logo-ring: #1D2227;
 
   /* Typography */
-  --font-sans: "Host Grotesk", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: var(--font-sans); /* set to var(--font-serif) to bring the serif back */
   --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --c-cta-focus: var(--c-accent);
 
   /*------------------------------------*\
@@ -76,9 +77,9 @@
     label    → mono eyebrows, proof labels
     micro    → tiny mono inside cards/animations
   \*------------------------------------*/
-  --t-display: clamp(2.25rem, 5.5vw, 3.5rem);
-  --t-title:   clamp(1.5rem, 3vw, 2rem);
-  --t-heading: 1.125rem;
+  --t-display: clamp(2.5rem, 5vw, 3.75rem);
+  --t-title:   clamp(1.75rem, 3vw, 2.5rem);
+  --t-heading: 1rem;
   --t-subhead: 0.9375rem;
   --t-body:    1rem;
   --t-body-sm: 0.875rem;
@@ -95,7 +96,7 @@
   --c-button-primary-hover: var(--c-accent-dark);
   --c-button-text: white;
   --c-input-border: var(--c-gray-300);
-  --c-input-focus: rgba(211, 63, 73, 0.2); /* Accent with opacity */
+  --c-input-focus: rgba(154, 43, 50, 0.2); /* Accent with opacity */
   
   /* Component colors - Light */
   --border-color: var(--c-border);
@@ -103,7 +104,7 @@
   --c-chip: var(--c-gray-200);
   --c-chip-border: #E4E4E7;
   --toc-bg: var(--c-gray-200);
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-shadow: none;
   --search-bg: var(--search-bg-light);
   
   /* Code blocks - Light */
@@ -134,18 +135,18 @@
   --c-border: var(--c-dark-gray-300);
   
   /* Accent colors - Dark (slightly adjusted for better contrast) */
-  --c-accent: #E75864;          /* Brighter for dark backgrounds */
-  --c-accent-dark: #D33F49;     /* Original accent as "dark" */
+  --c-accent: #E8A3A8;          /* Brighter for dark backgrounds */
+  --c-accent-dark: #F0B9BD;     /* Original accent as "dark" */
   --c-accent-light: #3A181B;    /* Very dark accent for backgrounds */
-  --c-link: #4D90F0;            /* Brighter blue for dark mode */
-  --c-link-hover: #6BA2F7;      /* Lighter on hover (opposite of light theme) */
+  --c-link: #E8A3A8;            /* Brighter blue for dark mode */
+  --c-link-hover: #FFFFFF;      /* Lighter on hover (opposite of light theme) */
   
   /* Component colors - Dark */
   --c-chip: var(--c-dark-gray-700);
   --c-chip-border: var(--c-dark-gray-600);
   --c-chip-bkg: var(--c-dark-gray-800);
   --toc-bg: var(--c-dark-gray-800);
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --card-shadow: none;
   --border-light: rgba(31, 31, 36, 0.8);
   --search-bg: var(--search-bg-dark);
   
@@ -486,7 +487,7 @@ h6 { font-size: var(--t-body-sm); }
 
 p {
   margin: 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: var(--t-body);
   color: var(--c-text-body);
   font-weight: 400;
@@ -516,7 +517,7 @@ p {
 .txt-normal { font-weight: 400; }
 .txt-medium { font-weight: 500; }
 .txt-bold { font-weight: 700; }
-.txt-xbold { font-weight: 900; }
+.txt-xbold { font-weight: 700; }
 
 .italic {
   font-style: italic;
@@ -2244,3 +2245,21 @@ header.contact-modal__header {
     background: color-mix(in srgb, var(--proj-accent, var(--hatch-neutral)) 10%, var(--c-background-gray));
   }
 }
+/* ── SOBER OVERRIDES (patch-sober.sh) ─────────────────────── */
+.site-footer { background: #111214; color: #A3A7AE; border-top: 0; }
+.site-footer .footer-brand-name,
+.site-footer .footer-links h4,
+.site-footer .footer-contact h4 { color: #FFFFFF; }
+.site-footer .footer-links a,
+.site-footer .footer-contact a,
+.site-footer .footer-contact .icon,
+.site-footer .footer-description,
+.site-footer .footer-bottom { color: #A3A7AE; }
+.site-footer .footer-links a:hover,
+.site-footer .footer-contact a:hover { color: #FFFFFF; }
+.site-footer .footer-tagline { color: #E8A3A8; }
+.site-footer .footer-bottom { border-top-color: #3A3D43; }
+.dropdown-menu { border-radius: 0; box-shadow: none; }
+.btn.btn-primary:hover { background-color: var(--c-accent); color: #FFF; }
+.btn.btn-secondary:hover { background-color: var(--c-text-primary); color: var(--c-background); }
+/* ── /SOBER OVERRIDES ─────────────────────────────────────── */

@@ -733,12 +733,23 @@ def index():
     # Get all tags for consistent coloring
     all_tags = sorted(set(tag for post in (posts + projects) for tag in post.get('tags', [])))
     tag_colors = get_tag_colors(all_tags)
+
+    all_notes, registry = load_notes(POSTS_DIR, parse_date_fn=parse_date)
+    register_notes = sorted(
+        all_notes,
+        key=lambda n: (
+            -n['parsed_date'].timestamp() if n.get('parsed_date') else 0,
+            -n.get('last_modified', 0),
+        ),
+    )[:20]
     
     return render_template('index.html', 
                          recent_posts=posts, 
                          recent_projects=projects,
                          tag_colors=tag_colors,
-                         endorsements=load_endorsements())
+                         endorsements=load_endorsements(),
+                         registry=registry,
+                         register_notes=register_notes)
 
 
 @blog_bp.route('/sketchboard')

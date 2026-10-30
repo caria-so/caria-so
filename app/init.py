@@ -7,7 +7,8 @@ _APP_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 try:
     from dotenv import load_dotenv
-    load_dotenv(os.path.join(_APP_ROOT, '.env'))
+    # Local .env is the source of truth (overrides stale shell exports).
+    load_dotenv(os.path.join(_APP_ROOT, '.env'), override=True)
 except ImportError:
     pass
 
