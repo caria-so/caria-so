@@ -27,8 +27,8 @@
                 </summary>
             <div class="arc-sidebar-sticky">
             <header class="arc-sidebar-head">
-                <span class="arc-eyebrow">Sketchboard</span>
-                <h1 class="arc-title">{% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Sketchboard{% endif %}</h1>
+                <span class="home-eyebrow">Sketchboard</span>
+                <h1 class="home-h2">{% if view == 'thread' and thread_meta %}{{ thread_meta.title }}{% else %}Sketchboard{% endif %}</h1>
                 <p class="arc-subtitle">
                     {% if view == 'thread' and thread_meta %}
                     Thread · {{ posts|length }} note{{ 's' if posts|length != 1 else '' }}

@@ -1,0 +1,11 @@
+<nav class="home-contact-links{% if social_links_compact|default(false) %} home-contact-links--compact{% endif %}" aria-label="Elsewhere">
+    <a href="mailto:{{ contact_email }}" class="home-contact-link" data-contact-trigger>
+        <i class="ph ph-envelope-simple" aria-hidden="true"></i> {{ contact_email }}
+    </a>
+    <a href="https://github.com/caria-so" class="home-contact-link" target="_blank" rel="noopener noreferrer">
+        <i class="ph ph-github-logo" aria-hidden="true"></i> GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/federico-caria/" class="home-contact-link" target="_blank" rel="noopener noreferrer">
+        <i class="ph ph-linkedin-logo" aria-hidden="true"></i> LinkedIn
+    </a>
+</nav>

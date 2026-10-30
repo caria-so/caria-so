@@ -4,6 +4,7 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ip-pipeline.css') }}">
 {% endblock %}
 
 {% block title %}Federico Caria{% endblock %}
@@ -41,43 +42,16 @@
     </div>
 
     <figure class="home-spec">
-        <div class="home-spec-stage" aria-hidden="true">
-            <div class="home-spec-page">
-                <div class="home-spec-meta"><span>scan_0147.tif</span><span>p. 12</span></div>
-                <div class="home-spec-lines">
-                    <div class="home-spec-line" style="--w:92%"></div>
-                    <div class="home-spec-row">
-                        <div class="home-spec-line" style="--w:28%"></div>
-                        <div class="home-spec-hit home-spec-hit--accent" data-tag="PERSON" style="--w:26%"></div>
-                        <div class="home-spec-line"></div>
-                    </div>
-                    <div class="home-spec-line" style="--w:86%"></div>
-                    <div class="home-spec-line" style="--w:95%"></div>
-                    <div class="home-spec-row">
-                        <div class="home-spec-line" style="--w:14%"></div>
-                        <div class="home-spec-hit" data-tag="WORK" style="--w:38%"></div>
-                        <div class="home-spec-line"></div>
-                    </div>
-                    <div class="home-spec-line" style="--w:78%"></div>
-                    <div class="home-spec-line" style="--w:90%"></div>
-                    <div class="home-spec-line" style="--w:54%"></div>
-                </div>
-            </div>
-            <div class="home-spec-out">
-                <div class="home-spec-out-label">EXTRACTED</div>
-                <div>(<mark>person</mark>) —wrote→ (work)</div>
-                <div>(work) —cites→ (work)</div>
-                <div>(work) —dated→ (year)</div>
-            </div>
+        <div class="home-spec-stage home-spec-stage--pipeline">
+            {% include 'partials/_ip_pipeline_hero.html' %}
         </div>
-        <figcaption>Fig. — a page in, structure out.</figcaption>
+        <figcaption>Fig. — evaluation picks the weakest dimension; the config rebuilds.</figcaption>
     </figure>
 </section>
 
 
 {# ════ LOGOS ════ #}
 <section class="home-wrap home-logos" aria-labelledby="aff-heading">
-    <h2 id="aff-heading" class="home-eyebrow">Institutions and clients</h2>
     <div class="home-logos-grid">
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/eu_commission.png') }}" alt="European Commission"></div>
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/marie_curie.png') }}" alt="Marie Skłodowska-Curie Actions"></div>
@@ -105,7 +79,7 @@
         <nav class="home-chips" aria-label="Threads" data-home-thread-nav>
             <button type="button" class="home-chip is-active" data-home-thread="" aria-pressed="true">All</button>
             {% for thread in registry %}
-            <button type="button" class="home-chip" data-home-thread="{{ thread.slug }}" aria-pressed="false">{{ thread.title }}</button>
+            <button type="button" class="home-chip" data-home-thread="{{ thread.slug }}" aria-pressed="false" style="--chip-thread: var(--{{ thread.color or 'hatch-neutral' }});">{{ thread.title }}</button>
             {% endfor %}
         </nav>
         {% endif %}
@@ -122,14 +96,14 @@
                 </thead>
                 <tbody>
                     {% for post in register_notes %}
-                    <tr data-home-thread-row="{{ post.thread }}">
+                    <tr data-home-thread-row="{{ post.thread }}" style="--row-thread: var(--{{ post.thread_color or 'hatch-neutral' }});">
                         <td class="cell-mono cell-no">{{ '%03d' % loop.index }}</td>
                         <td class="cell-title">
                             <a href="{{ url_for('blog.post_detail', slug=post.slug) }}">{{ post.title }}</a>
                             {% if post.summary %}<div class="cell-summary">{{ post.summary }}</div>{% endif %}
                         </td>
-                        <td class="cell-mono">
-                            <a href="{{ url_for('blog.sketchboard_thread', thread_slug=post.thread) }}">{{ post.thread_title or post.thread }}</a>
+                        <td class="cell-mono cell-section">
+                            <a href="{{ url_for('blog.sketchboard_thread', thread_slug=post.thread) }}" class="home-thread-link">{{ post.thread_title or post.thread }}</a>
                         </td>
                         <td class="cell-mono">
                             {% if post.thread_source and post.thread_source != 'manual' %}suggested{% elif post.date %}{{ post.date }}{% else %}—{% endif %}
@@ -169,33 +143,40 @@
 </script>
 
 
-{# ════ LAB — dark band ════ #}
+{# ════ LAB — four flagship projects ════ #}
 <section id="lab" class="home-band home-lab" aria-labelledby="lab-heading">
-    <div class="home-wrap">
+    <div class="home-wrap home-lab-inner">
         <div class="home-lab-head">
-            <h2 id="lab-heading" class="home-h2">From messy knowledge to working systems.</h2>
-            <p class="home-lab-intro">Figure out the structure, make it explicit, and build things that can work with it.</p>
+            <div>
+                <span class="home-eyebrow">My Lab</span>
+                <h2 id="lab-heading" class="home-h2">Every man needs a pipeline</h2>
+            </div>
+            <p class="home-lab-intro">Datasets, documents, hypotheses, and the structure underneath — four lines of work, each with a project write-up.</p>
         </div>
         <div class="home-lab-grid">
-            <a href="{{ url_for('blog.projects', service='knowledge') }}" class="home-lab-cell">
-                <span class="home-lab-num">01 — Prototypes</span>
-                <span class="home-lab-title">Things that half work</span>
-                <span class="home-lab-note">Experiments with graphs, OCR and agents. Some become projects, most stay here.</span>
+            <a href="{{ url_for('blog.project_detail', slug='scidata-hub') }}" class="home-lab-cell">
+                <span class="home-lab-num">01 — Datasets</span>
+                <span class="home-lab-title">SciData Hub</span>
+                <span class="home-lab-note">Scientific datasets and ontologies on Hugging Face — queryable in SQL, joinable across domains.</span>
+                <span class="home-lab-link">View project →</span>
             </a>
-            <a href="{{ url_for('blog.projects', service='pipelines') }}" class="home-lab-cell">
-                <span class="home-lab-num">02 — Projects</span>
-                <span class="home-lab-title">What is online</span>
-                <span class="home-lab-note">Systems in use, bookstores, and more.</span>
+            <a href="{{ url_for('blog.project_detail', slug='deepOCR') }}" class="home-lab-cell">
+                <span class="home-lab-num">02 — OCR</span>
+                <span class="home-lab-title">DeepOCR</span>
+                <span class="home-lab-note">OCR for historical and difficult texts — layout detection and structured output.</span>
+                <span class="home-lab-link">View project →</span>
             </a>
-            <a href="{{ url_for('blog.sketchboard_index') }}" class="home-lab-cell">
-                <span class="home-lab-num">03 — Sketchboard</span>
-                <span class="home-lab-title">Notes and sketches</span>
-                <span class="home-lab-note">Ideas while they are still moving. Lab diary, not listicles.</span>
+            <a href="{{ url_for('blog.project_detail', slug='ip-β') }}" class="home-lab-cell">
+                <span class="home-lab-num">03 — Research</span>
+                <span class="home-lab-title">IP-β</span>
+                <span class="home-lab-note">Graph-native multi-agent pipeline for literature-grounded scientific discovery.</span>
+                <span class="home-lab-link">View project →</span>
             </a>
-            <a href="{{ url_for('blog.projects', service='development') }}" class="home-lab-cell">
-                <span class="home-lab-num">04 — Tooling</span>
-                <span class="home-lab-title">Code for my own work</span>
-                <span class="home-lab-note">Scripts, pipelines and small tools, published as they are.</span>
+            <a href="{{ url_for('blog.about') }}" class="home-lab-cell">
+                <span class="home-lab-num">04 — Structure</span>
+                <span class="home-lab-title">DeepOwl</span>
+                <span class="home-lab-note">Research engineering studio — knowledge systems, archives, and field tooling.</span>
+                <span class="home-lab-link">About DeepOwl →</span>
             </a>
         </div>
     </div>
@@ -224,60 +205,19 @@
 {# ════ ENDORSEMENTS ════ #}
 {% if endorsements %}
 <section class="home-band home-endorse" aria-labelledby="home-endorse-heading">
-    <div class="home-wrap home-endorse-head">
+    <div class="home-wrap endorse-head">
         <span class="home-eyebrow">Endorsements</span>
         <h2 id="home-endorse-heading" class="home-h2">What collaborators say</h2>
     </div>
-    <div class="home-endorse-carousel" role="region" aria-label="Endorsement quotes">
-        <div class="home-endorse-track">
-            {% for _ in range(2) %}
-            {% set is_duplicate = loop.index == 2 %}
-            {% for e in endorsements %}
-            <blockquote class="home-endorse-card"{% if is_duplicate %} aria-hidden="true"{% endif %}>
-                <p class="home-endorse-quote">{{ e.quote }}</p>
-                <footer class="home-endorse-author">
-                    {% if e.logo %}
-                    <img class="home-endorse-logo" src="{{ url_for('static', filename=e.logo) }}" alt="" aria-hidden="true">
-                    {% endif %}
-                    <div>
-                        <p class="home-endorse-name">{{ e.name }}</p>
-                        <p class="home-endorse-role">{{ e.role }}</p>
-                    </div>
-                </footer>
-            </blockquote>
-            {% endfor %}
-            {% endfor %}
-        </div>
-    </div>
+    {% set endorse_marquee_bleed = true %}
+    {% include 'partials/_endorsements_marquee.html' %}
 </section>
 {% endif %}
 
 
 {# ════ CONTACT ════ #}
-<section id="contact" class="home-band home-contact" aria-labelledby="contact-heading">
-    <div class="home-wrap">
-        <div class="home-contact-panel">
-            <div class="home-contact-copy">
-                <span class="home-eyebrow">Collaborate</span>
-                <h2 id="contact-heading" class="home-h2">Working on a corpus, an archive, or a field's tooling?</h2>
-                <p class="home-contact-lead">Research infrastructure, digitisation, or tools that have to survive real workflows — tell me what you're building.</p>
-                <nav class="home-contact-links" aria-label="Elsewhere">
-                    <a href="https://github.com/caria-so" class="home-contact-link" target="_blank" rel="noopener noreferrer">
-                        <i class="ph ph-github-logo" aria-hidden="true"></i> GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/federico-caria/" class="home-contact-link" target="_blank" rel="noopener noreferrer">
-                        <i class="ph ph-linkedin-logo" aria-hidden="true"></i> LinkedIn
-                    </a>
-                </nav>
-            </div>
-            <div class="home-contact-aside">
-                <a href="mailto:{{ contact_email }}" class="home-btn home-btn--solid" data-contact-trigger>
-                    <i class="ph ph-envelope-simple" aria-hidden="true"></i> Send a message
-                </a>
-                <a href="mailto:{{ contact_email }}" class="home-contact-email">{{ contact_email }}</a>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'partials/_home_contact.html' %}
+
+<script src="{{ url_for('static', filename='js/ip_pipeline_hero.js') }}" defer></script>
 
 {% endblock %}

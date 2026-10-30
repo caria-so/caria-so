@@ -3,116 +3,8 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-
-<style>
-/* ══ ABOUT — hero (same pattern as projects) ══ */
-
-.abt-hero {
-    position: relative;
-    margin-inline: 0;
-    padding: clamp(4rem, 9vw, 6.5rem) var(--page-gutter, 2rem) clamp(3rem, 6vw, 4.5rem);
-    --hatch-color: var(--hatch-ux);
-    --pattern-opacity: 0.28;
-    background:
-        radial-gradient(ellipse 70% 55% at 8% 25%, color-mix(in srgb, var(--hatch-ux) 9%, transparent), transparent 55%),
-        radial-gradient(ellipse 50% 45% at 92% 75%, color-mix(in srgb, var(--hatch-ai) 7%, transparent), transparent 50%),
-        var(--c-background);
-    overflow: hidden;
-}
-
-.abt-hero-grid {
-    display: grid;
-    grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
-    gap: clamp(1.75rem, 4vw, 3.5rem);
-    align-items: start;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.abt-hero-eyebrow {
-    font-family: "Geist Mono", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--c-text-tertiary);
-    margin-bottom: 0.75rem;
-    display: block;
-}
-
-.abt-hero-title {
-    font-size: clamp(2rem, 4.5vw, 2.85rem);
-    font-weight: 900;
-    line-height: 1.06;
-    letter-spacing: -0.025em;
-    color: var(--c-text-primary);
-    margin: 0;
-}
-
-.abt-hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    font-weight: 500;
-    line-height: 1.35;
-    margin: 0.65rem 0 0;
-}
-
-.abt-hero-body {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    max-width: 42rem;
-    margin: 1.25rem 0 0;
-}
-
-.abt-portrait {
-    margin: 0;
-    aspect-ratio: 4 / 5;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid var(--c-border);
-    background: var(--c-background-gray);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-}
-
-.abt-portrait .media-load {
-    width: 100%;
-    height: 100%;
-}
-
-.abt-portrait-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.abt-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-}
-
-.abt-hero-social {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-}
-
-@media (max-width: 720px) {
-    .abt-hero {
-        padding: clamp(3rem, 8vh, 4.5rem) var(--page-gutter, 1rem) clamp(2.5rem, 5vh, 3.5rem);
-    }
-
-    .abt-hero-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .abt-portrait {
-        max-width: 220px;
-    }
-}
-</style>
 {% endblock %}
 
 {% block title %}About — Federico Caria{% endblock %}
@@ -121,70 +13,59 @@
 {% block content %}
 {% from 'partials/_media_picture.html' import picture %}
 
-<section class="abt-hero lr-pattern-noise" aria-labelledby="abt-hero-heading">
-    <div class="abt-hero-grid">
-        <figure class="abt-portrait">
-            {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
-        </figure>
+<section class="home-wrap home-hero" aria-labelledby="abt-hero-heading">
+    <figure class="home-spec abt-portrait">
+        {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
+    </figure>
 
-        <div class="abt-hero-copy">
-            <span class="abt-hero-eyebrow">About me</span>
-            <h1 id="abt-hero-heading" class="abt-hero-title">Federico Caria</h1>
-            <p class="abt-hero-subtitle">Human-Centered AI Researcher</p>
-            <p class="abt-hero-body">
-                I study how people work with knowledge — and I build the computational systems
-                to investigate it. Research infrastructure, datasets, prototypes, and the AI
-                tooling behind them. Eight years as Senior UX Researcher at the Baymard Institute,
-                studying information behavior in e-commerce at scale. Before that, a Marie Curie
-                Fellowship at the University of Cologne, working on digital tools for scientific
-                publishing. The subject has stayed the same: how people find, process, and publish
-                knowledge — and what changes when you change the tools.
-            </p>
-
-            <div class="abt-hero-actions">
-                {% if cv_available %}
-                <a href="{{ cv_url }}" class="btn btn-secondary" download>
-                    <i class="ph ph-file-pdf" aria-hidden="true"></i> Download CV
-                </a>
-                {% endif %}
-                <div class="abt-hero-social" aria-label="Social links">
-                    <a href="https://www.linkedin.com/in/federico-caria/" class="contact-social-btn contact-social-btn--linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-                        <i class="ph ph-linkedin-logo" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
+    <div class="home-hero-copy">
+        <span class="home-eyebrow">About me</span>
+        <h1 id="abt-hero-heading" class="home-hero-title">Federico Caria</h1>
+        <p class="home-hero-tagline">UX Researcher · Information Behaviour, Human–AI Interaction, Knowledge Graphs · ex-Baymard Institute · Marie Curie Fellow</p>
+        <p class="home-hero-sub">
+            I grew up in a world where knowledge is rare, and almost never written down in usable form. 
+            It sits in the distinctions an expert makes without thinking, in what someone knows 
+            to look for before they look, in the reasons two things that appear comparable are not, 
+            in the exceptions buried where nobody reads.
+        </p>
+        <p class="home-hero-sub">
+            For twenty years I've tried to understand how to recover it from what's left behind 
+            — from philosophy and textual criticism to the social sciences and human-computer interaction. 
+            What gets recorded is never the act itself, only its residue. Little by little 
+            I realized that knowledge, if we can speak of it at all, emerges under specific 
+            conditions: concrete needs, and tools used to meet them.
+        </p>
+        <p class="home-hero-sub">
+            Marie Curie fellowship. A doctorate in HCI on how scientists 
+            behave in research. Eight years at Baymard Institute measuring behaviour 
+            at industrial scale.
+        </p>
+        <p class="home-hero-sub">
+            Different fields, one bottleneck: environments and tools built for a user nobody ever identified. 
+            That isn't much of a problem when someone who knows the domain is doing the work. 
+            It becomes one when software has to decide. So that became the work 
+            — finding the missing structure, making it explicit, and building the systems that use it.
+        </p>
+        {% if cv_available %}
+        <div class="home-hero-cta">
+            <a href="{{ cv_url }}" class="home-btn home-btn--line" download>
+                <i class="ph ph-file-pdf" aria-hidden="true"></i> Download CV
+            </a>
         </div>
+        {% endif %}
     </div>
 </section>
 
-<section class="about-endorsements idx-section" aria-labelledby="endorsements-heading">
-    <div class="about-endorsements-head idx-section-inner idx-section-header">
-        <span class="rx-eyebrow">Endorsements</span>
-        <h2 id="endorsements-heading">What collaborators say</h2>
+{% if endorsements %}
+<section class="home-band home-endorse" aria-labelledby="endorsements-heading">
+    <div class="home-wrap endorse-head">
+        <span class="home-eyebrow">Endorsements</span>
+        <h2 id="endorsements-heading" class="home-h2">What collaborators say</h2>
     </div>
-
-    <div class="about-carousel" role="region" aria-label="Endorsement quotes">
-        <div class="about-carousel-track">
-            {% for _ in range(2) %}
-            {% set is_duplicate = loop.index == 2 %}
-            {% for e in endorsements %}
-            <blockquote class="about-endorsement-card"{% if is_duplicate %} aria-hidden="true"{% endif %}>
-                <p class="about-endorsement-quote">{{ e.quote }}</p>
-                <footer class="about-endorsement-author">
-                    {% if e.logo %}
-                    <img class="about-endorsement-logo" src="{{ url_for('static', filename=e.logo) }}" alt="" aria-hidden="true">
-                    {% endif %}
-                    <div>
-                        <p class="about-endorsement-name">{{ e.name }}</p>
-                        <p class="about-endorsement-role">{{ e.role }}</p>
-                    </div>
-                </footer>
-            </blockquote>
-            {% endfor %}
-            {% endfor %}
-        </div>
-    </div>
+    {% set endorse_marquee_bleed = true %}
+    {% include 'partials/_endorsements_marquee.html' %}
 </section>
+{% endif %}
 
 
 
@@ -214,17 +95,17 @@
  </section> -->
  
  
- {# ════════════════════════════════════
-    STACK BENTO
-    ════════════════════════════════════ #}
- <section class="idx-section idx-section--stack lr-pattern-grid-wide" aria-labelledby="abt-stack-heading">
-     <div class="idx-section-inner">
-         <div class="idx-section-header centered">
-             <span class="txt-mono txt-xsmall uppercase hiw-muted">Infrastructure</span>
-             <h2 id="abt-stack-heading" class="txt-xbold">What I Work With</h2>
-         </div>
- 
-         <div class="stack-bento">
+{# ════════════════════════════════════
+   STACK BENTO
+   ════════════════════════════════════ #}
+<section class="idx-section idx-section--stack lr-pattern-grid-wide" aria-labelledby="abt-stack-heading">
+    <div class="home-wrap">
+        <div class="idx-section-header centered">
+            <span class="txt-mono txt-xsmall uppercase hiw-muted">Infrastructure</span>
+            <h2 id="abt-stack-heading" class="txt-xbold">What I Work With</h2>
+        </div>
+
+        <div class="stack-bento">
              <div class="sb-filters" role="group" aria-label="Filter stack by category">
                  <button type="button" class="sb-filter active" data-filter="all">All</button>
                  <button type="button" class="sb-filter" data-filter="ai" style="--zone: var(--hatch-ai);">AI & NLP</button>
@@ -323,11 +204,11 @@
                      </div>
                  </article>
              </div>
-         </div>
-     </div>
- </section>
- 
+        </div>
+    </div>
+</section>
 
-{% include 'partials/_rx_contact.html' %}
+{# ════ CONTACT (same as index) ════ #}
+{% include 'partials/_home_contact.html' %}
 
 {% endblock %}

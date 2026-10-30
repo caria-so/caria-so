@@ -102,20 +102,6 @@ if ! grep -q 'SOBER OVERRIDES (patch-sober.sh)' "$S"; then
 cat >> "$S" <<'EOF'
 
 /* ── SOBER OVERRIDES (patch-sober.sh) ─────────────────────── */
-.site-footer { background: #111214; color: #A3A7AE; border-top: 0; }
-.site-footer .footer-brand-name,
-.site-footer .footer-links h4,
-.site-footer .footer-contact h4 { color: #FFFFFF; }
-.site-footer .footer-links a,
-.site-footer .footer-contact a,
-.site-footer .footer-contact .icon,
-.site-footer .footer-description,
-.site-footer .footer-bottom { color: #A3A7AE; }
-.site-footer .footer-links a:hover,
-.site-footer .footer-contact a:hover { color: #FFFFFF; }
-.site-footer .footer-tagline { color: #E8A3A8; }
-.site-footer .footer-bottom { border-top-color: #3A3D43; }
-.dropdown-menu { border-radius: 0; box-shadow: none; }
 .btn.btn-primary:hover { background-color: var(--c-accent); color: #FFF; }
 .btn.btn-secondary:hover { background-color: var(--c-text-primary); color: var(--c-background); }
 /* ── /SOBER OVERRIDES ─────────────────────────────────────── */

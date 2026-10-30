@@ -2,8 +2,8 @@
    PROJECT DETAIL PAGE
    
    Append to pages.css or import separately.
-   Requires: glass-panel, hatch system, hiw-tags,
-   hiw-muted from the shared design system.
+   Requires: hatch system, hiw-tags from styles.css
+   (IBM Plex / sober tokens). Flat overrides at EOF.
    ════════════════════════════════════════ */
 
 
@@ -25,7 +25,8 @@
     overflow: hidden;
     --proj-accent: var(--hatch-neutral);
     --hatch-color: var(--proj-accent);
-    --pattern-opacity: 0.24;
+    --pattern-opacity: 0;
+    --proj-ink: #111214;
     --proj-tag-bg: color-mix(in srgb, var(--proj-accent) 9%, var(--inline-code-bg));
     --proj-tag-text: color-mix(in srgb, var(--proj-accent) 62%, var(--c-text-primary));
     --proj-tag-border: color-mix(in srgb, var(--proj-accent) 20%, var(--c-border));
@@ -1343,4 +1344,453 @@
         scroll-snap-align: start;
         white-space: nowrap;
     }
+
+    .proj-cover {
+        border-radius: 0;
+    }
+
+    .proj-block--contact {
+        border-radius: 0;
+    }
 }
+
+
+
+/* ── HOME-ALIGNED OVERRIDES (matches home.css) ────────────────
+   Replaces the old SOBER OVERRIDES block. Delete this block to revert
+   to the original look. One ink, one accent, square corners, rules
+   instead of cards, mono for labels.                                 */
+
+/* Palette: kill per-project hatch colours, go neutral */
+.proj-page,
+[data-theme="dark"] .proj-page {
+    --proj-accent: var(--c-text-primary);
+    --proj-ink: #111214;
+    --proj-rule: var(--c-border);
+    --proj-panel: var(--c-background-gray);
+    --proj-tag-bg: transparent;
+    --proj-tag-text: var(--c-text-secondary);
+    --proj-tag-border: var(--c-border);
+    --proj-chip-bg: var(--c-background-gray);
+    --proj-chip-text: var(--c-text-primary);
+    --proj-chip-border: var(--c-border);
+    --proj-prose-color: var(--c-text-body);
+}
+
+.proj-page::before,
+.proj-page::after { display: none; animation: none; }
+
+.proj-page .proj-hero,
+[data-theme="dark"] .proj-page .proj-hero { background: none; --pattern-opacity: 0; }
+
+.proj-page .proj-hero[class*="lr-pattern-"]::before,
+.proj-page .proj-hero[class*="lr-pattern-"]::after { display: none; }
+
+/* Square everything */
+.proj-cover,
+.proj-media-frame,
+.proj-case-figure .proj-media-frame,
+.proj-code-frame,
+.proj-diagram,
+.proj-block--methodology,
+.proj-block--contact,
+.proj-metric,
+.proj-metrics--pills .proj-metric,
+.proj-case-metric,
+.proj-meta-strip .hiw-tag,
+.proj-ontology-badge,
+.proj-methodology-icon,
+.proj-prose :not(pre) > code,
+.proj-block--methodology .proj-prose code,
+.proj-related-links.idx-scroll-row .proj-related-link,
+.proj-hero-actions .btn,
+.proj-contact-btn { border-radius: 0; }
+
+
+/* ── Hero — like .home-hero ── */
+
+.proj-page .proj-hero {
+    padding: clamp(3rem, 7vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+    gap: 1rem;
+}
+
+.proj-hero-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+}
+
+.proj-back { color: var(--c-text-secondary); }
+.proj-back:hover { color: var(--c-accent); }
+
+.proj-status-dot { box-shadow: none; animation: none; }
+
+.proj-hero-title,
+.proj-hero-title.txt-xbold {
+    margin-top: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--c-text-primary);
+}
+
+.proj-hero-summary {
+    margin-top: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--c-text-body);
+    max-width: 40rem;
+}
+
+.proj-hero-actions { margin-top: 1.5rem; }
+
+.proj-hero-actions .btn {
+    min-height: 36px;
+    padding: 0 1.25rem;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    box-shadow: none;
+}
+
+
+/* ── Meta strip — like the register header ── */
+
+.proj-meta-strip {
+    border-top: 1px solid var(--proj-ink);
+    border-bottom: 1px solid var(--proj-rule);
+    padding: 1rem 0;
+    margin-bottom: 2.5rem;
+}
+
+[data-theme="dark"] .proj-meta-strip { border-top-color: var(--c-text-primary); }
+
+.proj-meta-inline {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+.proj-meta-strip .hiw-tag,
+.proj-meta-strip .hiw-tag:hover,
+[data-theme="dark"] .proj-meta-strip .hiw-tag:hover {
+    padding: 0.2em 0.6em;
+    font-weight: 400;
+    color: var(--proj-tag-text);
+    background: transparent;
+    border-color: var(--proj-tag-border);
+}
+
+.proj-meta-strip .hiw-tag:hover {
+    color: var(--c-text-primary);
+    border-color: var(--c-text-primary);
+}
+
+
+/* ── Cover + media — plain frames, neutral shimmer ── */
+
+.proj-cover { border: 1px solid var(--proj-rule); background: var(--proj-panel); }
+.proj-cover-caption { border-top-color: var(--proj-rule); }
+
+.proj-media-frame { border-color: var(--proj-rule); }
+
+.proj-media-shimmer {
+    background: linear-gradient(100deg,
+        var(--proj-panel) 0%,
+        color-mix(in srgb, var(--proj-rule) 60%, var(--proj-panel)) 48%,
+        var(--proj-panel) 96%);
+    background-size: 200% 100%;
+}
+
+.proj-figure-caption,
+.proj-caption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--c-text-secondary);
+}
+
+
+/* ── Body type ── */
+
+.proj-body { gap: 3.5rem; }
+
+.proj-block-title,
+.proj-block-title.txt-xbold,
+.proj-split-text h3 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--c-text-primary);
+}
+
+.proj-prose {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--c-text-body);
+}
+
+.proj-prose a {
+    color: var(--c-accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}
+
+.proj-prose a:hover { color: var(--c-text-primary); }
+
+.proj-prose :not(pre) > code {
+    background: var(--proj-panel);
+    color: var(--c-text-primary);
+    border: 1px solid var(--proj-rule);
+}
+
+
+/* ── Ontology badges — like .home-chip ── */
+
+.proj-ontology-badge,
+[data-theme="dark"] .proj-ontology-badge {
+    padding: 0 0.85rem;
+    min-height: 32px;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--c-text-primary);
+    background: transparent;
+    border: 1px solid var(--proj-rule);
+    box-shadow: none;
+}
+
+.proj-ontology-badge[title]:hover,
+[data-theme="dark"] .proj-ontology-badge[title]:hover {
+    background: transparent;
+    border-color: var(--c-text-primary);
+    box-shadow: none;
+}
+
+
+/* ── Diagram ── */
+
+.proj-diagram { padding: 1.5rem; background: var(--proj-panel); }
+.proj-diagram-svg .diag-box { fill: var(--c-background); stroke: var(--proj-rule); }
+.proj-diagram-svg .diag-box--accent { stroke: var(--c-accent); stroke-width: 1.5; }
+
+
+/* ── Code — ink block like the home dark band ── */
+
+.proj-code-frame { background: #111214; border: 1px solid #3A3D43; }
+.proj-code-bar { background: #111214; border-bottom-color: #3A3D43; }
+.proj-code-dot,
+.proj-code-dot:nth-child(1),
+.proj-code-dot:nth-child(2),
+.proj-code-dot:nth-child(3) { background: #3A3D43; }
+.proj-code-filename { font-family: var(--font-mono); color: #A3A7AE; }
+.proj-code-body { font-family: var(--font-mono); color: #E8E9EB; }
+
+
+/* ── Methodology — grey panel like .home-bg, no glass, no left bar ── */
+
+.proj-block--methodology,
+[data-theme="dark"] .proj-block--methodology {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--proj-panel);
+    border: 0;
+    border-top: 1px solid var(--proj-ink);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme="dark"] .proj-block--methodology { border-top-color: var(--c-text-primary); }
+
+.proj-block--methodology::before,
+.proj-block--methodology::after { display: none; }
+
+.proj-methodology-icon {
+    color: var(--c-text-secondary);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.proj-methodology-label,
+.proj-case-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--c-text-secondary);
+}
+
+.proj-methodology-title {
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    letter-spacing: -0.02em;
+}
+
+.proj-methodology-body,
+.proj-case-body { color: var(--c-text-body); }
+
+.proj-block--methodology .proj-prose code {
+    background: var(--c-background);
+    border-color: var(--proj-rule);
+}
+
+.proj-methodology-detail { border-top-color: #C9CDD2; }
+
+.proj-methodology-toggle,
+.proj-methodology-detail[open] .proj-methodology-toggle {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--c-accent);
+    text-decoration-color: currentColor;
+    min-height: 44px;
+}
+
+.proj-methodology-toggle:hover { color: var(--c-text-primary); }
+
+/* Case blocks: rule on top instead of a coloured left bar */
+.proj-case-block {
+    padding: 1rem 0 0;
+    border-left: 0;
+    border-top: 1px solid #C9CDD2;
+}
+
+.proj-case-metric {
+    background: var(--c-background);
+    border: 1px solid var(--proj-rule);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+}
+
+.proj-case-metric-after { color: var(--c-accent); }
+
+
+/* ── Metrics — ruled grid like .home-cv ── */
+
+.proj-block--metrics {
+    gap: 0;
+    border-top: 1px solid var(--proj-ink);
+}
+
+[data-theme="dark"] .proj-block--metrics { border-top-color: var(--c-text-primary); }
+
+.proj-block--metrics .proj-metric,
+[data-theme="dark"] .proj-block--metrics .proj-metric {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--proj-rule);
+    padding: 1rem 1.25rem 1rem 0;
+}
+
+.proj-metric-num {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.proj-metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--c-text-secondary);
+}
+
+.proj-metrics--pills .proj-metric {
+    background: transparent;
+    border: 1px solid var(--proj-rule);
+}
+
+
+/* ── Contact — like .home-contact, no box ── */
+
+.proj-block--contact,
+[data-theme="dark"] .proj-block--contact {
+    padding: clamp(2.5rem, 6vw, 4rem) 0 0;
+    background: none;
+    border: 0;
+    border-top: 1px solid var(--proj-ink);
+    box-shadow: none;
+}
+
+[data-theme="dark"] .proj-block--contact { border-top-color: var(--c-text-primary); }
+
+.proj-contact-inner { align-items: flex-end; gap: 1.5rem 3rem; }
+
+.proj-contact-kicker {
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.proj-contact-body { font-size: 1.0625rem; color: var(--c-text-body); }
+
+.proj-contact-btn {
+    min-height: 36px;
+    padding: 0 1.25rem;
+    box-sizing: border-box;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    background: var(--proj-ink);
+    border: 1px solid var(--proj-ink);
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+}
+
+.proj-contact-btn:hover {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+}
+
+.proj-contact-btn:hover i { transform: none; }
+
+[data-theme="dark"] .proj-contact-btn {
+    background: var(--c-text-primary);
+    border-color: var(--c-text-primary);
+    color: var(--c-background);
+}
+
+[data-theme="dark"] .proj-contact-btn:hover {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: #111214;
+}
+
+
+/* ── Footer + related — ruled rows like the register ── */
+
+.proj-footer { border-top: 1px solid var(--proj-ink); }
+[data-theme="dark"] .proj-footer { border-top-color: var(--c-text-primary); }
+
+.proj-related-link { min-height: 44px; }
+.proj-related-link:hover { color: var(--c-accent); gap: 0.5rem; }
+
+.proj-related-links.idx-scroll-row { gap: 0; border-left: 1px solid var(--proj-rule); border-top: 1px solid var(--proj-rule); }
+
+.proj-related-links.idx-scroll-row .proj-related-link {
+    padding: 1rem 1.25rem;
+    background: transparent;
+    border: 0;
+    border-right: 1px solid var(--proj-rule);
+    border-bottom: 1px solid var(--proj-rule);
+}
+
+.proj-related-links.idx-scroll-row .proj-related-link:hover { background: var(--proj-panel); }
+
+
+@media (max-width: 700px) {
+    .proj-contact-inner { align-items: stretch; }
+    .proj-related-links.idx-scroll-row { border-left: 0; }
+}
+
+/* ── /HOME-ALIGNED OVERRIDES ──────────────────────────────── */

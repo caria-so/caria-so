@@ -50,8 +50,8 @@
 }
 
 .ipx-io--seed.is-on {
-    border-color: color-mix(in srgb, var(--hatch-ux) 45%, var(--c-border));
-    background: color-mix(in srgb, var(--hatch-ux) 7%, var(--c-background-gray));
+    border-color: color-mix(in srgb, var(--hatch-ux) var(--hatch-mix-border, 52%), var(--c-border));
+    background: color-mix(in srgb, var(--hatch-ux) var(--hatch-mix-bg, 14%), var(--c-background-gray));
 }
 
 .ipx-io--seed.is-on .ipx-io-tag {
@@ -59,8 +59,8 @@
 }
 
 .ipx-io--print.is-on {
-    border-color: color-mix(in srgb, var(--hatch-ip) 55%, var(--c-border));
-    background: color-mix(in srgb, var(--hatch-ip) 10%, var(--c-background-gray));
+    border-color: color-mix(in srgb, var(--hatch-ip) var(--hatch-mix-border, 52%), var(--c-border));
+    background: color-mix(in srgb, var(--hatch-ip) var(--hatch-mix-bg, 14%), var(--c-background-gray));
 }
 
 .ipx-io--print.is-on .ipx-io-tag {
@@ -135,7 +135,7 @@
     border-radius: 8px;
     background: var(--c-background);
     overflow: hidden;
-    opacity: 0.42;
+    opacity: 0.58;
     transition:
         border-color 0.45s ease,
         box-shadow 0.45s ease,
@@ -146,7 +146,7 @@
     position: absolute;
     inset: 0 auto 0 0;
     width: 0;
-    background: color-mix(in srgb, var(--step-accent) 10%, transparent);
+    background: color-mix(in srgb, var(--step-accent) var(--hatch-mix-bg, 14%), transparent);
     transition: width 0.6s ease;
     pointer-events: none;
 }
@@ -207,7 +207,7 @@
 
 .ipx-step.is-active {
     opacity: 1;
-    border-color: color-mix(in srgb, var(--step-accent) 55%, var(--c-border));
+    border-color: color-mix(in srgb, var(--step-accent) var(--hatch-mix-border, 52%), var(--c-border));
 }
 
 .ipx-step.is-active .ipx-slot {
@@ -216,7 +216,7 @@
 
 .ipx-step.is-active .ipx-tag {
     color: var(--step-accent);
-    border-color: color-mix(in srgb, var(--step-accent) 40%, var(--c-border));
+    border-color: color-mix(in srgb, var(--step-accent) var(--hatch-mix-border, 52%), var(--c-border));
 }
 
 /* Currently executing */

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project-cards.css') }}">
+{% endblock %}
+
+{% block title %}Projects — Federico Caria{% endblock %}
+{% block meta_description %}Research and product projects — knowledge infrastructure, OCR, publishing tools, and UX research systems.{% endblock %}
+
+{% block content %}
+<section class="home-wrap home-hero" aria-labelledby="proj-index-heading" style="padding-block: clamp(2rem, 5vw, 3rem);">
+    <div class="home-hero-copy">
+        <span class="home-eyebrow">Lab</span>
+        <h1 id="proj-index-heading" class="home-hero-title">Projects</h1>
+        <p class="home-hero-sub">
+            Full index layout is being refreshed. Each project page is still available below,
+            or from the <a href="{{ url_for('blog.index') }}#lab">homepage lab</a>.
+        </p>
+    </div>
+</section>
+
+<section class="idx-section" aria-label="All projects">
+    <div class="home-wrap">
+        <div class="proj-list">
+            {% for project in projects %}
+            {% set card_index = loop.index %}
+            {% include 'partials/_project_card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

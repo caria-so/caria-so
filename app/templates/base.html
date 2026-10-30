@@ -49,7 +49,9 @@
 					</div>
 					<div id="menu" class="nav-links">
 						<a href="{{ url_for('blog.index') }}" class="link-mono">Home</a>
+						{# Projects index — restore when /projects is redesigned
 						<a href="{{ url_for('blog.projects') }}" class="link-mono">Projects</a>
+						#}
 						<a href="{{ url_for('blog.sketchboard_index') }}" class="link-mono">Sketchboard</a>
 						<div class="nav-dropdown{% if request.endpoint == 'blog.methods_finder' %} is-active is-open{% endif %}">
 							<button
@@ -112,7 +114,7 @@
 				{% endif %}
 				<li><a href="{{ url_for('blog.sketchboard_index') }}">Sketchboard</a></li>
 				<li><a href="{{ url_for('blog.about') }}">About</a></li>
-				<li><a href="{{ url_for('blog.projects') }}">Projects</a></li>
+				{# <li><a href="{{ url_for('blog.projects') }}">Projects</a></li> #}
 				<!-- <li><a href="{{ url_for('blog.vitriol') }}">95%</a></li> -->	
 				</ul>
 			</nav>

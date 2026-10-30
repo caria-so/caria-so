@@ -1,0 +1,24 @@
+{# Duplicated track for infinite scroll — set endorse_marquee_bleed=true on index for full-bleed. #}
+{% if endorsements %}
+<div class="endorse-marquee{% if endorse_marquee_bleed|default(false) %} endorse-marquee--bleed{% endif %}" role="region" aria-label="Endorsement quotes">
+    <div class="endorse-marquee-track">
+        {% for _ in range(2) %}
+        {% set is_duplicate = loop.index == 2 %}
+        {% for e in endorsements %}
+        <blockquote class="endorse-card"{% if is_duplicate %} aria-hidden="true"{% endif %}>
+            <p class="endorse-quote">{{ e.quote }}</p>
+            <footer class="endorse-author">
+                {% if e.logo %}
+                <img class="endorse-logo" src="{{ url_for('static', filename=e.logo) }}" alt="" aria-hidden="true">
+                {% endif %}
+                <div>
+                    <p class="endorse-name">{{ e.name }}</p>
+                    <p class="endorse-role">{{ e.role }}</p>
+                </div>
+            </footer>
+        </blockquote>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

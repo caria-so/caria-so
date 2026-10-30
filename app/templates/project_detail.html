@@ -37,8 +37,8 @@
        ════════════════════════════════════ #}
     <header class="proj-hero {{ project.pattern or 'lr-pattern-noise' }}">
         <div class="proj-hero-meta">
-            <a href="{{ url_for('blog.projects') }}" class="proj-back txt-mono txt-xsmall uppercase">
-                <i class="ph ph-arrow-left"></i> Projects
+            <a href="{{ url_for('blog.index') }}#lab" class="proj-back txt-mono txt-xsmall uppercase">
+                <i class="ph ph-arrow-left"></i> Lab
             </a>
             {% if project.status %}
             <span class="proj-status txt-mono txt-xsmall uppercase" style="--status-color: {{ 'var(--hatch-ecommerce)' if project.status == 'live' else 'var(--hatch-ai)' if project.status == 'active' else 'var(--hatch-neutral)' }};">
@@ -304,8 +304,8 @@
         {% endif %}
 
         <div class="proj-nav">
-            <a href="{{ url_for('blog.projects') }}" class="btn btn-secondary txt-mono uppercase">
-                <i class="ph ph-arrow-left"></i> All Projects
+            <a href="{{ url_for('blog.index') }}#lab" class="btn btn-secondary txt-mono uppercase">
+                <i class="ph ph-arrow-left"></i> Back to lab
             </a>
         </div>
     </div>

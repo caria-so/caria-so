@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<style>
+.rd-page { max-width: 1100px; padding-bottom: 3rem; }
+.rd-header { padding: clamp(2rem, 5vh, 3rem) 0 1.5rem; }
+.rd-header h1 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; }
+.rd-sub { color: var(--c-text-secondary); font-size: 0.9rem; line-height: 1.7; margin-top: 0.75rem; max-width: 640px; }
+
+.rd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.rd-timeline { border: 1px solid var(--c-border); border-radius: 12px; padding: 1.25rem; }
+.rd-timeline h2 { font-size: 0.95rem; margin-bottom: 1rem; }
+
+.rd-iter {
+  display: block;
+  padding: 0.75rem;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s;
+}
+.rd-iter:hover { border-color: var(--hatch-ai); color: inherit; }
+.rd-iter--active { border-color: var(--hatch-ecommerce); background: color-mix(in srgb, var(--hatch-ecommerce) 6%, transparent); }
+.rd-iter--child.rd-iter--active { border-color: #e94560; background: rgba(233, 69, 96, 0.08); }
+
+.rd-iter-ts { font-family: "Geist Mono", monospace; font-size: 0.65rem; color: var(--c-text-tertiary); }
+.rd-iter-run { font-weight: 600; font-size: 0.85rem; margin: 0.2rem 0; }
+.rd-iter-meta { font-size: 0.72rem; color: var(--c-text-secondary); }
+
+.rd-viz-wrap {
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 1rem;
+  background: #0f0f23;
+  min-height: 440px;
+}
+
+.rd-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.62rem;
+  color: #aaa;
+}
+.rd-leg-parent::before { content: '■ '; color: #16213e; }
+.rd-leg-child::before { content: '■ '; color: #e94560; }
+.rd-theta { margin-left: auto; color: #e94560; }
+
+.rd-residual {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--c-border);
+}
+.rd-residual h2 { font-size: 1rem; margin-bottom: 0.5rem; }
+.rd-residual p { font-size: 0.85rem; line-height: 1.75; color: var(--c-text-secondary); }
+
+.rd-novelty-strip {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.rd-novelty-chip {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--c-border);
+}
+
+@media (max-width: 900px) {
+  .rd-grid { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block title %}Regime diversity — {{ run.path }}{% endblock %}
+
+{% block content %}
+<div class="rd-page">
+  <div class="rd-header">
+    <span class="ip-report-eyebrow" style="font-family:'Geist Mono',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-tertiary);">Regime residual · layout preview</span>
+    <h1>{{ run.path }}</h1>
+    <p class="rd-sub">
+      Iterations share the same run folder; timestamps in filenames mark temporal order.
+      Parent = earliest fingerprint (literature regime). Child = selected iteration.
+      Radar shows how far the iteration moved from the parent on seven divergence axes.
+    </p>
+  </div>
+
+  <div class="rd-grid">
+    <div class="rd-timeline">
+      <h2>Iterations ({{ run.iterations | length }})</h2>
+      {% for it in run.iterations %}
+      <a href="{{ url_for('blog.regime_diversity', run=run.path, parent=run.iterations[0].filename, child=it.filename) }}"
+         class="rd-iter {% if it.filename == parent.iteration.filename %}rd-iter--active{% endif %} {% if it.filename == child.iteration.filename %}rd-iter--child rd-iter--active{% endif %}">
+        <span class="rd-iter-ts">{{ it.timestamp_label }}</span>
+        <div class="rd-iter-run">{{ it.run_id or it.filename }}</div>
+        <div class="rd-iter-meta">
+          {% if it.verdict %}{{ it.verdict | replace('_', ' ') }}{% endif %}
+          {% if it.novelty_ratio is not none %} · novelty {{ (it.novelty_ratio * 100) | round }}%{% endif %}
+          {% if it.parent_run %} · parent {{ it.parent_run }}{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+
+      <p style="font-size:0.75rem;color:var(--c-text-tertiary);margin-top:1rem;line-height:1.5;">
+        Comparing <strong>{{ parent.iteration.run_id }}</strong> → <strong>{{ child.iteration.run_id }}</strong>
+      </p>
+    </div>
+
+    <div>
+      <div class="rd-viz-wrap" id="regime-radar"></div>
+    </div>
+  </div>
+
+  {% if radar.novelty_summary %}
+  <div class="rd-novelty-strip">
+    <span class="rd-novelty-chip">A: {{ radar.novelty_summary.level_a or 0 }}</span>
+    <span class="rd-novelty-chip">B: {{ radar.novelty_summary.level_b or 0 }}</span>
+    <span class="rd-novelty-chip">C: {{ radar.novelty_summary.level_c or 0 }}</span>
+    <span class="rd-novelty-chip">D: {{ radar.novelty_summary.level_d or 0 }}</span>
+    <span class="rd-novelty-chip">ratio {{ radar.novelty_summary.novelty_ratio or '—' }}</span>
+  </div>
+  {% endif %}
+
+  {% if radar.residual %}
+  <div class="rd-residual">
+    <h2>Residual hypothesis</h2>
+    <p>{{ radar.residual[:900] }}{% if radar.residual|length > 900 %}…{% endif %}</p>
+    {% if radar.residual_hypothesis %}
+    <p style="margin-top:1rem;">{{ radar.residual_hypothesis[:600] }}…</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <p style="margin-top:2rem;">
+    <a href="{{ url_for('blog.papers_index') }}" style="font-family:'Geist Mono',monospace;font-size:0.72rem;color:var(--c-text-secondary);">← All findings</a>
+  </p>
+</div>
+
+<script src="{{ url_for('static', filename='js/regime_diversity_radar.js') }}"></script>
+<script>
+  renderRegimeRadar('regime-radar', {{ radar | tojson }});
+</script>
+{% endblock %}

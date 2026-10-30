@@ -1,0 +1,17 @@
+<section id="contact" class="home-band home-contact" aria-labelledby="contact-heading">
+    <div class="home-wrap">
+        <div class="home-contact-panel">
+            <div class="home-contact-copy">
+                <span class="home-eyebrow">Collaborate</span>
+                <h2 id="contact-heading" class="home-h2">{{ contact_heading | default("Working on a corpus, an archive, or a field's tooling?") }}</h2>
+                <p class="home-contact-lead">{{ contact_lead | default("Research infrastructure, digitisation, or tools that have to survive real workflows — tell me what you're building.") }}</p>
+                {% include 'partials/_elsewhere_links.html' %}
+            </div>
+            <div class="home-contact-aside">
+                <a href="mailto:{{ contact_email }}" class="home-btn home-btn--solid" data-contact-trigger>
+                    <i class="ph ph-envelope-simple" aria-hidden="true"></i> Send a message
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
