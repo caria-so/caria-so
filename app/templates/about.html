@@ -13,7 +13,8 @@
 {% block content %}
 {% from 'partials/_media_picture.html' import picture %}
 
-<section class="home-wrap home-hero" aria-labelledby="abt-hero-heading">
+<section class="home-hero" aria-labelledby="abt-hero-heading">
+    <div class="home-wrap">
     <figure class="home-spec abt-portrait">
         {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
     </figure>
@@ -23,28 +24,13 @@
         <h1 id="abt-hero-heading" class="home-hero-title">Federico Caria</h1>
         <p class="home-hero-tagline">UX Researcher · Information Behaviour, Human–AI Interaction, Knowledge Graphs · ex-Baymard Institute · Marie Curie Fellow</p>
         <p class="home-hero-sub">
-            I grew up in a world where knowledge is rare, and almost never written down in usable form. 
-            It sits in the distinctions an expert makes without thinking, in what someone knows 
-            to look for before they look, in the reasons two things that appear comparable are not, 
-            in the exceptions buried where nobody reads.
+            Knowledge is never in the record. It lives in the unwritten — what an expert knows without thinking, what a teacher whispers to a student, why two things that look comparable are not.
         </p>
         <p class="home-hero-sub">
-            For twenty years I've tried to understand how to recover it from what's left behind 
-            — from philosophy and textual criticism to the social sciences and human-computer interaction. 
-            What gets recorded is never the act itself, only its residue. Little by little 
-            I realized that knowledge, if we can speak of it at all, emerges under specific 
-            conditions: concrete needs, and tools used to meet them.
+            I went looking for it in records. It isn’t there. Knowledge happens in use, in the meeting between a need and the tool that serves it, and the record is what that leaves behind. A residue.
         </p>
         <p class="home-hero-sub">
-            Marie Curie fellowship. A doctorate in HCI on how scientists 
-            behave in research. Eight years at Baymard Institute measuring behaviour 
-            at industrial scale.
-        </p>
-        <p class="home-hero-sub">
-            Different fields, one bottleneck: environments and tools built for a user nobody ever identified. 
-            That isn't much of a problem when someone who knows the domain is doing the work. 
-            It becomes one when software has to decide. So that became the work 
-            — finding the missing structure, making it explicit, and building the systems that use it.
+            That loss isn’t a big problem when someone who knows the field is doing the work — they supply what’s missing without noticing they’re supplying it. It becomes a big problem when the software has to make the decisions.
         </p>
         {% if cv_available %}
         <div class="home-hero-cta">
@@ -53,6 +39,7 @@
             </a>
         </div>
         {% endif %}
+    </div>
     </div>
 </section>
 

@@ -11,16 +11,10 @@
         <p>Get in touch and tell me about your project or simply say hello.</p>
       </div>
 
-      <div class="contact-modal__social" aria-label="Other ways to reach me">
-        <a href="mailto:hello@caria.so" class="contact-social-btn contact-social-btn--email" title="Email hello@caria.so" aria-label="Email">
-          <i class="ph ph-envelope-simple"></i>
-        </a>
-        <a href="https://github.com/caria-so" class="contact-social-btn contact-social-btn--github" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-          <i class="ph ph-github-logo"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/federico-caria/" class="contact-social-btn contact-social-btn--linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-          <i class="ph ph-linkedin-logo"></i>
-        </a>
+      <div class="contact-modal__social">
+        {% set social_links_compact = true %}
+        {% set social_email_direct = true %}
+        {% include 'partials/_elsewhere_links.html' %}
       </div>
 
       <form class="contact-modal__form" action="{{ url_for('blog.contact') }}" method="post">
@@ -49,8 +43,8 @@
           <textarea class="contact-modal__input contact-modal__textarea" id="contact-message" name="message" placeholder="What are you building? What do you need help with?" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary contact-modal__submit">
-          Send message <i class="ph ph-paper-plane-tilt"></i>
+        <button type="submit" class="home-btn home-btn--solid contact-modal__submit">
+          Send message <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
         </button>
       </form>
     </div>

@@ -30,28 +30,31 @@
 
 
 {# ════ HERO ════ #}
-<section class="home-wrap home-hero" aria-labelledby="hero-heading">
-    <div class="home-hero-copy">
-        <span class="home-eyebrow">Research &amp; development</span>
-        <h1 id="hero-heading" class="home-hero-title">Knowledge work,<br><em>shipped as code.</em></h1>
-        <p class="home-hero-sub">I work on how fields actually use their knowledge, make that structure explicit, and build the tools that run on it. Archives, historical corpora, research infrastructure.</p>
-        <div class="home-hero-cta">
-            <a href="#notes" class="home-btn home-btn--solid">Read the sketchboard</a>
-            <a href="#lab" class="home-btn home-btn--line">See the work</a>
+<section class="home-hero" aria-labelledby="hero-heading">
+    <div class="home-wrap">
+        <div class="home-hero-copy">
+            <span class="home-eyebrow">Research &amp; development</span>
+            <h1 id="hero-heading" class="home-hero-title">Findings,<br><em>shipped as code.</em></h1>
+            <p class="home-hero-sub">I study how people actually use their tools, then build the ones that fit.</p>
+            <div class="home-hero-cta">
+                <a href="#notes" class="home-btn home-btn--solid">Go to sketchboard</a>
+                <a href="#lab" class="home-btn home-btn--line">See the work</a>
+            </div>
         </div>
-    </div>
 
-    <figure class="home-spec">
-        <div class="home-spec-stage home-spec-stage--pipeline">
-            {% include 'partials/_ip_pipeline_hero.html' %}
-        </div>
-        <figcaption>Fig. — evaluation picks the weakest dimension; the config rebuilds.</figcaption>
-    </figure>
+        <figure class="home-spec">
+            <div class="home-spec-stage home-spec-stage--pipeline">
+                {% include 'partials/_ip_pipeline_hero.html' %}
+            </div>
+            {# <figcaption>Fig. — evaluation picks the weakest dimension; the config rebuilds.</figcaption> #}
+        </figure>
+    </div>
 </section>
 
 
 {# ════ LOGOS ════ #}
-<section class="home-wrap home-logos" aria-labelledby="aff-heading">
+<section class="home-logos" aria-labelledby="aff-heading">
+    <div class="home-wrap">
     <div class="home-logos-grid">
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/eu_commission.png') }}" alt="European Commission"></div>
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/marie_curie.png') }}" alt="Marie Skłodowska-Curie Actions"></div>
@@ -60,6 +63,7 @@
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/baymard_institute.png') }}" alt="Baymard Institute"></div>
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/conicet.png') }}" alt="CONICET"></div>
         <div class="home-logo"><img src="{{ url_for('static', filename='assets/icons/customers/cicus.png') }}" alt="CICUS"></div>
+    </div>
     </div>
 </section>
 
@@ -77,7 +81,7 @@
 
         {% if registry %}
         <nav class="home-chips" aria-label="Threads" data-home-thread-nav>
-            <button type="button" class="home-chip is-active" data-home-thread="" aria-pressed="true">All</button>
+            <button type="button" class="home-chip is-active" data-home-thread="" aria-pressed="true" style="--chip-thread: var(--chip-all);">All</button>
             {% for thread in registry %}
             <button type="button" class="home-chip" data-home-thread="{{ thread.slug }}" aria-pressed="false" style="--chip-thread: var(--{{ thread.color or 'hatch-neutral' }});">{{ thread.title }}</button>
             {% endfor %}
@@ -189,7 +193,7 @@
         <div class="home-bg-copy">
             <span class="home-eyebrow">Background</span>
             <h2 id="arc-heading" class="home-bg-quote">“What gets recorded is never the act itself, <em>only its residue.</em>”</h2>
-            <p class="home-bg-text">Twenty years recovering knowledge from what's left behind — philosophy and textual criticism, the social sciences, human-computer interaction. Different fields, one bottleneck: tools built for a user nobody ever identified.</p>
+            <p class="home-bg-text">Scholarly publishing, e-commerce, B2B procurement, SaaS, financial services, healthcare archives. The domain changes; the object doesn’t. What transfers is the method and the speed of getting competent in an unfamiliar field.</p>
             <a href="{{ url_for('blog.about') }}" class="home-link">About me →</a>
         </div>
         <dl class="home-cv">

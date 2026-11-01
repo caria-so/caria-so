@@ -1,6 +1,6 @@
 ---
 title: "IP-β Function model. Sketching the full system. One box."
-thread: knowledge
+thread: engineering
 keywords: [scientific discovery, agentic ai]
 author: "Federico Caria"
 date: "2026-08-26"

@@ -1,6 +1,6 @@
 ---
 title: "I put +30 scientific datasets on Hugging Face so you don't have to write another API wrapper"
-thread: knowledge
+thread: archives
 keywords: [scidata-hub, datasets]
 author: "Federico Caria"
 date: "2026-08-26"

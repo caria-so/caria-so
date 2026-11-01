@@ -6,21 +6,23 @@
 
    :root {
     --home-max: 80rem;           /* 1280px */
-    --home-gutter: max(1rem, var(--page-gutter, 2rem));
     --home-ink: #111214;
-    --home-ink-2: #3A3D43;       /* rules on dark */
+    --home-ink-2: #3A3D43;       /* rules on dark lab band */
     --home-on-ink: #E8E9EB;
     --home-on-ink-2: #A3A7AE;
+    --home-cv-rule: #C9CDD2;
+    --chip-all: var(--home-ink-stroke, var(--home-ink)); /* “All” chip — ink pill (light) */
     /* --home-rule / --home-panel → styles.css :root */
 
     /* Type tokens → styles.css :root */
 }
 
-/* Hero shell → styles.css; --home-max for index-only bands below */
-
-#theme-wrapper:has(.home-hero) > section {
-    padding-inline: var(--home-gutter);
+[data-theme="dark"] {
+    --chip-all: var(--home-ink-stroke, var(--c-text-primary));
+    --home-cv-rule: var(--c-border);
 }
+
+/* Hero shell → styles.css; --home-max for index-only bands below */
 
 /* Band sections: vertical rhythm only; horizontal gutter on <section> */
 .home-band {
@@ -53,11 +55,44 @@
 
 .home-spec-stage {
     position: relative;
-    background: var(--home-panel);
+    isolation: isolate;
+    overflow: hidden;
     padding: 1.75rem 1.75rem 4.25rem;
+    background: color-mix(in srgb, var(--home-panel) 28%, var(--c-background));
+    border: 1px solid color-mix(in srgb, var(--c-border) 20%, transparent);
+    backdrop-filter: blur(14px) saturate(1.12);
+    -webkit-backdrop-filter: blur(14px) saturate(1.12);
 }
 
-/* Pipeline hero (ip_pipeline_hero.js) — restyle TBD */
+.home-spec-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+        155deg,
+        color-mix(in srgb, var(--c-background) 55%, transparent) 0%,
+        transparent 42%,
+        color-mix(in srgb, var(--home-panel) 18%, transparent) 100%
+    );
+}
+
+.home-spec-stage > * {
+    position: relative;
+    z-index: 1;
+}
+
+:root[data-theme="light"] .home-spec-stage {
+    background: color-mix(in srgb, var(--home-panel) 18%, var(--c-background));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--c-background) 80%, transparent);
+}
+
+[data-theme="dark"] .home-spec-stage {
+    background: color-mix(in srgb, var(--home-panel) 42%, var(--c-background));
+}
+
+/* Pipeline hero (ip_pipeline_hero.js) */
 .home-spec-stage--pipeline {
     padding: 1rem;
     overflow: visible;
@@ -187,28 +222,34 @@
     padding: 0 0.9rem;
     font-family: inherit;
     font-size: 0.8125rem;
-    color: var(--c-text-primary);
     text-decoration: none;
-    background: transparent;
     cursor: pointer;
-    border: 1px solid var(--home-rule);
+    border: 1px solid var(--c-border);
     transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.home-chip:hover {
-    border-color: color-mix(in srgb, var(--chip-thread, var(--home-ink)) 65%, var(--home-ink));
-    color: color-mix(in srgb, var(--chip-thread, var(--c-text-primary)) 55%, var(--c-text-primary));
+.home-chip:not(.is-active) {
+    background: color-mix(in srgb, var(--chip-thread, var(--c-border)) 11%, var(--c-background));
+    color: color-mix(in srgb, var(--chip-thread, var(--c-text-secondary)) var(--hatch-mix-text, 62%), var(--c-text-primary));
+    border-color: color-mix(in srgb, var(--chip-thread, var(--c-border)) var(--hatch-mix-border, 52%), var(--c-border));
+}
+
+.home-chip:hover:not(.is-active) {
+    background: color-mix(in srgb, var(--chip-thread, var(--c-border)) 16%, var(--c-background));
+    border-color: color-mix(in srgb, var(--chip-thread, var(--c-border)) 68%, var(--c-border));
+    color: color-mix(in srgb, var(--chip-thread, var(--c-text-primary)) 58%, var(--c-text-primary));
 }
 
 .home-chip.is-active {
-    background: var(--home-ink);
-    border-color: var(--home-ink);
+    background: var(--chip-thread, var(--home-ink-stroke, var(--home-ink)));
+    border-color: var(--chip-thread, var(--home-ink-stroke, var(--home-ink)));
     color: #fff;
 }
 
-.home-chip:not(.is-active) {
-    color: color-mix(in srgb, var(--chip-thread, var(--c-text-primary)) var(--hatch-mix-text, 62%), var(--c-text-primary));
-    border-color: color-mix(in srgb, var(--chip-thread, var(--home-rule)) var(--hatch-mix-border, 52%), var(--home-rule));
+[data-theme="dark"] .home-chip.is-active {
+    background: var(--chip-thread, var(--chip-all));
+    border-color: var(--chip-thread, var(--chip-all));
+    color: var(--c-background);
 }
 
 .home-register {
@@ -224,7 +265,7 @@
     line-height: 1.5;
 }
 
-.home-register thead tr { border-bottom: 1px solid var(--home-ink); }
+.home-register thead tr { border-bottom: 1px solid var(--home-ink-stroke, var(--home-ink)); }
 
 .home-register th {
     padding: 0.6rem 1rem 0.6rem 0;
@@ -430,14 +471,14 @@
     grid-template-columns: max-content 1fr;
     font-size: 0.9375rem;
     line-height: 1.45;
-    border-top: 1px solid var(--home-ink);
+    border-top: 1px solid var(--home-ink-stroke, var(--home-ink));
 }
 
 .home-cv dt,
 .home-cv dd {
     margin: 0;
     padding: 0.85rem 0;
-    border-bottom: 1px solid #C9CDD2;
+    border-bottom: 1px solid var(--home-cv-rule);
 }
 
 .home-cv dt {
@@ -453,7 +494,7 @@
    ──────────────────────────────────────── */
 
 .home-logos {
-    padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(1.75rem, 4vw, 2.5rem);
+    padding-block: clamp(1.25rem, 3vw, 2rem) clamp(1.75rem, 4vw, 2.5rem);
 }
 
 .home-logos-grid {
@@ -508,7 +549,30 @@
    ──────────────────────────────────────── */
 
 @media (max-width: 760px) {
-    .home-hero { gap: 2.5rem; }
+    .home-hero > .home-wrap {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .home-hero-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .home-hero-cta {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .home-hero .home-spec {
+        width: 100%;
+        max-width: min(28rem, 100%);
+        margin-inline: auto;
+    }
 
     .home-lab-head {
         flex-direction: column;

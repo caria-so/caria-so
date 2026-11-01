@@ -19,6 +19,7 @@
 
 .post-content-wrapper {
     min-width: 0;
+    --prose-measure: 68ch;
 }
 
 .post-body aside {
@@ -56,8 +57,8 @@
     position: relative;
     z-index: 1;
     max-width: var(--content-max, 75rem);
-    margin-inline: auto;
     width: 100%;
+    max-width: 60ch;
 }
 
 .post-header--cover {
@@ -112,7 +113,7 @@
     color: var(--c-text-secondary);
     font-size: var(--t-body);
     line-height: 1.6;
-    max-width: 68ch;
+    max-width: var(--prose-measure);
 }
 
 .post-keywords {
@@ -128,7 +129,7 @@
     font-size: var(--t-label);
     font-weight: 500;
     letter-spacing: 0.03em;
-    text-transform: lowercase;
+    text-transform: uppercase;
     line-height: 1.2;
     color: var(--c-text-secondary);
     background: var(--c-background-gray);
@@ -161,6 +162,25 @@
     line-height: 1.75;
     color: var(--c-text-body);
     background: var(--c-background);
+}
+
+/* Body content shares one measure (code blocks stay full column for long lines) */
+.post-content.prose :is(
+    p,
+    h1, h2, h3, h4, h5, h6,
+    ul, ol,
+    blockquote,
+    hr,
+    table,
+    .post-image,
+    .post-image-grid
+) {
+    max-width: var(--prose-measure);
+}
+
+.post-content.prose img {
+    max-width: 100%;
+    height: auto;
 }
 
 .post-content.prose > *:first-child {
@@ -298,7 +318,6 @@
 
 .post-content.prose blockquote p {
     margin: 0 0 0.65rem;
-    max-width: none;
 }
 
 .post-content.prose blockquote p:last-child {
@@ -349,9 +368,10 @@
     border-radius: 0;
 }
 
-.post-image-caption {
+.post-content.prose p.post-image-caption {
     margin-top: 0.5rem;
-    font-size: var(--t-body-sm);
+    font-size: var(--t-caption);
+    line-height: 1.5;
     color: var(--c-text-secondary);
     text-align: center;
 }
@@ -379,6 +399,20 @@
 @media (max-width: 768px) {
     .post-content.prose {
         padding: 1.35rem var(--page-gutter, 1.25rem);
+    }
+
+    .post-summary,
+    .post-content.prose :is(
+        p,
+        h1, h2, h3, h4, h5, h6,
+        ul, ol,
+        blockquote,
+        hr,
+        table,
+        .post-image,
+        .post-image-grid
+    ) {
+        max-width: none;
     }
 
     .post-image-grid {

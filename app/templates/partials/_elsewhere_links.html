@@ -1,5 +1,5 @@
 <nav class="home-contact-links{% if social_links_compact|default(false) %} home-contact-links--compact{% endif %}" aria-label="Elsewhere">
-    <a href="mailto:{{ contact_email }}" class="home-contact-link" data-contact-trigger>
+    <a href="mailto:{{ contact_email }}" class="home-contact-link"{% if not social_email_direct|default(false) %} data-contact-trigger{% endif %}>
         <i class="ph ph-envelope-simple" aria-hidden="true"></i> {{ contact_email }}
     </a>
     <a href="https://github.com/caria-so" class="home-contact-link" target="_blank" rel="noopener noreferrer">

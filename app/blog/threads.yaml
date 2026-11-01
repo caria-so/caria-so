@@ -3,8 +3,8 @@
 
 threads:
 
-  - slug: knowledge
-    title: Knowledge
+  - slug: Archives
+    title: archives
     color: hatch-ip
     order: 2
 
