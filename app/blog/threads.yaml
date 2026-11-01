@@ -3,8 +3,8 @@
 
 threads:
 
-  - slug: Archives
-    title: archives
+  - slug: archives
+    title: Archives
     color: hatch-archives
     order: 2
 

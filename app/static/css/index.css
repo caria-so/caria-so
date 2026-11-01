@@ -323,7 +323,12 @@
 .home-register .cell-summary {
     margin-top: 0.2rem;
     font-size: 0.875rem;
+    line-height: 1.45;
     color: var(--c-text-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 
