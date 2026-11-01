@@ -29,6 +29,7 @@
   --hatch-data: #2E8FA0;
   --hatch-neutral: #5C5C68;
   --hatch-ip: #6A8F42;
+  --hatch-archives: #6B6560;
   --hatch-color: var(--hatch-neutral);
   /* color-mix strengths for hatch tints (bump here for global presence) */
   --hatch-mix-bg: 14%;
@@ -149,6 +150,7 @@
   --hatch-data: #6aabb8;
   --hatch-neutral: #71717a;
   --hatch-ip: #9aaa7a;
+  --hatch-archives: #9a928a;
   --hatch-mix-bg: 18%;
   --hatch-mix-border: 58%;
   --hatch-mix-text: 72%;
