@@ -537,11 +537,6 @@
     padding-block: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.home-endorse .endorse-head {
-    padding-inline: 0;
-}
-
-
 /* Contact CTA → styles.css (.home-contact-*) */
 
 /* ────────────────────────────────────────
@@ -557,6 +552,8 @@
     }
 
     .home-hero-copy {
+        flex: 1 1 auto;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -569,6 +566,7 @@
     }
 
     .home-hero .home-spec {
+        flex: 1 1 auto;
         width: 100%;
         max-width: min(28rem, 100%);
         margin-inline: auto;
