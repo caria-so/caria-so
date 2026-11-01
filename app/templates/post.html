@@ -74,7 +74,12 @@
             </div>
         </header>
         <article class="post-content prose">
+            {% if post.sections %}
+            {% include 'partials/_post_sections.html' %}
+            {% endif %}
+            {% if post.content %}
             {{ post.content|safe }}
+            {% endif %}
         </article>
     </div>
 

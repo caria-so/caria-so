@@ -1,0 +1,114 @@
+{# Structured sections (project-style frontmatter) inside a blog post #}
+{% from 'partials/_media_picture.html' import picture %}
+
+{% macro post_figure(src, alt='', caption='') %}
+{% if src %}
+<div class="post-image">
+    {{ picture(src, alt, '', 'lazy', '', 'media-load') }}
+    {% if caption %}
+    <p class="post-image-caption">{{ caption }}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endmacro %}
+
+<div class="post-sections">
+{% for section in post.sections %}
+    {% if section.type == 'text' %}
+    <section class="post-section post-section--text">
+        {% if section.title %}
+        <h2>{{ section.title }}</h2>
+        {% endif %}
+        {{ section.content | safe }}
+    </section>
+
+    {% elif section.type == 'split' %}
+    <section class="post-section post-section--split{% if section.reverse %} post-section--split-reverse{% endif %}">
+        <div class="post-section-split-copy">
+            {% if section.title %}
+            <h3>{{ section.title }}</h3>
+            {% endif %}
+            {{ section.content | safe }}
+        </div>
+        {% if section.image %}
+        <div class="post-section-split-media">
+            {{ post_figure(section.image, section.title or '', section.caption or '') }}
+        </div>
+        {% endif %}
+    </section>
+
+    {% elif section.type == 'image' %}
+    <section class="post-section post-section--figure">
+        {% if section.title %}
+        <p class="post-section-kicker">{{ section.title }}</p>
+        {% endif %}
+        {{ post_figure(section.image or '', section.title or '', section.caption or '') }}
+    </section>
+
+    {% elif section.type == 'metrics' or section.type == 'metrics-pills' %}
+    <section class="post-section post-section--metrics{% if section.type == 'metrics-pills' %} post-section--metrics-pills{% endif %}" aria-label="Metrics">
+        {% for metric in section['items'] %}
+        <div class="post-metric">
+            <span class="post-metric-value">{{ metric.value }}</span>
+            <span class="post-metric-label">{{ metric.label }}</span>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% elif section.type == 'methodology' %}
+    <aside class="post-section post-section--aside" aria-label="{{ section.title or 'Notes' }}">
+        {% if section.title %}
+        <h3>{{ section.title }}</h3>
+        {% endif %}
+        {{ section.content | safe }}
+    </aside>
+
+    {% elif section.type == 'callout' %}
+    <section class="post-section post-section--callout">
+        {% if section.title %}
+        <p class="post-section-callout-title">{{ section.title }}</p>
+        {% endif %}
+        {% if section.content %}
+        <div class="post-section-callout-body">{{ section.content | safe }}</div>
+        {% endif %}
+        <p class="post-section-callout-action">
+            <button type="button" class="home-btn home-btn--solid" data-contact-trigger>
+                {{ section.button or 'Get in touch' }}
+            </button>
+        </p>
+    </section>
+
+    {% elif section.type == 'code' %}
+    <section class="post-section post-section--code">
+        {% if section.title or section.filename %}
+        <p class="post-section-kicker">{{ section.filename or section.title }}</p>
+        {% endif %}
+        <pre><code>{{ section.content }}</code></pre>
+    </section>
+
+    {% elif section.type == 'gallery' %}
+    <section class="post-section post-section--gallery">
+        {% if section.title %}
+        <p class="post-section-kicker">{{ section.title }}</p>
+        {% endif %}
+        <div class="post-image-grid">
+            {% for img in section.images %}
+            {{ post_figure(img.src if img is mapping else img, img.alt if img is mapping else '', img.caption if img is mapping else '') }}
+            {% endfor %}
+        </div>
+    </section>
+
+    {% elif section.type == 'diagram' %}
+    <section class="post-section post-section--diagram">
+        {% if section.title %}
+        <h2>{{ section.title }}</h2>
+        {% endif %}
+        {% if section.caption %}
+        <p class="post-section-kicker">{{ section.caption }}</p>
+        {% endif %}
+        <div class="post-section-diagram">{{ section.content | safe }}</div>
+    </section>
+
+    {% endif %}
+{% endfor %}
+</div>

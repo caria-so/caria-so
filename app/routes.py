@@ -118,11 +118,39 @@ def _contact_redirect(fallback=None):
 
 
 def parse_date(date_str):
-    """Parse date string into datetime object."""
+    """Parse frontmatter dates for sorting; None if not sortable."""
+    if date_str is None or date_str == '':
+        return None
+    if isinstance(date_str, datetime):
+        return date_str
+    if hasattr(date_str, 'year') and hasattr(date_str, 'month'):
+        # yaml may load ISO dates as datetime.date
+        return datetime(date_str.year, date_str.month, date_str.day)
+
+    text = str(date_str).strip()
     try:
-        return datetime.strptime(date_str, '%Y-%m-%d')
-    except (ValueError, TypeError):
-        return datetime.min
+        return datetime.strptime(text, '%Y-%m-%d')
+    except ValueError:
+        pass
+
+    # "2025-present", "2025–ongoing", etc. — sort by start year
+    head = text[:4]
+    if head.isdigit():
+        year = int(head)
+        if 1970 <= year <= 2100:
+            return datetime(year, 1, 1)
+    return None
+
+
+def date_sort_key(value):
+    """Float timestamp for sorting; unparseable dates sort last."""
+    parsed = parse_date(value) if not isinstance(value, datetime) else value
+    if parsed is None:
+        return 0.0
+    try:
+        return parsed.timestamp()
+    except (OSError, OverflowError, ValueError):
+        return 0.0
 
 
 def normalize_tags(raw):
@@ -258,31 +286,8 @@ def _static_asset_exists(url):
 
 
 def _normalize_project_assets(project):
-    """Normalize image paths and section media URLs."""
-    for key in ('image', 'desktop_cover', 'mobile_cover'):
-        if project.get(key):
-            project[key] = normalize_static_url(project[key])
-
-    for section in project.get('sections') or []:
-        if section.get('image'):
-            section['image'] = normalize_static_url(section['image'])
-        if section.get('images'):
-            normalized = []
-            for img in section['images']:
-                if isinstance(img, dict) and img.get('src'):
-                    img = {**img, 'src': normalize_static_url(img['src'])}
-                elif isinstance(img, str):
-                    img = normalize_static_url(img)
-                normalized.append(img)
-            section['images'] = normalized
-        case_study = section.get('case_study')
-        if isinstance(case_study, dict) and case_study.get('evidence'):
-            case_study['evidence'] = [
-                {**item, 'image': normalize_static_url(item['image'])}
-                if isinstance(item, dict) and item.get('image') else item
-                for item in case_study['evidence']
-            ]
-    return project
+    from app.content_blocks import normalize_sections_document
+    return normalize_sections_document(project)
 
 
 def _resolve_project_cover(project):
@@ -390,7 +395,7 @@ def load_posts(directory):
 
         posts.append(post)
 
-    posts.sort(key=lambda post: parse_date(post['date']), reverse=True)
+    posts.sort(key=lambda post: date_sort_key(post.get('date')), reverse=True)
     return posts
 
 
@@ -667,7 +672,7 @@ def load_papers(include_fingerprint=False):
         except (json.JSONDecodeError, OSError) as e:
             current_app.logger.error(f"Error loading run paper {filepath}: {e}")
 
-    papers.sort(key=lambda paper: parse_date(paper['date']), reverse=True)
+    papers.sort(key=lambda paper: date_sort_key(paper.get('date')), reverse=True)
     return papers
 
 
@@ -738,7 +743,7 @@ def index():
     register_notes = sorted(
         all_notes,
         key=lambda n: (
-            -n['parsed_date'].timestamp() if n.get('parsed_date') else 0,
+            -date_sort_key(n.get('parsed_date')),
             -n.get('last_modified', 0),
         ),
     )[:20]
@@ -836,7 +841,15 @@ def post_detail(slug):
 
     post = hydrate_note_content(post, POSTS_DIR)
 
-    related_posts = related_notes_in_thread(post, notes, limit=3)
+    related_slugs = post.get('related_post_slugs')
+    if related_slugs and isinstance(related_slugs[0], str):
+        related_posts = [
+            n for slug_ref in related_slugs
+            for n in notes
+            if n.get('slug') == slug_ref
+        ]
+    else:
+        related_posts = related_notes_in_thread(post, notes, limit=3)
     all_tags = sorted(set(tag for n in notes for tag in n.get('tags', [])))
     tag_colors = get_tag_colors(all_tags)
 

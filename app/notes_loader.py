@@ -4,7 +4,9 @@ import os
 
 import yaml
 
+from app.content_blocks import normalize_sections_document
 from app.markdown_utils import convert_markdown, create_markdown_parser
+from app.media import normalize_static_url
 from app.notes_nlp import (
     build_thread_centroids,
     extract_entities,
@@ -229,23 +231,34 @@ def load_notes(posts_dir=POSTS_DIR, parse_date_fn=None):
 
 
 def hydrate_note_content(note, posts_dir=POSTS_DIR):
-    """Attach rendered HTML for a single note (post detail only)."""
-    if not note or note.get('content'):
+    """Attach rendered HTML and optional structured sections (post detail only)."""
+    if not note:
         return note
 
     filepath = resolve_note_filepath(posts_dir, note.get('slug', ''))
     if not filepath:
         return note
 
-    _, raw_text = parse_note_file(filepath)
-    if not raw_text:
-        return note
-
-    md = create_markdown_parser()
-
+    meta, raw_text = parse_note_file(filepath)
     note = dict(note)
-    note['content'] = convert_markdown(raw_text, md)
-    note['toc'] = getattr(md, 'toc', '')
+
+    if raw_text.strip() and not note.get('content'):
+        md = create_markdown_parser()
+        note['content'] = convert_markdown(raw_text, md)
+        note['toc'] = getattr(md, 'toc', '')
+
+    if meta.get('sections'):
+        note['sections'] = meta.get('sections') or []
+        note['related_post_slugs'] = meta.get('related_posts') or []
+        if meta.get('technologies'):
+            note['technologies'] = meta.get('technologies')
+        if meta.get('accent'):
+            note['accent'] = meta.get('accent')
+        normalize_sections_document(note)
+
+    if meta.get('image'):
+        note['image'] = normalize_static_url(meta.get('image'))
+
     return note
 
 

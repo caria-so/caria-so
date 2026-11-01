@@ -105,15 +105,17 @@ def build_thread_counts(posts, registry):
 
 def thread_sort_key(post):
     """Order notes inside a column: thread_order then date."""
+    from app.routes import date_sort_key
+
     order = post.get('thread_order')
     if order is not None:
         try:
             return (0, int(order))
         except (TypeError, ValueError):
             pass
-    date = post.get('parsed_date')
-    if date:
-        return (1, -date.timestamp())
+    ts = date_sort_key(post.get('parsed_date'))
+    if ts:
+        return (1, -ts)
     return (2, post.get('title', ''))
 
 
