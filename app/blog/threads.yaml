@@ -5,7 +5,7 @@ threads:
 
   - slug: Archives
     title: archives
-    color: hatch-ip
+    color: hatch-archives
     order: 2
 
   - slug: usability
@@ -27,6 +27,11 @@ threads:
     title: Tyling
     color: hatch-ecommerce
     order: 6
+
+  - slug: ip
+    title: Impossible Papers
+    color: hatch-ip
+    order: 7
 
   - slug: uncategorized
     title: Uncategorized
