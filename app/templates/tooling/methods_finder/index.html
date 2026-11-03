@@ -10,11 +10,11 @@
 
 {% block content %}
 
-<div class="tool-page">
+<div class="tool-page tool-page--methods-finder">
     {% set hero_eyebrow = 'Method Finder' %}
     {% set hero_title = 'Research & design toolkit builder' %}
     {% set hero_body = catalog.meta.description ~ ' Pick methods by what you need to learn, what you can spend, and where you are in the product lifecycle — not by habit.' %}
-    {% include 'tooling/partials/_hero.html' %}
+    {% include 'tooling/methods_finder/_hero.html' %}
 
     {% include 'tooling/methods_finder/_explorer.html' %}
     {% include 'tooling/methods_finder/_drawer.html' %}

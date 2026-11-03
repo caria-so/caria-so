@@ -3,9 +3,10 @@ title: "IP-β Function model. Sketching the full system. One box."
 thread: engineering
 keywords: [scientific discovery, agentic ai]
 author: "Federico Caria"
-date: "2026-08-26"
+date: "2026-08-11"
 tags: [scientific datasets, open data, hugging face, duckdb, parquet, ontologies]
 summary: "Sketching the full system."
+image:
 ---
 
 This is an IDEF0 function model of the research pipeline as it exists today, 30-08-26. A function model is useful to plan complex architecture, and it is especially valuable when many i/o modules interact. 

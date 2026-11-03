@@ -1,0 +1,482 @@
+/* ══ TOOLING — UX Observatory (sober shell; teal accent vs site rose) ══ */
+
+#theme-wrapper:has(> .tool-page--ux-observatory) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#theme-wrapper > .tool-page--ux-observatory {
+    padding-inline: 0;
+    flex: 1;
+}
+
+.tool-page--ux-observatory {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    background: var(--c-background);
+    color: var(--c-text-primary);
+
+    /* Project accent — observatory / data (distinct from --c-accent rose) */
+    --uxo-accent: #0d9488;
+    --uxo-accent-2: #0891b2;
+    --uxo-accent-soft: color-mix(in srgb, var(--uxo-accent) 14%, transparent);
+    --uxo-accent-2-soft: color-mix(in srgb, var(--uxo-accent-2) 14%, transparent);
+    --uxo-green: #059669;
+    --uxo-amber: #d97706;
+    --uxo-red: #dc2626;
+    --uxo-muted: var(--c-text-tertiary);
+    --uxo-surface: var(--c-background-gray);
+    --uxo-surface-2: var(--c-chip-bkg);
+    --uxo-border: var(--c-border);
+    --uxo-radius: 12px;
+    --uxo-radius-sm: 8px;
+    --uxo-gap: clamp(1rem, 2vw, 1.5rem);
+    --uxo-y: clamp(1.5rem, 3vw, 2.5rem);
+    --uxo-gutter: max(1rem, var(--page-gutter, 2rem));
+    --uxo-max: 80rem;
+}
+
+[data-theme="dark"] .tool-page--ux-observatory {
+    --uxo-accent: #2dd4bf;
+    --uxo-accent-2: #22d3ee;
+    --uxo-green: #34d399;
+    --uxo-amber: #fbbf24;
+    --uxo-red: #f87171;
+}
+
+/* Hero — same band as Method Finder */
+.tool-page--ux-observatory .tool-hero {
+    position: relative;
+    padding: clamp(2rem, 5vw, 3.25rem) var(--uxo-gutter) clamp(1.75rem, 4vw, 2.75rem);
+    border-bottom: 1px solid var(--uxo-border);
+    background: var(--c-background);
+    overflow: hidden;
+}
+
+.tool-page--ux-observatory .tool-hero.lr-pattern-noise {
+    --pattern-opacity: 0.22;
+}
+
+.tool-page--ux-observatory .tool-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--uxo-max);
+    margin-inline: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tool-page--ux-observatory .tool-hero-inner .home-hero-title {
+    margin-top: 0.85rem;
+}
+
+.tool-page--ux-observatory .tool-hero-body {
+    max-width: 42rem;
+    margin-inline: auto;
+}
+
+.tool-page--ux-observatory .uxo-hero-meta {
+    margin-top: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: var(--t-label, 0.75rem);
+    color: var(--uxo-muted);
+    letter-spacing: 0.02em;
+}
+
+.tool-page--ux-observatory .uxo-dashboard {
+    max-width: var(--uxo-max);
+    margin: 0 auto;
+    width: 100%;
+    padding: var(--uxo-y) var(--uxo-gutter);
+    box-sizing: border-box;
+}
+
+.tool-page--ux-observatory .uxo-dashboard *,
+.tool-page--ux-observatory .uxo-dashboard *::before,
+.tool-page--ux-observatory .uxo-dashboard *::after {
+    box-sizing: border-box;
+}
+
+/* Grids */
+.tool-page--ux-observatory .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--uxo-gap);
+    margin-bottom: var(--uxo-y);
+}
+
+.tool-page--ux-observatory .chart-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--uxo-gap);
+    margin-bottom: var(--uxo-y);
+}
+
+.tool-page--ux-observatory .chart-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--uxo-gap);
+    margin-bottom: var(--uxo-y);
+}
+
+.tool-page--ux-observatory .full-width {
+    margin-bottom: var(--uxo-y);
+}
+
+/* Cards */
+.tool-page--ux-observatory .card {
+    background: var(--uxo-surface);
+    border: 1px solid var(--uxo-border);
+    border-radius: var(--uxo-radius);
+    padding: clamp(1rem, 2vw, 1.25rem);
+    transition: border-color 0.2s;
+}
+
+.tool-page--ux-observatory .card:hover {
+    border-color: color-mix(in srgb, var(--uxo-accent) 35%, var(--uxo-border));
+}
+
+.tool-page--ux-observatory .card h3 {
+    font-size: var(--t-label, 0.75rem);
+    font-weight: 600;
+    color: var(--uxo-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+}
+
+/* KPI */
+.tool-page--ux-observatory .kpi {
+    text-align: center;
+    padding: clamp(1.25rem, 2.5vw, 1.5rem) 1rem;
+    min-width: 0;
+}
+
+.tool-page--ux-observatory .kpi .value {
+    font-size: clamp(1.375rem, 2.4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    margin-bottom: 0.25rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.tool-page--ux-observatory .kpi .label {
+    font-size: var(--t-label, 0.75rem);
+    color: var(--uxo-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tool-page--ux-observatory .kpi .sub {
+    font-size: 0.6875rem;
+    color: var(--c-text-secondary);
+    margin-top: 0.35rem;
+}
+
+.tool-page--ux-observatory .kpi .value.accent { color: var(--uxo-accent); }
+.tool-page--ux-observatory .kpi .value.accent2 { color: var(--uxo-accent-2); }
+.tool-page--ux-observatory .kpi .value.green { color: var(--uxo-green); }
+.tool-page--ux-observatory .kpi .value.amber { color: var(--uxo-amber); }
+.tool-page--ux-observatory .kpi .value.red { color: var(--uxo-red); }
+
+/* Feature bars */
+.tool-page--ux-observatory .feature-list { list-style: none; }
+
+.tool-page--ux-observatory .feature-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--uxo-border);
+}
+
+.tool-page--ux-observatory .feature-item:last-child { border-bottom: none; }
+
+.tool-page--ux-observatory .feature-name {
+    width: 11rem;
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    color: var(--c-text-secondary);
+}
+
+.tool-page--ux-observatory .feature-bar-bg {
+    flex: 1;
+    height: 1.5rem;
+    background: var(--uxo-surface-2);
+    border-radius: var(--uxo-radius-sm);
+    overflow: hidden;
+}
+
+.tool-page--ux-observatory .feature-bar {
+    height: 100%;
+    border-radius: var(--uxo-radius-sm);
+    transition: width 1s ease;
+    min-width: 2px;
+}
+
+.tool-page--ux-observatory .feature-pct {
+    width: 3.75rem;
+    text-align: right;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-left: 0.75rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Accessibility matrix */
+.tool-page--ux-observatory .a11y-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+    gap: var(--uxo-gap);
+}
+
+.tool-page--ux-observatory .a11y-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.75rem;
+    background: var(--uxo-surface-2);
+    border-radius: var(--uxo-radius-sm);
+    border: 1px solid var(--uxo-border);
+}
+
+.tool-page--ux-observatory .a11y-ring {
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.tool-page--ux-observatory .a11y-ring.good {
+    background: color-mix(in srgb, var(--uxo-green) 15%, transparent);
+    color: var(--uxo-green);
+    border: 2px solid var(--uxo-green);
+}
+
+.tool-page--ux-observatory .a11y-ring.ok {
+    background: color-mix(in srgb, var(--uxo-amber) 15%, transparent);
+    color: var(--uxo-amber);
+    border: 2px solid var(--uxo-amber);
+}
+
+.tool-page--ux-observatory .a11y-ring.bad {
+    background: color-mix(in srgb, var(--uxo-red) 15%, transparent);
+    color: var(--uxo-red);
+    border: 2px solid var(--uxo-red);
+}
+
+.tool-page--ux-observatory .a11y-label { font-size: 0.75rem; line-height: 1.35; }
+.tool-page--ux-observatory .a11y-label span {
+    display: block;
+    color: var(--uxo-muted);
+    font-size: 0.6875rem;
+}
+
+/* Table */
+.tool-page--ux-observatory .table-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--uxo-gap);
+    margin-bottom: var(--uxo-gap);
+    align-items: center;
+}
+
+.tool-page--ux-observatory .table-controls input {
+    flex: 1;
+    min-width: 12rem;
+    padding: 0.625rem 1rem;
+    background: var(--c-background);
+    border: 1px solid var(--uxo-border);
+    border-radius: var(--uxo-radius-sm);
+    color: var(--c-text-primary);
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.tool-page--ux-observatory .table-controls input:focus {
+    border-color: var(--uxo-accent);
+}
+
+.tool-page--ux-observatory .table-controls select {
+    padding: 0.625rem 1rem;
+    background: var(--c-background);
+    border: 1px solid var(--uxo-border);
+    border-radius: var(--uxo-radius-sm);
+    color: var(--c-text-primary);
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.tool-page--ux-observatory .site-table-wrap {
+    overflow-x: auto;
+    max-height: 37.5rem;
+    overflow-y: auto;
+    border: 1px solid var(--uxo-border);
+    border-radius: var(--uxo-radius);
+}
+
+.tool-page--ux-observatory .site-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+}
+
+.tool-page--ux-observatory .site-table th {
+    position: sticky;
+    top: 0;
+    background: var(--uxo-surface-2);
+    padding: 0.625rem 0.5rem;
+    text-align: left;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--uxo-muted);
+    border-bottom: 1px solid var(--uxo-border);
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.tool-page--ux-observatory .site-table th:hover { color: var(--uxo-accent); }
+
+.tool-page--ux-observatory .site-table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--uxo-border);
+    white-space: nowrap;
+}
+
+.tool-page--ux-observatory .site-table tr:hover td {
+    background: color-mix(in srgb, var(--uxo-accent) 6%, transparent);
+}
+
+.tool-page--ux-observatory .badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+}
+
+.tool-page--ux-observatory .badge.green {
+    background: color-mix(in srgb, var(--uxo-green) 15%, transparent);
+    color: var(--uxo-green);
+}
+
+.tool-page--ux-observatory .badge.red {
+    background: color-mix(in srgb, var(--uxo-red) 15%, transparent);
+    color: var(--uxo-red);
+}
+
+.tool-page--ux-observatory .badge.amber {
+    background: color-mix(in srgb, var(--uxo-amber) 15%, transparent);
+    color: var(--uxo-amber);
+}
+
+.tool-page--ux-observatory .badge.blue {
+    background: var(--uxo-accent-soft);
+    color: var(--uxo-accent);
+}
+
+.tool-page--ux-observatory .score-bar {
+    width: 3.75rem;
+    height: 0.375rem;
+    background: var(--uxo-surface-2);
+    border-radius: 999px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.375rem;
+    overflow: hidden;
+}
+
+.tool-page--ux-observatory .score-bar .fill {
+    display: block;
+    height: 100%;
+    min-width: 0;
+    border-radius: 999px;
+}
+
+.tool-page--ux-observatory .score-bar .fill--good { background: var(--uxo-green); }
+.tool-page--ux-observatory .score-bar .fill--mid { background: var(--uxo-amber); }
+.tool-page--ux-observatory .score-bar .fill--low { background: var(--uxo-red); }
+
+.tool-page--ux-observatory .score-num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+/* Section titles */
+.tool-page--ux-observatory .section-title {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    margin-bottom: var(--uxo-gap);
+    padding-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--c-text-primary);
+}
+
+.tool-page--ux-observatory .section-title .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Loading / errors */
+.tool-page--ux-observatory .loading {
+    text-align: center;
+    padding: clamp(3rem, 8vw, 5rem) 1.25rem;
+    color: var(--uxo-muted);
+    font-size: 1rem;
+}
+
+.tool-page--ux-observatory .loading .spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid var(--uxo-border);
+    border-top-color: var(--uxo-accent);
+    border-radius: 50%;
+    animation: uxo-spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes uxo-spin { to { transform: rotate(360deg); } }
+
+.tool-page--ux-observatory .uxo-load-error {
+    color: var(--uxo-red);
+}
+
+.tool-page--ux-observatory .chart-container { position: relative; }
+.tool-page--ux-observatory .chart-container canvas { max-height: 20rem; }
+.tool-page--ux-observatory .chart-container.tall canvas { max-height: 26rem; }
+
+@media (max-width: 1200px) {
+    .tool-page--ux-observatory .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-page--ux-observatory .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tool-page--ux-observatory .chart-row,
+    .tool-page--ux-observatory .chart-row-3 {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

@@ -3,9 +3,10 @@ title: "Frontend as Backend Specs"
 thread: engineering
 keywords: [engineering, xai, hci]
 author: "Federico Caria"
-date: "2026-08-24"
+date: "2026-08-14"
 tags: [notes, engineering]
 summary: "Build the maximal, wrong version of the interface. The places it breaks are your backend spec."
+image:
 ---
 
 Luke Wroblewski's argument: design used to run ahead of engineering because mockups were cheap and production software wasn't. AI coding agents killed that gap. Working software now appears about as fast as a mockup, so development can get ahead of design.

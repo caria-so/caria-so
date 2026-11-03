@@ -6,9 +6,10 @@ author: "Federico Caria"
 date: "2026-09-12"
 tags: 
 summary: "Computational stress test of whether RNA aptazyme systems can meet the Evolution 2.0 Prize's 5-bit threshold without a pre-designed code. Lays out a four-quantity framework (per-channel noise, orthogonal channels, crosstalk, Hill coefficient), documents which architectures are ruled out and why, flags Blahut–Arimoto capacity estimates as methodology-sensitive, and proposes wet-lab dose-response CV profiling as the single rate-limiting measurement."
+image:
 ---
 
-# **1\. Why This Document**
+# **1\. Why This**
 
 Work on exploring whether RNA-based molecular systems can encode enough information to function as a simple communication system. It’s basically a stress test for my system, using a specific prize competition (the Evolution 2.0 Prize, $10M), but more broadly to the question of how molecular coding systems originate.
 

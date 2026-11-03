@@ -2,11 +2,11 @@
 
 Layout:
     app/data/
-      research_methods/methods.json   → tooling/methods_finder
+      research_methods/methods.json   → methods_finder
       endorsements/endorsements.json
       fingerprints/                   (IP runs — large)
 
-Each tooling page loads from its own subfolder via app/tooling/<tool>.py.
+Each tool: app/tooling/<tool>.py + templates/tooling/<tool>/index.html.
 """
 
 import json

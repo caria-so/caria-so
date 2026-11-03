@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 import yaml
-from flask import Blueprint, render_template, request, abort, current_app, session, redirect, url_for, flash, Response
+from flask import Blueprint, render_template, request, abort, current_app, session, redirect, url_for, flash, Response, jsonify
 from datetime import datetime
 from functools import wraps
 
@@ -886,7 +886,28 @@ def _cv_download_context():
 def methods_finder():
     """Method Finder — filterable research & design methods toolkit."""
     catalog = load_methods_finder_catalog()
-    return render_template('tooling/methods_finder.html', catalog=catalog)
+    return render_template('tooling/methods_finder/index.html', catalog=catalog)
+
+
+def _versioned_static(filename):
+    # Static files are cached for a year, so the URL must change with the file.
+    try:
+        version = int(os.path.getmtime(os.path.join(current_app.static_folder, filename)))
+    except OSError:
+        version = 0
+    return url_for('static', filename=filename, v=version)
+
+
+@blog_bp.route('/ux-observatory', endpoint='ux_observatory')
+@blog_bp.route('/mass-analysis', endpoint='mass_analysis')
+def ux_observatory():
+    """UX observatory dashboard; the dataset is a static file."""
+    return render_template(
+        'tooling/ux_observatory/index.html',
+        data_url=_versioned_static('data/ux_observatory/dashboard_data.json'),
+        script_url=_versioned_static('js/tooling/ux_observatory/dashboard.js'),
+        style_url=_versioned_static('css/tooling/ux_observatory/dashboard.css'),
+    )
 
 
 @blog_bp.route('/about')

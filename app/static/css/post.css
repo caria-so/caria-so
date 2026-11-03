@@ -164,7 +164,7 @@
     background: var(--c-background);
 }
 
-/* Body content shares one measure (code blocks stay full column for long lines) */
+/* Body content shares one measure (incl. fenced / CodeHilite blocks) */
 .post-content.prose :is(
     p,
     h1, h2, h3, h4, h5, h6,
@@ -175,7 +175,8 @@
     .post-image,
     .post-image-grid,
     .post-sections,
-    .post-section
+    .post-section,
+    .codehilite
 ) {
     max-width: var(--prose-measure);
 }
@@ -215,7 +216,6 @@
     font-size: clamp(1.25rem, 2vw, 1.5rem);
     margin: 2rem 0 0.75rem;
     padding-bottom: 0.35rem;
-    border-bottom: 1px solid var(--c-border);
 }
 
 .post-content.prose h3 {
@@ -287,6 +287,14 @@
     background: var(--code-bg);
     border: 1px solid var(--c-border);
     border-radius: 0;
+}
+
+.post-content.prose .codehilite {
+    margin: 1.5rem 0;
+}
+
+.post-content.prose .codehilite pre {
+    margin: 0;
 }
 
 .post-content.prose code {
@@ -375,7 +383,6 @@
     font-size: var(--t-caption);
     line-height: 1.5;
     color: var(--c-text-secondary);
-    text-align: center;
 }
 
 .post-image-grid {
@@ -569,7 +576,8 @@
         .post-image,
         .post-image-grid,
         .post-sections,
-        .post-section
+        .post-section,
+        .codehilite
     ) {
         max-width: none;
     }
@@ -641,6 +649,18 @@
 
 .toc-container a:hover {
     color: var(--c-accent);
+}
+
+.toc-container a.is-active {
+    color: var(--c-text-primary);
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 var(--c-accent);
+    padding-left: 0.55rem;
+    margin-left: -0.55rem;
+}
+
+.toc-container li.is-active > a:not(.is-active) {
+    color: var(--c-text-secondary);
 }
 
 @media (max-width: 768px) {

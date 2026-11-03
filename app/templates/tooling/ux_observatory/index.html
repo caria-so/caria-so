@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ style_url }}">
+{% endblock %}
+
+{% block title %}Italian E-Commerce UX Observatory — Federico Caria{% endblock %}
+
+{% block content %}
+
+<div class="tool-page tool-page--ux-observatory">
+    <section class="tool-hero lr-pattern-noise" aria-labelledby="uxo-hero-title">
+        <div class="tool-hero-inner">
+            <span class="home-eyebrow">UX observatory</span>
+            <h1 id="uxo-hero-title" class="home-hero-title">Italian E-Commerce UX Observatory</h1>
+            <p class="home-hero-sub tool-hero-body" id="uxo-hero-sub">Loading site profiles…</p>
+            <p class="uxo-hero-meta" id="uxo-hero-meta" hidden></p>
+        </div>
+    </section>
+
+    <div class="uxo-dashboard" id="app">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            Loading site profiles…
+        </div>
+    </div>
+</div>
+
+<script type="application/json" id="ux-observatory-config">{{ {'dataUrl': data_url} | tojson }}</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="{{ script_url }}" defer></script>
+
+{% endblock %}

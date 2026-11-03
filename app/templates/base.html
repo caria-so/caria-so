@@ -53,11 +53,12 @@
 						<a href="{{ url_for('blog.projects') }}" class="link-mono">Projects</a>
 						#}
 						<a href="{{ url_for('blog.sketchboard_index') }}" class="link-mono">Sketchboard</a>
-						<div class="nav-dropdown{% if request.endpoint == 'blog.methods_finder' %} is-active is-open{% endif %}">
+						{% set nav_ux_observatory = request.path.startswith('/ux-observatory') or request.path.startswith('/mass-analysis') %}
+						<div class="nav-dropdown{% if request.endpoint == 'blog.methods_finder' or nav_ux_observatory %} is-active is-open{% endif %}">
 							<button
 								type="button"
 								class="link-mono dropdown-toggle"
-								aria-expanded="{{ 'true' if request.endpoint == 'blog.methods_finder' else 'false' }}"
+								aria-expanded="{{ 'true' if request.endpoint == 'blog.methods_finder' or nav_ux_observatory else 'false' }}"
 								aria-haspopup="true"
 								aria-controls="nav-tooling-menu"
 								id="nav-tooling-toggle"
@@ -67,6 +68,7 @@
 							</button>
 							<div class="dropdown-menu" id="nav-tooling-menu" role="menu" aria-labelledby="nav-tooling-toggle">
 								<a href="{{ url_for('blog.methods_finder') }}" class="link-mono" role="menuitem">Method Finder</a>
+								<a href="/ux-observatory" class="link-mono" role="menuitem">UX observatory</a>
 							</div>
 						</div>
 						<a href="{{ url_for('blog.about') }}" class="link-mono">About Me</a>
