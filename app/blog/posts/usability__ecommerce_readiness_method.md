@@ -11,7 +11,7 @@ image:
 
 More and more product searches will start in a conversation with an AI assistant rather than in a retailer's search box. The buyer types what they need; the assistant reads what shops publish and comes back with a few products. Whether that works depends on something retailers control directly: the information on their product pages.
 
-This series measures how well it works today. This first post explains the study: the question, how we measure it, and the safeguards that keep the result honest. [Part two](#) shares preliminary findings on how retailers publish product data. Part three will report what happens when an AI agent actually shops their catalogues.
+This series measures how well it works today. This first post explains the study: the question, how we measure it, and the safeguards that keep the result honest. [Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) shares preliminary findings on how retailers publish product data. Part three will report what happens when an AI agent actually shops their catalogues.
 
 ## The question
 
@@ -122,7 +122,7 @@ Limits are written down before the results, so they cannot be softened afterward
 
 ## Next in the series
 
-[Part two](#) looks at what is already visible before any agent runs: how a few Italian bathroom and home retailers publish product data, and how little of it is in a form software can read directly. Part three will report the agent's results, retailer by retailer.
+[Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) looks at what is already visible before any agent runs: how a few Italian bathroom and home retailers publish product data, and how little of it is in a form software can read directly. Part three will report the agent's results, retailer by retailer.
 
 If you run one of the shops in the study and want your figures early, get in touch.
 
