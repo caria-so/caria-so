@@ -6,6 +6,7 @@ author: "Federico Caria"
 date: "2026-08-26"
 tags: [scientific datasets, open data, hugging face, duckdb, parquet, ontologies]
 summary: "Galaxy rotation curves, dark matter detector results, 3 million elliptic curves, 12 ontologies with full synonym tables. All on Hugging Face. Query them in SQL. Join them across domains. No downloads, no API keys, no pagination code."
+image:
 ---
 
 Every scientist I know has a folder called something like `data_scripts_FINAL_v3_fixed`. Inside it there are 40 Python files, each one talking to a different API, each one broken in a slightly different way. One has a hardcoded auth token that expired in March, another does pagination but crashes on page 47 because the API changed its response format, a third downloads a 2GB CSV every time you run it because somebody forgot to add caching.
