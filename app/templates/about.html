@@ -16,7 +16,10 @@
 <section class="home-hero" aria-labelledby="abt-hero-heading">
     <div class="home-wrap">
     <figure class="home-spec abt-portrait">
-        {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
+        <div class="abt-portrait-frame">
+            {{ picture('/static/assets/images/about/fede_deadhead.png', 'Federico Caria', 'abt-portrait-photo', 'eager', '', 'media-load') }}
+        </div>
+        <figcaption class="abt-portrait-caption">Me pretending not to pose at 710 Ashbury Street, San Francisco.</figcaption>
     </figure>
 
     <div class="home-hero-copy">

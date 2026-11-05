@@ -1,7 +1,7 @@
 ---
 title: "Measuring ecommerce readiness I. Methodology"
-thread: usability
-keywords: [ecommerce, agentic ai, user experience, home & furniture]
+thread: ecommerce
+keywords: [ecommerce, agentic ai, user experience, usability, home & furniture]
 author: "Federico Caria"
 date: "2026-10-31"
 tags: 

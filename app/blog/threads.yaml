@@ -8,8 +8,8 @@ threads:
     color: hatch-archives
     order: 2
 
-  - slug: usability
-    title: Usability
+  - slug: ecommerce
+    title: E-commerce
     color: hatch-ux
     order: 3
 

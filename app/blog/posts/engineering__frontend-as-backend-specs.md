@@ -1,15 +1,15 @@
 ---
-title: "Frontend as Backend Specs"
+title: "From Frontend to Backend Specs"
 thread: engineering
-keywords: [engineering, xai, hci]
+keywords: [vibe]
 author: "Federico Caria"
 date: "2026-08-14"
-tags: [notes, engineering]
+tags:
 summary: "Build the maximal, wrong version of the interface. The places it breaks are your backend spec."
 image:
 ---
 
-Luke Wroblewski's argument: design used to run ahead of engineering because mockups were cheap and production software wasn't. AI coding agents killed that gap. Working software now appears about as fast as a mockup, so development can get ahead of design.
+Wroblewski's argument: design used to run ahead of engineering because mockups were cheap and production software wasn't. AI coding agents killed that gap. Working software now appears about as fast as a mockup, so development can get ahead of design.
 
 Fine. I think there might be a second flip inside that one. **Build the frontend first to figure out the backend.** Not frontend faster. Not frontend without Figma — though that alone is worth the price. I often use frontend as the instrument to stress test a specification.
 
@@ -71,10 +71,8 @@ So prototypes don't remove specifications. They add an executable version of one
 
 A specification can describe a system accurately and still fail to reveal that the system cannot be built as described. Building the form is the test, and it can take ten seconds on screen to expose what four careful readings missed.
 
-That's not an argument for reading less. It's an argument for not asking prose to do a job that interaction does better.
+That's not an argument for reading less. It's an argument for **not asking prose to do a job that interaction does better**.
 
-The maximalist prototype is not the architecture. It's allowed to be excessive: ten states where four will ship, controls that should never exist, transitions that turn out unnecessary. Once you've seen the space, you cut it down. **Waste tokens in the prototype so you don't waste architecture in production.**
+The maximalist prototype is not the architecture. It's allowed to be excessive: ten states where four will ship, controls that should never exist, transitions that turn out unnecessary. Once you've seen the space, you cut it down. **Waste tokens in the prototype so you don't waste architecture later on**
 
-Which inverts the usual order into: build something maximally wrong, interact with it, find out what must be true, make the backend true, simplify the interface.
-
-Sounds backwards. For complex systems under human control, it's the more natural direction. The frontend stops being the last layer of the stack and becomes the first instrument for discovering it.
+Which inverts the usual order into: build something maximally wrong, interact with it, find out what must be true, make the backend true, simplify the interface. Sounds backwards. For complex systems under human control, it's the more natural direction. The frontend stops being the last layer of the stack and sometimes becomes the first instrument for discovering it.

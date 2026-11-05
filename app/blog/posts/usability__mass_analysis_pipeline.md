@@ -1,7 +1,7 @@
 ---
 title: "How I Mass-Audit E-Commerce UX with Playwright and a Multi-Phase Analysis Pipeline"
-thread: usability
-keywords: [ecommerce, agentic UX, agentic usability]
+thread: ecommerce
+keywords: [agentic UX, agentic usability]
 author: "Federico Caria"
 date: "2025-07-21"
 tags: 

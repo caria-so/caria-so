@@ -1,23 +1,17 @@
 ---
 title: "IP-β Function model. Sketching the full system. One box."
 thread: engineering
-keywords: [scientific discovery, agentic ai]
+keywords: [scientific discovery, agentic ai, hugging face, duckdb, parquet, ontologies]
 author: "Federico Caria"
 date: "2026-08-11"
-tags: [scientific datasets, open data, hugging face, duckdb, parquet, ontologies]
-summary: "Sketching the full system."
+tags: 
+summary: "This document sketches only the **overall shell** — one box and how it decomposes. The point of modelling at this level is to hold the *what* separate from the *how*: Neo4j, Claude, OpenAlex are function carriers; the functions are acquire, design, simulate, review, and decide."
 image:
 ---
 
-This is an IDEF0 function model of the research pipeline as it exists today, 30-08-26. A function model is useful to plan complex architecture, and it is especially valuable when many i/o modules interact. 
-
-## What this system is
-
 IP-β is a graph-native research agent: one hands it a hypothesis, and it tries to turn that seed into an evidenced, adversarially reviewed account of where the idea stands — plus a candidate for what to run next. The ambition is an openClaw-style experiment in scientific discovery: not a chatbot that writes plausible prose, but a pipeline that reads what exists, grounds terms, searches for disconfirming as well as supporting literature, and closes the loop only when the machinery can prove it earned the next step.
 
-This document sketches only the **overall shell** — one box (A-0) and how it decomposes — not every agent or harness detail. The point of modelling at this level is to hold the *what* separate from the *how*: Neo4j, Claude, OpenAlex are function carriers; the functions are acquire, design, simulate, review, and decide.
-
-## System boundary
+## Narrow boundary
 
 **Inside:** one seed in, one fingerprint out; the run state on disk; the Neo4j subgraph the run touched; the control plane (heat, budget, mode, manager, architect, harness thresholds).
 
@@ -32,9 +26,7 @@ That boundary is a kind of a bet: I am designing the research *programme conduct
 | **Top** | Control | What constrains *how* it may act — decisions, membranes, budgets |
 | **Bottom** | Mechanism | What performs it — agents, APIs, graph, sandbox |
 
-
 ---
-
 
 # A-0 — Conduct a research programme
 This is the whole system in one box. The control side matters most here: the experiment is not *can an LLM write a review?* or *brute force a math prolem* but "can a **controlled** loop run literature acquisition, optional simulation, and adversarial review without confirming its own seed?" Heat, budget, mode, the manager, the architect, and the five *harness membranes* are how that control is supposed to work — even when most of them are still shadow or declared rather than live on the CLI path. 

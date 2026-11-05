@@ -4,7 +4,7 @@ thread: tyling
 keywords: ["consciousness", "research practice", "Faggin"]
 author: "Federico Caria"
 date: "2025-06-01"
-tags: ["notes", "research"]
+tags: 
 summary: "Every researcher I take seriously is running a second, invisible research program. Nobody puts it on the CV."
 image: ""
 ---

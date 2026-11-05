@@ -1,10 +1,10 @@
 ---
 title: "I put +30 scientific datasets on Hugging Face so you don't have to write another API wrapper"
 thread: archives
-keywords: [scidata-hub, datasets]
+keywords: [scidata-hub, datasets, open data, hugging face, duckdb, parquet, ontologies]
 author: "Federico Caria"
 date: "2026-08-26"
-tags: [scientific datasets, open data, hugging face, duckdb, parquet, ontologies]
+tags: 
 summary: "Galaxy rotation curves, dark matter detector results, 3 million elliptic curves, 12 ontologies with full synonym tables. All on Hugging Face. Query them in SQL. Join them across domains. No downloads, no API keys, no pagination code."
 image:
 ---
