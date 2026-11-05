@@ -5,7 +5,7 @@ keywords: [HCI, AI tooling, developer workflow, function modelling, function str
 author: "Federico Caria"
 date: "2025-07-12"
 tags: 
-summary: "Notes from class Human–Computer Interaction (HCI) for AI Systems Design by Prof Ola Kristensson - Cambridge University. Expanded with worked examples and literature."
+summary: "My notes from Human–Computer Interaction (HCI) for AI Systems Design by Prof Ola Kristensson, Cambridge University. Expanded with worked examples and literature."
 image:
 ---
 
