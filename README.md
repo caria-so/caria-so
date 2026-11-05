@@ -4,7 +4,7 @@
 
 Portfolio and product site for [Federico Caria](https://caria.so/about): UX research, e-commerce optimization, and AI/knowledge systems built as things you can actually test — not slide decks.
 
-**→ [Visit the site](https://caria.so)** · **[Projects](https://caria.so/projects)** · **[Get in touch](mailto:hello@caria.so)**
+**→ [Visit the site](https://caria.so)** · **[Get in touch](mailto:hello@caria.so)**
 
 ---
 
