@@ -221,15 +221,6 @@ What links all three methods is the idea of **envelope analysis**: exploring the
 
 ---
 
-## TO DOs
-
-- Everything about KLM-GOMS. Start: Card et al. (1980) → John & Kieras (1996) → Kieras's KLM guide (2001), which adds the modern B / BB / W(t) operators.
-- Practice modeling on NLS. (If this means Engelbart's oN-Line System: Engelbart & English (1968) is the primary source for the demo's functionality, so you can reconstruct the function structure from it.)
-- Redo the code-completion function structure above for a *chat-style* assistant. Which signals appear that were not in the inline case (conversation history, tool calls, user corrections)?
-- Pick one parameter pair for a real project and sweep it in a small simulation before building.
-
----
-
 ## Bibliography
 
 Álvarez, A., & Ritchey, T. (2015). Applications of general morphological analysis: From engineering design to policy analysis. *Acta Morphologica Generalis, 4*(1).
