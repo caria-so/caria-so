@@ -290,7 +290,7 @@ function renderDashboard(data) {
       <div class="card">
         <h3>Carousel Autoplay & WCAG Violations</h3>
         <div class="chart-container"><canvas id="carouselChart"></canvas></div>
-        <div id="wcagWarning" style="margin-top:12px;font-size:12px;color:var(--red)"></div>
+        <div id="wcagWarning" class="uxo-warn"></div>
       </div>
       <div class="card">
         <h3>Navigation Depth Distribution</h3>

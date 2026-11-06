@@ -18,11 +18,10 @@
     background: var(--c-background);
     color: var(--c-text-primary);
 
-    /* Project accent — observatory / data (distinct from --c-accent rose) */
     --uxo-accent: #0d9488;
     --uxo-accent-2: #0891b2;
-    --uxo-accent-soft: color-mix(in srgb, var(--uxo-accent) 14%, transparent);
-    --uxo-accent-2-soft: color-mix(in srgb, var(--uxo-accent-2) 14%, transparent);
+    --uxo-accent-soft: color-mix(in srgb, var(--uxo-accent) 12%, transparent);
+    --uxo-accent-2-soft: color-mix(in srgb, var(--uxo-accent-2) 12%, transparent);
     --uxo-green: #059669;
     --uxo-amber: #d97706;
     --uxo-red: #dc2626;
@@ -30,10 +29,9 @@
     --uxo-surface: var(--c-background-gray);
     --uxo-surface-2: var(--c-chip-bkg);
     --uxo-border: var(--c-border);
-    --uxo-radius: 12px;
-    --uxo-radius-sm: 8px;
-    --uxo-gap: clamp(1rem, 2vw, 1.5rem);
-    --uxo-y: clamp(1.5rem, 3vw, 2.5rem);
+    --uxo-radius: 0;
+    --uxo-gap: clamp(0.85rem, 1.5vw, 1.25rem);
+    --uxo-y: clamp(1.75rem, 3.5vw, 2.75rem);
     --uxo-gutter: max(1rem, var(--page-gutter, 2rem));
     --uxo-max: 80rem;
 }
@@ -46,17 +44,18 @@
     --uxo-red: #f87171;
 }
 
-/* Hero — same band as Method Finder */
+/* ── Hero ── */
+
 .tool-page--ux-observatory .tool-hero {
     position: relative;
-    padding: clamp(2rem, 5vw, 3.25rem) var(--uxo-gutter) clamp(1.75rem, 4vw, 2.75rem);
+    padding: clamp(2rem, 5vw, 3.25rem) var(--uxo-gutter) clamp(1.5rem, 3vw, 2.25rem);
     border-bottom: 1px solid var(--uxo-border);
     background: var(--c-background);
     overflow: hidden;
 }
 
 .tool-page--ux-observatory .tool-hero.lr-pattern-noise {
-    --pattern-opacity: 0.22;
+    --pattern-opacity: 0.2;
 }
 
 .tool-page--ux-observatory .tool-hero-inner {
@@ -71,28 +70,37 @@
     text-align: center;
 }
 
+.tool-page--ux-observatory .home-eyebrow {
+    color: var(--uxo-accent);
+}
+
 .tool-page--ux-observatory .tool-hero-inner .home-hero-title {
-    margin-top: 0.85rem;
+    margin-top: 0.75rem;
+    max-width: 36ch;
 }
 
 .tool-page--ux-observatory .tool-hero-body {
     max-width: 42rem;
     margin-inline: auto;
+    color: var(--c-text-secondary);
+    line-height: 1.65;
 }
 
 .tool-page--ux-observatory .uxo-hero-meta {
-    margin-top: 0.65rem;
+    margin-top: 0.75rem;
     font-family: var(--font-mono);
     font-size: var(--t-label, 0.75rem);
     color: var(--uxo-muted);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
 }
+
+/* ── Dashboard shell ── */
 
 .tool-page--ux-observatory .uxo-dashboard {
     max-width: var(--uxo-max);
     margin: 0 auto;
     width: 100%;
-    padding: var(--uxo-y) var(--uxo-gutter);
+    padding: var(--uxo-y) var(--uxo-gutter) clamp(2rem, 4vw, 3rem);
     box-sizing: border-box;
 }
 
@@ -102,81 +110,145 @@
     box-sizing: border-box;
 }
 
-/* Grids */
+/* ── Section headings (injected by JS) ── */
+
+.tool-page--ux-observatory .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 var(--uxo-gap);
+    padding-top: var(--uxo-y);
+    border-top: 1px solid var(--uxo-border);
+    font-family: var(--font-sans);
+    font-size: var(--t-subhead, 1.0625rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--c-text-primary);
+}
+
+.tool-page--ux-observatory .uxo-dashboard > .section-title:first-child,
+.tool-page--ux-observatory .kpi-grid + .section-title {
+    padding-top: var(--uxo-y);
+}
+
+.tool-page--ux-observatory .kpi-grid + .section-title {
+    margin-top: 0.25rem;
+}
+
+.tool-page--ux-observatory .section-title .dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Grids ── */
+
 .tool-page--ux-observatory .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--uxo-gap);
-    margin-bottom: var(--uxo-y);
+    margin-bottom: 0;
 }
 
 .tool-page--ux-observatory .chart-row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--uxo-gap);
-    margin-bottom: var(--uxo-y);
+    margin-bottom: 0;
 }
 
 .tool-page--ux-observatory .chart-row-3 {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--uxo-gap);
-    margin-bottom: var(--uxo-y);
+    margin-bottom: 0;
 }
 
 .tool-page--ux-observatory .full-width {
+    margin-bottom: 0;
+}
+
+.tool-page--ux-observatory .section-title + .chart-row,
+.tool-page--ux-observatory .section-title + .chart-row-3,
+.tool-page--ux-observatory .section-title + .full-width,
+.tool-page--ux-observatory .section-title + .kpi-grid {
     margin-bottom: var(--uxo-y);
 }
 
-/* Cards */
+/* ── Cards ── */
+
 .tool-page--ux-observatory .card {
     background: var(--uxo-surface);
     border: 1px solid var(--uxo-border);
     border-radius: var(--uxo-radius);
-    padding: clamp(1rem, 2vw, 1.25rem);
-    transition: border-color 0.2s;
-}
-
-.tool-page--ux-observatory .card:hover {
-    border-color: color-mix(in srgb, var(--uxo-accent) 35%, var(--uxo-border));
+    padding: clamp(1.1rem, 2vw, 1.35rem);
 }
 
 .tool-page--ux-observatory .card h3 {
+    margin: 0 0 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--uxo-border) 85%, transparent);
+    font-family: var(--font-mono);
     font-size: var(--t-label, 0.75rem);
-    font-weight: 600;
-    color: var(--uxo-muted);
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.75rem;
+    color: var(--uxo-muted);
 }
 
-/* KPI */
+/* ── KPI strip ── */
+
+.tool-page--ux-observatory .kpi-grid .card.kpi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 6.5rem;
+    padding: 1.15rem 1rem;
+    text-align: left;
+    background: var(--c-background);
+    border-top: 2px solid var(--uxo-accent);
+}
+
+.tool-page--ux-observatory .kpi-grid .card.kpi:nth-child(4),
+.tool-page--ux-observatory .kpi-grid .card.kpi:nth-child(5) {
+    border-top-color: var(--uxo-accent-2);
+}
+
+.tool-page--ux-observatory .kpi-grid .card.kpi:nth-child(2),
+.tool-page--ux-observatory .kpi-grid .card.kpi:nth-child(3),
+.tool-page--ux-observatory .kpi-grid .card.kpi:nth-child(6) {
+    border-top-color: color-mix(in srgb, var(--uxo-border) 70%, var(--uxo-accent));
+}
+
 .tool-page--ux-observatory .kpi {
-    text-align: center;
-    padding: clamp(1.25rem, 2.5vw, 1.5rem) 1rem;
     min-width: 0;
 }
 
 .tool-page--ux-observatory .kpi .value {
-    font-size: clamp(1.375rem, 2.4vw, 2.25rem);
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.05;
     overflow-wrap: anywhere;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
     font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
 }
 
 .tool-page--ux-observatory .kpi .label {
+    font-family: var(--font-mono);
     font-size: var(--t-label, 0.75rem);
-    color: var(--uxo-muted);
+    font-weight: 500;
+    color: var(--c-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
 }
 
 .tool-page--ux-observatory .kpi .sub {
-    font-size: 0.6875rem;
-    color: var(--c-text-secondary);
-    margin-top: 0.35rem;
+    margin-top: 0.4rem;
+    font-size: var(--t-caption, 0.75rem);
+    line-height: 1.4;
+    color: var(--uxo-muted);
 }
 
 .tool-page--ux-observatory .kpi .value.accent { color: var(--uxo-accent); }
@@ -184,55 +256,86 @@
 .tool-page--ux-observatory .kpi .value.green { color: var(--uxo-green); }
 .tool-page--ux-observatory .kpi .value.amber { color: var(--uxo-amber); }
 .tool-page--ux-observatory .kpi .value.red { color: var(--uxo-red); }
+.tool-page--ux-observatory .kpi .value.teal { color: var(--uxo-accent); }
+.tool-page--ux-observatory .kpi .value.cyan { color: var(--uxo-accent-2); }
 
-/* Feature bars */
-.tool-page--ux-observatory .feature-list { list-style: none; }
+/* ── Charts ── */
+
+.tool-page--ux-observatory .chart-container {
+    position: relative;
+    min-height: 13.5rem;
+}
+
+.tool-page--ux-observatory .chart-container canvas {
+    max-height: 16rem;
+    width: 100% !important;
+}
+
+.tool-page--ux-observatory .chart-container.tall {
+    min-height: 18rem;
+}
+
+.tool-page--ux-observatory .chart-container.tall canvas {
+    max-height: 22rem;
+}
+
+/* ── Feature bars ── */
+
+.tool-page--ux-observatory .feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
 .tool-page--ux-observatory .feature-item {
     display: flex;
     align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--uxo-border);
+    gap: 0.5rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--uxo-border) 75%, transparent);
 }
 
-.tool-page--ux-observatory .feature-item:last-child { border-bottom: none; }
+.tool-page--ux-observatory .feature-item:last-child {
+    border-bottom: none;
+}
 
 .tool-page--ux-observatory .feature-name {
-    width: 11rem;
+    width: 10.5rem;
     flex-shrink: 0;
-    font-size: 0.8125rem;
+    font-size: var(--t-body-sm, 0.875rem);
     color: var(--c-text-secondary);
 }
 
 .tool-page--ux-observatory .feature-bar-bg {
     flex: 1;
-    height: 1.5rem;
-    background: var(--uxo-surface-2);
-    border-radius: var(--uxo-radius-sm);
+    height: 1.35rem;
+    background: var(--c-background);
+    border: 1px solid color-mix(in srgb, var(--uxo-border) 80%, transparent);
     overflow: hidden;
 }
 
 .tool-page--ux-observatory .feature-bar {
     height: 100%;
-    border-radius: var(--uxo-radius-sm);
-    transition: width 1s ease;
     min-width: 2px;
+    transition: width 0.8s ease;
 }
 
 .tool-page--ux-observatory .feature-pct {
-    width: 3.75rem;
+    width: 3.25rem;
     text-align: right;
-    font-size: 0.8125rem;
+    font-family: var(--font-mono);
+    font-size: var(--t-caption, 0.75rem);
     font-weight: 600;
     flex-shrink: 0;
-    margin-left: 0.75rem;
     font-variant-numeric: tabular-nums;
+    color: var(--c-text-secondary);
 }
 
-/* Accessibility matrix */
+/* ── Accessibility grid ── */
+
 .tool-page--ux-observatory .a11y-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
     gap: var(--uxo-gap);
 }
 
@@ -240,149 +343,158 @@
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    padding: 0.65rem 0.75rem;
-    background: var(--uxo-surface-2);
-    border-radius: var(--uxo-radius-sm);
+    padding: 0.75rem;
+    background: var(--c-background);
     border: 1px solid var(--uxo-border);
 }
 
 .tool-page--ux-observatory .a11y-ring {
-    width: 2.625rem;
-    height: 2.625rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
     font-weight: 700;
     flex-shrink: 0;
 }
 
 .tool-page--ux-observatory .a11y-ring.good {
-    background: color-mix(in srgb, var(--uxo-green) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-green) 12%, transparent);
     color: var(--uxo-green);
-    border: 2px solid var(--uxo-green);
+    border: 1.5px solid color-mix(in srgb, var(--uxo-green) 45%, transparent);
 }
 
 .tool-page--ux-observatory .a11y-ring.ok {
-    background: color-mix(in srgb, var(--uxo-amber) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-amber) 12%, transparent);
     color: var(--uxo-amber);
-    border: 2px solid var(--uxo-amber);
+    border: 1.5px solid color-mix(in srgb, var(--uxo-amber) 45%, transparent);
 }
 
 .tool-page--ux-observatory .a11y-ring.bad {
-    background: color-mix(in srgb, var(--uxo-red) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-red) 12%, transparent);
     color: var(--uxo-red);
-    border: 2px solid var(--uxo-red);
+    border: 1.5px solid color-mix(in srgb, var(--uxo-red) 45%, transparent);
 }
 
-.tool-page--ux-observatory .a11y-label { font-size: 0.75rem; line-height: 1.35; }
+.tool-page--ux-observatory .a11y-label {
+    font-size: var(--t-body-sm, 0.875rem);
+    line-height: 1.35;
+}
+
 .tool-page--ux-observatory .a11y-label span {
     display: block;
+    margin-top: 0.15rem;
+    font-size: var(--t-caption, 0.75rem);
     color: var(--uxo-muted);
-    font-size: 0.6875rem;
 }
 
-/* Table */
+/* ── Site explorer table ── */
+
 .tool-page--ux-observatory .table-controls {
     display: flex;
     flex-wrap: wrap;
     gap: var(--uxo-gap);
     margin-bottom: var(--uxo-gap);
-    align-items: center;
+    align-items: stretch;
+}
+
+.tool-page--ux-observatory .table-controls input,
+.tool-page--ux-observatory .table-controls select {
+    padding: 0.55rem 0.85rem;
+    background: var(--c-background);
+    border: 1px solid var(--uxo-border);
+    border-radius: var(--uxo-radius);
+    color: var(--c-text-primary);
+    font-family: inherit;
+    font-size: var(--t-body-sm, 0.875rem);
+    outline: none;
 }
 
 .tool-page--ux-observatory .table-controls input {
     flex: 1;
     min-width: 12rem;
-    padding: 0.625rem 1rem;
-    background: var(--c-background);
-    border: 1px solid var(--uxo-border);
-    border-radius: var(--uxo-radius-sm);
-    color: var(--c-text-primary);
-    font-size: 0.875rem;
-    font-family: inherit;
-    outline: none;
 }
 
-.tool-page--ux-observatory .table-controls input:focus {
+.tool-page--ux-observatory .table-controls input:focus,
+.tool-page--ux-observatory .table-controls select:focus {
     border-color: var(--uxo-accent);
 }
 
-.tool-page--ux-observatory .table-controls select {
-    padding: 0.625rem 1rem;
-    background: var(--c-background);
-    border: 1px solid var(--uxo-border);
-    border-radius: var(--uxo-radius-sm);
-    color: var(--c-text-primary);
-    font-size: 0.875rem;
-    font-family: inherit;
-    outline: none;
-    cursor: pointer;
-}
-
 .tool-page--ux-observatory .site-table-wrap {
-    overflow-x: auto;
-    max-height: 37.5rem;
-    overflow-y: auto;
+    overflow: auto;
+    max-height: 36rem;
     border: 1px solid var(--uxo-border);
-    border-radius: var(--uxo-radius);
+    background: var(--c-background);
 }
 
 .tool-page--ux-observatory .site-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.75rem;
+    font-size: var(--t-caption, 0.75rem);
 }
 
 .tool-page--ux-observatory .site-table th {
     position: sticky;
     top: 0;
-    background: var(--uxo-surface-2);
-    padding: 0.625rem 0.5rem;
+    z-index: 2;
+    padding: 0.65rem 0.55rem;
     text-align: left;
-    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
     color: var(--uxo-muted);
+    background: var(--uxo-surface);
     border-bottom: 1px solid var(--uxo-border);
     cursor: pointer;
     white-space: nowrap;
-    z-index: 10;
 }
 
-.tool-page--ux-observatory .site-table th:hover { color: var(--uxo-accent); }
+.tool-page--ux-observatory .site-table th:hover {
+    color: var(--uxo-accent);
+}
 
 .tool-page--ux-observatory .site-table td {
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--uxo-border);
+    padding: 0.45rem 0.55rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--uxo-border) 65%, transparent);
     white-space: nowrap;
 }
 
-.tool-page--ux-observatory .site-table tr:hover td {
-    background: color-mix(in srgb, var(--uxo-accent) 6%, transparent);
+.tool-page--ux-observatory .site-table tbody tr:nth-child(even) td {
+    background: color-mix(in srgb, var(--uxo-surface) 45%, transparent);
+}
+
+.tool-page--ux-observatory .site-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--uxo-accent) 8%, var(--c-background));
 }
 
 .tool-page--ux-observatory .badge {
     display: inline-block;
-    padding: 0.125rem 0.5rem;
-    border-radius: 6px;
-    font-size: 0.6875rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
     font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .tool-page--ux-observatory .badge.green {
-    background: color-mix(in srgb, var(--uxo-green) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-green) 14%, transparent);
     color: var(--uxo-green);
 }
 
 .tool-page--ux-observatory .badge.red {
-    background: color-mix(in srgb, var(--uxo-red) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-red) 14%, transparent);
     color: var(--uxo-red);
 }
 
 .tool-page--ux-observatory .badge.amber {
-    background: color-mix(in srgb, var(--uxo-amber) 15%, transparent);
+    background: color-mix(in srgb, var(--uxo-amber) 14%, transparent);
     color: var(--uxo-amber);
 }
 
@@ -392,20 +504,19 @@
 }
 
 .tool-page--ux-observatory .score-bar {
-    width: 3.75rem;
-    height: 0.375rem;
-    background: var(--uxo-surface-2);
+    width: 3.5rem;
+    height: 0.35rem;
+    margin-right: 0.35rem;
+    background: color-mix(in srgb, var(--uxo-border) 50%, var(--c-background));
     border-radius: 999px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 0.375rem;
     overflow: hidden;
 }
 
 .tool-page--ux-observatory .score-bar .fill {
     display: block;
     height: 100%;
-    min-width: 0;
     border-radius: 999px;
 }
 
@@ -414,60 +525,66 @@
 .tool-page--ux-observatory .score-bar .fill--low { background: var(--uxo-red); }
 
 .tool-page--ux-observatory .score-num {
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     font-weight: 600;
 }
 
-/* Section titles */
-.tool-page--ux-observatory .section-title {
-    font-size: clamp(1rem, 2vw, 1.125rem);
-    font-weight: 600;
-    margin-bottom: var(--uxo-gap);
-    padding-top: 0.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--c-text-primary);
-}
-
-.tool-page--ux-observatory .section-title .dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-/* Loading / errors */
-.tool-page--ux-observatory .loading {
-    text-align: center;
-    padding: clamp(3rem, 8vw, 5rem) 1.25rem;
-    color: var(--uxo-muted);
-    font-size: 1rem;
-}
-
-.tool-page--ux-observatory .loading .spinner {
-    width: 2.5rem;
-    height: 2.5rem;
-    border: 3px solid var(--uxo-border);
-    border-top-color: var(--uxo-accent);
-    border-radius: 50%;
-    animation: uxo-spin 0.8s linear infinite;
-    margin: 0 auto 1rem;
-}
-
-@keyframes uxo-spin { to { transform: rotate(360deg); } }
-
-.tool-page--ux-observatory .uxo-load-error {
+.tool-page--ux-observatory .uxo-warn {
+    margin-top: 0.75rem;
+    font-size: var(--t-caption, 0.75rem);
     color: var(--uxo-red);
 }
 
-.tool-page--ux-observatory .chart-container { position: relative; }
-.tool-page--ux-observatory .chart-container canvas { max-height: 20rem; }
-.tool-page--ux-observatory .chart-container.tall canvas { max-height: 26rem; }
+/* ── Loading ── */
 
-@media (max-width: 1200px) {
+.tool-page--ux-observatory .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 14rem;
+    padding: 3rem 1.25rem;
+    color: var(--uxo-muted);
+    font-size: var(--t-body-sm, 0.875rem);
+    background: var(--uxo-surface);
+    border: 1px solid var(--uxo-border);
+}
+
+.tool-page--ux-observatory .loading .spinner {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid var(--uxo-border);
+    border-top-color: var(--uxo-accent);
+    border-radius: 50%;
+    animation: uxo-spin 0.75s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes uxo-spin {
+    to { transform: rotate(360deg); }
+}
+
+.tool-page--ux-observatory .uxo-load-error {
+    color: var(--uxo-red);
+    font-size: var(--t-body-sm, 0.875rem);
+}
+
+/* ── Responsive ── */
+
+@media (min-width: 1280px) {
     .tool-page--ux-observatory .kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .tool-page--ux-observatory .kpi-grid .card.kpi {
+        text-align: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .tool-page--ux-observatory .chart-row-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -475,8 +592,20 @@
     .tool-page--ux-observatory .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
     .tool-page--ux-observatory .chart-row,
     .tool-page--ux-observatory .chart-row-3 {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .tool-page--ux-observatory .feature-name {
+        width: 7.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-page--ux-observatory .kpi-grid {
         grid-template-columns: minmax(0, 1fr);
     }
 }

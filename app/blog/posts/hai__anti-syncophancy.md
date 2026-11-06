@@ -6,6 +6,7 @@ author: "Federico Caria"
 date: "2025-06-01"
 tags: []
 summary: "I experimented with some design tricks to mitigate the most dreadful LLM's behavior"
+image:
 ---
 
 [*See demo here*](https://xfydjp.csb.app/). 

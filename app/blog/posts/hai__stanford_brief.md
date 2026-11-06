@@ -6,6 +6,7 @@ author: "Federico Caria"
 date: "2026-07-12"
 tags: 
 summary: "Six recommendations by stanford HAI - Human-Centered LLM Strategy"
+image:
 ---
 
 # The Stanford HAI Brief That Barely Mentions LLMs
