@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Federico Caria — CV</title>
+<style>
+/* ─────────── tokens ─────────── */
+:root{
+  --blue:#2196f3;
+  --ink:#1a1a1a;
+  --body:#333;
+  --muted:#6b6b6b;
+  --rule:#1a1a1a;
+  --hair:#c9c9c9;
+  --bar-off:#dfe3e6;
+
+  --fs-name:30pt;
+  --fs-role:12.5pt;
+  --fs-sec:11.5pt;
+  --fs-h3:10.5pt;
+  --fs-body:9.4pt;
+  --fs-meta:8.6pt;
+}
+
+@page{ size:A4; margin:14mm 13mm; }
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+  font-size:var(--fs-body);
+  line-height:1.42;
+  color:var(--body);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─────────── header ─────────── */
+.name{
+  font-size:var(--fs-name);
+  font-weight:800;
+  letter-spacing:-.012em;
+  text-transform:uppercase;
+  color:var(--ink);
+  line-height:1.05;
+}
+.role{
+  font-size:var(--fs-role);
+  font-weight:700;
+  color:var(--blue);
+  margin-top:2pt;
+}
+.contact{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4pt 14pt;
+  margin-top:9pt;
+  font-size:var(--fs-meta);
+  font-weight:600;
+  color:var(--ink);
+}
+.contact span{ display:flex; align-items:center; gap:4pt; white-space:nowrap; }
+.contact svg{ width:9pt; height:9pt; fill:var(--blue); flex:none; }
+
+/* ─────────── layout ─────────── */
+.cols{
+  display:grid;
+  grid-template-columns:1fr 0.595fr;
+  gap:0 7mm;
+  margin-top:13pt;
+  align-items:start;
+}
+
+/* ─────────── sections ─────────── */
+.sec{ margin-bottom:13pt; }
+.sec > h2{ break-after:avoid; }
+.sec > h2{
+  font-size:var(--fs-sec);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.005em;
+  color:var(--ink);
+  padding-bottom:3pt;
+  border-bottom:1.6pt solid var(--rule);
+  margin-bottom:7pt;
+}
+
+/* ─────────── entries ─────────── */
+.entry{ padding-bottom:7pt; margin-bottom:7pt; border-bottom:.6pt dashed var(--hair); }
+.entry h3, .org, .meta{ break-after:avoid; }
+li{ break-inside:avoid; }
+p{ orphans:3; widows:3; }
+.entry:last-child{ border-bottom:0; padding-bottom:0; margin-bottom:0; }
+.entry h3{ font-size:var(--fs-h3); font-weight:700; color:var(--ink); line-height:1.25; }
+.org{ font-size:var(--fs-body); font-weight:700; color:var(--blue); margin-top:1pt; }
+
+.meta{
+  display:flex; flex-wrap:wrap; gap:3pt 12pt;
+  margin-top:3pt; margin-bottom:4pt;
+  font-size:var(--fs-meta); color:var(--muted);
+}
+.meta span{ display:flex; align-items:center; gap:3.5pt; }
+.meta svg{ width:8pt; height:8pt; fill:var(--muted); flex:none; }
+
+ul{ list-style:none; }
+li{ position:relative; padding-left:9pt; margin-bottom:2.5pt; }
+li::before{
+  content:"•"; position:absolute; left:1pt; top:-.5pt;
+  color:var(--body); font-size:10pt; line-height:1.4;
+}
+li:last-child{ margin-bottom:0; }
+
+/* ─────────── skills ─────────── */
+.skill-group{ font-size:var(--fs-body); font-weight:700; color:var(--blue); margin-bottom:5pt; }
+.skill-group + .chips{ margin-bottom:9pt; }
+.chips{ display:flex; flex-wrap:wrap; gap:4pt 9pt; }
+.chip{
+  font-size:var(--fs-meta);
+  font-weight:700;
+  color:var(--ink);
+  padding:0 1pt 3pt;
+  border-bottom:1.1pt solid var(--hair);
+}
+
+/* ─────────── languages ─────────── */
+.lang{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:8pt; padding-bottom:6pt; margin-bottom:6pt;
+  border-bottom:.6pt dashed var(--hair);
+}
+.lang:last-child{ border-bottom:0; padding-bottom:0; margin-bottom:0; }
+.lang b{ display:block; font-size:var(--fs-h3); font-weight:700; color:var(--ink); }
+.lang i{ display:block; font-style:normal; font-size:var(--fs-meta); color:var(--muted); margin-top:.5pt; }
+.bars{ display:flex; gap:2.5pt; flex:none; }
+.bars u{ width:4.5pt; height:14pt; background:var(--blue); border-radius:1pt; }
+.bars u.off{ background:var(--bar-off); }
+
+/* compact right-column entries */
+.tight{ padding-bottom:6pt; margin-bottom:6pt; }
+.tight h3{ font-size:var(--fs-body); }
+.tight .org{ font-size:var(--fs-meta); }
+.note{ font-size:var(--fs-meta); color:var(--muted); margin-top:1.5pt; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="name">Federico Caria</div>
+  <div class="role">Product Researcher</div>
+  <div class="contact">
+    <span><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>+39 375 898 9876</span>
+    <span><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>hello@caria.so</span>
+    <span><svg viewBox="0 0 24 24"><path d="M3.9 12a3.1 3.1 0 0 1 3.1-3.1h4V7H7a5 5 0 0 0 0 10h4v-1.9H7A3.1 3.1 0 0 1 3.9 12zM8 13h8v-2H8v2zm9-6h-4v1.9h4a3.1 3.1 0 0 1 0 6.2h-4V17h4a5 5 0 0 0 0-10z"/></svg>caria.so</span>
+    <span><svg viewBox="0 0 24 24"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.3 18.3v-7.5H5.9v7.5h2.4zM7.1 9.7a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8zm11.2 8.6v-4.3c0-2.3-1.2-3.3-2.9-3.3a2.5 2.5 0 0 0-2.2 1.2v-1h-2.4v7.5h2.4V14c0-1 .2-2 1.4-2s1.2 1.1 1.2 2.1v4.2h2.5z"/></svg>linkedin.com/in/federico-caria</span>
+    <span><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Cagliari, Italy · Remote</span>
+  </div>
+</header>
+
+<div class="cols">
+
+<!-- ══════════ LEFT ══════════ -->
+<main>
+
+  <section class="sec">
+    <h2>Summary</h2>
+    <p>Senior UX researcher with eight years at Baymard Institute conducting large-scale usability research, synthesising findings, and translating evidence into actionable product recommendations. Experienced across the full research lifecycle, from study design and usability testing to qualitative analysis, benchmarking and reporting. Previously a Marie Skłodowska-Curie Research Fellow at the University of Cologne, conducting international mixed-methods research on information-seeking behaviour and tools for scientific publishing.</p>
+  </section>
+
+  <section class="sec">
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <h3>Independent Researcher &amp; Developer</h3>
+      <div class="org">caria.so</div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 17H5V10h14v9z"/></svg>2026 – Present</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Remote</span>
+      </div>
+      <ul>
+        <li>Research and development on how domain knowledge is made usable by software — evaluation, knowledge modelling, and the systems built on top of them.</li>
+        <li>Built a document-processing pipeline (OCR, layout detection, entity resolution) converting fifty years of unstructured clinical archives into structured, searchable material.</li>
+        <li>Designed and built a multi-agent research pipeline for literature review, claim decomposition and adversarial review, backed by a Neo4j knowledge graph.</li>
+        <li>Client work in e-commerce research and development: heuristic evaluation, catalogue data quality, and the implementations that follow from the findings.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Senior UX Researcher</h3>
+      <div class="org">Baymard Institute</div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 17H5V10h14v9z"/></svg>12/2018 – 06/2026</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Remote</span>
+      </div>
+      <ul>
+        <li>Conducted large-scale heuristic evaluations and usability research across e-commerce, B2B procurement, SaaS, financial services and healthcare, rapidly learning complex workflows and domain-specific user needs.</li>
+        <li>Analysed usability evidence, identified recurring patterns and interaction problems, and translated findings into structured recommendations for enterprise clients.</li>
+        <li>Contributed to a large-scale UX benchmarking dataset and a research library of 700+ usability guidelines, applying consistent evaluation criteria across websites, platforms and industries.</li>
+        <li>Designed and built an internal quality-assurance tool that reduced a three-day manual QA process to approximately twenty minutes.</li>
+        <li>Developed a UI detection and classification model to support semi-automated interface analysis.</li>
+        <li>Mentored junior researchers in research methodology, evaluation quality and client communication.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Marie Skłodowska-Curie Research Fellow</h3>
+      <div class="org">University of Cologne</div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 17H5V10h14v9z"/></svg>04/2014 – 06/2018</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Cologne, Germany</span>
+      </div>
+      <ul>
+        <li>Led an internationally funded research project investigating information-seeking behaviour and the usability of scholarly tools.</li>
+        <li>Designed and conducted mixed-methods studies — usability testing, interviews and surveys — across international and cross-cultural research contexts.</li>
+        <li>Synthesised research findings into scholarly publications and presented results at eight international conferences.</li>
+        <li>Published three first-author papers in Springer Lecture Notes in Computer Science.</li>
+        <li>Directed an international collaboration with CONICET, Buenos Aires, coordinating participants, methodology and outputs.</li>
+      </ul>
+    </div>
+
+  </section>
+</main>
+
+<!-- ══════════ RIGHT ══════════ -->
+<aside>
+
+  <section class="sec">
+    <h2>Skills</h2>
+
+    <div class="skill-group">Research Methods</div>
+    <div class="chips">
+      <span class="chip">Research Design</span>
+      <span class="chip">Usability Testing</span>
+      <span class="chip">Heuristic Evaluation</span>
+      <span class="chip">Benchmarking</span>
+      <span class="chip">Competitive Analysis</span>
+      <span class="chip">Interviews</span>
+      <span class="chip">Mixed Methods</span>
+    </div>
+
+    <div class="skill-group">Tooling and AI</div>
+    <div class="chips">
+      <span class="chip">Python</span>
+      <span class="chip">Flask / FastAPI</span>
+      <span class="chip">Neo4j</span>
+      <span class="chip">LLM Pipelines</span>
+      <span class="chip">Automation</span>
+      <span class="chip">Data Analysis &amp; Visualisation</span>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Tools Built</h2>
+    <div class="entry tight">
+      <h3>DeepOCR</h3>
+      <div class="note">Document pipeline — vision and text-layer engines, transformer layout detection across 37 region types.</div>
+    </div>
+    <div class="entry tight">
+      <h3>Flowws</h3>
+      <div class="note">Computable UX knowledge base — 4,800+ interaction scenarios parsed from research literature, every citation verified.</div>
+    </div>
+    <div class="entry tight">
+      <h3>QA Tool — Baymard</h3>
+      <div class="note">Evaluation workflow automation, from Colab script to production Flask application.</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Education</h2>
+    <div class="entry tight">
+      <h3>Doctoral Research in Human–Computer Interaction</h3>
+      <div class="org">University of Cologne</div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 17H5V10h14v9z"/></svg>2015 – 2018</span>
+      </div>
+      <div class="note">Marie Skłodowska-Curie Fellow. Thesis not submitted.</div>
+    </div>
+    <div class="entry tight">
+      <h3>MA in Linguistics</h3>
+      <div class="org">Università Roma Tre</div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 17H5V10h14v9z"/></svg>2009 – 2011</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Training / Courses</h2>
+    <div class="entry tight">
+      <h3>Human–Computer Interaction for AI Systems Design</h3>
+      <div class="note">University of Cambridge</div>
+    </div>
+    <div class="entry tight">
+      <h3>Research Ethics</h3>
+      <div class="note">Université Grenoble Alpes</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Languages</h2>
+    <div class="lang">
+      <div><b>Italian</b><i>Native</i></div>
+      <div class="bars"><u></u><u></u><u></u><u></u><u></u></div>
+    </div>
+    <div class="lang">
+      <div><b>English</b><i>Proficient</i></div>
+      <div class="bars"><u></u><u></u><u></u><u></u><u class="off"></u></div>
+    </div>
+    <div class="lang">
+      <div><b>Spanish</b><i>Conversational</i></div>
+      <div class="bars"><u></u><u></u><u></u><u class="off"></u><u class="off"></u></div>
+    </div>
+  </section>
+
+</aside>
+</div>
+
+</body>
+</html>

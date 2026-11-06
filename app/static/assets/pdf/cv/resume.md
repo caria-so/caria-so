@@ -1,127 +1,109 @@
-# Federico Caria
+Federico Caria
 
-**Product & UX Designer · AI-Assisted Prototyping**
+Experience Engineer Rome, IT · caria.so · linkedin.com/in/federicocaria
 
-Berlin, Germany (CET) · Remote worldwide · federico.caria@live.it · caria.so · linkedin.com/in/federicocaria · github.com/caria-so
+Profile
 
----
+UX researcher who writes production code. I evaluate interfaces against 1000+ empirical heuristics, design the fix, and ship it — no handoff, no translation loss. Eight years of e-commerce UX research at Baymard Institute (Fortune 500 benchmarks), a PhD in HCI, and a full development stack: Python, Flask, JavaScript, WooCommerce, Neo4j, D3.js. When the agency won't cooperate, I ship around them.
 
-I research / design digital products and build them. Twelve years turning complex, technical problems into interfaces people can actually use — eight of them advising Fortune 500 e-commerce, SaaS, and financial-services teams at Baymard Institute, the industry's benchmark authority on UX. Today I run an AI-assisted practice: LLM-drafted specs, interactive prototypes in days rather than weeks, and production-ready frontend code — so clients test real interfaces instead of approving static mockups. I work end to end, alone or embedded in a client's team, and I stay in the build through QA and release.
+What I deliver
 
-| **+27%** | **700+** | **12 yrs** | **Ph.D.** |
-|---|---|---|---|
-| Avg. conversion lift delivered to client teams | UX guidelines applied across large-scale evaluations | Design & research across industry and EU-funded R&D | Human-Computer Interaction, Marie Curie Fellow |
+UX audits that come with the fix, not just the report. Heuristic evaluations, usability testing, competitive analysis — then the working code that implements the findings. Clients get one deliverable instead of a research deck that sits in a drawer.
 
----
+E-commerce development grounded in research. Product pages, catalog systems, checkout flows, payment integrations — built by someone who has evaluated thousands of them and knows which patterns actually convert.
 
-## Experience
+AI-powered tools for complex information. LLM pipelines, semantic search, entity resolution, OCR systems, research dashboards — functional prototypes to production applications.
 
-### Independent Product Designer & AI Prototyping Consultant — Freelance
-*2025 – present · Berlin · remote engagements*
+Client & Product Work
+UX Engineer | Parama — Bathroom Furniture E-Commerce
 
-— **Research and evaluation** — 
+2024 · Contract
 
-— **Product research** — find what's costing you conversions. Heuristic evaluations against 700+ guidelines, moderated usability sessions, funnel teardowns with annotated recordings.
+— Evaluated the product page against usability heuristics and benchmarked 12 direct competitors in a structured competitive analysis.
 
-— **Prototyping & development** — from concept to shipped interface. Interactive prototypes, e-commerce builds, and research dashboards in Flask, FastAPI, and WooCommerce. Design and build in the same pair of hands: no handoff loss.
+— Redesigned the entire product page: multi-angle gallery, grid-based variant selectors (size + color), restructured buy section with stock indicators, split delivery options, and third-party payment integration.
 
-— **AI pipelines** — wire AI into your actual workflow. LLM orchestration, entity resolution, semantic search, OCR extraction. Production integrations, not a chatbot on a landing page.
+— Shipped the full redesign via external CSS overrides and injected JavaScript — zero backend changes, zero agency dependency. The CMS was locked down; the fix went around it.
 
-— **Knowledge architecture** — make complex information findable. Graph databases, semantic search, metadata architecture, and dataset curation — for research labs and businesses alike.
+— Three iterative design rounds with the client, each tested against the heuristic baseline.
 
-— Building a multi-agent research platform (30+ agents) with a full design system, interactive D3.js data visualisations, evidence dashboards, and an open peer-review flow — designed, built, and maintained end to end.
+Developer | Bookshelf — Catalog System for Independent Bookshops
 
-- Built Flowws (flowws.io), a usability system that makes UX research computable: 392 articles parsed into 4,815 interaction scenarios and 17,640 verified citations, exposed as an MCP server Claude Code queries while writing frontend code. A deterministic verifier checks every quote character by character against its source — zero fabricated citations across 11,000+ candidates.
+2025 · Product
 
-— Comfortable owning client communication, scoping, and delivery independently — including asynchronous work across time zones, in English.
+— Built a metadata aggregation platform: scan a barcode, five sources queried simultaneously (OPAC SBN, IBS, OpenLibrary, Maremagnum, ViaLibri), intelligent merge, one-click publish to WooCommerce with diff-based field detection.
 
-### Senior UX Researcher — Baymard Institute
-*Dec 2018 – Jun 2026 · Remote-first, distributed international team*
+— Handles 18,000+ products. Reduced catalog data entry from 5 minutes per book to under 10 seconds.
 
-— Advised **Fortune 500 clients** on checkout, product-page, search, and account UX — translating findings into concrete interface recommendations that produced an **average 27% mobile conversion improvement**.
+— Mobile barcode scanner with auto-zoom and multi-pass decoding for dimly lit shop environments. Desktop laser scanner support via keyboard emulation.
 
-— Led large-scale usability evaluations across e-commerce, B2B, SaaS, and financial services, contributing to the **700+ guideline benchmark dataset** the industry references.
+— Stack: Python, FastAPI, SQLite, pyzbar, WooCommerce REST API, Vanilla JS.
 
-— Designed and built an **internal analysis tool** that automated part of the evaluation workflow, iterated over multiple rounds of researcher feedback — an in-house product, not a deliverable.
+Developer | Libreria Rotondi — E-Commerce Platform
 
-— Contributed to a **machine-learning UI detection and classification model** for semi-automated interface analysis.
+2024 · Contract
 
-— Mentored junior researchers in methodology, analytical rigour, and client communication.
+— Full WooCommerce build for an esoteric bookshop: 18,000 products, custom taxonomy system (11,000+ author entries), Nexi XPay payment integration, HPOS migration, ACF-driven metadata.
 
-### Marie Curie Research Fellow — Universität zu Köln
-*Apr 2014 – Jun 2018 · EU Commission–funded fellowship (ITN-DCH)*
+— Addressed catalog data quality: 2,545 items under "Senza categoria," inconsistent metadata across 280 category nodes. Built automated classification and cleanup tooling.
 
-— Led a funded research project on tool usability, designing and running mixed-methods studies across four countries (Germany, Argentina, Austria, Slovenia).
+Developer | DeepOCR — Document Processing Pipeline
 
-— Built interactive prototypes and tested them head-to-head against incumbent formats — finding that usability barriers, not features, drove users back to PDFs. Published as three first-author papers (Springer LNCS).
+2023–present · Product
 
-— Presented at eight international conferences; directed a cross-institution collaboration with remote participants in Argentina.
+— End-to-end OCR system with two engines: vision model (LightOn 2B on HF Inference) for scanned documents, PyMuPDF text extraction for born-digital PDFs. Auto-detection samples first five pages and picks the right engine.
 
-### UX Researcher — Digilab, Sapienza University of Rome
-*May 2014 – Mar 2015*
+— D-FINE transformer model trained on LADaS dataset for layout detection: 37 region types including margin notes, drop capitals, tables, figures. Handles 17th-century manuscripts to modern reports.
 
-— Designed and ran systematic user testing on research platforms; published reports and led evaluation workshops.
+— Structured JSON output: body, footnotes, headers, figures, tables in separate fields. Downstream apps consume the structure, not raw text.
 
----
+Research Background
+Senior UX Researcher | Baymard Institute
 
-## Selected Work
+Dec 2018 – Jun 2026
 
-**Ip-beta — Multi-Agent Research Platform** *(2026 – present)*
-Full product: Flask/Jinja2 interface, Neo4j knowledge graph (9,600+ nodes), FastAPI service layer, D3.js interactive visualisations, Claude API agent pipeline. Open peer-review system with three-dimensional scoring. caria.so/impossible-papers
+— Led large-scale heuristic evaluations across e-commerce, B2B, SaaS, and financial services — contributing directly to the industry's largest UX benchmarking dataset (700+ guidelines).
 
+— Designed and built an internal QA tool that automated the evaluation workflow: from Colab scripts to Streamlit prototype to Flask production app. 3-day manual QA process reduced to 20 minutes.
 
+— Built a UI detection and classification model for semi-automated interface analysis.
 
-**caria.so — Design System & Publishing Platform** *(2025 – present)*
-Custom Flask application with a token-based CSS design system (variables, pattern library, light/dark theming), markdown blog engine, project portfolio with device-mockup rendering, and contact flow. Designed and built end to end.
+— Translated usability findings into actionable recommendations for Fortune 500 clients, avg. 27% mobile conversion improvement.
 
-**DeepOCR — Document Intelligence Tool** *(2025 – present)*
-End-to-end OCR pipeline with a web interface for annotation and model evaluation, PaddleOCR/Tesseract backend and a PyTorch training loop for domain adaptation. Built for researchers where off-the-shelf OCR fails.
+— Mentored junior researchers in methodology and client communication.
 
-**SciData Hub — Federated Scientific Datasets** *(2026 – present)*
-Hugging Face organisation hosting seven scientific ontologies as queryable Parquet, federated via DuckDB with no local copies. huggingface.co/scidata-hub
+Marie Curie Research Fellow | Universität zu Köln
 
----
+Apr 2014 – Jun 2018
 
-## Capabilities
+— EU-funded research on scholarly tool usability. Mixed-methods studies across four countries.
 
-**Design:** Product & UI design · design systems and tokens · information architecture · interaction design · rapid prototyping · responsive and light/dark theming · Figma
+— 3 first-author publications (Springer LNCS), 8 international conferences.
 
-**Research:** Usability testing · heuristic evaluation (700+ guidelines) · mixed methods · A/B testing · eye-tracking · funnel, retention and adoption analysis · customer interviews
+— Built and tested interactive digital edition prototypes against paper alternatives.
 
-**AI delivery:** Claude API & Claude Code · Cursor · prompt engineering · multi-agent orchestration · RAG pipelines · OpenAI API · LangChain · Hugging Face
+Technical Skills
 
-**Build:** HTML/CSS · JavaScript · D3.js · Python · Flask · Django · FastAPI · PostgreSQL · SQLite · Neo4j (Cypher) · DuckDB · PyTorch · spaCy · Git
+Frontend: HTML/CSS, JavaScript, D3.js, Jinja2, Figma
 
----
+Backend: Python, Flask, FastAPI, Django, PHP
 
-## Education
+Data: PostgreSQL, SQLite, DuckDB, Neo4j, BigQuery
 
-**Ph.D., Human-Computer Interaction** — Universität zu Köln, 2015–2018
-Marie Skłodowska-Curie Fellow · Evaluation frameworks for digital editions
+E-Commerce: WooCommerce, WordPress, Nexi XPay, PayPal, HPOS, ACF, REST API integrations
 
-**HCI for AI Systems Design (Certificate)** — University of Cambridge, 2024
-AI interface design, transparency in AI decision-making
+AI/NLP: Claude API, OpenAI API, LangChain, spaCy, Hugging Face, RAG pipelines, embedding search, PaddleOCR, Tesseract
 
-**M.A. Linguistics** — Università Roma Tre, 2009–2011 · Computational text analysis
+UX Research: Heuristic evaluation (700+ guidelines), usability testing, A/B testing, eye-tracking, competitive analysis, GA4, Hotjar
 
-**B.A. Classical Philology** — Università Roma Tre, 2004–2008 · 110/110 cum laude
+Education
 
----
+Ph.D. Human-Computer Interaction — Universität zu Köln (2015–2018) Marie Skłodowska-Curie Fellow
 
-## Publications & Awards
+HCI for AI Systems Design — University of Cambridge (2024)
 
-Caria F., Mathiak B. (2020). "Annotation in Digital Humanities." *Digital Cultural Heritage*, Springer.
+MA Linguistics — Università Roma Tre (2009–2011)
 
-Caria F., Mathiak B. (2018). "Minimal Functionality for Digital Scholarly Editions." Springer LNCS 10605, 350–363.
+Languages
 
-Caria F., Mathiak B. (2018). "A Hybrid Focus Group for the Evaluation of Digital Scholarly Editions." Schriftenreihe des IDE 12.
-
-**Marie Skłodowska-Curie Fellowship** — European Commission, 2014–2017
-
-**A.C.M.E. Arts & Cultural Management in Europe** — EU Leonardo da Vinci Programme, 2012–2013
-
----
-
-**Languages** · Italian (native) · English (fluent, professional) · Spanish (conversational) · German (basic)
-
-**Availability** · Open to remote freelance engagements, full or part-time
+Italian (native) · English (fluent) · Spanish (conversational) · German (basic)

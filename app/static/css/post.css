@@ -155,7 +155,7 @@ a.meta-item--thread:hover {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.2rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     font-family: var(--font-mono);
     font-size: var(--t-label);
     font-weight: 500;
@@ -176,13 +176,31 @@ a.meta-item--thread:hover {
 /* ── Article body (.prose base → pages.css) ── */
 
 .post-content.prose {
+    /* Stronger than global --c-text-body in both themes (readable + “present”) */
+    --prose-ink: color-mix(in srgb, var(--c-text-primary) 92%, var(--c-text-secondary));
+    --prose-surface: var(--c-background);
     padding: clamp(1.75rem, 4vw, 2.75rem) var(--page-gutter, 2rem);
     max-width: none;
     font-family: var(--font-body);
     font-size: var(--t-body);
-    line-height: 1.75;
-    color: var(--c-text-body);
-    background: var(--c-background);
+    line-height: 1.5;
+    color: var(--prose-ink);
+    background: var(--prose-surface);
+}
+
+:root[data-theme="light"] .post-content.prose {
+    --prose-ink: color-mix(in srgb, var(--c-text-primary) 96%, var(--c-text-secondary));
+    --prose-surface: color-mix(in srgb, var(--c-background-gray) 28%, var(--c-background));
+}
+
+[data-theme="dark"] .post-content.prose {
+    --prose-ink: color-mix(in srgb, var(--c-text-primary) 86%, var(--c-text-secondary));
+    --prose-surface: color-mix(in srgb, var(--c-background-gray) 45%, var(--c-background));
+}
+
+/* pages.css .prose p has no color — set here so body copy uses --prose-ink */
+.post-content.prose p {
+    color: var(--prose-ink);
 }
 
 /* Body content shares one measure (incl. fenced / CodeHilite blocks) */
@@ -277,7 +295,7 @@ a.meta-item--thread:hover {
 
 .post-content.prose li {
     margin-bottom: 0.4rem;
-    color: var(--c-text-body);
+    color: var(--prose-ink);
 }
 
 .post-content.prose ul li {
@@ -336,10 +354,10 @@ a.meta-item--thread:hover {
     padding: 0.85rem 1rem 0.85rem 1.1rem;
     font-size: var(--t-body);
     line-height: 1.7;
-    color: var(--c-text-secondary);
-    background: var(--c-background-gray);
+    color: color-mix(in srgb, var(--prose-ink) 78%, var(--c-text-tertiary));
+    background: color-mix(in srgb, var(--c-background-gray) 88%, var(--prose-surface));
     border: 1px solid var(--c-border);
-    border-left: 3px solid var(--c-border);
+    border-left: 3px solid color-mix(in srgb, var(--c-accent) 35%, var(--c-border));
     border-radius: 0;
 }
 
@@ -373,13 +391,17 @@ a.meta-item--thread:hover {
     border-bottom: 1px solid var(--c-border);
 }
 
+.post-content.prose table td {
+    color: var(--prose-ink);
+}
+
 .post-content.prose table th {
     font-weight: 600;
     font-size: var(--t-label);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--c-text-secondary);
-    background: var(--c-background-gray);
+    color: color-mix(in srgb, var(--prose-ink) 70%, var(--c-text-tertiary));
+    background: color-mix(in srgb, var(--c-background-gray) 70%, var(--prose-surface));
 }
 
 .post-content.prose table tr:last-child td {
