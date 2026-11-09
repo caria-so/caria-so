@@ -4,7 +4,7 @@ thread: hai
 keywords: [HCI, IIS, interaction design, artificial intelligence, generalist designer]
 author: "Federico Caria"
 date: "2025-07-12"
-tags: ["HCI", "AI", "Notes"]
+tags: 
 summary: "Human–AI systems break most assumptions interface design was built on and that calls for a generalist researcher to own the design."
 image:
 ---
@@ -45,14 +45,7 @@ This figure does not have to be invented, but built with a little combinatory ar
 
 ### Intelligent interactive systems (IIS)
 
-IIS is an existing research field: systems that rely on some form of AI to do their work, such as recommenders, dialogue systems, human–robot interaction, auto-correct keyboards and human-in-the-loop systems. They are already everywhere, and the labs that study them are a starting point:
-
-- **Harvard Intelligent Interactive Systems Group.** Human–AI interaction systems, decision tools, community–AI collaboration. <https://iis.seas.harvard.edu/>
-- **Interactive Intelligent Systems Lab, University of Tokyo** (Koji Yatani). HCI, ubiquitous computing, mental well-being. <https://iis-lab.org/>
-- **Cambridge Intelligent Interactive Systems Group**, Engineering Design Centre (Per Ola Kristensson). Text input, keyboards, inclusive design. <https://www-edc.eng.cam.ac.uk/research/intelligent-interactive-systems>
-- **ETH Zurich Institute for Intelligent Interactive Systems.** Computational robotics, sensing, interaction and perception. <https://iis.inf.ethz.ch/>
-
-Not exhaustive; each has its own direction.
+IIS is an existing research field: systems that rely on some form of AI to do their work, such as recommenders, dialogue systems, human–robot interaction, auto-correct keyboards and human-in-the-loop systems. They are already everywhere, and the labs that study them are a starting point.
 
 #### Academic, not product
 
@@ -70,10 +63,10 @@ The Copilot work from Microsoft Research is the concrete case [4]. Mozannar and 
 
 ## References
 
-[1] Castelvecchi, D. (2016). Can we open the black box of AI? *Nature*, 538, 20–23. See also Lipton, Z. C. (2018). The mythos of model interpretability. *Communications of the ACM*, 61(10).
-[2] Parasuraman, R., & Manzey, D. H. (2010). Complacency and bias in human use of automation: an attentional integration. *Human Factors*, 52(3), 381–410. The earlier framing is Parasuraman, R., & Riley, V. (1997). Humans and automation: use, misuse, disuse, abuse. *Human Factors*, 39(2), 230–253.
-[3] Fjeld, J., Achten, N., Hilligoss, H., Nagy, A., & Srikumar, M. (2020). *Principled Artificial Intelligence: Mapping Consensus in Ethical and Rights-based Approaches to Principles for AI*. Berkman Klein Center Research Publication 2020-1. <https://cyber.harvard.edu/publication/2020/principled-ai>
-[4] Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2024). Reading between the lines: modeling user behavior and costs in AI-assisted programming. *CHI 2024*. <https://arxiv.org/abs/2210.14306>
-[5] Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2023). When to show a suggestion? Integrating human feedback in AI-assisted programming. <https://arxiv.org/abs/2306.04930>
-[6] Marchionini, G. (2006). Exploratory search: from finding to understanding. *Communications of the ACM*, 49(4), 41–46.
-[7] Pirolli, P., & Card, S. (1999). Information foraging. *Psychological Review*, 106(4), 643–675.
+1. Castelvecchi, D. (2016). Can we open the black box of AI? *Nature*, 538, 20–23. See also Lipton, Z. C. (2018). The mythos of model interpretability. *Communications of the ACM*, 61(10).
+2. Parasuraman, R., & Manzey, D. H. (2010). Complacency and bias in human use of automation: an attentional integration. *Human Factors*, 52(3), 381–410. The earlier framing is Parasuraman, R., & Riley, V. (1997). Humans and automation: use, misuse, disuse, abuse. *Human Factors*, 39(2), 230–253.
+3. Fjeld, J., Achten, N., Hilligoss, H., Nagy, A., & Srikumar, M. (2020). *Principled Artificial Intelligence: Mapping Consensus in Ethical and Rights-based Approaches to Principles for AI*. Berkman Klein Center Research Publication 2020-1. <https://cyber.harvard.edu/publication/2020/principled-ai>
+4. Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2024). Reading between the lines: modeling user behavior and costs in AI-assisted programming. *CHI 2024*. <https://arxiv.org/abs/2210.14306>
+5. Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2023). When to show a suggestion? Integrating human feedback in AI-assisted programming. <https://arxiv.org/abs/2306.04930>
+6. Marchionini, G. (2006). Exploratory search: from finding to understanding. *Communications of the ACM*, 49(4), 41–46.
+7. Pirolli, P., & Card, S. (1999). Information foraging. *Psychological Review*, 106(4), 643–675.

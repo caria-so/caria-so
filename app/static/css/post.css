@@ -288,7 +288,7 @@ a.meta-item--thread:hover {
 
 .post-content.prose ul,
 .post-content.prose ol {
-    margin: 0 0 1rem;
+    margin: 1rem 0;
     padding-left: 1.35rem;
     list-style-position: outside;
 }
