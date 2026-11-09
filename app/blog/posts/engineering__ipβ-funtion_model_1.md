@@ -1,79 +1,274 @@
 ---
-title: "Generative AI needs a designer who can read the code"
-thread: hai
-keywords: [HCI, IIS, interaction design, artificial intelligence, generalist designer]
+title: "IP-β Function model. Sketching the full system. One box."
+thread: engineering
+keywords: [scientific discovery, agentic ai, hugging face, duckdb, parquet, ontologies]
 author: "Federico Caria"
-date: "2025-07-12"
-tags: ["HCI", "AI", "Notes"]
-summary: "Human–AI systems break the assumptions interface design was built on. Notes from Cambridge's HCI for AI course on why that calls for a generalist designer, and where to look for one."
+date: "2026-08-11"
+tags: 
+summary: "This document sketches only the **overall shell** — one box and how it decomposes. The point of modelling at this level is to hold the *what* separate from the *how*: Neo4j, Claude, OpenAlex are function carriers; the functions are acquire, design, simulate, review, and decide."
 image:
 ---
 
-I took the Cambridge HCI for AI course (Per Ola Kristensson) expecting to learn how to evaluate AI products. What I took away is narrower and, I think, more useful: building AI into software changes who has to do the design.
+IP-β is a graph-native research agent: one hands it a hypothesis, and it tries to turn that seed into an evidenced, adversarially reviewed account of where the idea stands — plus a candidate for what to run next. The ambition is an openClaw-style experiment in scientific discovery: not a chatbot that writes plausible prose, but a pipeline that reads what exists, grounds terms, searches for disconfirming as well as supporting literature, and closes the loop only when the machinery can prove it earned the next step.
 
-## Automation was always hard
+## Narrow boundary
 
-Software has carried some form of synthetic intelligence for decades. Human–AI interaction still raises problems that older interfaces mostly avoided:
+**Inside:** one seed in, one fingerprint out; the run state on disk; the Neo4j subgraph the run touched; the control plane (heat, budget, mode, manager, architect, harness thresholds).
 
-1. **Control.** AI systems are complex, dynamic systems. Users struggle to link their actions to outcomes.
-2. **Understanding.** AI is often a black box: we see input and output, not what happens between, yet we rely on it to decide [1].
-3. **Agency.** More automation means less felt ownership. The automation literature calls the result complacency: users no longer feel responsible for outcomes [2].
-4. **Governance.** Privacy, accountability, safety and security, transparency and explainability, fairness and non-discrimination, human control of technology, professional responsibility, promotion of human values. These are the eight themes Fjeld et al. found across 36 AI-principles documents [3]. Few teams cover all of them.
+**Outside (environment, not designed here):** the human who wrote the seed and who may or may not act on the fingerprint; the full literature and dataset corpora (we query, we do not own); external peer review and publication; compute billing and API rate limits treated as constraints rather than subfunctions.
 
-## Why that points to a generalist
+That boundary is a kind of a bet: I am designing the research *programme conductor*, not the journal, not the wet lab. Computational tests in a sandbox are in scope only as far as this pipeline can run them — not as a replacement for real experiments.
 
-None of the four lives only at the interface. Control depends on how the model behaves over repeated use. Understanding depends on what the system can expose. Agency depends on how automation is split between person and machine. Governance depends on the data and the process around the model. So if one wants to ship something more than a thin wrapper around an API call, usefulness has to be worked out starting from the code and the data, not painted on afterwards.
+| Side | Name | Meaning here |
+|------|------|----------------|
+| **Left** | Input | What the function transforms |
+| **Right** | Output | What it produces |
+| **Top** | Control | What constrains *how* it may act — decisions, membranes, budgets |
+| **Bottom** | Mechanism | What performs it — agents, APIs, graph, sandbox |
 
-The obvious answer is a cross-functional team, and large organisations will build one. But a team only works if someone in it can hold the whole problem: see that a model threshold is an interaction decision, that a logging choice is a research-method decision, that a governance requirement constrains the architecture. That person sits across several fields at once:
+---
 
-- Human–computer interaction
-- Design, and engineering design
-- Human factors and ergonomics
-- Machine learning
-- Cognitive science and behaviour
-- Usability and user experience
+# A-0 — Conduct a research programme
+This is the whole system in one box. The control side matters most here: the experiment is not *can an LLM write a review?* or *brute force a math prolem* but "can a **controlled** loop run literature acquisition, optional simulation, and adversarial review without confirming its own seed?" Heat, budget, mode, the manager, the architect, and the five *harness membranes* are how that control is supposed to work — even when most of them are still shadow or declared rather than live on the CLI path. 
 
-This role cuts across academic disciplines, and no established framework seems to exist for working in the gaps. It is a high-level design role, not an engineering one. It needs the skills of someone who can frame problems and look for solutions in several directions with the same dexterity.
+```
+                    ┌ control ─────────────────────────────────────────┐
+                    │  heat · mode · impact · budget                   │
+                    │  manager (tactical) · architect (strategic)      │
+                    │  harness membranes (5)                           │
+                    └──────────────────────┬───────────────────────────┘
+                                           │
+     seed ──────────►┌─────────────────────▼─────────────────────┐──────────► fingerprint
+                     │                                           │
+                     │     A0  Conduct a research programme      │
+                     │                                           │
+                     └─────────────────────▲─────────────────────┘
+                                           │
+                    ┌ mechanism ───────────┴───────────────────────┐
+                    │  sources · ontologies · datasets             │
+                    │  Neo4j graph · LLMs · compute sandbox        │
+                    └──────────────────────────────────────────────┘
+```
 
-### What I think this replaces
+**Does.** Takes one person's hypothesis and returns a positioned, evidenced,
+adversarially reviewed account of where that hypothesis stands — plus the next
+hypotheses/claims worth running.
 
-For decades the industry traded rigorous user research for flashy graphics, forcing researchers into absurdly narrow boxes, like a *Senior Left-Click Usability Interviewer for Desktop Web Browsers (Q3 Only)* who wouldn't dare touch a survey or mock up a prototype. What changes now is that the visual layer carries less of the weight. In a chat or an agentic tool there is not much interface left to polish; the question moves back to behaviour, information processing and what the system does underneath. That rewards people who can move between source code and human behaviour without hand-offs.
+**Input — seed.** A research idea: hypothesis, claims (test / pass /
+fail), heat, impact weights, mode, constraints, optional `[[n:]]` / `[[e:]]`
+markers, declared datasets. Graph-native from tick 0 as `:Seed` + `:Claim` +
+`POSITIONED_IN`. The input must have those parts; it can carry other information,
+but everything else lives in run state until a writer persists it.
 
-## Not designing from nothing
+**Output — fingerprint.** Nella mia idea il seed è bozza di programma ricerca a cui manca la validazione. The fingerprint is *derived on read* from what the run left on disk (`decisions.jsonl`, `pipeline.jsonl`, `writes.jsonl`, `panel/*.json`, `fork.json`, `seed.json`, the
+seed YAML). It is not built in-process at a clean end. A run stopped at tick 3
+is a fingerprint with three ticks; an unrun seed is a fingerprint at tick zero.
 
-This figure does not have to be invented, but built with a little combinatory art.
+**Control.** `control` holds inputs only (heat, impact, budget, mode).
+`derive_control()` is the only place knobs are computed. The manager picks the
+next action from the weakest maturity dimension; the architect is called only
+on escalation (stall, budget milestone, no affordable agent). Today both are
+**SHADOW** on the production path — `run_cmd` is a hardcoded stage list;
+`manage()` writes `would` vs `actual` to `decisions.jsonl`.
 
-### Intelligent interactive systems (IIS)
+**Mechanism — three external authorities**, not interchangeable:
 
-IIS is an existing research field: systems that rely on some form of AI to do their work, such as recommenders, dialogue systems, human–robot interaction, auto-correct keyboards and human-in-the-loop systems. They are already everywhere, and the labs that study them are a starting point:
+| Mechanism | Answers | How it enters |
+|-----------|---------|----------------|
+| **Sources** | What has been published | OpenAlex, PubMed, Europe PMC, Semantic Scholar, patents, PDFs |
+| **Ontologies** | What the terms *are* | OpenAlex backbone, Wikidata, MeSH, SciData Hub via `ground/resolver` |
+| **Datasets** | What can *test* a claim | Registry + Hub + corpus; `dataset_finder` writes `:Dataset` + `CAN_TEST` |
 
-- **Harvard Intelligent Interactive Systems Group.** Human–AI interaction systems, decision tools, community–AI collaboration. <https://iis.seas.harvard.edu/>
-- **Interactive Intelligent Systems Lab, University of Tokyo** (Koji Yatani). HCI, ubiquitous computing, mental well-being. <https://iis-lab.org/>
-- **Cambridge Intelligent Interactive Systems Group**, Engineering Design Centre (Per Ola Kristensson). Text input, keyboards, inclusive design. <https://www-edc.eng.cam.ac.uk/research/intelligent-interactive-systems>
-- **ETH Zurich Institute for Intelligent Interactive Systems.** Computational robotics, sensing, interaction and perception. <https://iis.inf.ethz.ch/>
+Plus the Neo4j graph (canonical state), LLM providers, and
+`tools/compute_executor.py` (sandbox — Layer 1 of simulation, no caller yet).
 
-Not exhaustive; each has its own direction.
+**The hard part.** Three of them, and they are not really implementation problems:
 
-#### Academic, not product
+1. **Knowing when to stop.** There is no bottom to a literature. Every stop rule
+   is a bet that the next paper would not have changed the answer, and the
+   system cannot see the paper it did not fetch. `_should_exit` is five signals
+   voting on that bet.
+2. **Not confirming itself.** Every mechanism that improves retrieval — scoping,
+   affinity maturation, anti-queries — improves it *toward the seed's own
+   framing*. Disconfirming evidence sits, by construction, where the seed is not
+   looking. Most of the specific protections in A1 exist for this one reason.
+3. **Closing the loop without laundering authorship.** A machine-written child
+   seed must re-enter as a machine claim. The origin firewall is what stops the
+   system from citing itself as a human source.
 
-The material is very academic. When I joined the classes at Cambridge expecting to learn how to evaluate AI products, I got very little about that. The gap is real: the methods exist (envelope analysis, mixed-initiative principles, function modelling) but they stop at the prototype. Nobody in that literature is asked whether the thing sells, retains, or survives a support queue.
+---
 
-### User research
+# A0 — Four phases
 
-Someone has to take the research and carry it into products, with a holistic view of the process and what it means for meaningful design and product success. This is where user research finds its place. It needs no less rethinking to be applied successfully, on at least two fronts: (a) how user research and task analysis change when the unit of analysis is no longer a click or a well confined task; (b) whether ease of use is the right target for AI-infused tools.
+The parent decomposes into four sequential functions and one control function
+that sits above them for the whole run. The intended cycle is not a straight
+line: after review the manager may send a child seed back into A1, or forward
+into A2.
 
-**Usability for AI systems starts in the code and the data**, so the thing to analyse is behaviour over time, not isolated events. Classic task analysis assumes a fixed task with a known sequence of steps. With a generative system the task is open and the output varies, so *what counts as a task* is unclear.
+```
+                         A5  Control & decide
+                         manager · architect · harnesses
+                    ┌────────────────────────────────────┐
+                    │  readiness → weakest dim → action  │
+                    │  escalate → architect              │
+                    │  membranes wrap A1–A4              │
+                    └──────────────┬─────────────────────┘
+          seed                     │                         fingerprint
+            │                      │                              ▲
+            ▼                      ▼                              │
+     ┌────────────┐   ┌────────────┐   ┌────────────┐   ┌────────────┐
+     │ A1 Acquire │──►│ A2 Design  │──►│ A3 Simulate│──►│ A4 Review  │
+     │ knowledge  │   │ experiment │   │            │   │ & fork     │
+     │            │   │            │   │            │   │            │
+     │ **LIVE**   │   │ DECLARED   │   │ DECLARED   │   │ **LIVE**   │
+     │ to fork    │   │ no agent   │   │ sandbox    │   │ panel +    │
+     │            │   │            │   │ only       │   │ YAML child │
+     └────────────┘   └────────────┘   └────────────┘   └────────────┘
+            ▲                                                 │
+            └──────────── child seed (intended) ──────────────┘
+                          machine-origin re-entry BLOCKED
+```
 
-The Copilot work from Microsoft Research is the concrete case [4]. Mozannar and colleagues had 21 programmers label their own coding sessions with a taxonomy of 12 states (CUPS: writing new code, prompt crafting, verifying a suggestion, editing a suggestion, deferring thought, and so on). The result is a timeline per session, not a list of clicks. Two findings matter here. First, verifying suggestions took about 22% of session time, the single largest state, and much of that verification happened *after* acceptance, which acceptance-rate metrics miss entirely. Second, once you account for it, the time attributable to the AI nearly doubles compared with the standard metrics. The usability problem is invisible in the interface and visible only in the time series. And the fix is not a UI change: the follow-up work asks *when to show a suggestion at all* [5], which is a model and policy decision. Usability sits in the code.
+| Box | Job | Input | Output | Today |
+|-----|-----|-------|--------|-------|
+| **A1** | Turn a seed into a grounded, scoped corpus and a closable subgraph | seed | graph + state + lit-close fork | **LIVE** through panel-end fork. This is what `run_cmd` actually does. |
+| **A2** | Design tests that use available datasets | claims + `CAN_TEST` | `experiments` | Capability declared. **No registered agent.** `simulation_readiness` was removed because nothing produced it. |
+| **A3** | Execute computational tests | experiments + datasets | `simulation_results` | Sandbox exists (`compute_executor`). Capability requires `experiments`, which nothing writes. |
+| **A4** | Adversarial panel (min. 4 agents) → verdict → child seed | claim subgraph | `panel/*.json` + `fork.json` + fingerprint | **LIVE** sequential panel. Child YAML is `origin: machine` and `run_cmd` refuses it. |
+| **A5** | Choose the next function and wrap it in membranes | maturity vector | `Action` / heat throttle / escalation | Manager **SHADOW**. Architect uncalled on the CLI path. Harnesses: see below. |
 
-**Ease of use came from consumer products and may be the wrong primary target** for AI tools people use to find and think with. Ease and speed ("I want it all now") suit buying goods. Having worked in e-commerce and in information systems, I saw how little attention goes to the person who consumes *information*. The information seeker has a different profile: the goal is often vague at the start and sharpens while searching, so the task is to learn rather than to complete [6]; people trade effort for expected information value, not for speed alone [7]; and what they need from the system is the ability to judge a source, to retrace steps and to compare, not fewer clicks. Users of today's chat tools are largely information consumers, so metrics built for checkout flows (time on task, conversion, error rate) miss what matters. Which metrics replace them is an open question; task success and time-on-task are not candidates.
+**Why the decomposition is hard, independent of any box.** A1 is cheap-ish and
+unbounded; A2/A3 are expensive and bounded; A4 is cheap and decisive. The
+economically correct order is to let A4 tell A1 when to stop — but A4 needs a
+corpus to review, so it cannot run first. The pipeline resolves this by running
+A1 to its own exhaustion and only then reviewing, which means **every run pays
+full literature price before anything adversarial has looked at it**. That is
+the structural cost of the current shape, and it is what A5 exists to fix.
 
-## References
+External arrows into A0 (mechanisms used by more than one box):
 
-[1] Castelvecchi, D. (2016). Can we open the black box of AI? *Nature*, 538, 20–23. See also Lipton, Z. C. (2018). The mythos of model interpretability. *Communications of the ACM*, 61(10).
-[2] Parasuraman, R., & Manzey, D. H. (2010). Complacency and bias in human use of automation: an attentional integration. *Human Factors*, 52(3), 381–410. The earlier framing is Parasuraman, R., & Riley, V. (1997). Humans and automation: use, misuse, disuse, abuse. *Human Factors*, 39(2), 230–253.
-[3] Fjeld, J., Achten, N., Hilligoss, H., Nagy, A., & Srikumar, M. (2020). *Principled Artificial Intelligence: Mapping Consensus in Ethical and Rights-based Approaches to Principles for AI*. Berkman Klein Center Research Publication 2020-1. <https://cyber.harvard.edu/publication/2020/principled-ai>
-[4] Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2024). Reading between the lines: modeling user behavior and costs in AI-assisted programming. *CHI 2024*. <https://arxiv.org/abs/2210.14306>
-[5] Mozannar, H., Bansal, G., Fourney, A., & Horvitz, E. (2023). When to show a suggestion? Integrating human feedback in AI-assisted programming. <https://arxiv.org/abs/2306.04930>
-[6] Marchionini, G. (2006). Exploratory search: from finding to understanding. *Communications of the ACM*, 49(4), 41–46.
-[7] Pirolli, P., & Card, S. (1999). Information foraging. *Psychological Review*, 106(4), 643–675.
+```
+  sources ──────────► A1 (search, full text, patents)
+  ontologies ───────► A1 (resolve, backbone match) · A4 (claim_subgraph concepts)
+  datasets ─────────► A1 (dataset_finder) · A2 · A3
+  compute sandbox ──► A3 (and, later, A4 reviewer tools)
+```
+
+---
+
+# A5 — Control and decide  *(zoom)*
+
+Not a phase. Questo è il modulo di controllo che siede al di sopra, the set of functions that *selects and constrains* A1–A4.
+
+```
+     maturity vector · reward · budget remaining
+                    │
+                    ▼
+     ┌──────────────────────────────┐
+     │ A5.1  Measure readiness      │  LIVE (assess() every stage boundary)
+     └──────────────┬───────────────┘
+                    │
+                    ▼
+     ┌──────────────────────────────┐
+     │ A5.2  Manage (tactical)      │  SHADOW — logs would; cli runs actual
+     │   weakest dim → cheapest     │  one write: set_heat() throttle
+     │   improving agent            │
+     └──────────────┬───────────────┘
+                    │ escalate?
+                    ▼
+     ┌──────────────────────────────┐
+     │ A5.3  Architect (strategic)  │  DECLARED — Opus on stall / budget /
+     │   continue · pivot · fork ·  │  no-affordable-agent. Heuristic fallback.
+     │   narrow · abandon · review  │  No CLI caller.
+     └──────────────────────────────┘
+```
+
+### A5.1  Measure readiness
+
+**Does.** Reduces the whole run — graph, state, corpus — to a maturity vector
+with a named weakest dimension, plus a reward delta against the previous tick's
+committed baseline.
+
+**Hard part.** A dimension that cannot be measured must read `None`, not `0.0`.
+The two are opposite instructions to the manager: `0.0` means "this is the
+weakest thing, fix it", `None` means "nothing has spoken to this yet". Every
+regression in this box has been a `None`/`0.0` confusion — `data_availability`
+read `0.00` on every diverge tick until `dataset_finder` moved into the loop,
+so the manager kept prescribing a remedy that was queued too late to run. The
+`unscored` / `dim_states` fields in `decisions.jsonl` exist so this class of bug
+is visible without re-running.
+
+**Today.** **LIVE.** One `assess()` per tick, and `manage()` decides from the
+*same* assessment object rather than measuring again — the two used to disagree
+inside one tick. `commit_tick()` advances the baseline exactly once per tick and
+refuses a second committer loudly (`commit_conflicts` in the record).
+
+### A5.2  Manage (tactical)
+
+**Does.** Picks the cheapest agent that improves the weakest measured dimension.
+No LLM. Algorithmic by construction, so its choices are auditable.
+
+**Hard part.** The manager is only as good as the capability graph it plans over
+— `capabilities.py` declares `requires` / `produces` / `improves` per agent, and
+a capability whose `requires` nothing produces is a permanent dead end the
+planner will keep proposing. `experiment` (requires nothing, produces
+`experiments`) and `simulation` (requires `experiments`) are exactly this pair:
+the planner can see a path to `feasibility` that no run can walk.
+
+**Today.** **SHADOW.** Writes `would` / `reason` / `would_targets` /
+`would_cost` beside the `actual` stage into `decisions.jsonl`. Its one live
+write is the `set_heat()` throttle. `executed` compares the manager's *agent*
+name against the agents that actually ran since the last tick — comparing it
+against the *stage* label made `would_eq_actual=0` a namespace artifact rather
+than a finding.
+
+### A5.3  Architect (strategic)
+
+**Does.** The only executive that uses an LLM, called only where the manager
+cannot resolve algorithmically: stall, budget milestone, or no affordable agent.
+Chooses `continue · pivot · fork · narrow · abandon · review`.
+
+**Hard part.** Its inputs are the same numbers the manager already failed to act
+on. An escalation is a request to reason about *why the numbers are stuck*,
+which needs run history and not a snapshot — and a heuristic fallback that
+answers "continue" is indistinguishable from an architect that was never called.
+
+**Today.** **DECLARED.** No CLI caller.
+
+**Seams the manager is supposed to own** (`_FLOW.md`):
+
+| Seam | When | Can choose |
+|------|------|------------|
+| S0 | After seed-graph + ingest | proceed to A1 / block |
+| S1 | Each A1 tick | widen / map / depth / gap / fork / exit A1 |
+| S2 | A1 closed | panel / pause / A2 |
+| S3 | After A4 | child seed / conclude / back to A1 |
+
+Today only shadow ticks exist (`diverge_N`, `post_diverge`, `formalize`,
+`depth_N`, `panel`). `dispatch.run_tick` has zero callers on the main path.
+
+### Harnesses — membranes, not functions
+
+Five types (`enums.HarnessType`). `derive_control()` computes a threshold
+block for each every tick. **Applying** a harness is a different fact from
+**deriving** its knobs.
+
+| Harness | Biological analogue | Would buy | Why it isn't on |
+|---------|---------------------|-----------|-----------------|
+| **GradientSensor** | Chemotaxis — still learning? | A second, independent stop signal to cross-check typed yield | **Measure only, deliberately.** Its saturation reading rests on `claim_stability`, which compares `core_thesis` against its previous value — and nothing revises `core_thesis`, so the similarity is an identity. `thesis_unrevised` on each reading says the number is an artifact, not a measurement. Exit stays `cli._should_exit`. |
+| **Phosphatase** | Downstream kills push back upstream | A2/A3 failure revising A1's claims instead of just ending the run | **No-op.** `check()` returns `None` when `total == 0`; nothing writes `state["experiments"]`. Runner-only apply. |
+| **SharedContext** | T-cell panel — later reviewers read earlier ones | A panel that argues rather than five parallel monologues | Split writer/reader. All five reviewers *read* `get_panel_strategy(state, …)` and degrade to `""`; the writer `SharedContext.record` has no caller on either path. The panel is therefore sequential in time and independent in content. |
+| **SelectionPressure** | Clonal selection — rank, don't just vary | Ranking among multiple agent outputs instead of taking the first | Runner debate executor only. |
+| **Stigmergy** | Pheromone — the store as shared environment | Cross-run memory: papers that paid off before surface sooner | Talks to `papers.db`, which the target architecture kills. Not on the graph path. |
+
+```
+  derive_control() ──► harness thresholds (always)
+         │
+         ├── CLI path:   GradientSensor.measure() logged; others unused
+         └── runner path: init_harnesses + pre/post hooks  (UNWIRED)
+```
+
+Affinity maturation is listed here only to refuse the category: it does live
+I/O and iterates. That is A1 work, not a membrane the runner inserts.
+
+
