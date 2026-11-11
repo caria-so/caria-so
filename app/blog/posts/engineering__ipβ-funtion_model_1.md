@@ -1,5 +1,5 @@
 ---
-title: "IP-β Function model. Sketching the full system. One box."
+title: "IP-β Function model. Squeezing the full system in one box."
 thread: engineering
 keywords: [scientific discovery, agentic ai, hugging face, duckdb, parquet, ontologies]
 author: "Federico Caria"
