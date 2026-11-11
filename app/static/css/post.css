@@ -215,6 +215,7 @@ a.meta-item--thread:hover {
     .post-image-grid,
     .post-sections,
     .post-section,
+    .post-warning,
     .codehilite
 ) {
     max-width: var(--prose-measure);
@@ -370,6 +371,40 @@ a.meta-item--thread:hover {
 }
 
 .post-content.prose blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Callout — caution / retracted drafts (raw HTML in post body) */
+.post-content.prose .post-warning {
+    margin: 0 0 1.5rem;
+    padding: 0.85rem 1rem 1rem 1.15rem;
+    font-size: var(--t-body);
+    line-height: 1.65;
+    color: var(--prose-ink);
+    background: color-mix(in srgb, var(--c-warning) 16%, var(--prose-surface));
+    border: 1px solid color-mix(in srgb, var(--c-warning) 42%, var(--c-border));
+    border-left: 4px solid var(--c-warning);
+}
+
+.post-content.prose .post-warning__title {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-sans);
+    font-size: var(--t-caption);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--prose-ink) 55%, #8a6a00);
+}
+
+[data-theme="dark"] .post-content.prose .post-warning__title {
+    color: color-mix(in srgb, var(--c-warning) 65%, var(--c-text-primary));
+}
+
+.post-content.prose .post-warning p {
+    margin: 0 0 0.65rem;
+}
+
+.post-content.prose .post-warning p:last-child {
     margin-bottom: 0;
 }
 
@@ -620,6 +655,7 @@ a.meta-item--thread:hover {
         .post-image-grid,
         .post-sections,
         .post-section,
+        .post-warning,
         .codehilite
     ) {
         max-width: none;
