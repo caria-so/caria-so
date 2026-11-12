@@ -5,7 +5,7 @@ keywords: [astrophysics, dark-matter]
 author: "Federico Caria"
 date: "2026-07-12"
 tags: 
-summary: ""
+summary: "This is one output of early experiments with ip-Beta."
 image: "/static/assets/images/blog/ip_astrophys_TDG_Superfluid_DM_Accretion_Timescale_some_numbers.jpg"
 ---
 
