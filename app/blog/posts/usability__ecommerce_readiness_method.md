@@ -64,27 +64,38 @@ Every product the agent returns is checked against the request, constraint by co
 
 The third verdict is the important one. If a page never states whether the glass is frosted, the product may well be right, but neither the buyer nor the agent can know. Unverifiable is never counted as a pass or a fail. It is reported on its own, because it measures something a retailer can fix.
 
-From these verdicts come three headline measures, always reported together:
+### Having it versus finding it
 
-- **task success:** did the agent return products that meet every constraint?
+A big shop has more chances to stock something that fits than a small one. If that went straight into the scores, size would look like quality. So I separate two questions:
+
+- **Does the shop have it?** For each request, is there at least one product in the catalogue that fits? This describes the assortment. It is reported, but not ranked.
+- **Can the agent find it?** Only on the requests the shop can actually satisfy: did the agent find what fits? This is what the study ranks.
+
+From the constraint verdicts come three measures, always reported together:
+
+- **task success:** on the requests the shop can satisfy, did the agent return products that meet every constraint?
 - **constraint precision:** of what the agent returned, how much actually fits?
-- **constraint recall:** of the products in the catalogue that fit, how many did the agent find?
+- **constraint recall:** of the fitting products the request asked for, how many did the agent find? A request for three products is fully satisfied by three good ones, whether the shop has four that fit or four hundred.
+
+Next to every result I report the size of the relevant part of each catalogue (how many shower trays, how many toilets), so readers can see where size might still play a role.
 
 To know what "all the products that fit" are, we cannot rely on our own search, or we would only grade what our system happens to find. Candidate products are therefore gathered by several independent search methods, and each candidate is judged against its own product page. A language model does the bulk of that judging; people check a stratified sample of its verdicts, and a set of ten sealed requests is judged by people only, so the model's reliability is measured rather than assumed.
 
-### Five dimensions per retailer
+### One ranking, and a profile around it
 
-Instead of one score, each retailer gets a profile:
+Thirty requests are enough to rank retailers on one thing, not on five. Each shop only faces the requests that apply to it, and splitting those across five dimensions would leave a handful of answers per box, too few to tell shops apart. So the profile has three levels:
 
-| Dimension | What it shows |
-| --- | --- |
-| Handoff | Does the link the agent hands over open, land on the right variant, show the same price, show stock and delivery terms? |
-| Variant resolution | Can the agent pick the right size or colour at the right price? |
-| Attributes and constraints | How success falls as requests carry more constraints |
-| Meaning | Failures caused by vague or ambiguous product language |
-| Relations | Compatibility, alternatives and complements, scored separately |
+| Measure | What it shows | How it is reported |
+| --- | --- | --- |
+| Constraint compliance | Can the agent find products that meet every constraint? | **ranked**, per retailer |
+| Handoff | Does the link the agent hands over open, land on the right variant, show the same price, show stock and delivery terms? | per retailer, measured on 100+ products |
+| Freshness | How far the published values drift from the live page over time | per retailer, measured on 100+ products |
+| Variant resolution | Can the agent pick the right size or colour at the right price? | for the whole category; per retailer as indicative only |
+| Attributes and constraints | How success falls as requests carry more constraints | for the whole category; per retailer as indicative only |
+| Meaning | Failures caused by vague or ambiguous product language | for the whole category; per retailer as indicative only |
+| Relations | Compatibility, alternatives and complements | for the whole category; per retailer as indicative only |
 
-Alongside the profile we measure **freshness**: how far the published values drift from the live page.
+Handoff and freshness don't depend on the requests, so they can be measured on many products per shop. Some requests are harder than others, and the analysis accounts for that: a shop isn't ranked down just because more of the hard requests applied to it. Where the uncertainty doesn't allow a strict order between two shops, they share a tier.
 
 ### Tracing every failure to its cause
 
@@ -96,11 +107,11 @@ It's a good idea to establish rules before getting results and stick to them:
 
 - **Requests are written before anyone reads the catalogs,** by people who aren't involved in creating or tweaking the system. A third of these requests are sealed and opened only for final execution.
 
-- **The rules for determining what is considered a correct response are defined based solely on the request,** by an external person with specific industry expertise. Which retailers each request applies to is also decided at this stage: a store that doesn't sell restrooms isn't penalized for not finding one.
+- **The rules for determining what is considered a correct response are defined based solely on the request,** by an external person with specific industry expertise. Which retailers each request applies to is also decided at this stage: a store that doesn't sell toilets isn't penalized for not finding one.
 
 - **Agent-caused errors are never counted against a retailer.** Their frequency is published as a check on the validity of the study itself: if the agent messes up too often due to their own fault, all retailer data is background noise.
 
-- **No composite score.** Retailers are ranked based on their compliance with the constraints.
+- **No composite score.** Retailers are ranked on one measure, their compliance with the constraints, and grouped into tiers where the uncertainty doesn't allow a strict order.
 
 - **The method is registered before the main run,** along with its assumptions and thresholds, so the analysis cannot be modified after viewing the data.
 
@@ -118,16 +129,13 @@ Limits are written down before the results, so they cannot be softened afterward
 - **It is not a test of commercial assistants.** The agent is a fixed instrument chosen so the study can be repeated. We compare its failures with two commercial assistants on a subset of retailers, and the match will be imperfect.
 - **It covers one category and one country.** 
 - **Thirty requests describe a range of buyer needs, not a whole catalogue.** 
+- **Per-retailer results on single dimensions are indicative.** Thirty requests support a profile of the whole category and one ranking, not a ranking on every dimension.
+- **Catalogue size can't be removed completely.** Separating "has it" from "finds it" and showing the size of each catalogue reduces its influence, but a large catalogue can still make some requests easier or harder.
 - **Agents vary from run to run.** Every figure is reported with its interval over repeated runs.
-- **Thirty requests won't support five dimensions per retailer.** Across twenty retailers that's a handful of observations per cell, and the intervals will be wide enough that the ranking is mostly noise. 
-- **Catalogue size will contaminate recall**. A retailer with 50,000 SKUs has more chances to satisfy any constraint than one with 2,000. Applicability gating helps but doesn't remove the gradient. Report catalogue size next to recall at minimum, or compute recall within the matched subcategory.
--
+---
 
 ## Next in the series
 
 [Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) looks at what is already visible before any agent runs: how a few Italian bathroom and home retailers publish product data, and how little of it is in a form software can read directly. Part three will report the agent's results, retailer by retailer.
 
 If you run one of the shops in the study and want your figures early, get in touch.
-
-
-
