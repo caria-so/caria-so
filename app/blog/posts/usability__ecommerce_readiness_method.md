@@ -5,7 +5,7 @@ keywords: [ecommerce, agentic ai, user experience, usability, home & furniture]
 author: "Federico Caria"
 date: "2026-10-31"
 tags: 
-summary: "Can an AI shopping agent find the product a real buyer asks for, using only what a retailer publishes? This first post explains how we are measuring it across Italian bathroom retailers, and why the method is built the way it is."
+summary: "Can an AI shopping agent find the product a real buyer asks for, using only what a retailer publishes? This first post explains how I am trying to capture the metrics across Italian bathroom retailers, and why the method is built the way it is."
 image:
 ---
 
@@ -116,9 +116,12 @@ Limits are written down before the results, so they cannot be softened afterward
 
 - **I am not measuring revenue.** As far as I know, being this gap specific and relatively new, nobody has yet published what closing this gap is worth.
 - **It is not a test of commercial assistants.** The agent is a fixed instrument chosen so the study can be repeated. We compare its failures with two commercial assistants on a subset of retailers, and the match will be imperfect.
-- **It covers one category and one country.** BIt's just a pilot!!!
-- **Thirty requests describe a range of buyer needs, not a whole catalogue.** Same as above!!
+- **It covers one category and one country.** 
+- **Thirty requests describe a range of buyer needs, not a whole catalogue.** 
 - **Agents vary from run to run.** Every figure is reported with its interval over repeated runs.
+- **Thirty requests won't support five dimensions per retailer.** Across twenty retailers that's a handful of observations per cell, and the intervals will be wide enough that the ranking is mostly noise. 
+- **Catalogue size will contaminate recall**. A retailer with 50,000 SKUs has more chances to satisfy any constraint than one with 2,000. Applicability gating helps but doesn't remove the gradient. Report catalogue size next to recall at minimum, or compute recall within the matched subcategory.
+-
 
 ## Next in the series
 
