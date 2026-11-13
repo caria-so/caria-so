@@ -1,7 +1,5 @@
 # [caria.so](https://caria.so)
 
-**Experience engineering — from user research through working code.**
-
 Portfolio and product site for [Federico Caria](https://caria.so/about): UX research, e-commerce optimization, and AI/knowledge systems built as things you can actually test — not slide decks.
 
 **→ [Visit the site](https://caria.so)** · **[Get in touch](mailto:hello@caria.so)**
