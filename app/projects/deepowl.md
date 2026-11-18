@@ -1,6 +1,6 @@
 ---
-title: deepowl
-summary: Turn product data into a knowledge graph, grounded against Wikidata and published ontologies.
+title: Deepowl
+summary: Turns a WooCommerce store into a knowledge graph, linking its categories, tags and attributes to published vocabularies so that other systems can understand them too.
 status: internal tool
 date: 2025-present
 role: Solo developer
@@ -29,10 +29,10 @@ sections:
   - type: text
     title: Why I Built This
     content: |
-      <p>Every e-commerce store has its own taxonomy — categories, tags, attributes, author names — built by hand over years, internally consistent at best. The terms mean something, but only to the people who made them. Ontology tooling exists to fix this, but it's built for ontologists. deepowl brings that rigour to product data, with AI doing the matching and a human making the calls.</p>
+      <p>Most online shops build their categories, tags and attributes by hand over many years. That structure holds real knowledge about the products, but it's written in the shop's own terms, and search engines and AI shopping assistants can't easily tell what those terms mean. Ontologies were made to solve this, but the tools for them are designed for specialists, not for someone running a store. I wanted a way to connect a store's own vocabulary to shared, published vocabularies, with automatic matching to do the heavy lifting and a person making the final decisions.</p>
 
   # ── 2. METRICS ──
-  - type: metrics-pills
+  - type: metrics
     items:
       - value: "94,747"
         label: Nodes in the first graph
@@ -45,24 +45,24 @@ sections:
   - type: split
     title: From Store to Knowledge Graph
     content: |
-      <p>deepowl reads a WooCommerce store over the REST API — products, categories, tags, attributes, orders — and builds a graph. The source is never modified. Every piece of store taxonomy becomes a node that can be mapped to a published vocabulary: schema.org, SKOS, Wikidata, domain ontologies.</p>
-      <p>Decisions live in Postgres. The graph in Neo4j is a projection — droppable and rebuildable at any time without losing a single mapping. What you see is disposable. What you decided is not.</p>
+      <p>deepowl reads a WooCommerce store through its REST API (products, categories, tags, attributes and orders) and builds a graph from it. It only reads from the store and never changes it. Each category, tag and attribute becomes a node that can be linked to a published vocabulary, such as schema.org, SKOS, Wikidata or an ontology from the store's own field.</p>
+      <p>The mapping decisions are stored in Postgres, and the Neo4j graph is built from them. That means I can throw away the graph and rebuild it at any time without losing any of the work that went into the mappings.</p>
     image: /static/assets/images/projects/deepowl/desktop_cover.webp
     reverse: false
 
   - type: split
     title: Grounding With BERTMap and JEV
     content: |
-      <p>Every local term is matched against Wikidata and any published ontology you load. BERTMap handles semantic matching — finding that your <em>autore</em> field maps to <code>schema:author</code>. JEV catches near-duplicates and surface-level variants within your own taxonomy before they become separate nodes in the graph.</p>
-      <p>Auto-accept is narrow: all authorities answered, exactly one unambiguous match, no objection from the scorer. Everything else goes to a review queue. A wrong <code>exactMatch</code> is a lie nobody catches later — a row in a queue is work you can trust.</p>
+      <p>Each term in the store is compared against Wikidata and any other ontology I load. BERTMap, from the DeepOnto library, handles the semantic matching. It can recognise, for example, that a field called <em>autore</em> corresponds to <code>schema:author</code>. JEV looks for near-duplicates and spelling variants within the store's own vocabulary, so they can be merged before they become separate nodes.</p>
+      <p>A match is only accepted automatically in a narrow case: every source has answered, there is exactly one clear candidate, and the scorer raises no objection. Everything else goes to a review queue. I'd rather review a row than discover months later that a wrong match has spread quietly through the data.</p>
     image: /static/assets/images/projects/deepowl/grounding.webp
     reverse: true
 
   - type: split
-    title: Blast Radius
+    title: Seeing the Impact Before Applying It
     content: |
-      <p>Once a term is grounded, it has properties — from Wikidata, from the ontology it matched against. deepowl lets you inherit those properties selectively, and shows you the blast radius: how many nodes in your graph each inherited property would touch, and whether any of them collide with terms you already grounded differently.</p>
-      <p>JEV runs again here — comparing inherited labels against your existing terms to surface overlaps before they become contradictions. The system tells you what would happen. You decide whether it should.</p>
+      <p>Once a term is linked to Wikidata or an ontology, it can take on that source's properties. deepowl lets me choose which properties to bring in. Before anything is applied, it shows how many nodes each property would affect and whether any of them conflict with links I've already made, which I call the "blast radius."</p>
+      <p>JEV runs again at this stage, comparing incoming labels with existing terms to flag overlaps before they turn into contradictions. The tool shows the consequences of a change, and I decide whether to make it.</p>
     image: /static/assets/images/projects/deepowl/blast_radius.webp
     reverse: false
 
@@ -70,13 +70,15 @@ sections:
   - type: methodology
     title: What Goes Out
     content: |
-      <p>The model exports as Turtle, OWL, or JSON-LD. Published vocabularies are referenced, never forked — if you use a class someone else defined, the export names it, not redefines it. The matching and graph code is pure Python with no Django dependency, so the same pipeline runs from a CLI before any interface exists.</p>
+      <p>The resulting model can be exported as Turtle, OWL or JSON-LD. Published vocabularies are referenced rather than copied, so if the store uses a class someone else defined, the export points to the original. The matching and graph code is plain Python, independent of Django, so the whole pipeline can also run from the command line.</p>
 
   # ── 5. CTA ──
   - type: callout
-    title: Product data that should be smarter?
+    title: Want your product data to be understood beyond your own shop?
     content: |
-      <p>If your store's taxonomy is a mess of hand-made categories and ungrounded terms — I built the tool to fix that, and I can help you run it.</p>
+      <p>If you've built up a store's categories and attributes over years and would like
+      search engines, partners or AI assistants to understand them as well as you do, I'd be
+      glad to talk about how this could work for your catalogue.</p>
     button: Get in touch
 
   - type: gallery

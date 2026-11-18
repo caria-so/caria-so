@@ -364,6 +364,36 @@
     margin-bottom: 1rem;
 }
 
+.proj-block-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.proj-block-head .proj-block-title {
+    margin-bottom: 0;
+}
+
+.proj-block-lede {
+    margin: 0;
+    flex: 1 1 12rem;
+    max-width: 22rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: right;
+    color: var(--c-text-secondary);
+}
+
+@media (max-width: 640px) {
+    .proj-block-lede {
+        text-align: left;
+        max-width: none;
+    }
+}
+
 /* Prose */
 .proj-prose {
     font-size: 1rem;
@@ -1183,6 +1213,76 @@
 
 .proj-metrics--pills .proj-metric-label {
     font-size: 0.75rem;
+}
+
+
+/* ── Dataset cards (HTML in proj-prose) ── */
+
+.proj-prose p + .proj-dataset-grid {
+    margin-top: 1.25rem;
+}
+
+.proj-dataset-grid {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+    .proj-block--text .proj-dataset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+.proj-dataset-card {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.8rem 0.95rem;
+    background: var(--c-background-gray);
+    border: 1px solid var(--c-border);
+    border-left: 3px solid color-mix(in srgb, var(--proj-accent, var(--c-accent)) 50%, var(--c-border));
+    border-radius: 8px;
+}
+
+.proj-dataset-card__topic {
+    align-self: flex-start;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--proj-accent, var(--c-accent)) 72%, var(--c-text-secondary));
+    background: color-mix(in srgb, var(--proj-accent, var(--c-accent)) 8%, var(--c-background));
+    border: 1px solid color-mix(in srgb, var(--proj-accent, var(--c-accent)) 22%, var(--c-border));
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .proj-dataset-card {
+    background: color-mix(in srgb, var(--c-background-gray) 88%, var(--c-background));
+}
+
+.proj-dataset-card__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--c-text-primary);
+}
+
+.proj-dataset-card__desc {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--c-text-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 

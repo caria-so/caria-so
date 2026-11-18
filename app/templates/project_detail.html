@@ -133,8 +133,15 @@
                 {# ── Text block ── #}
                 {% if section.type == 'text' %}
                 <div class="proj-block proj-block--text">
-                    {% if section.title %}
-                    <h2 class="proj-block-title txt-xbold">{{ section.title }}</h2>
+                    {% if section.title or section.lede %}
+                    <div class="proj-block-head">
+                        {% if section.title %}
+                        <h2 class="proj-block-title txt-xbold">{{ section.title }}</h2>
+                        {% endif %}
+                        {% if section.lede %}
+                        <p class="proj-block-lede">{{ section.lede }}</p>
+                        {% endif %}
+                    </div>
                     {% endif %}
                     <div class="proj-prose">
                         {{ section.content | safe }}

@@ -1,6 +1,6 @@
 ---
 title: SciData Hub
-summary: The data behind the papers. 30+ scientific datasets and 12 ontologies on Hugging Face — queryable in SQL, loadable in Python, joinable across domains. Zero downloads, zero API keys.
+summary: Cleaned, versioned copies of 30+ scientific datasets and 12 ontologies on Hugging Face, so they can be queried in SQL or loaded in Python without writing a new API client each time. Built as infrastructure for Impossible Papers, open to anyone.
 status: live
 date: 2025-present
 role: Solo developer
@@ -27,11 +27,16 @@ sections:
   - type: text
     title: The Problem
     content: |
-      <p>Every scientist who's tried to test a hypothesis across two datasets knows
-      the ritual: hunt down the archive, read the API docs, write the pagination code,
-      fight the rate limiter, clean the format, realize the other dataset uses different
-      column names, write a coordinate matcher. Do this for every source, every project,
-      every domain. The plumbing takes longer than the science. SciData Hub ends the ritual. Cleaned, versioned, Parquet-backed datasets on Hugging Face — one line to load, one SQL query to join, one search to discover. The data behind the papers, ready to use.</p>
+      <p>Anyone who has tried to test an idea against two datasets from different fields
+      knows how much of the work happens before the analysis starts: finding the archive,
+      reading its documentation, handling pagination and rate limits, converting formats,
+      and reconciling column names and coordinate systems that were never meant to meet.
+      None of this is anyone's fault. Each collaboration publishes its data in the way that
+      suits its own community, but the cost falls on whoever tries to work across them.</p>
+      <p>SciData Hub is my attempt to take some of that cost away. I convert published
+      datasets and ontologies to Parquet, keep them versioned on Hugging Face, and document
+      how to query and join them. The original data, and the credit for it, stays with the
+      teams who produced it. This is a convenience layer, not a replacement.</p>
 
   # ── 2. METRICS ──
   - type: metrics
@@ -47,52 +52,54 @@ sections:
 
   # ── 3. FOUR WAYS IN ──
   - type: split
-    title: One Door, Four Ways In
+    title: Four Ways to Access the Data
     content: |
-      <p><strong>Hugging Face Parquet</strong> — every dataset under the
-      <code>scidata-hub</code> org. Versioned, streamable, free.
-      <code>load_dataset("scidata-hub/sparc-rotation-curves")</code> and you're working.</p>
-      <p><strong>DuckDB over HTTP</strong> — SQL against remote Parquet. No download,
-      no install beyond <code>pip install duckdb</code>. Join galaxy properties with
-      rotation curves in one query, from a terminal, a notebook, or a script in any language.</p>
-      <p><strong>Python library</strong> (coming) — unified <code>load()</code>,
-      <code>query()</code>, <code>discover()</code>, <code>join()</code> across cached
-      and live sources.</p>
-      <p><strong>MCP server</strong> (coming) — LLM research agents discover, query,
-      and join datasets through tools. No hand-written API code per hypothesis.</p>
-    image: /static/assets/images/projects/scidata-hub/desktop_cover.webp
+      <p><strong>Hugging Face Parquet</strong>: every dataset is published under the
+      <code>scidata-hub</code> organisation, versioned, streamable and free to use.
+      <code>load_dataset("scidata-hub/sparc-rotation-curves")</code> loads it in Python.</p>
+      <p><strong>DuckDB over HTTP</strong>: SQL queries run directly against the remote
+      Parquet files, so nothing has to be downloaded first and the only install is
+      <code>pip install duckdb</code>. For example, you can join galaxy properties with
+      rotation curves in a single query from a terminal, a notebook or a script.</p>
+      <p><strong>Python library</strong> (planned): a common <code>load()</code>,
+      <code>query()</code>, <code>discover()</code> and <code>join()</code> interface
+      across cached and live sources.</p>
+      <p><strong>MCP server</strong> (planned): research agents built on LLMs would be able to
+      find, query and join datasets through tools instead of needing API code written
+      for each new hypothesis.</p>
+    image: /static/assets/images/projects/scidata-hub/viz_structure.webp
     caption: |
       Scidata Hub home
     reverse: false
 
-  
+
   # ── 9. METHODOLOGY ──
   - type: methodology
-    title: Push one, prove the abstraction, scale
+    title: Start with one dataset, test the approach, then grow
     content: |
-      <p>Started with a single rotation curve dataset and a question: can Hugging Face + DuckDB replace forty bespoke API integrations? Proved the pattern with SPARC, then scaled to dark matter, number theory, and ontologies — one push script per source, each live before the next.</p>
+      <p>I started with a single dataset and a narrow question: could Hugging Face plus DuckDB replace the bespoke API code I kept having to write? SPARC was small enough to test that cheaply. Once it worked, I added sources one at a time (dark matter experiments, number theory, ontologies) and only moved on when each one was live and queryable.</p>
     detail_label: Process & decisions
     case_study:
       problem: |
-        <p>Ip-β' simulation agents needed data from a variety of sources — galaxy rotation curves, detector event rates, elliptic curve databases, biomedical ontologies. Every new hypothesis domain meant writing bespoke API code: pagination, rate limiting, auth, format conversion. The agent spent more tokens on plumbing than on science. Cross-domain joins (match a galaxy across SPARC and SDSS by coordinates, or resolve a paper term against MeSH and HPO simultaneously) were effectively impossible without manual integration per pair.</p>
+        <p>The simulation agents in Ip-β needed data from very different places: galaxy rotation curves, detector event rates, elliptic curve databases and biomedical ontologies. Each new hypothesis domain meant new API code for pagination, rate limits, authentication and format conversion. In practice the agents spent more effort getting the data than working on the question itself. Joining across sources, such as matching a galaxy between SPARC and SDSS by coordinates or resolving a term against MeSH and HPO at the same time, needed manual integration for every pair.</p>
       role: |
-        <p>Solo developer: chose the architecture, wrote every push script, parsed every format (MRT, OBO, OWL, Manchester Notation, NLM XML, SKOS CSV, space-delimited fixed-width), debugged every PyArrow overflow, and curated 12 ontologies with full synonym support.</p>
+        <p>I worked on this alone. I chose the architecture, wrote the ingestion scripts, and wrote or adapted parsers for the formats involved: MRT, OBO, OWL, Manchester syntax, NLM XML, SKOS CSV and fixed-width text. I also curated the ontology tables, including their synonyms.</p>
       method: |
-        <p>SPARC first (3,391 rows, simple) → ANAIS-112 (per-detector CSVs, medium) → XENON1T (response matrices, complex schemas) → COSINE-100 (15 configs across 3 experiment sets) → Cremona (3M rows, integer overflow edge cases) → 12 ontologies across 5 parser backends. Each dataset live on HF and queryable via DuckDB before starting the next.</p>
+        <p>The datasets went in roughly in order of difficulty. First came SPARC (3,391 rows, simple), then ANAIS-112 (per-detector CSVs), XENON1T (response matrices with complex schemas), COSINE-100 (15 configs across three experiment sets) and Cremona (3M rows, with some integer edge cases). The last step was 12 ontologies spread across five parser backends. I made each dataset live on HF and queryable through DuckDB before I started the next one.</p>
       decisions: |
-        <p><strong>Hugging Face over S3/self-hosted</strong> — free hosting, dataset viewer, community discovery, versioning. Zero infrastructure to maintain.</p>
-        <p><strong>DuckDB httpfs over a custom query API</strong> — stolen from science-datalake. A 274KB <code>.duckdb</code> file with SQL views reads remote Parquet at zero cost. Any language, any notebook, no server.</p>
-        <p><strong>config_name over DatasetDict</strong> — HF's DatasetDict requires matching schemas across splits. Scientific datasets never match. Separate configs per table, each with its own schema, solved it.</p>
-        <p><strong>Federation over duplication</strong> — MultimodalUniverse has 100TB of astronomy data. OEIS has 392K sequences. science-datalake has 293M papers. Don't re-host. Point DuckDB views at their Parquet, join in the same session.</p>
-        <p><strong>Synonyms as a first-class table</strong> — entity resolution lives or dies on synonyms. "Heart rate variability" isn't in MeSH but is in HPO. Without the synonyms table, the resolver misses a large fraction of real mentions.</p>
-        <p><strong>Tree numbers for hierarchy gating</strong> — MeSH resolved "methods", "review", "therapeutics" as entities. Adding tree_numbers to the terms table let the resolver gate by branch: V (Publication Types) and L (Information Science) are design space, not real entities. One column eliminated an entire class of junk matches.</p>
-        <p><strong>Coefficients as strings</strong> — Cremona's elliptic curve coefficients overflow int64 at high conductors. Store as strings in Parquet, parse on read. PyArrow doesn't negotiate with large integers.</p>
+        <p><strong>Hugging Face rather than S3 or self-hosting</strong>: free hosting, a built-in dataset viewer, versioning and discoverability, with no infrastructure for me to maintain. The trade-off is that the project depends on one platform's policies.</p>
+        <p><strong>DuckDB over HTTP rather than a custom query API</strong>: I borrowed this approach from science-datalake, which ships a small (274KB) <code>.duckdb</code> file of SQL views over remote Parquet. It works from any language or notebook and needs no server.</p>
+        <p><strong>Separate configs instead of DatasetDict</strong>: DatasetDict expects every split to share a schema, and scientific tables rarely do. Giving each table its own config and schema meant I didn't have to force them into one shape.</p>
+        <p><strong>Linking rather than re-hosting</strong>: projects such as MultimodalUniverse, OEIS and science-datalake already maintain large collections on HF. Copying them would duplicate their work and could drift out of sync, so the DuckDB views point at their Parquet files and the joins happen in the same session.</p>
+        <p><strong>Synonyms as their own table</strong>: entity resolution depends heavily on synonyms. "Heart rate variability", for example, has no dedicated MeSH heading but does appear in HPO. Without a synonyms table the resolver missed many real mentions.</p>
+        <p><strong>MeSH tree numbers for filtering</strong>: early versions matched generic words such as "methods", "review" or "therapeutics" as entities. Once I added tree numbers to the terms table, the resolver could exclude branches like V (Publication Characteristics) and L (Information Science), which removed most of those false matches.</p>
+        <p><strong>Large coefficients stored as strings</strong>: some of Cremona's elliptic curve coefficients exceed the int64 range at high conductors. They are stored as strings and parsed on read, which is less convenient but loses no information.</p>
       constraints: |
-        <p>No budget, no team, no infrastructure beyond a laptop and free HF hosting. Parser failures on complex OBO files (pronto crashed on UBERON, MONDO, SO, CL) required fallback to obonet. NLM's download server returned 403 on FMA, requiring manual BioPortal download. science-datalake's <code>unified_papers</code> table (293M rows) cannot be scanned over httpfs — ZSTD decompression fails. Only the small mapping tables work remotely.</p>
+        <p>There was no budget or team, just a laptop and free HF hosting. Some OBO files (UBERON, MONDO, SO, CL) crashed the pronto parser, so I fell back to obonet. FMA's official download returned a 403 error, so I retrieved it manually from BioPortal. The largest table in science-datalake (<code>unified_papers</code>, 293M rows) currently can't be scanned over httpfs because ZSTD decompression fails, so only its smaller mapping tables work remotely.</p>
       outcome: |
-        <p>30+ datasets and 12 ontologies live on Hugging Face, queryable in a single DuckDB session over HTTP. SPARC, ANAIS-112, XENON1T, and COSINE-100 form the only unified dark matter direct detection collection on HF. Cremona's 3M elliptic curves are the largest number theory dataset on the platform. MeSH with tree numbers and 236K synonyms powers entity resolution across the full Impossible Papers pipeline. The integration demo joins scidata-hub measurement data with science-datalake's 293M-paper bibliometrics in one script, zero downloads.</p>
+        <p>More than 30 datasets and 12 ontologies are now on Hugging Face and can be queried together in a single DuckDB session over HTTP. As far as I know, SPARC, ANAIS-112, XENON1T and COSINE-100 had not been available side by side on HF before. Cremona's tables, with around 3M curves, are among the larger number-theory datasets on the platform. MeSH, with tree numbers and 236K synonyms, now handles entity resolution across the Impossible Papers pipeline. A demo script joins measurement data from the hub with science-datalake's bibliometric tables without downloading anything.</p>
       lessons: |
-        <p>The abstraction held: one push script per source format, three Parquet tables per ontology, DuckDB views over httpfs for everything. The value wasn't in the Python library (not yet built) or the MCP server (not yet built) — it was in getting the data cleaned and on HF where anyone can reach it. Ship the data first. Build the API when the data proves it's worth wrapping.</p>
+        <p>The pattern held up: one ingestion script per source format, three Parquet tables per ontology, and DuckDB views for access. Most of the value so far has come from the unglamorous part, which is cleaning the data and putting it somewhere people can reach it. The library and the MCP server aren't built yet, and I'd rather see how people actually use the data before deciding what API to put around it.</p>
       metrics:
         - label: Datasets live
           before: "0 (bespoke API calls)"
@@ -106,45 +113,58 @@ sections:
         - label: Parser backends
           before: "—"
           after: "5 (pronto, obonet, XML, OWL, regex)"
- 
+
 
   # ── 4. LIVE DATASETS ──
-  - type: split
+  - type: text
     title: What's Live Right Now
     content: |
-      <p><strong>Astrophysics & Dark Matter</strong></p>
-      <ul>
-        <li><strong>SPARC</strong> — 175 galaxies, 3,391 rotation curve data points (Lelli+ 2016)</li>
-        <li><strong>ANAIS-112</strong> — 6-year dark matter modulation search. 9 NaI detectors, 3 energy ranges, event rates + efficiency + simulated backgrounds + live time</li>
-        <li><strong>XENON1T S2-only</strong> — response matrices (NR, ER, electron), events, backgrounds, 10 exclusion limit curves</li>
-        <li><strong>COSINE-100</strong> — WIMP extraction (SET2), modulation analysis (SET3), DAMA comparison simulations. 15 configs</li>
-      </ul>
-      <p><strong>Number Theory</strong></p>
-      <ul>
-        <li><strong>Cremona ECDB</strong> — 3,064,705 elliptic curves up to conductor 500,000. Curves, BSD data (L-ratio, regulator, analytic Sha), generators, modular degrees, isogeny matrices, big Sha</li>
-      </ul>
-    image: /static/assets/images/projects/scidata-hub/viz_structure.webp
-    caption: |
-      The layer
-    reverse: true
+      <p>Here are the datasets currently on the hub.</p>
+      <div class="proj-dataset-grid">
+        <article class="proj-dataset-card">
+          <span class="proj-dataset-card__topic">Astrophysics &amp; dark matter</span>
+          <h4 class="proj-dataset-card__title">SPARC</h4>
+          <p class="proj-dataset-card__desc">175 galaxies and 3,391 rotation-curve points (Lelli+ 2016).</p>
+        </article>
+        <article class="proj-dataset-card">
+          <span class="proj-dataset-card__topic">Astrophysics &amp; dark matter</span>
+          <h4 class="proj-dataset-card__title">ANAIS-112</h4>
+          <p class="proj-dataset-card__desc">Six-year NaI annual-modulation search with rates, efficiency, backgrounds, and live time.</p>
+        </article>
+        <article class="proj-dataset-card">
+          <span class="proj-dataset-card__topic">Astrophysics &amp; dark matter</span>
+          <h4 class="proj-dataset-card__title">XENON1T S2-only</h4>
+          <p class="proj-dataset-card__desc">S2 response matrices, events, backgrounds, and ten exclusion-limit curves.</p>
+        </article>
+        <article class="proj-dataset-card">
+          <span class="proj-dataset-card__topic">Astrophysics &amp; dark matter</span>
+          <h4 class="proj-dataset-card__title">COSINE-100</h4>
+          <p class="proj-dataset-card__desc">WIMP and modulation analysis sets plus DAMA comparison sims (15 configs).</p>
+        </article>
+        <article class="proj-dataset-card">
+          <span class="proj-dataset-card__topic">Number theory</span>
+          <h4 class="proj-dataset-card__title">Cremona ECDB</h4>
+          <p class="proj-dataset-card__desc">3.06M elliptic curves to conductor 500k with BSD fields, generators, and isogeny data.</p>
+        </article>
+      </div>
 
   # ── 5. ONTOLOGIES ──
   - type: split
     title: 12 Ontologies, Full Synonym Support
     content: |
-      <p>Every ontology ships with three Parquet tables — terms, relationships, and synonyms.
-      Entity resolution searches names <em>and</em> synonyms, so "HRV" finds
-      <code>HP:0031860</code> (Abnormal heart rate variability) even though MeSH doesn't
-      have a dedicated term for it.</p>
+      <p>Each ontology is stored as three Parquet tables: terms, relationships and synonyms.
+      Searching synonyms as well as names catches mentions that a single vocabulary would
+      miss. "HRV", for instance, resolves to <code>HP:0031860</code> (Abnormal heart rate
+      variability) in HPO, even though MeSH has no dedicated heading for it.</p>
     badges:
       - name: MeSH
-        detail: 31K medical terms, 236K synonyms, tree numbers for hierarchy gating
+        detail: 31K medical terms, 236K synonyms, tree numbers for hierarchy filtering
       - name: Gene Ontology
         detail: 47K biological process/function/component terms
       - name: ChEBI
         detail: 175K chemical entities
       - name: HPO
-        detail: 20K human phenotypes (the one that catches what MeSH misses)
+        detail: 20K human phenotypes, covering many clinical terms that MeSH lacks
       - name: DOID
         detail: 15K diseases
       - name: UBERON
@@ -166,14 +186,14 @@ sections:
       - name: MP
         detail: Mammalian Phenotype Ontology
       - name: ENVO
-        detail: Enviroment Ontology
+        detail: Environment Ontology
       - name: NBO
         detail: Neuro Behavior Ontology
       - name: PATO
         detail: Phenotype and Trait Ontology
       - name: PO
         detail: Plant Ontology
-      
+
     reverse: false
 
   # ── 6. CODE ──
@@ -181,7 +201,7 @@ sections:
     title: Query Across Domains in One Session
     filename: scidata_duckdb.sql
     content: |
-      -- No download. No API key. Just DuckDB + httpfs.
+      -- Requires only DuckDB with the httpfs extension; nothing is downloaded in advance.
 
       -- Galaxy rotation curves
       SELECT galaxy, radius_kpc, Vobs_km_s
@@ -204,31 +224,31 @@ sections:
 
   # ── 7. FEDERATION ──
   - type: split
-    title: Federation, Not Duplication
+    title: Linking, Not Copying
     content: |
-      <p>SciData Hub doesn't re-host what others maintain.
+      <p>Several groups already maintain excellent scientific collections on Hugging Face.
       <a href="https://huggingface.co/MultimodalUniverse">MultimodalUniverse</a>
-      hosts 24 astronomical surveys (JWST, DESI, TESS) at 100TB+.
+      brings together 24 astronomical surveys, including JWST, DESI and TESS, at more than 100TB.
       <a href="https://huggingface.co/datasets/J0nasW/science-datalake">science-datalake</a>
       maps 293M papers to ontology terms.
-      <a href="https://huggingface.co/datasets/christopher/oeis">OEIS</a> has 392K
-      integer sequences.
+      <a href="https://huggingface.co/datasets/christopher/oeis">OEIS</a> holds 392K
+      integer sequences, and
       <a href="https://huggingface.co/datasets/facebook/principia-collection">Principia</a>
-      has 554K math/physics problems tagged with MSC2020 and PhySH.</p>
-      <p>They stay where they are. SciData Hub's DuckDB views and join layer route to
-      them, making them queryable and joinable alongside our own data — in the same
-      SQL session, over the same httpfs connection. Federate, don't duplicate.</p>
+      collects 554K maths and physics problems tagged with MSC2020 and PhySH.</p>
+      <p>There's no reason to copy them. The hub's DuckDB views point at their Parquet files
+      instead, so they can be queried and joined with the datasets here in the same SQL
+      session. Their authors keep both the credit and the maintenance.</p>
     image: /static/assets/images/projects/scidata-hub/datalake.webp
     caption: |
       The Datalake on Hugging Face
     reverse: true
 
   - type: callout
-    title: Growing every week
+    title: What's next
     content: |
-      <p>Next on the roadmap: WESAD wearable stress data, Odlyzko zeta zeros,
-      Rfam RNA families, and NHANES health surveys. Each new source follows the
-      same pattern — one push script, one DuckDB view, discoverable from day one.
-      Working on a dataset that belongs here? Get in touch.</p>
+      <p>Next I'm planning to add WESAD (wearable stress data), Odlyzko's zeta zeros,
+      Rfam RNA families and the NHANES health surveys, following the same pattern. If you
+      work with a dataset that would be useful here, or you maintain one that's already
+      included and would like something changed, I'd be glad to hear from you.</p>
     button: Get in touch
 ---
