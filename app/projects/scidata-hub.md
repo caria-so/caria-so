@@ -31,11 +31,7 @@ sections:
       the ritual: hunt down the archive, read the API docs, write the pagination code,
       fight the rate limiter, clean the format, realize the other dataset uses different
       column names, write a coordinate matcher. Do this for every source, every project,
-      every domain. The plumbing takes longer than the science.</p>
-      <p>SciData Hub ends the ritual. Cleaned, versioned, Parquet-backed datasets on
-      Hugging Face — one line to load, one SQL query to join, one search to discover.
-      From galaxy rotation curves to dark matter exclusion limits to elliptic curve
-      databases to medical ontologies. The data behind the papers, ready to use.</p>
+      every domain. The plumbing takes longer than the science. SciData Hub ends the ritual. Cleaned, versioned, Parquet-backed datasets on Hugging Face — one line to load, one SQL query to join, one search to discover. The data behind the papers, ready to use.</p>
 
   # ── 2. METRICS ──
   - type: metrics
@@ -78,7 +74,7 @@ sections:
     detail_label: Process & decisions
     case_study:
       problem: |
-        <p>Impossible Papers' simulation agents needed data from 40+ public sources — galaxy rotation curves, detector event rates, elliptic curve databases, biomedical ontologies. Every new hypothesis domain meant writing bespoke API code: pagination, rate limiting, auth, format conversion. The agent spent more tokens on plumbing than on science. Cross-domain joins (match a galaxy across SPARC and SDSS by coordinates, or resolve a paper term against MeSH and HPO simultaneously) were effectively impossible without manual integration per pair.</p>
+        <p>Ip-β' simulation agents needed data from a variety of sources — galaxy rotation curves, detector event rates, elliptic curve databases, biomedical ontologies. Every new hypothesis domain meant writing bespoke API code: pagination, rate limiting, auth, format conversion. The agent spent more tokens on plumbing than on science. Cross-domain joins (match a galaxy across SPARC and SDSS by coordinates, or resolve a paper term against MeSH and HPO simultaneously) were effectively impossible without manual integration per pair.</p>
       role: |
         <p>Solo developer: chose the architecture, wrote every push script, parsed every format (MRT, OBO, OWL, Manchester Notation, NLM XML, SKOS CSV, space-delimited fixed-width), debugged every PyArrow overflow, and curated 12 ontologies with full synonym support.</p>
       method: |
