@@ -899,16 +899,17 @@ def _versioned_static(filename):
     return url_for('static', filename=filename, v=version)
 
 
-@blog_bp.route('/ux-observatory', endpoint='ux_observatory')
-@blog_bp.route('/mass-analysis', endpoint='mass_analysis')
-def ux_observatory():
-    """UX observatory dashboard; the dataset is a static file."""
-    return render_template(
-        'tooling/ux_observatory/index.html',
-        data_url=_versioned_static('data/ux_observatory/dashboard_data.json'),
-        script_url=_versioned_static('js/tooling/ux_observatory/dashboard.js'),
-        style_url=_versioned_static('css/tooling/ux_observatory/dashboard.css'),
-    )
+# Mass-analysis pipeline (UX observatory dashboard) — off until the tooling is stable.
+# Templates and static assets remain under tooling/ux_observatory/.
+# @blog_bp.route('/ux-observatory', endpoint='ux_observatory')
+# @blog_bp.route('/mass-analysis', endpoint='mass_analysis')
+# def ux_observatory():
+#     return render_template(
+#         'tooling/ux_observatory/index.html',
+#         data_url=_versioned_static('data/ux_observatory/dashboard_data.json'),
+#         script_url=_versioned_static('js/tooling/ux_observatory/dashboard.js'),
+#         style_url=_versioned_static('css/tooling/ux_observatory/dashboard.css'),
+#     )
 
 
 @blog_bp.route('/about')

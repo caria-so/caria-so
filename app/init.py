@@ -74,8 +74,6 @@ def create_app():
                 return None
             if request.endpoint == 'blog.index':
                 return None
-            if request.path.startswith('/ux-observatory') or request.path.startswith('/mass-analysis'):
-                return None
             return redirect(url_for('blog.index'))
 
     from app.media import media_variants

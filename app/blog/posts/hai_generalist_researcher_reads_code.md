@@ -4,7 +4,7 @@ thread: hai
 keywords: [HCI, IIS, interaction design, artificial intelligence, generalist designer]
 author: "Federico Caria"
 date: "2025-07-12"
-tags: ["HCI", "AI", "Notes"]
+tags:
 summary: "Human–AI systems break most of the assumptions interface design was built on. Somebody has to own that problem whole, and I don't think we have a name for them yet."
 image:
 ---
