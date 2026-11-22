@@ -9,19 +9,21 @@ summary: "Can an AI shopping agent find the product a real buyer asks for, using
 image:
 ---
 
-More and more product searches will start in a conversation with an AI assistant rather than in a retailer's search box. The buyer types what they need, the assistant reads what shops publish, and it comes back with a few products. Whether that works depends on something retailers control directly: the information on their product pages.
+For many years at Baymard, we've been measuring how well ecommerce search can support a number of query types. Among them was an interestign one which we eventually stopped evaluating because it was consistently negative. It was called *Natural Language Search*. This type of query now seems very relevant to me as the paradigm changes and more product searches start in a conversation with an AI assistant rather than in a search box. 
 
-This series measures how well it works today. This first post explains the study: the question, the principles behind the method, and the safeguards that keep the result honest. [Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) shares preliminary findings on how retailers publish product data. Part three will report what happens when an AI agent actually shops their catalogues.
+The buyer types what they need, the assistant reads what shops publish, and it comes back with a few products. Whether that works depends on something retailers control directly: the information on their product pages.
 
-I'm deliberately not publishing every detail of the setup yet. Part of the study's value is that it can be repeated over time to measure change, and that only works if the test can't be tuned or trained on in advance. The full method will be published together with the results.
+This series aims to capture how well this works today and what follows explains the principles behind the method, and the safeguards. [Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) shares preliminary findings on how a bunch of retailers publish product data. Part three publishes the findings.
 
-## The question
+Don't expect a super-detailed methodology. This is a pilot. Running a comprehensive study requires investment, and it's best to first verify whether that's worth.
+
+## Question
 
 Given only what a retailer publishes today, can an AI agent find products that satisfy a real buyer's stated requirements? And when it fails, what in the retailer's data caused it?
 
-The question is deliberately narrow. I'm not measuring sales, conversion or the quality of the AI assistants themselves. I'm measuring one thing: whether a retailer's public product information lets an agent identify the right products, and describe them without claiming things the page doesn't support.
+## Back to Natural language query
 
-A buyer's request is rarely just a keyword. It's usually a set of constraints:
+A buyer's request or intent is rarely just a keyword. It's usually a set of constraints:
 
 > "I need a shower enclosure for a 70x90 corner, with a sliding door because there is little space in front. Clear glass, not frosted. 400 euros at most."
 
@@ -29,19 +31,19 @@ That's four constraints: size, door type, glass and price. A good answer meets a
 
 ## Why bathrooms, and why Italy
 
-I chose bathroom products because they're full of constraints that matter: precise dimensions, materials and finishes, installation types, and compatibility with things the buyer already owns, such as a toilet seat that has to fit a specific toilet. A wrong size or an incompatible part isn't a matter of taste. The product simply doesn't work.
+*Bathroom* is spec heavy, perhaps not the funniest niche to work with, but for sure a good test bed: products are full of constraints that matter, a wrong size or an incompatible part and the item is simply wrong. 
 
-Before starting, I sent a few real enquiries to the chat assistants on major Italian retailers' websites. Every answer left something out, and the follow-up messages mostly suggested related products that weren't what I'd asked for. That isn't a result, but it was one more reason to think the study was worth doing.
-
-Italy comes first partly out of curiosity, and partly because I already had a list of thousands of Italian retailers across many niches, collected months ago and not yet used. Bathroom products are sold by very different kinds of shop (specialists, plumbing and heating distributors, DIY chains, furniture chains), which makes for a useful comparison of how product data gets published. Other countries could follow with the same method.
+The choice of *Italy* was less strategic. I already had a list of thousands of Italian retailers across many niches and not yet used. Bathroom products are sold by very different kinds of shop (specialists, plumbing and heating distributors, DIY chains, furniture chains), which makes for a useful comparison of how product data gets published. Other countries could follow with the same method.
 
 ## The principles behind the method
+
+Before starting, I sent a few real enquiries to the chat assistants on major Italian retailers' websites. Every answer left something out, and the follow-up messages mostly suggested related products that weren't what I'd asked for. I am not publishing this as it is not a result, but one more reason to think the study was worth doing.
 
 ### The agent is the measuring instrument
 
 The agent isn't what's being tested; it's the instrument. I use a single open-weight language model running on my own hardware, kept at the same version and with the same instructions and limits for the whole study. Because the agent stays constant, differences between retailers should come from their data, not from changes in the agent.
 
-The agent doesn't browse the live websites. It works from each retailer's catalogue **as published**, collected from public pages without any cleaning, correction or additions. For every requirement in a request, it has to say what it found and where. That's what makes it possible to catch the agent when it claims something the page doesn't actually say.
+The agent doesn't browse the live websites. It works from each retailer's catalogue **as published**, collected from public pages without any cleaning, correction or additions. For every requirement in a request, it has to say what it found and where. 
 
 ### Real requests from real buyers
 
@@ -57,7 +59,7 @@ Each product the agent returns is checked against the request one requirement at
 | FAIL | the page shows it does not |
 | UNVERIFIABLE | the page does not say |
 
-The third verdict is the most interesting one. If a page never says whether the glass is frosted, the product may well be right, but neither the buyer nor the agent can know. Unverifiable is never counted as a pass or a fail. It's reported on its own, because it points to something a retailer can fix.
+The third verdict is the most interesting one. If a page never says whether the glass is frosted, the product may well be right, but neither the buyer nor the agent can know. *Unverifiable* is never counted as a pass or a fail. It's reported on its own, because it points to something a retailer can fix.
 
 ### Having a product versus finding it
 

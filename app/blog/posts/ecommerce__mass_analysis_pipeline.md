@@ -9,24 +9,23 @@ summary: "This post walks through the system I built to mass analyse Italian e-c
 image: 
 ---
 
-*This is an experiment on a list of Italian retailers that I put together with the idea of ​​playing with an automatic user experience evaluation method*, 
+*This is an experiment on a list of retailers that I put together with the idea of ​​playing with an automatic user experience evaluation method*, 
 
-When you want to understand how a whole vertical of e-commerce sites behaves — not one site, but **hundreds** — you need more than a checklist. You need a pipeline that can scrape, analyse, and extract structured insights at cohort scale without becoming a maintenance nightmare.
-
-This post walks through the system I built to do exactly that for Italian e-commerce. It collects homepage data from hundreds of sites, runs a series of analysis phases, and outputs structured, comparable data that powers competitive UX research.
+This post walks through the system to gather *data on e-commerce at scale*. It collects homepage data from hundreds of sites, runs a series of analysis phases, and outputs structured, comparable data that powers competitive research.
 
 ---
 
 ## The Problem
 
-Auditing UX patterns across an industry vertical — Italian bookshops, pharmacies, furniture retailers — means answering questions like:
+Checking UX patterns across a single website takes time. Doing it across a whole industry, dozens or hundreds of sites, is a much bigger job, and manual review doesn't scale to either.
 
-- What percentage of sites expose order tracking on the homepage?
-- How deep is the typical navigation hierarchy in this vertical?
-- Which sites have a carousel with no pause control (a WCAG violation)?
-- What platforms dominate, and how does that correlate with performance?
+I've seen teams try to solve this by handing the whole evaluation to a vision-language model (VLM). The usual result is accuracy problems, then custom models built to fix them, then API bills that grow faster than the results improve. It's the obvious first move, a bit lazy but okay. But I think it starts from the wrong place.
 
-Manual auditing doesn't scale. You need to automate the collection, structure the extraction, and make the outputs comparable across sites.
+The main reason is that **UX is dynamic**. We evaluate states and behaviour, not static pictures: what happens when a filter is applied, when a form is submitted with an error, when a menu opens on mobile. A VLM looking at screenshots can tell you useful things about layout, provided you give it clear heuristics and a well-designed prompt. It can't tell you much about how the interface behaves, and that's where most of the important UX questions are. For the cost involved, I think that's a poor trade.
+
+So my approach is to keep VLM use to a minimum and get as much as possible from the page itself. The HTML and CSS, the JavaScript, and a Lighthouse report already contain a lot of what an evaluation needs: where elements sit, how the page is structured, how it looks and loads, and much more. The VLM is used only for what those sources can't answer.
+
+This post doesn't cover browser automation or computer use, meaning agents that click through a site. It explains how the automated analysis works, and how it makes the results comparable from one site to the next.
 
 ---
 
@@ -36,7 +35,7 @@ Manual auditing doesn't scale. You need to automate the collection, structure th
 CSV of URLs
     │
     ▼
-mass_url_analyzer.py          ← Playwright: screenshot, HTML, metadata, Lighthouse
+mass_analyzer.py          ← Playwright: screenshot, HTML, metadata, Lighthouse
     │
     ▼ (optional)
 prepare_discovery_for_pipeline.py  ← merge richer Computer Use audit data
@@ -56,13 +55,13 @@ The pipeline is **resumable**: every phase writes a `done` flag per site into `s
 
 ## Stage 1: Mass Scraping
 
-`mass_url_analyzer.py` is the collection engine. It reads a CSV with `company` and `company_link` columns and processes each URL through a concurrent Playwright browser pool (default: 5 parallel browsers).
+`mass_analyzer.py` is the collection engine. It reads a CSV with `company` and `company_link` columns and processes each URL through a concurrent Playwright browser pool (default: 5 parallel browsers).
 
 For each site it:
 
-1. Navigates to the URL (stealth mode, Italian locale, 1300×1300 viewport)
-2. **Dismisses GDPR banners** — using a priority stack: learned per-domain selectors → global selector DB → Italian keyword heuristics → generic patterns
-3. Scrolls the page and waits for images to load
+1. Navigates to the URL in stealth mode.
+2. **Dismisses GDPR banners** — using a priority stack: learned per-domain selectors → global selector DB → keyword heuristics → generic patterns
+3. Scrolls the page, waits for images to load
 4. Captures a **full-page PNG screenshot**
 5. Saves the **rendered HTML** (post-JS, what the user actually sees)
 6. Records **metadata**: page title, load time, DOM stats, image/script counts
@@ -70,7 +69,7 @@ For each site it:
 
 Everything lands in a timestamped results folder: `_results/{NICHE}__analysis_{YYYYMMDD_HHMMSS}/`. The folder naming convention is important — it encodes the niche and date, and is used downstream by the import system.
 
-**Scale:** The system handles ~400 sites per run at roughly one minute per site with Lighthouse enabled. A BOOKS vertical run processed 87 sites in under two hours with a 90.8% success rate.
+**Scale:** The system handles ~400 sites per run at roughly one minute per site with Lighthouse enabled. A simple vertical run processed 87 sites in under two hours with a 90.8% success rate.
 
 ---
 
@@ -84,11 +83,11 @@ Reads `results.csv` and `metadata/*.json`, creates one `SiteProfile` record per 
 
 ### Phase 1 — Screenshot Validation
 
-Sends each screenshot to Claude for a fast check: is the page usable? Is there a blocking overlay? Is it in the expected language? Pages that fail are flagged and skipped in Phase 2. This keeps vision costs focused on usable data.
+Sends each screenshot to a vlm for a fast check: is the page usable? Is there a blocking overlay? Is it in the expected language? Pages that fail are flagged and queued for retry in Phase 2. This keeps vision costs focused on usable data.
 
 ### Phase 2 — Vision UX Analysis
 
-A deeper Claude pass over validated screenshots. Extracts: search bar visibility and location, hero type, value proposition text, trust badges, pricing visibility, phone number prominence, design score, overall impression. This phase is the most expensive (~$0.01–0.02 per site) and is skipped by default for budget-conscious runs.
+A deeper vlm pass over validated screenshots extracts a number of data to power the more qualitative evaluation. Search bar visibility and location, hero type, value proposition text, trust badges, pricing visibility, phone number prominence, design score, overall impression. This phase is the most expensive (~$0.01–0.02 per site) and is skipped by default for budget-conscious runs.
 
 ### Phase 3 — HTML/DOM Analysis
 
@@ -203,7 +202,7 @@ pip install -r requirements.txt
 playwright install chromium
 
 # 2. Scrape
-python mass_url_analyzer.py --urls path/to/sites.csv
+python mass_analyzer.py --urls path/to/sites.csv
 
 # 3. Run analysis phases (no vision, no API cost)
 python analysis_pipeline/run_pipeline.py \
