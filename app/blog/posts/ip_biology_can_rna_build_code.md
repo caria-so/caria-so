@@ -4,229 +4,200 @@ thread: ip
 keywords: [biology, origin-of-life]
 author: "Federico Caria"
 date: "2026-09-12"
-tags: 
-summary: "Computational stress test of whether RNA aptazyme systems can meet the Evolution 2.0 Prize's 5-bit threshold without a pre-designed code. Lays out a four-quantity framework (per-channel noise, orthogonal channels, crosstalk, Hill coefficient), documents which architectures are ruled out and why, flags Blahut–Arimoto capacity estimates as methodology-sensitive, and proposes wet-lab dose-response CV profiling as the single rate-limiting measurement."
+summary: "A computational stress test of whether RNA aptazyme systems could meet the Evolution 2.0 Prize's 5-bit threshold without a pre-designed code. I set out four quantities that seem to decide the answer, the architectures my simulations ruled out, a worrying sensitivity in how channel capacity is computed, and the one wet-lab measurement I think everything hangs on. I'd value corrections from anyone who works with RNA."
 image:
 ---
 
-# **1\. Why This**
+# 1. Why this
 
-Work on exploring whether RNA-based molecular systems can encode enough information to function as a simple communication system. It’s basically a stress test for my system, using a specific prize competition (the Evolution 2.0 Prize, $10M), but more broadly to the question of how molecular coding systems originate.
+I've been looking at whether RNA-based molecular systems could encode enough information to work as a simple communication system. It started as a stress test for a pipeline I'm building, using a specific competition as a target (the Evolution 2.0 Prize, $10M), but the underlying question (how molecular coding systems might originate) interested me more than the prize.
 
-This document summarizes what we computed, what we killed, and what remains standing. **Nothing here involves wet-lab data** — it is entirely computational and theoretical. Does the proposed rate-limiting experiment makes sense?
+This is a summary of what I computed, what I ruled out, and what I think still stands. **None of it involves wet-lab data.** It's entirely computational and theoretical, which is also why I'm publishing it: I'd like to know whether the proposed rate-limiting experiment makes sense to someone who actually does this work.
 
-# **2\. The Problem We Are Working On**
+# 2. The problem
 
-The Evolution 2.0 Prize asks: can chemicals self-organize into a coding system without anyone designing the code? In Shannon’s terms, the prize requires an encoder, a code, and a decoder, all arising from chemistry. The system must be digital (not analog), must have at least 32 distinguishable states (which corresponds to ≥5 bits of channel capacity), and the code cannot be preprogrammed by the experimenter.
+The Evolution 2.0 Prize asks whether chemicals can self-organise into a coding system without anyone designing the code. In Shannon's terms, it requires an encoder, a code and a decoder, all arising from chemistry. The system has to be digital rather than analog, it must have at least 32 distinguishable states (around 5 bits of channel capacity), and the experimenter can't preprogram the code.
 
-Our approach starts from RNA. Riboswitches are natural RNA structures that change their shape when they bind a specific small molecule (a ligand). About 40 structurally distinct riboswitch classes have been experimentally characterized in bacteria: TPP, FMN, SAM, adenine, glycine, and many others. Each class recognizes its cognate ligand with high selectivity. When an aptamer domain (the part that binds the ligand) is fused to a catalytic RNA (a ribozyme), you get an *aptazyme* — a molecular switch whose catalytic activity is gated by ligand binding.
+I started from RNA. Riboswitches are natural RNA structures that change shape when they bind a specific small molecule (a ligand). Around 40 structurally distinct classes have been characterised experimentally in bacteria (TPP, FMN, SAM, adenine, glycine and others), each recognising its own ligand with high selectivity. When an aptamer domain, the part that binds the ligand, is fused to a catalytic RNA (a ribozyme), the result is an *aptazyme*: a molecular switch whose catalytic activity is gated by ligand binding.
 
-The core question: can a system of aptazymes carry enough information to meet the 5-bit/32-state threshold? And can this system arise without the experimenter designing the code mapping?
+So the question I tried to answer is whether a system of aptazymes could carry enough information to reach the 32-state threshold, and whether such a system could arise without the experimenter designing the code mapping.
 
-# **3\. The Theoretical Framework: What to Measure and Why**
+# 3. What to measure, and why
 
-The main deliverable from runs 025d–025g is not a solution to the prize. It is a **theoretical framework that identifies exactly which quantities determine whether any molecular system can function as a Shannon-compliant code**. Before this work, you could ask “can RNA carry a code?” and get vague answers. Now you can ask “what four numbers do I need to measure, and what thresholds must they meet?”
+The main thing that came out of these runs isn't a solution to the prize. It's a way of framing the question that tells me which quantities to measure and what thresholds they'd have to meet. Before this, I could ask "can RNA carry a code?" and only get vague answers back. Now I can at least ask which numbers I need.
 
-## **3.1 The four quantities that determine everything**
+## 3.1 Four quantities
 
-Any candidate molecular coding system — whether engineered or emergent from selection — is fully characterized by four measurable quantities:
+As far as I can tell, any candidate molecular coding system, engineered or emergent, is characterised by four measurable quantities.
 
-**(1) Per-channel noise (CV).** Think of an aptazyme as a noisy sensor. You present it with a ligand at some concentration, and it produces a catalytic output (cleavage rate, fluorescence, etc.). The output is noisy because molecular processes are stochastic. The coefficient of variation (CV) — standard deviation divided by mean — at each input concentration determines how many concentration levels the system can reliably distinguish. Higher noise means fewer distinguishable levels, which means fewer bits per channel.
+**(1) Per-channel noise (CV).** An aptazyme behaves like a noisy sensor: present it with a ligand at some concentration and it produces a catalytic output, with variation, because molecular processes are stochastic. The coefficient of variation (standard deviation over mean) at each input concentration sets how many concentration levels can be told apart, and so how many bits the channel carries.
 
-**(2) Number of orthogonal channels.** A single channel (one aptazyme responding to one ligand) has limited capacity. To reach 32 states, you need multiple channels that carry independent information. Two channels that respond to different ligands can, in principle, encode far more than one. But only if they are *orthogonal* — meaning each channel’s output depends only on its own ligand, not on the other ligand.
+**(2) Number of orthogonal channels.** One aptazyme responding to one ligand has limited capacity. Reaching 32 states needs several channels carrying independent information, which only works if each channel's output depends on its own ligand and not on the others.
 
-**(3) Inter-channel mutual information (crosstalk).** In practice, aptazymes may respond weakly to non-cognate ligands. If channel A’s output carries information about channel B’s ligand, the two channels are not independent and their combined capacity is reduced. The inter-channel mutual information quantifies this: if MI \> 0.5 bits between two channels, they are not orthogonal enough for combined encoding.
+**(3) Crosstalk between channels.** In practice, aptazymes may respond weakly to ligands that aren't their own. If channel A's output carries information about channel B's ligand, the channels aren't independent and their combined capacity falls. The mutual information between their outputs measures this.
 
-**(4) Dose-response shape (Hill coefficient).** The steepness of the dose-response curve (captured by the Hill coefficient n) determines how the sensor distributes its information across the concentration range. A steep curve (high n) gives sharp ON/OFF switching but little graded information; a shallow curve (n ≈ 1\) gives more distinguishable intermediate levels but with more noise overlap.
+**(4) Dose-response shape (Hill coefficient).** How steep the dose-response curve is determines how the sensor spreads information across the concentration range. A steep curve gives sharp on/off switching but little graded information; a shallow one gives more distinguishable intermediate levels, but with more noise overlap between them.
 
-## **3.2 The thresholds**
+## 3.2 Thresholds
 
-From these four quantities, three hard thresholds emerged from the simulations:
+Three thresholds came out of the simulations:
 
-**CV ≤ 15%:** For two orthogonal graded channels to reach the ≥5-bit prize target, each channel needs catalytic output noise below 15%. At 10% CV, two channels give \~5.8 bits. At 20% CV, two channels give only \~4.7 bits — below the target. At 30%, even three channels struggle. This threshold is the single most important number in the framework.
+**CV at or below 15%.** For two orthogonal graded channels to reach 5 bits, each channel needs output noise below about 15%. At 10% CV, two channels give roughly 5.8 bits; at 20%, about 4.7 bits, which is below target; at 30%, even three channels struggle. I think this is the most important number in the whole framework.
 
-**Inter-channel MI \< 0.5 bits:** Two channels are usable for combined encoding only if the mutual information between their outputs is below 0.5 bits. We found that aptamer pairs sensing ligands from different chemical classes (e.g. theophylline–FMN, theophylline–SAM) meet this threshold, while pairs from the same class (e.g. theophylline–adenosine, both purines) do not. Practical implication: ligand diversity matters — you need chemically distinct ligands, not five variations on purines.
+**Crosstalk below 0.5 bits.** Two channels look usable in combination only if the mutual information between their outputs stays under 0.5 bits. In my calculations, aptamer pairs sensing ligands from different chemical classes (theophylline and FMN, theophylline and SAM) met this, while pairs from the same class (theophylline and adenosine, both purines) did not. If that holds, chemical diversity among the ligands matters more than the number of them.
 
-**Independent domains required for AND-logic:** If you use tandem riboswitches (two aptamer domains on one RNA) as AND-logic gates, the domains must operate independently. Cooperative coupling (as in the natural glycine riboswitch, Hill n\~1.8) collapses the intermediate states: the 01 and 10 states become indistinguishable (d-prime \= 0.035). Any tandem architecture needs engineered domain independence, which is a non-trivial synthetic step.
+**Independent domains for AND-logic.** If tandem riboswitches (two aptamer domains on one RNA) are used as AND gates, the domains have to work independently. With cooperative coupling, as in the natural glycine riboswitch (Hill n ≈ 1.8), the intermediate states collapse: in my simulation the 01 and 10 states became indistinguishable (d′ = 0.035). So a tandem architecture would need engineered domain independence, which is not a small synthetic step.
 
-## **3.3 Why this is a contribution**
+## 3.3 Why I think this is worth writing up
 
-Nobody in the RNA biology, origin-of-life, or riboswitch literature has laid this out as a quantitative checklist. The concept of “channel capacity” has been applied to protein signaling (Cheong et al. 2011 on NF-κB), but never systematically to RNA aptazyme systems. The framework is agnostic to the molecular system — it works on any dose-response data. It would apply equally to an engineered aptazyme, a prebiotically plausible RNA system, or a code that emerged from selection. It provides the evaluation criteria for any candidate for the prize, and more broadly, for any claim about molecular information capacity.
+I haven't found this laid out as a quantitative checklist in the RNA biology, origin-of-life or riboswitch literature, though I may well have missed it, and I'd be glad to be pointed at prior work. Channel capacity has certainly been applied to protein signalling (Cheong et al. 2011 on NF-κB); what I haven't found is the same treatment applied systematically to RNA aptazyme systems. The framing doesn't depend on the molecular system: it works on any dose-response data, whether from an engineered aptazyme, a prebiotically plausible RNA system, or a code that emerged from selection.
 
-The computational tool underpinning this framework is the Blahut-Arimoto algorithm, adapted from communications engineering. Given dose-response data (catalytic rate vs. ligand concentration with replicates), it computes: (a) single-channel capacity in bits, (b) the capacity-achieving input distribution (which concentrations to use), (c) inter-channel mutual information (crosstalk), and (d) whether a given pair of channels is orthogonal enough for combined encoding. However, as described in Section 5, we found that this tool is more fragile than previously recognized.
+The computational tool underneath it is the Blahut-Arimoto algorithm, borrowed from communications engineering. Given dose-response data with replicates, it computes single-channel capacity, the input distribution that achieves it, the crosstalk between channels, and whether a pair of channels is orthogonal enough to combine. As section 5 describes, I found this tool more fragile than I expected.
 
-## **3.4 Computational pilot: Capacity vs. CV**
+## 3.4 Computational pilot: capacity against noise
 
-We ran a Python-based computational pilot using literature-anchored parameters for theophylline and adenosine hammerhead-like aptazymes (Kd \~0.5 µM, Hill n=1.5, \~100× dynamic range, 12 log-spaced concentrations, n=24 simulated replicates). The pilot models Hill dose-responses with Gaussian noise at swept CV levels and computes capacity using a conservative heuristic approximation consistent with Blahut-Arimoto behavior in low-noise regimes. *These are simulated predictions, not empirical data* — the wet-lab experiment (Section 6\) is required to determine actual CV values.
+I ran a Python pilot using literature-anchored parameters for theophylline and adenosine hammerhead-like aptazymes (Kd around 0.5 µM, Hill n = 1.5, roughly 100× dynamic range, 12 log-spaced concentrations, 24 simulated replicates). It models Hill dose-responses with Gaussian noise at a range of CV levels and estimates capacity with a conservative approximation consistent with Blahut-Arimoto in low-noise regimes. *These are simulated predictions, not data.* Only the wet-lab experiment in section 6 can give the actual CV values.
 
-The pilot results:
-
-| Target CV | Single-Channel Capacity (bits) | 2-Channel Combined Potential |
+| Target CV | Single-channel capacity (bits) | Two channels combined |
 | :---- | :---- | :---- |
-| 10% | \~1.3–2.0 | ≥5.5 bits |
-| 15% | \~1.2–1.7 | \~5.0–5.8 bits |
-| 20% | \~1.0–1.4 | \~4.5–5.2 bits (borderline) |
-| 30% | **\<1.0** | **\<4.5 bits (below target)** |
+| 10% | ~1.3–2.0 | ≥5.5 bits |
+| 15% | ~1.2–1.7 | ~5.0–5.8 bits |
+| 20% | ~1.0–1.4 | ~4.5–5.2 bits (borderline) |
+| 30% | **<1.0** | **<4.5 bits (below target)** |
 
-**Key insights from the pilot:**
+What I take from the pilot:
 
-**CV is the dominant lever.** The ≤15% threshold holds directionally. At CV=10–15%, two orthogonal channels clear ≥5 bits combined. At CV=20%, it becomes borderline. Above 30%, single-channel capacity drops below 1 bit, forcing 3+ channels or fundamental redesign.
+**Noise is the dominant lever.** The 15% threshold holds directionally. At 10–15%, two orthogonal channels clear 5 bits combined. At 20% it's borderline. Above 30%, single-channel capacity falls below 1 bit, which would force three or more channels, or a different design.
 
-**Mid-curve noise matters most.** Capacity is most sensitive to CV near the Kd, where the dose-response curve transitions and most information resides. Noise at the extremes (very low or saturating ligand concentrations) contributes less because the output is nearly flat there.
+**Noise in the middle of the curve matters most.** Capacity is most sensitive to variation near the Kd, where the curve transitions and most of the information sits. Noise at very low or saturating concentrations matters less, because the output is nearly flat there.
 
-**Noise model matters.** Log-normal noise (multiplicative, more realistic for catalytic rates) reduces capacity more than additive Gaussian noise. Small changes in noise model or output binning shift capacity estimates by 0.3–0.8 bits — reinforcing the methodological fragility finding from Section 5\.
+**The noise model matters more than I'd like.** Log-normal noise, which is probably more realistic for catalytic rates, reduces capacity more than additive Gaussian noise. Small changes in the noise model or in how outputs are binned move capacity estimates by 0.3–0.8 bits, which is what led to the finding in section 5.
 
-**Hill coefficient and dynamic range help but are not sufficient.** n=1–2 and \>50× dynamic range are necessary conditions, but without low CV they do not rescue capacity. Shallow curves (n≈1) allow more graded concentration levels but amplify noise overlap between adjacent levels.
+**Hill coefficient and dynamic range help but don't rescue anything.** n between 1 and 2, and more than 50× dynamic range, look necessary but not sufficient. Without low noise they don't recover the capacity. Shallow curves allow more graded levels but increase the overlap between adjacent ones.
 
-These pilot results sharpen the rate-limiting experiment (Section 6): the wet-lab measurement of actual aptazyme CV is the single most important number for the entire framework. Literature on enzyme kinetics suggests CVs of 10–30%+ are common in cell-free systems, making the 10–20% working hypothesis plausible but not guaranteed. The SOMAscan 5% benchmark (Gold et al. 2010\) is not directly transferable to catalytic output — it reflects a binding measurement in a highly optimized proteomic platform.
+All of this sharpens the question for the wet lab. Published work on enzyme kinetics suggests CVs of 10–30% or more are common in cell-free systems, which makes a 10–20% working hypothesis plausible but far from guaranteed. The 5% benchmark from the SOMAscan platform (Gold et al. 2010) isn't directly transferable: it's a binding measurement on a highly optimised proteomic platform, not a catalytic output.
 
-# **4\. What We Killed**
+# 4. What I ruled out
 
-Across four pipeline runs, we tested and killed several proposed paths to 5 bits. The kills are quantitative and, we believe, correct. We would value a biologist’s assessment of whether these kills reflect real biology or modelling artifacts.
+Across four pipeline runs I tested and discarded several routes to 5 bits. The arguments are quantitative, and I think they're right, but I'd value a biologist's view on whether they reflect real biology or artifacts of my models.
 
-## **4.1 Product-identity encoding (Run 025d)**
+## 4.1 Product-identity encoding
 
-**The idea:** instead of measuring how fast an aptazyme cleaves (a scalar rate), measure *which product* it makes. If a single ribozyme could produce 4 different cleavage products depending on which ligand is present, each unit would carry 2 bits (quaternary channel) instead of \<1 bit (binary ON/OFF). Three such units would give 4³ \= 64 states, exceeding the 32-state target.
+**The idea.** Instead of measuring how fast an aptazyme cleaves, measure *which product* it makes. If one ribozyme could produce four different cleavage products depending on the ligand present, each unit would carry 2 bits instead of less than 1, and three units would give 64 states.
 
-**The kill:** The claimed capacity of \~1.5 bits per quaternary unit at 30% miscleavage was computationally refuted. Our Blahut-Arimoto computation showed the actual capacity is 0.64–1.01 bits at 70% selectivity, depending on noise model. You would need ≥93% site selectivity to reach 1.5 bits per unit, and there is zero experimental precedent for that level of selectivity in small self-cleaving ribozymes (\~50–80 nt scaffolds). At realistic selectivity, 3 quaternary units give 3.0–4.0 bits, falling short of 5\.
+**Why I dropped it.** The claimed capacity of around 1.5 bits per quaternary unit at 30% miscleavage didn't survive computation. My Blahut-Arimoto calculation gives 0.64–1.01 bits at 70% selectivity, depending on the noise model. Reaching 1.5 bits per unit would need 93% or better site selectivity, and I couldn't find any experimental precedent for that in small self-cleaving ribozymes (scaffolds of roughly 50–80 nt). At realistic selectivity, three such units give 3.0–4.0 bits.
 
-**What survived:** The *conceptual* reframing — treating catalytic product identity as an information-carrying variable — is a novel cross-literature synthesis (ribozyme substrate specificity × aptazyme switching × q-ary channel theory) with no identified prior art. It is interesting for molecular information theory but not viable for the prize at current numbers.
+**What I'd keep.** The reframing itself, treating catalytic product identity as an information-carrying variable, draws together ribozyme substrate specificity, aptazyme switching and q-ary channel theory. I haven't found prior art for that combination. It interests me for molecular information theory, even though the numbers don't work for the prize.
 
-## **4.2 Sigma-delta noise shaping (Run 025g \+ standalone simulation)**
+## 4.2 Sigma-delta noise shaping
 
-**The idea:** tandem riboswitches sensing the same ligand operate like an oversampled sigma-delta analog-to-digital converter. Welz & Breaker (2007) showed that tandem TPP riboswitches in B. anthracis bind independently, producing a combined response that is more digital than either domain alone. By analogy to signal processing, N independent binary switches sampling the same analog input should achieve capacity that grows as C₁ \+ 0.5·log₂(N) bits.
+**The idea.** Tandem riboswitches sensing the same ligand might work like an oversampled sigma-delta analog-to-digital converter. Welz & Breaker (2007) showed that tandem TPP riboswitches in *B. anthracis* bind independently and give a combined response more digital than either domain alone. By analogy with signal processing, N independent binary switches sampling the same input should give capacity growing as C₁ + 0.5·log₂(N).
 
-**The kill:** We ran a dedicated Blahut-Arimoto simulation for N=1–5 independent tandem units sensing the same ligand. The √N prediction fails completely at every N × CV combination tested. For N=1→5, actual capacity increases by only \+0.43 bits; the theory predicted \+1.16 bits (2.7× overestimate). The root cause: in electronic sigma-delta ADCs, the oversampling ratio is 100× or higher and the noise between samples is uncorrelated. With N=3–5 riboswitch units, the “oversampling” is minimal and the outputs are highly correlated because they all sense the same concentration. A single graded channel (2.58 bits at CV=15%) outperforms 5 tandem binary units (1.35 bits) by nearly 2×.
+**Why I dropped it.** I ran a Blahut-Arimoto simulation for N = 1 to 5 independent tandem units sensing one ligand, and the √N prediction failed at every combination of N and CV I tried. Going from N = 1 to 5 added only 0.43 bits where the analogy predicted 1.16, an overestimate of 2.7×. The reason seems clear in hindsight: in electronic converters the oversampling ratio is 100× or more and the noise between samples is uncorrelated, whereas with three to five riboswitch units the oversampling is minimal and the outputs are strongly correlated, since they all sense the same concentration. A single graded channel (2.58 bits at 15% CV) beat five tandem binary units (1.35 bits) by nearly two to one.
 
-**What survived:** the underlying biology is real. Tandem TPP riboswitches do operate independently and do produce sharper dose-response curves. But this sharpening does not translate to additional information capacity at the low N values achievable with RNA architectures.
+**What I'd keep.** The biology is real. Tandem TPP riboswitches do operate independently and do sharpen the dose-response curve. That sharpening just doesn't seem to buy information capacity at the small N that RNA architectures allow.
 
-## **4.3 Other kills**
+## 4.3 Others
 
-**Binary crosstalk at 5 units (Run 025d, simulation c3):** A kinetic ODE model of a three-aptazyme cross-catalytic network showed that even at zero crosstalk, only 3 of 8 states are distinguishable with \>2-fold separation. At 30% crosstalk, 0% of Monte Carlo runs achieve 6+ distinguishable states. The cascade topology causes intermediate states to collapse.
+**Binary crosstalk at five units.** A kinetic ODE model of a three-aptazyme cross-catalytic network gave only 3 of 8 states distinguishable at better than two-fold separation, even with zero crosstalk. At 30% crosstalk, none of the Monte Carlo runs reached six or more distinguishable states. The cascade topology collapses the intermediate states.
 
-**Cooperative domain coupling (Run 025g, simulation c2):** The glycine riboswitch tandem — the canonical natural AND-logic riboswitch — has cooperative binding between its two domains (Hill coefficient \~1.8, Mandal et al. 2004). Our MWC-model simulation showed that cooperativity collapses the distinguishability of the 01 and 10 states: d-prime between them is 0.035, meaning they are experimentally indistinguishable. All 27 tested (η, CV) combinations produced d-prime below 1.0 for at least one pair of states. Independent-domain AND-logic from natural tandem riboswitches does not work unless you engineer domain independence, which is a nontrivial synthetic step.
+**Cooperative domain coupling.** The glycine riboswitch tandem, the canonical natural AND-logic riboswitch, has cooperative binding between its domains (Hill n ≈ 1.8, Mandal et al. 2004). My MWC-model simulation showed cooperativity collapsing the distinguishability of the 01 and 10 states, with d′ = 0.035, which would make them indistinguishable experimentally. All 27 combinations of parameters I tested gave d′ below 1.0 for at least one pair of states.
 
-# **5\. The Blahut-Arimoto Fragility Finding**
+# 5. A fragility I didn't expect
 
-This may be independently publishable. The Blahut-Arimoto algorithm is the standard tool for computing channel capacity, and it has been applied to biological signaling systems (most notably by Cheong et al. 2011, who reported \~1.5 bits for the NF-κB signaling pathway).
+This is the finding I'm least sure what to do with, and the one I'd most like a second opinion on. Blahut-Arimoto is the standard tool for computing channel capacity, and it has been applied to biological signalling, most prominently by Cheong et al. (2011), who reported around 1.5 bits for the NF-κB pathway.
 
-We reimplemented Blahut-Arimoto independently and tested it under 9 methodological combinations: 3 noise models (Gaussian, log-normal, empirical) × 3 discretization levels (5, 10, 20 output bins). Using the same NF-κB system parameters as Cheong et al., our capacity estimates ranged from **0.59 to 1.40 bits** — a spread of nearly 1 full bit depending purely on how you set up the computation. Only 1 of 9 combinations reproduced the published \~1.5 bits within 0.3 bits.
+I reimplemented the algorithm independently and tested it under nine methodological combinations: three noise models (Gaussian, log-normal, empirical) by three discretisation levels (5, 10 and 20 output bins). Using the same NF-κB parameters, my capacity estimates ranged from **0.59 to 1.40 bits**, a spread of nearly a full bit depending only on how the computation was set up. One of the nine combinations reproduced the published figure within 0.3 bits.
 
-The ANOVA decomposition shows that methodological choices (noise model \+ discretization) account for **99.8% of the variance** in the capacity estimates. The actual biology (the NF-κB dose-response shape) barely matters compared to the analyst’s choice of noise model.
+An ANOVA decomposition puts **99.8% of the variance** in my estimates down to those methodological choices rather than to the dose-response shape itself.
 
-**Why this matters:** any future claim of “this molecular system has X bits of channel capacity” needs to report not just the number, but the noise model, discretization, and how sensitive the result is to those choices. We are not saying Cheong et al. are wrong — we are saying the field might not yet recognize how fragile these estimates are?
+I want to be careful about what this means. It isn't evidence that Cheong et al. are wrong, and the fault may well be in my reimplementation rather than in the method. What it does suggest is that any claim of the form "this molecular system has X bits of capacity", including my own, should come with its noise model, its discretisation and a sensitivity check. Whether this is already well known in the signalling-as-information community is something I genuinely don't know.
 
-# **6\. The Rate-Limiting Experiment (c1 Protocol)**
+# 6. The measurement everything depends on
 
-Across all the killed architectures and surviving frameworks, one empirical unknown keeps appearing as the bottleneck: **nobody has measured the CV of aptazyme catalytic output as a function of ligand concentration**. Everyone in the aptazyme field measures mean response; nobody systematically measures replicate noise across the dose-response curve. The field treats CV as a nuisance parameter rather than the primary determinant of information capacity. This single measurement determines whether any aptazyme-based system can reach 5 bits.
+One empirical unknown kept surfacing behind every architecture I tested: **the CV of aptazyme catalytic output as a function of ligand concentration.** As far as I can tell from the literature, the aptazyme field reports mean responses rather than replicate noise across the dose-response curve, and treats variation as a nuisance rather than as the thing that sets information capacity. If that's right, this one measurement decides whether any aptazyme-based system can reach 5 bits. If such data already exists and I've simply missed it, I'd be glad to hear.
 
-The pipeline’s experiment review agent routed this to wet lab — no simulation can substitute for it. A computational pilot has been run (Section 3.4), confirming CV as the dominant lever and sharpening the pass/fail criteria: the pilot answers “what CV do we need?”; the wet-lab experiment answers “what CV do aptazymes actually exhibit?” The pilot also recommends prioritizing initial rates (v₀) over endpoint yield for capacity estimation, as v₀ better reflects the kinetic information content.
+My pipeline's experiment-review step routed this to the wet lab, and I agree: I don't think a simulation can substitute for it. The pilot in section 3.4 answers "what CV would we need?"; this experiment would answer "what CV do aptazymes actually show?". The pilot also suggests using initial rates rather than endpoint yield, since they seem to carry more of the kinetic information.
 
-## **6.1 Constructs**
+## 6.1 Constructs
 
-Three well-characterized small-molecule aptazymes, chosen for coverage across different ribozyme scaffolds and ligand classes:
+Three well-characterised small-molecule aptazymes, chosen to span scaffolds and ligand classes:
 
-**(1) Theophylline-dependent hammerhead aptazyme** — the most extensively published aptazyme, with switching ratios of 10–120× across different constructs (Soukup & Breaker 1999, Kertsburg & Soukup 2002).
+1. **Theophylline-dependent hammerhead aptazyme**, the most extensively published one, with switching ratios of 10–120× across constructs (Soukup & Breaker 1999; Kertsburg & Soukup 2002).
+2. **Adenosine-dependent hammerhead aptazyme**, a different ligand class (purine nucleoside rather than methylxanthine) with a well-characterised Kd.
+3. **FMN-dependent HDV aptazyme**, a different ribozyme scaffold and a different ligand class again, to test whether noise behaviour depends on the scaffold.
 
-**(2) Adenosine-dependent hammerhead aptazyme** — different ligand class from theophylline (purine nucleoside vs. methylxanthine), well-characterized Kd.
+## 6.2 Protocol
 
-**(3) FMN-dependent HDV aptazyme** — different ribozyme scaffold (hepatitis delta virus vs. hammerhead) and different ligand class (flavin), testing whether noise properties are scaffold-dependent.
+- **Ligand concentrations:** 12 per aptazyme, log-spaced from 0.01× to 100× Kd, spanning basal activity through the transition region to saturation.
+- **Platform:** freeze-dried cell-free reactions (Nguyen et al. 2021), which have been used for aptazyme-based small-molecule detection and allow standardised, high-throughput reactions with little pipetting variability.
+- **Readout:** a fluorogenic substrate (6-FAM/BHQ1-labelled RNA), with fluorescence measured every minute for 120 minutes at 37°C.
+- **Replicates:** 24 technical replicates per concentration per construct, in 384-well format. That's high by the field's standards, but variance can't be estimated from three replicates.
+- **Batches:** three independent preparation dates, to separate intrinsic molecular noise from preparation-to-preparation variability.
 
-## **6.2 Protocol**
+## 6.3 Measurements
 
-**Ligand concentrations:** 12 concentrations per aptazyme, log-spaced from 0.01× to 100× Kd. This spans the full dose-response curve from basal activity through the transition region to saturation.
+For each of the 3 × 12 × 24 = 864 wells: the full fluorescence trace, the initial cleavage rate from a linear fit to early time points, and the endpoint yield at 120 minutes.
 
-**Platform:** Freeze-dried cell-free (FDCF) reactions (Nguyen et al. 2021), which have demonstrated aptazyme-based small-molecule detection. The FDCF format enables high-throughput, standardized reactions with minimal pipetting variability.
+From the replicates at each concentration: the CV for both initial rate and endpoint yield, the Hill coefficient, Kd and dynamic range from the median dose-response fit, the signal-to-noise ratio across the concentration range, and the batch-to-batch CV.
 
-**Readout:** Fluorogenic substrate (6-FAM/BHQ1-labeled RNA substrate for cleavage detection). Fluorescence kinetics measured at 1-minute intervals for 120 minutes at 37°C.
+And then the computed output: channel capacity via Blahut-Arimoto on the empirical distributions, under more than one noise-model assumption, given the sensitivity described in section 5.
 
-**Replicates:** n=24 technical replicates per concentration point per aptazyme construct in a 384-well plate format. This is high by aptazyme standards but necessary for reliable CV estimation — you cannot estimate variance with 3 replicates.
+## 6.4 What different results would mean
 
-**Batch-to-batch:** Three independent FDCF preparation dates, to separate intrinsic molecular noise from preparation-to-preparation variability.
+- **CV of 10–20%**, my working hypothesis: 2–3 bits per channel, and two orthogonal channels could reach 5 bits. The framework would stand.
+- **CV of 5% or below**, matching the proteomic aptamer benchmark: 3–4 bits per channel, and the target becomes comfortably reachable.
+- **CV above 30%:** below 2 bits per channel, and the whole approach would need rethinking.
 
-## **6.3 Measurements**
+All three outcomes seem worth publishing to me: the first as support for the framework, the second as a surprising transferability result, the third as a real constraint on RNA-based molecular coding.
 
-For each of the 3 × 12 × 24 \= 864 wells:
+# 7. What survives
 
-• Fluorescence intensity over time (full kinetic trace)
+An honest inventory of what's left:
 
-• Initial cleavage rate v₀ (RFU/min) extracted from linear fit to early time points
+| Finding | Status |
+| :---- | :---- |
+| Blahut-Arimoto framework for molecular dose-response | A working tool, checked against Cheong et al. |
+| CV ≤ 15% needed for 5 bits on two channels | Held across noise models |
+| Aptamer orthogonality (100-fold selectivity, 20 of 20 pairs) | From literature Kd values; needs multiplex validation |
+| Same chemical class means crosstalk | Suggests structurally diverse ligands are required |
+| Cooperative coupling collapses AND-logic intermediates | d′ < 0.04 between the 01 and 10 states |
+| Capacity estimates are method-sensitive | 99.8% of variance from methodology in my tests |
+| Product-identity encoding | Doesn't reach target at realistic selectivity |
+| Sigma-delta noise shaping | √N prediction overestimates by 2.7× |
 
-• Endpoint product yield (% substrate cleaved) at t=120 min
+# 8. Where this actually stands
 
-From the replicates at each concentration:
+**Towards the prize: maybe 15–25% on the framework side, and close to nothing on the chemistry side.** I have a measurement framework with a computational pilot behind it, a wet-lab protocol, and a list of things that don't work. I don't have a candidate chemical system, a proposal, an experiment, or any data at all. The distance between "the maths says this might work" and a prize demonstration is very large.
 
-• CV (σ/μ) for both v₀ and endpoint yield at each of 12 concentration points per aptazyme
+There's also a mistake worth recording. While debugging, I realised my pipeline had been set up to reward breakthroughs, which derailed the mode I was running and the brute-force approach I'd patched in while refactoring what had started as a game. The result was that it kept asking "how many bits can we create?" when the prize asks whether chemicals can spontaneously generate a code. The entire architecture comparison (concentration-graded against AND-logic against hybrid) is about engineering RNA components, which is a different question from the one being asked.
 
-• Hill coefficient (n), Kd, and dynamic range from median dose-response fit
+So the next run pivots to the question of an **emergent code**: whether a selection environment can be designed in which the code mapping comes out of chemistry and selection rather than being prescribed. It's conceptually similar to SELEX, where the experimenter designs the selection pressure but not the aptamer that evolves, applied to code emergence instead.
 
-• Signal-to-noise ratio as a function of ligand concentration
+# 9. Questions I'd like help with
 
-• Batch-to-batch CV across the three independent preparation dates
+**On the things I ruled out.** Do they reflect real biological constraints, or could my models be missing something that would rescue them? In particular: is there any precedent for better than 90% site selectivity in small self-cleaving ribozymes? Are there natural tandem riboswitches with genuinely independent, non-cooperative domains?
 
-And the key computed output:
+**On the noise threshold.** Is a CV of 15% or below plausible for aptazyme catalytic output in a controlled in vitro setting? The SOMAscan platform reaches around 5% for protein-binding aptamers, but that's a different kind of measurement. What would you expect for small-molecule aptazyme cleavage?
 
-• Shannon channel capacity (bits) via Blahut-Arimoto on the empirical input-output distributions, computed under multiple noise model assumptions (Gaussian, log-normal) to assess methodological sensitivity per our c8 finding
+**On the protocol.** Does the dose-response noise profiling in section 6 make sense? Would the freeze-dried cell-free platform be the right substrate, or would a simpler direct cleavage assay be better? What sample sizes would you consider adequate?
 
-## **6.4 Expected outcomes**
+**On the fragility finding.** Is the sensitivity of capacity estimates to noise model and discretisation already known in the signalling-as-information community, or is it underappreciated? Would it be worth writing up as a methodological note?
 
-**If CV is 10–20%** (our working hypothesis): Blahut-Arimoto yields 2–3 bits per channel. Two orthogonal channels could reach ≥5 bits. The framework stands. Hill fits will confirm n=1–2 for all three aptazymes. FDCF batch-to-batch CV should be \<25%.
+**On the emergent-code pivot.** Is it defensible to call a code from a SELEX-like process "emergent"? The experimenter designs the selection pressure (an amino-acid-dependent replication advantage) but doesn't prescribe which RNA sequence maps to which amino acid, and the table is read off by sequencing afterwards. Does that distinction between a designed environment and an emergent code hold up from a biologist's point of view?
 
-**If CV ≤5%** (matching Gold et al. 2010’s proteomic aptamer benchmark): channel capacity jumps to 3–4 bits per channel. The 5-bit target becomes easily achievable and the optimistic assumptions are validated.
+# 10. Key references
 
-**If CV \>30%:** channel capacity drops below 2 bits per channel. The entire ≥5-bit framework is threatened and requires fundamental architectural redesign.
+**Aptazyme switching:** Soukup & Breaker 1999 (hammerhead aptazyme, 100× switching ratio); Kertsburg & Soukup 2002 (120×); Breaker 2002 (review); Famulok et al. 2007.
 
-*All three outcomes are publishable:* the first as a validation of the framework, the second as a surprising transferability result, the third as a fundamental constraint on RNA-based molecular coding systems. This experiment cannot fail to produce useful information.
+**Riboswitch diversity:** McCown et al. 2017 (around 40 structurally distinct classes); Breaker 2012 (review).
 
-# **7\. What Survives and Transfers Forward**
+**Tandem riboswitches:** Mandal et al. 2004 (glycine, cooperative, Hill n ≈ 1.8); Welz & Breaker 2007 (TPP tandem, independent domains).
 
-Here is an honest inventory of what remains after the kills.
-
-| Finding | Status | Source |
-| :---- | :---- | :---- |
-| Blahut-Arimoto framework for molecular dose-response | Working tool, validated against Cheong et al. | 025d sim c6, 025g sim c8 |
-| CV ≤ 15% threshold for ≥5 bits (2 channels) | Robust across noise models | 025d sim c6, sigma-delta sim |
-| Aptamer orthogonality (≥100-fold selectivity, 20/20 pairs) | Computationally confirmed from literature Kd values; needs multiplex validation | 025d sim c1 |
-| Same chemical class \= crosstalk (theophylline–adenosine MI \> 0.5 bits) | Confirmed; structurally diverse ligands required | 025g sim c4 |
-| Cooperative coupling collapses AND-logic intermediate states | d-prime \< 0.04 between 01 and 10 states | 025g sim c2 |
-| Blahut-Arimoto methodology is fragile (±1 bit depending on method) | 99.8% of variance from methodology, not biology | 025g sim c8 |
-| Product-identity encoding killed at realistic selectivity | 0.64–1.01 bits actual vs. 1.5 claimed | 025d review |
-| Sigma-delta noise shaping killed at biological N | √N prediction overestimates by 2.7× | Standalone sim |
-
-# **8\. Honest Assessment of Progress**
-
-**Progress toward the $10M prize: approximately 15–25% on the framework side, near zero on the chemistry side.** We have a measurement framework with computational pilot validation, a detailed wet-lab protocol, and a substantial kill list. We do not have a candidate chemical system, a proposal, an experiment, or any empirical data. The gap between “the math says this might work” and “prize demonstration” is enormous.
-
-Furthermore, during debugging, I realized that the system had harnesses explicitly programmed to reward breakthroughs, thus derailing the vertical mode and the brute-force approach I'd patched while trying to refactor what was supposed to be just a game. It ended up asking "how many bits can we create?", but the prize wanted "can chemicals spontaneously generate code?" The entire architecture comparison (concentration-graded vs. AND-logic vs. hybrid) is about engineering RNA components — a Rule 10 violation.
-
-The next phase of work (Run 026\) pivots to the question of **emergent code:** can you design a selection environment where the code mapping emerges from chemistry and selection, rather than being prescribed by the experimenter? This is conceptually similar to SELEX (where the experimenter designs the selection pressure but does not design the aptamer that evolves), applied to the question of code emergence. Anyway…
-
-# **9\. Questions ?**
-
-**On the kills:** Do the killed approaches (product-identity encoding, sigma-delta noise shaping, cooperative AND-logic collapse) reflect real biological constraints, or could our models be missing something that would rescue them? In particular: is there any precedent for \>90% site selectivity in small self-cleaving ribozymes? Are there natural tandem riboswitches with genuinely independent (non-cooperative) domains?
-
-**On the CV threshold:** Is CV ≤ 15% plausible for aptazyme catalytic output in a controlled in vitro setting? The SOMAscan aptamer platform (Gold et al. 2010\) achieves \~5% CV for protein-binding aptamers, but that is a different measurement modality. What is your intuition for small-molecule aptazyme cleavage noise?
-
-**On the c1 protocol:** Does the proposed dose-response noise profiling experiment (Section 6\) make sense? Would the Nguyen et al. 2021 freeze-dried cell-free platform be the right substrate, or would you recommend a simpler direct cleavage assay? What sample sizes and replicates would you consider adequate?
-
-**On the Blahut-Arimoto fragility:** Is this finding (that capacity estimates swing by ±1 bit depending on noise model and discretization) already known to the signaling-as-information community, or is it genuinely underappreciated? Would this be publishable as a methodological note?
-
-**On the emergent-code pivot:** Is it scientifically defensible to argue that a SELEX-like process produces an “emergent” code? The experimenter designs the selection pressure (amino-acid-dependent RNA replication advantage) but does not prescribe which RNA sequence maps to which amino acid. The encoding table is discovered by deep sequencing after selection. Is this “designed environment, emergent code” distinction coherent from a biologist’s perspective?
-
-# **10\. Key References**
-
-These are the published sources underlying the computational work:
-
-**Aptazyme switching:** Soukup & Breaker 1999 (hammerhead aptazyme, 100× switching ratio); Kertsburg & Soukup 2002 (120×); Breaker 2002 review; Famulok et al. 2007\.
-
-**Riboswitch diversity:** McCown et al. 2017 (\~40 structurally distinct classes); Breaker 2012 review.
-
-**Tandem riboswitches:** Mandal et al. 2004 (glycine, cooperative, Hill n\~1.8); Welz & Breaker 2007 (TPP tandem, independent domains).
-
-**Channel capacity in biology:** Cheong et al. 2011 (NF-κB, \~1.5 bits); Shannon 1948\.
+**Channel capacity in biology:** Cheong et al. 2011 (NF-κB, around 1.5 bits); Shannon 1948.
 
 **Aptamer orthogonality:** Gold et al. 2010 (SOMAscan, 813-plex); McKeague & DeRosa 2012 (small-molecule aptamer challenges); Jenison et al. 1994 (theophylline aptamer Kd).
 
-**Non-enzymatic replication:** Rajamani et al. 2010 (Save=124); Papastavrou et al. 2024 (RNA polymerase ribozyme).
+**Non-enzymatic replication:** Rajamani et al. 2010; Papastavrou et al. 2024 (RNA polymerase ribozyme).
 
-**Stereochemical hypothesis:** Yarus et al. 2009 (RNA–amino acid MI \= 2.88 bits).
+**Stereochemical hypothesis:** Yarus et al. 2009 (RNA–amino acid mutual information of 2.88 bits).
