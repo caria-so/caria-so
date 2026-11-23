@@ -9,7 +9,7 @@ summary: "Italian home and bathroom retailers state most product attributes, but
 image:
 ---
 
-These are preliminary findings from a study called [Evaluating agentic ecommerce readiness](https://caria.so/post/usability__ecommerce_readiness_method). The question behind it is simple. More and more people ask an AI assistant to find products for them: "a white bathroom wall cabinet, MDF, no wider than 60 cm." Can the assistant answer that correctly using only what retailers publish on their product pages, without making things up?
+These are preliminary findings from a study called [Evaluating agentic ecommerce readiness](/post/ecommerce__ecommerce_readiness_method). The question behind it is simple. More and more people ask an AI assistant to find products for them: "a white bathroom wall cabinet, MDF, no wider than 60 cm." Can the assistant answer that correctly using only what retailers publish on their product pages, without making things up?
 
 I call this *agentic readiness*: how far a retailer's public product information lets an AI agent find products that meet a buyer's requirements, and describe them without claiming things the page doesn't support.
 

@@ -1,22 +1,48 @@
 {% from 'partials/_logo_mark.html' import logo_mark %}
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="{{ html_theme }}">
 <head>
     <meta charset="UTF-8">
     <script>
     (function () {
-        var theme = 'light';
-        try {
-            var saved = localStorage.getItem('theme');
-            if (saved === 'dark' || saved === 'light') theme = saved;
-        } catch (e) {}
-        var root = document.documentElement;
-        root.dataset.theme = theme;
-        root.style.colorScheme = theme;
-        if (theme === 'dark') {
-            root.style.backgroundColor = '#0E0E10';
-            root.style.color = '#FAFAFA';
+        function applyTheme(theme) {
+            var root = document.documentElement;
+            root.dataset.theme = theme;
+            root.style.colorScheme = theme;
+            if (theme === 'dark') {
+                root.style.backgroundColor = '#0E0E10';
+                root.style.color = '#FAFAFA';
+            } else {
+                root.style.backgroundColor = '';
+                root.style.color = '';
+            }
         }
+        function persistTheme(theme) {
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (e) {}
+            try {
+                document.cookie = 'theme=' + theme + ';path=/;max-age=31536000;SameSite=Lax';
+            } catch (e) {}
+        }
+        function readTheme() {
+            var theme = 'light';
+            try {
+                var saved = localStorage.getItem('theme');
+                if (saved === 'dark' || saved === 'light') return saved;
+            } catch (e) {}
+            var fromHtml = document.documentElement.getAttribute('data-theme');
+            if (fromHtml === 'dark' || fromHtml === 'light') return fromHtml;
+            return theme;
+        }
+        var theme = readTheme();
+        applyTheme(theme);
+        persistTheme(theme);
+        window.addEventListener('pageshow', function (event) {
+            if (!event.persisted) return;
+            var restored = readTheme();
+            applyTheme(restored);
+        });
     })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -202,9 +228,19 @@
 
 			root.dataset.theme = newTheme;
 			root.style.colorScheme = newTheme;
-			root.style.backgroundColor = '';
-			root.style.color = '';
-			localStorage.setItem('theme', newTheme);
+			if (newTheme === 'dark') {
+				root.style.backgroundColor = '#0E0E10';
+				root.style.color = '#FAFAFA';
+			} else {
+				root.style.backgroundColor = '';
+				root.style.color = '';
+			}
+			try {
+				localStorage.setItem('theme', newTheme);
+			} catch (e) {}
+			try {
+				document.cookie = 'theme=' + newTheme + ';path=/;max-age=31536000;SameSite=Lax';
+			} catch (e) {}
 
 			updateThemeToggleIcon(newTheme);
 		});

@@ -89,10 +89,13 @@ def create_app():
 
     @app.context_processor
     def inject_media_helpers():
+        raw = request.cookies.get('theme', '')
+        html_theme = raw if raw in ('dark', 'light') else 'light'
         return {
             'media_variants': media_variants,
             'site_url': app.config['SITE_URL'],
             'contact_email': app.config['CONTACT_EMAIL'],
+            'html_theme': html_theme,
         }
 
     @app.after_request

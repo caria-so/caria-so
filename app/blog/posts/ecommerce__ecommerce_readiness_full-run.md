@@ -9,7 +9,7 @@ summary: "An AI agent shopped four Italian bathroom retailers for 18 real buyer 
 image:
 ---
 
-[Part one](https://caria.so/post/usability__ecommerce_readiness_method) described the method. [Part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) showed that Italian bathroom retailers state most product facts, but rarely in a form software reads directly. This part puts an AI agent in front of four of those catalogues with real buyer requests and checks every answer against the retailer's own pages.
+[Part one](/post/ecommerce__ecommerce_readiness_method) described the method. [Part two](/post/ecommerce__ecommerce_readiness_preliminary) showed that Italian bathroom retailers state most product facts, but rarely in a form software reads directly. This part puts an AI agent in front of four of those catalogues with real buyer requests and checks every answer against the retailer's own pages.
 
 This is not the main study. I started with a larger batch of requests, then realised I should first test the whole pipeline end to end on a small one, before aiming at real numbers. So this is a pilot to refine the method: 18 requests, four shops, one agent, one run. The agent will be improved before the main run, and the requests used here will be retired from it. The numbers below have wide intervals and support no ranking of retailers. What they do show is where things break, in the retailers' data and in my own instrument.
 

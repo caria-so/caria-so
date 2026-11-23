@@ -17,7 +17,7 @@ image:
 | **Type** | Observational measurement study, with a pilot run before the main run |
 | **Category and market** | Bathroom and sanitary ware, Italian online retailers |
 | **Instrument** | A fixed, open-weight AI agent, used as a measuring tool |
-| **Series** | I. Methodology (this post) · [II. Preliminary findings](https://caria.so/post/ecommerce__ecommerce_readiness_preliminary) · III. A first agent run (pilot) · main results to follow |
+| **Series** | I. Methodology (this post) · [II. Preliminary findings](/post/ecommerce__ecommerce_readiness_preliminary) · [III. A first agent run (pilot)](/post/ecommerce__ecommerce_readiness_full-run) · main results to follow |
 
 This post describes the design at the level of principles. Some operational details are held back until the results are published, for reasons explained in section 10.
 
@@ -40,7 +40,7 @@ The study asks two questions:
 
 And it tests one hypothesis that links the series together:
 
-- **H1.** Requirements whose facts sit lower on the readability ladder described in [part two](https://caria.so/post/usability__ecommerce_readiness_preliminary) (prose rather than specification tables or structured data) more often end up unverifiable or missed.
+- **H1.** Requirements whose facts sit lower on the readability ladder described in [part two](/post/ecommerce__ecommerce_readiness_preliminary) (prose rather than specification tables or structured data) more often end up unverifiable or missed.
 
 ## 3. What is sampled
 
@@ -137,6 +137,6 @@ The limitations are written down before the results, so they can't be softened a
 
 ## Next in the series
 
-[Part two](https://caria.so/post/ecommerce__ecommerce_readiness_preliminary) looks at what's already visible before any agent runs: how Italian bathroom and home retailers publish product data, and how little of it is in a form software can read directly. Part three reports a first pilot run of the agent.
+[Part two](/post/ecommerce__ecommerce_readiness_preliminary) looks at what's already visible before any agent runs: how Italian bathroom and home retailers publish product data, and how little of it is in a form software can read directly. [Part three](/post/ecommerce__ecommerce_readiness_full-run) reports a first pilot run of the agent.
 
 If you run one of the shops in the study and would like to see your figures early, get in touch.
