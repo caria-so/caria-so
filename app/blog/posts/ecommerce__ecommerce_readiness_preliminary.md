@@ -3,7 +3,7 @@ title: "Evaluating agentic ecommerce readiness II. Preliminary Findings"
 thread: ecommerce
 keywords: [ecommerce, agentic ai, user experience, usability, home & furniture, schema.org, GPSR]
 author: "Federico Caria"
-date: "2026-10-31"
+date: "2026-11-15"
 tags: 
 summary: "Italian home and bathroom retailers state most product attributes, but one to three steps below where software reads. For material, half of what is stated already sits in label-and-value form and only needs mapping into structured data."
 image:
