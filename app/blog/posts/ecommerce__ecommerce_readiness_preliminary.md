@@ -59,7 +59,7 @@ The rest of this post goes through each of these in more detail.
 For every core attribute, the gap between what retailers state and what software can read is between 30 and 70 percentage points.
 
 <div class="post-image">
-<img src="/static/assets/images/blog/agentic-ecom__viz_ladder.png" alt="Stacked bars for material, colour, width, height, finish and depth: machine-readable share is 0.3 to 11 percent of pages; label-and-value not mapped 10 to 40 percent; prose only 22 to 37 percent; the rest not stated" />
+<img src="/static/assets/images/blog/agentic_ecom_2/attribute_ladder.webp" alt="Stacked bars for material, colour, width, height, finish and depth: machine-readable share is 0.3 to 11 percent of pages; label-and-value not mapped 10 to 40 percent; prose only 22 to 37 percent; the rest not stated" />
 <p class="post-image-caption">Share of sampled product pages by the highest step where each attribute appears · 23 retailers, 25 pages each (Boleco 23, Paramashop 24, Idro-Bric 15) · collected 30 Sep–3 Oct 2026</p>
 </div>
 
@@ -142,7 +142,7 @@ All figures are the share of each retailer's 25 pages, averaged across the 23 re
 **How precise a single retailer's figure is.** 25 pages give a rough measure, not an exact one. If a retailer scores 60%, its true figure could be anywhere from about 41% to 77% (that's what a 95% interval means). Because a sample can include several variants of the same product series, the real uncertainty is wider still. For that reason I only name individual retailers when the difference is large, and I give the interval when I do.
 
 <div class="post-image">
-<img src="/static/assets/images/blog/agentic-ecom__viz_material_retailers.png" alt="Dot plot of the share of pages stating material for each of 23 retailers with 95% intervals; most intervals overlap, Mondo Convenienza is lowest at 2 of 25" />
+<img src="/static/assets/images/blog/agentic_ecom_2/material_stated_most_page.webp" alt="Dot plot of the share of pages stating material for each of 23 retailers with 95% intervals; most intervals overlap, Mondo Convenienza is lowest at 2 of 25" />
 <p class="post-image-caption">Material stated, per retailer, with 95% intervals · diamonds: material in schema.org (Bagnity, IKEA)</p>
 </div>
 
