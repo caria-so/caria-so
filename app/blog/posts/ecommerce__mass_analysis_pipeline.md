@@ -1,5 +1,5 @@
 ---
-title: "Testing the ground: a quick experiment in automated UX evaluation at scale"
+title: "A quick experiment in automated UX evaluation at scale"
 thread: ecommerce
 keywords: [ux evaluation, automated audit, accessibility, lighthouse, ecommerce]
 author: "Federico Caria"
@@ -66,7 +66,7 @@ The pipeline is **resumable**: every phase writes a `done` flag per site into `s
 This was the clearest result. The HTML analysis can tell whether a homepage has a carousel, which library builds it, whether it plays automatically and whether there's a control to pause it. WCAG 2.1 (success criterion 2.2.2) asks that content which moves automatically can be paused, so an autoplaying carousel without a pause control is a check that can be fully automated.
 
 <div class="post-image">
-<img src="/static/assets/images/blog/mass_analysis/carousel_autoplay_violation.webp" alt="Bar chart: about 80 sites have a carousel, about 30 autoplay, about 4 have a pause control; 20 sites flagged for autoplay without pause control" />
+<img src="/static/assets/images/blog/mass_analysis/carousel_autoplay.webp" alt="Bar chart: about 80 sites have a carousel, about 30 autoplay, about 4 have a pause control; 20 sites flagged for autoplay without pause control" />
 <p class="post-image-caption">Carousels on the homepage, autoplay, pause controls and WCAG 2.2.2 flags</p>
 </div>
 
@@ -86,7 +86,7 @@ The same pass records whether a homepage offers search, prices, a phone number, 
 Search and prices on the homepage are the most common. Visible email addresses and chat widgets are the least common. Few shops offer live chat at all, and among those that do, a handful of providers dominate.
 
 <div class="post-image">
-<img src="/static/assets/images/blog/mass_analysis/widget_providers.webp" alt="Donut chart: most sites have no chat widget; Crisp is the most common provider, followed by LiveChat, Intercom, Tidio and tawk.to" />
+<img src="/static/assets/images/blog/mass_analysis/chat_providers.webp" alt="Donut chart: most sites have no chat widget; Crisp is the most common provider, followed by LiveChat, Intercom, Tidio and tawk.to" />
 <p class="post-image-caption">Chat and support widget providers</p>
 </div>
 
@@ -97,8 +97,13 @@ Search and prices on the homepage are the most common. Visible email addresses a
 Lighthouse is a low hanging fruit (sorry Andy!), enough good to get some more context and it is free.
 
 <div class="post-image">
-<img src="/static/assets/images/blog/mass_analysis/basic_lighthouse.webp" alt="Performance score distribution mostly between 20 and 80; LCP mostly above 4 seconds; CLS mostly below 0.05; accessibility pass rates for alt text, colour contrast, heading order, tap targets, skip navigation, lang attribute, title, meta description, font size and crawlability" />
-<p class="post-image-caption">Lighthouse results: performance, largest contentful paint, layout shift and accessibility checks</p>
+<img src="/static/assets/images/blog/mass_analysis/lighthouse_performance.webp" alt="Performance score distribution mostly between 20 and 80; largest contentful paint mostly above 4 seconds; cumulative layout shift mostly below 0.05" />
+<p class="post-image-caption">Lighthouse: performance, LCP and CLS across the cohort</p>
+</div>
+
+<div class="post-image">
+<img src="/static/assets/images/blog/mass_analysis/accessibility_checks.webp" alt="Accessibility pass rates for alt text, colour contrast, heading order, tap targets, skip navigation, language attribute, title, meta description, font size and crawlability" />
+<p class="post-image-caption">Lighthouse accessibility checks</p>
 </div>
 
 Most performance scores fall between 20 and 80, and the largest element on the page usually takes more than four seconds to appear. Lighthouse simulates a slow mobile connection, so these figures are pessimistic, but the spread between sites looks realistic. Layout stability is good almost everywhere. On accessibility, the basics are mostly in place (page titles, language attribute, readable font sizes).
@@ -117,11 +122,11 @@ This is the most freestyle part. The pipeline detects which platform each site r
 </div>
 
 <div class="post-image">
-<img src="/static/assets/images/blog/mass_analysis/average_score_by_platform.webp" alt="Radar chart comparing average performance, accessibility, best practices, SEO and feature count for custom/unknown (91) and WooCommerce (15) sites" />
-<p class="post-image-caption">Average scores by platform · Custom/Unknown (91 sites), WooCommerce (15)</p>
+<img src="/static/assets/images/blog/mass_analysis/lighthouse_by_platform.webp" alt="Lighthouse averages by platform: performance, accessibility, best practices and SEO for custom or unknown sites versus WooCommerce" />
+<p class="post-image-caption">Lighthouse averages by platform · Custom/Unknown vs WooCommerce</p>
 </div>
 
-The WooCommerce shops show search, a phone number and trust badges far more often than the rest, and score similarly on Lighthouse. With only 15 of them, and with most sites landing in "custom or unknown", this is a hint rather than a finding. Some of the gap may also come from detection: a WooCommerce theme that ships a feature by default is easy to spot, while a custom site that does the same thing differently may be missed. But it points to what I think is the most interesting use of this approach.
+The WooCommerce shops show search, a phone number and trust badges far more often than the rest, and score similarly on Lighthouse. With only a few of them, and with most sites landing in "custom or unknown", this is a hint rather than a finding. Some of the gap may also come from detection: a WooCommerce theme that ships a feature by default is easy to spot, while a custom site that does the same thing differently may be missed. But it points to what I think is the most interesting use of this approach.
 
 ---
 
@@ -131,4 +136,4 @@ See how this goes? Frankly, it seems to me to be pushing in a much less utilitar
 
 **Qualitative and quantitative, together, at scale.** The pipeline produces counts (pass rates, percentages, distributions), but each count is kind of built from qualitative judgements a UX reviewer would normally make by hand: is there a search box? is it just a loupe icon or there is a visible input field? can this carousel be paused? where does the menu lead? 
 
-**Useful for a single site, more interesting across many.** In general, many of the patterns, good and bad, aren't really decisions by individual shops. They come with the platform. If an autoplaying carousel without a pause button keeps turning up with the same library and the same default settings, the fix belongs with the vendor, and it would reach thousands of shops at once. This run can only point in that direction regardless of how bad is the current state of platform detection in my code. 
+**Useful for a single site, more interesting across many.** In general, many of the patterns, good and bad, aren't really decisions by individual shops. They come with the platform. If an autoplaying carousel without a pause button keeps turning up with the same library and the same default settings, the fix belongs with the vendor, and it would reach thousands of shops at once. This run can only point in that direction.
