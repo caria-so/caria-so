@@ -20,7 +20,7 @@
     font-size: var(--t-caption, 0.75rem);
     line-height: 1.45;
     color: var(--c-text-secondary);
-    text-align: center;
+    text-align: left;
 }
 
 @media (max-width: 760px) {
@@ -28,6 +28,65 @@
         flex: 0 1 auto;
         max-width: min(14rem, 58vw);
         margin-inline: auto;
+    }
+}
+
+/* Toolchain band on About — edge-to-edge + light/dark tokens (not fixed --home-ink) */
+.home-lab.home-lab--about {
+    --lab-bg: var(--c-background-gray);
+    --lab-fg: var(--c-text-primary);
+    --lab-muted: var(--c-text-secondary);
+    --lab-rule: var(--c-border);
+    --lab-hover: color-mix(in srgb, var(--c-background) 32%, var(--c-background-gray));
+    --home-ink-2: var(--lab-rule);
+    --home-on-ink: var(--lab-fg);
+    --home-on-ink-2: var(--lab-muted);
+
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    box-sizing: border-box;
+    background: var(--lab-bg);
+    color: var(--lab-fg);
+}
+
+[data-theme="dark"] .home-lab.home-lab--about {
+    --lab-bg: color-mix(in srgb, var(--c-background-gray) 90%, var(--c-background));
+    --lab-hover: color-mix(in srgb, var(--c-background) 42%, var(--c-background-gray));
+}
+
+.home-lab.home-lab--about .home-eyebrow,
+.home-lab.home-lab--about .home-lab-intro,
+.home-lab.home-lab--about .home-lab-num,
+.home-lab.home-lab--about .home-lab-note {
+    color: var(--lab-muted);
+}
+
+.home-lab.home-lab--about .home-h2,
+.home-lab.home-lab--about .home-lab-title,
+.home-lab.home-lab--about .home-lab-cell {
+    color: var(--lab-fg);
+}
+
+.home-lab.home-lab--about .home-lab-grid {
+    border-top-color: var(--lab-rule);
+}
+
+.home-lab.home-lab--about .home-lab-cell {
+    border-right-color: var(--lab-rule);
+    color: var(--lab-fg);
+}
+
+.home-lab.home-lab--about .home-lab-cell:hover {
+    color: var(--lab-fg);
+    background: var(--lab-hover);
+}
+
+@media (max-width: 768px) {
+    .home-lab.home-lab--about .home-lab-cell,
+    .home-lab.home-lab--about .home-lab-cell:first-child,
+    .home-lab.home-lab--about .home-lab-cell:last-child {
+        border-bottom-color: var(--lab-rule);
     }
 }
 

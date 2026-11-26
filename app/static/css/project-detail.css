@@ -856,13 +856,24 @@
 }
 
 .proj-methodology-body {
-    font-size: 0.96rem;
-    line-height: 1.65;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.45;
     color: var(--proj-prose-color, var(--c-text-secondary));
 }
 
+.proj-block--methodology .proj-prose {
+    font-family: var(--font-sans);
+}
+
+.proj-block--methodology .proj-prose p,
+.proj-block--methodology .proj-prose li {
+    font-family: inherit;
+    line-height: inherit;
+}
+
 .proj-block--methodology .proj-prose p + p {
-    margin-top: 0.75rem;
+    margin-top: 0.55rem;
 }
 
 .proj-block--methodology .proj-prose p:last-child {
@@ -892,16 +903,15 @@
 .proj-methodology-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     cursor: pointer;
     list-style: none;
     letter-spacing: 0.1em;
+    font-weight: 600;
     color: var(--method-link);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--method-link) 42%, transparent);
-    text-underline-offset: 0.22em;
+    text-decoration: none;
     user-select: none;
-    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    transition: color 0.15s ease;
 }
 
 .proj-methodology-toggle::-webkit-details-marker {
@@ -909,14 +919,14 @@
 }
 
 .proj-methodology-toggle i {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 700;
     transition: transform 0.2s ease;
     color: inherit;
 }
 
 .proj-methodology-detail[open] .proj-methodology-toggle {
     color: var(--method-link-hover);
-    text-decoration-color: color-mix(in srgb, var(--method-link-hover) 50%, transparent);
 }
 
 .proj-methodology-detail[open] .proj-methodology-toggle i {
@@ -925,7 +935,6 @@
 
 .proj-methodology-toggle:hover {
     color: var(--method-link-hover);
-    text-decoration-color: color-mix(in srgb, var(--method-link-hover) 58%, transparent);
 }
 
 .proj-case-study {
@@ -948,8 +957,9 @@
 }
 
 .proj-case-body {
-    font-size: 0.92rem;
-    line-height: 1.6;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.42;
     color: var(--proj-prose-color, var(--c-text-secondary));
 }
 
@@ -958,7 +968,7 @@
 }
 
 .proj-block--methodology .proj-case-body.proj-prose p + p {
-    margin-top: 0.65rem;
+    margin-top: 0.45rem;
 }
 
 .proj-case-metrics {
@@ -1740,6 +1750,24 @@
 .proj-methodology-body,
 .proj-case-body { color: var(--c-text-body); }
 
+/* Methodology box: sans focus copy — beats global .proj-prose scale */
+.proj-block--methodology .proj-methodology-body.proj-prose,
+.proj-block--methodology .proj-case-body.proj-prose {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.45;
+}
+
+.proj-block--methodology .proj-case-body.proj-prose {
+    font-size: 0.8125rem;
+    line-height: 1.42;
+}
+
+.proj-block--methodology .proj-prose p,
+.proj-block--methodology .proj-prose li {
+    font-size: inherit;
+}
+
 .proj-block--methodology .proj-prose code {
     background: var(--c-background);
     border-color: var(--proj-rule);
@@ -1750,11 +1778,17 @@
 .proj-methodology-toggle,
 .proj-methodology-detail[open] .proj-methodology-toggle {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     color: var(--c-accent);
-    text-decoration-color: currentColor;
+    text-decoration: none;
     min-height: 44px;
+}
+
+.proj-methodology-toggle i {
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .proj-methodology-toggle:hover { color: var(--c-text-primary); }

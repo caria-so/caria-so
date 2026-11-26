@@ -1,12 +1,20 @@
 """Load and enrich blog notes with thread placement."""
 
 import os
+import re
 
 import yaml
 
 from app.content_blocks import normalize_sections_document
-from app.markdown_utils import convert_markdown, create_markdown_parser
+from app.markdown_utils import (
+    convert_markdown,
+    create_markdown_parser,
+    extract_footnote_defs,
+    strip_footnote_block,
+)
 from app.media import normalize_static_url
+
+POST_SECTION_MARKER = re.compile(r'<!--\s*post-section:\s*([\w-]+)\s*-->', re.IGNORECASE)
 from app.notes_nlp import (
     build_thread_centroids,
     extract_entities,
@@ -230,6 +238,52 @@ def load_notes(posts_dir=POSTS_DIR, parse_date_fn=None):
     return notes, registry
 
 
+def _sections_include_methodology(sections):
+    return any(s.get('type') == 'methodology' for s in (sections or []))
+
+
+def _html_with_footnotes(segment, defs, md):
+    source = segment if not defs else f"{segment.rstrip()}\n\n{defs}"
+    return convert_markdown(source, md)
+
+
+def _build_content_chunks(raw_text, sections_by_id):
+    """Split markdown on <!-- post-section: id --> and interleave structured blocks."""
+    body, defs = extract_footnote_defs(raw_text)
+    md = create_markdown_parser()
+    chunks = []
+    last = 0
+    for match in POST_SECTION_MARKER.finditer(body):
+        if match.start() > last:
+            segment = body[last:match.start()]
+            if segment.strip():
+                chunks.append({
+                    'type': 'html',
+                    'html': _html_with_footnotes(segment, defs, md),
+                })
+        section_id = match.group(1)
+        section = sections_by_id.get(section_id)
+        if section:
+            chunks.append({'type': 'section', 'section': section})
+        last = match.end()
+    if last < len(body):
+        segment = body[last:]
+        if segment.strip():
+            chunks.append({
+                'type': 'html',
+                'html': _html_with_footnotes(segment, defs, md),
+            })
+
+    if defs:
+        html_indexes = [i for i, chunk in enumerate(chunks) if chunk['type'] == 'html']
+        if not chunks or chunks[-1]['type'] != 'html':
+            chunks.append({'type': 'html', 'html': convert_markdown(defs, md)})
+            html_indexes.append(len(chunks) - 1)
+        for i in html_indexes[:-1]:
+            chunks[i]['html'] = strip_footnote_block(chunks[i]['html'])
+    return chunks
+
+
 def hydrate_note_content(note, posts_dir=POSTS_DIR):
     """Attach rendered HTML and optional structured sections (post detail only)."""
     if not note:
@@ -242,19 +296,35 @@ def hydrate_note_content(note, posts_dir=POSTS_DIR):
     meta, raw_text = parse_note_file(filepath)
     note = dict(note)
 
+    sections = meta.get('sections') or []
+    if sections:
+        normalize_sections_document({'sections': sections})
+    sections_by_id = {s['id']: s for s in sections if s.get('id')}
+    leading_sections = [s for s in sections if not s.get('id')]
+    use_inline = bool(sections_by_id and POST_SECTION_MARKER.search(raw_text))
+
     if raw_text.strip() and not note.get('content'):
         md = create_markdown_parser()
-        note['content'] = convert_markdown(raw_text, md)
-        note['toc'] = getattr(md, 'toc', '')
+        if use_inline:
+            note['content_chunks'] = _build_content_chunks(raw_text, sections_by_id)
+            body_for_toc = POST_SECTION_MARKER.sub('\n\n', raw_text)
+            convert_markdown(body_for_toc, md)
+            note['toc'] = getattr(md, 'toc', '')
+        else:
+            note['content'] = convert_markdown(raw_text, md)
+            note['toc'] = getattr(md, 'toc', '')
 
-    if meta.get('sections'):
-        note['sections'] = meta.get('sections') or []
+    if sections:
+        note['sections'] = leading_sections if use_inline else sections
         note['related_post_slugs'] = meta.get('related_posts') or []
         if meta.get('technologies'):
             note['technologies'] = meta.get('technologies')
         if meta.get('accent'):
             note['accent'] = meta.get('accent')
-        normalize_sections_document(note)
+        note['has_methodology'] = (
+            _sections_include_methodology(leading_sections)
+            or _sections_include_methodology(sections_by_id.values())
+        )
 
     if meta.get('image'):
         note['image'] = normalize_static_url(meta.get('image'))

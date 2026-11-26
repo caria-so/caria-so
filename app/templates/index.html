@@ -34,11 +34,11 @@
     <div class="home-wrap">
         <div class="home-hero-copy">
             <span class="home-eyebrow">Research &amp; development</span>
-            <h1 id="hero-heading" class="home-hero-title">Findings,<br><em>shipped as code.</em></h1>
-            <p class="home-hero-sub">I study how people actually use their tools, then build the ones that fit.</p>
+            <h1 id="hero-heading" class="home-hero-title">caria.so<br><em></em></h1>
+            <p class="home-hero-sub">Research notes and the tools I built to do my own work <br> <em>in various states of repair</em></p>
             <div class="home-hero-cta">
                 <a href="#notes" class="home-btn home-btn--solid">Go to sketchboard</a>
-                <a href="#lab" class="home-btn home-btn--line">See the work</a>
+                <a href="mailto:{{ contact_email }}" class="home-btn home-btn--line" data-contact-trigger>Work together</a>
             </div>
         </div>
 
@@ -72,11 +72,8 @@
 <section id="notes" class="home-band home-notes" aria-labelledby="notes-heading">
     <div class="home-wrap">
         <div class="home-notes-head">
-            <div>
-                <span class="home-eyebrow">Sketchboard</span>
-                <h2 id="notes-heading" class="home-h2">Notes while things are still moving</h2>
-            </div>
-            <a href="{{ url_for('blog.sketchboard_index') }}" class="home-link">All notes →</a>
+            <span class="home-eyebrow">Sketchboard</span>
+            <h2 id="notes-heading" class="home-h2">While things are still moving</h2>
         </div>
 
         {% if registry %}
@@ -121,6 +118,11 @@
                 </tbody>
             </table>
         </div>
+        {% if register_notes_total > register_notes|length %}
+        <p class="home-notes-foot">
+            <a href="{{ url_for('blog.sketchboard_index') }}" class="home-btn home-btn--line">See all on sketchboard</a>
+        </p>
+        {% endif %}
     </div>
 </section>
 
@@ -147,44 +149,7 @@
 </script>
 
 
-{# ════ LAB — four flagship projects ════ #}
-<section id="lab" class="home-band home-lab" aria-labelledby="lab-heading">
-    <div class="home-wrap home-lab-inner">
-        <div class="home-lab-head">
-            <div>
-                <span class="home-eyebrow">My Lab</span>
-                <h2 id="lab-heading" class="home-h2">The Toolchain</h2>
-            </div>
-            <p class="home-lab-intro">The work runs on code I wrote for it, because nothing off the shelf did the job. Four tools — documents in, datasets grounded, hypotheses decomposed, and the structure underneath — each with a write-up.</p>
-        </div>
-        <div class="home-lab-grid">
-            <a href="{{ url_for('blog.project_detail', slug='scidata-hub') }}" class="home-lab-cell">
-                <span class="home-lab-num">01 — Datasets</span>
-                <span class="home-lab-title">SciData Hub</span>
-                <span class="home-lab-note">Scientific datasets and ontologies on Hugging Face — queryable in SQL, joinable across domains.</span>
-                <span class="home-lab-link">View project →</span>
-            </a>
-            <a href="{{ url_for('blog.project_detail', slug='tractOCR') }}" class="home-lab-cell">
-                <span class="home-lab-num">02 — OCR</span>
-                <span class="home-lab-title">Tract</span>
-                <span class="home-lab-note">OCR for historical and difficult texts — layout detection and structured output.</span>
-                <span class="home-lab-link">View project →</span>
-            </a>
-            <a href="{{ url_for('blog.project_detail', slug='ip-β') }}" class="home-lab-cell">
-                <span class="home-lab-num">03 — Research</span>
-                <span class="home-lab-title">IP-β</span>
-                <span class="home-lab-note">Graph-native multi-agent pipeline for literature-grounded scientific discovery.</span>
-                <span class="home-lab-link">View project →</span>
-            </a>
-            <a href="{{ url_for('blog.project_detail', slug='deepowl') }}" class="home-lab-cell">
-                <span class="home-lab-num">04 — Structure</span>
-                <span class="home-lab-title">DeepOwl</span>
-                <span class="home-lab-note">Research engineering studio — knowledge systems, archives, and field tooling.</span>
-                <span class="home-lab-link">About DeepOwl →</span>
-            </a>
-        </div>
-    </div>
-</section>
+{# LAB (home-band home-lab) moved to about.html#lab — delete this comment when sure #}
 
 
 {# ════ BACKGROUND ════ #}

@@ -13,18 +13,21 @@
 
 .post-body {
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(200px, 1fr);
+    grid-template-columns: minmax(200px, 1fr) minmax(0, 3fr);
     align-items: start;
 }
 
 .post-content-wrapper {
     min-width: 0;
-    --prose-measure: 68ch;
+    --prose-measure: 76ch;
+    grid-column: 2;
 }
 
 .post-body aside {
+    grid-column: 1;
+    grid-row: 1;
     height: 100%;
-    border-left: 1px solid var(--c-border);
+    border-right: 1px solid var(--c-border);
     background: var(--c-background-gray);
 }
 
@@ -33,8 +36,14 @@
         grid-template-columns: 1fr;
     }
 
+    .post-content-wrapper,
     .post-body aside {
-        border-left: none;
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .post-body aside {
+        border-right: none;
         border-top: 1px solid var(--c-border);
     }
 }
@@ -58,7 +67,7 @@
     z-index: 1;
     max-width: var(--content-max, 75rem);
     width: 100%;
-    max-width: 60ch;
+    max-width: 100ch;
 }
 
 .post-header--cover {
@@ -198,12 +207,11 @@ a.meta-item--thread:hover {
     --prose-surface: color-mix(in srgb, var(--c-background-gray) 45%, var(--c-background));
 }
 
-/* pages.css .prose p has no color — set here so body copy uses --prose-ink */
 .post-content.prose p {
     color: var(--prose-ink);
 }
 
-/* Body content shares one measure (incl. fenced / CodeHilite blocks) */
+/* One measure for body copy, headings, lists, figures, tables, code */
 .post-content.prose :is(
     p,
     h1, h2, h3, h4, h5, h6,
@@ -219,6 +227,28 @@ a.meta-item--thread:hover {
     .codehilite
 ) {
     max-width: var(--prose-measure);
+}
+
+/* Methodology panel: full width of the prose column (inner copy not re-capped per <p>) */
+.post-content.prose .post-section--methodology {
+    max-width: var(--prose-measure);
+    width: 100%;
+}
+
+.post-content.prose .proj-block--methodology :is(
+    p,
+    ul,
+    ol,
+    li,
+    .proj-methodology-body,
+    .proj-case-study,
+    .proj-case-block,
+    .proj-case-body,
+    .proj-case-metrics,
+    .proj-case-evidence,
+    .proj-case-figure
+) {
+    max-width: none;
 }
 
 .post-content.prose img {
@@ -294,6 +324,10 @@ a.meta-item--thread:hover {
     list-style-position: outside;
 }
 
+.proj-case-study .proj-case-block .proj-case-metrics {
+    padding-left: 0 !important;
+}
+
 .post-content.prose li {
     margin-bottom: 0.4rem;
     color: var(--prose-ink);
@@ -314,6 +348,80 @@ a.meta-item--thread:hover {
     margin-top: 0.35rem;
     margin-bottom: 0.35rem;
     padding-left: 1.25rem;
+}
+
+.post-content.prose .footnote-ref {
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0 0.12em;
+    color: #2f5fc9;
+}
+
+.post-content.prose .footnote-ref:hover {
+    color: #1d3f8f;
+    text-decoration: underline;
+}
+
+[data-theme="dark"] .post-content.prose .footnote-ref {
+    color: #8ba4e6;
+}
+
+[data-theme="dark"] .post-content.prose .footnote-ref:hover {
+    color: #c5d3f5;
+}
+
+.post-content.prose .footnote {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--c-border);
+    max-width: var(--prose-measure);
+}
+
+.post-content.prose h2#references {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 0;
+}
+
+.post-content.prose h2#references + .footnote {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.post-content.prose .footnote hr {
+    display: none;
+    margin: 0;
+    border: none;
+}
+
+.post-content.prose .footnote ol {
+    margin: 0;
+    padding-left: 1.35rem;
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--prose-ink);
+}
+
+.post-content.prose .footnote li {
+    margin-bottom: 0.85rem;
+    padding-right: 0.25rem;
+    scroll-margin-top: 5rem;
+}
+
+.post-content.prose .footnote-backref {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    text-decoration: none;
+    color: var(--c-text-tertiary);
+    margin-left: 0.25rem;
+}
+
+.post-content.prose .footnote-backref:hover {
+    color: var(--c-accent);
 }
 
 .post-content.prose pre {
@@ -583,6 +691,47 @@ a.meta-item--thread:hover {
     color: var(--c-text-secondary);
 }
 
+/* Same proj tokens as .proj-page — methodology + case-study panels in posts */
+.post-content.post-content--proj-blocks,
+[data-theme="dark"] .post-content.post-content--proj-blocks {
+    --proj-ink: #111214;
+    --proj-rule: var(--c-border);
+    --proj-panel: var(--c-background-gray);
+    --proj-prose-color: var(--c-text-body);
+}
+
+.post-section--methodology {
+    margin: 1.35rem 0 1.65rem;
+}
+
+.post-section--methodology .proj-block--methodology {
+    margin: 0;
+}
+
+.post-content.prose .proj-block--methodology .proj-prose :is(p, li) {
+    font-family: var(--font-sans);
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Full project methodology layout inside prose measure */
+.post-content.post-content--proj-blocks .proj-methodology-head {
+    margin-bottom: 0.65rem;
+}
+
+.post-content.post-content--proj-blocks .proj-methodology-title {
+    font-family: var(--font-sans);
+}
+
+.post-content.post-content--proj-blocks .proj-case-block:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.post-content.post-content--proj-blocks .proj-case-metric-after {
+    color: var(--proj-accent, var(--c-accent));
+}
+
 .post-section--aside {
     margin: 0;
     padding: 0.85rem 1rem 0.85rem 1.1rem;
@@ -595,28 +744,55 @@ a.meta-item--thread:hover {
     font-size: var(--t-subhead);
 }
 
-.post-section--callout {
-    padding: 1.25rem 1.35rem;
-    background: var(--c-background-gray);
-    border: 1px solid var(--c-border);
+.post-content.prose .post-section--callout {
+    max-width: none;
+    margin: 2.5rem calc(-1 * var(--page-gutter, 2rem)) 0;
+    padding: 1.5rem var(--page-gutter, 2rem);
+    background: var(--proj-accent, var(--c-text-primary));
+    border: none;
+    color: #fff;
 }
 
-.post-section-callout-title {
-    margin: 0 0 0.5rem;
-    font-weight: 600;
-    color: var(--c-text-primary);
+.post-section--callout .proj-block--contact {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
 }
 
-.post-section-callout-body p {
-    margin: 0;
+.proj-contact-kicker {
+    font-size: clamp(1.25rem, 2vw, 1.5rem) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.02em !important;
+    color: #fff !important;
+    
 }
 
-.post-section-callout-body p + p {
-    margin-top: 0.65rem;
+.post-section--callout .proj-contact-kicker,
+.post-section--callout .proj-contact-body,
+.post-section--callout .proj-block--contact .proj-prose,
+.post-section--callout .proj-block--contact .proj-prose p {
+    color: #fff;
 }
 
-.post-section-callout-action {
-    margin: 1rem 0 0;
+.post-content.prose .post-section--callout .proj-contact-btn,
+.post-content.prose .post-section--callout .proj-contact-btn:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.post-content.prose .post-section--callout .proj-contact-btn {
+    background: transparent;
+    border: 1px solid #fff;
+    box-shadow: none;
+}
+
+.post-content.prose .post-section--callout .proj-contact-btn:hover {
+    background: #fff;
+    border-color: #fff;
+    color: var(--proj-accent, var(--c-text-primary));
+    box-shadow: none;
 }
 
 .post-section--code pre {

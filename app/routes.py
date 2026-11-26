@@ -741,13 +741,15 @@ def index():
     tag_colors = get_tag_colors(all_tags)
 
     all_notes, registry = load_notes(POSTS_DIR, parse_date_fn=parse_date)
-    register_notes = sorted(
+    notes_sorted = sorted(
         all_notes,
         key=lambda n: (
             -date_sort_key(n.get('parsed_date')),
             -n.get('last_modified', 0),
         ),
-    )[:20]
+    )
+    home_notes_limit = 6
+    register_notes = notes_sorted[:home_notes_limit]
     
     return render_template('index.html', 
                          recent_posts=posts, 
@@ -755,7 +757,8 @@ def index():
                          tag_colors=tag_colors,
                          endorsements=load_endorsements(),
                          registry=registry,
-                         register_notes=register_notes)
+                         register_notes=register_notes,
+                         register_notes_total=len(notes_sorted))
 
 
 @blog_bp.route('/sketchboard')

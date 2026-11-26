@@ -5,6 +5,9 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+{% if post.has_methodology %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project-detail.css') }}">
+{% endif %}
 {% endblock %}
 
 {% block title %}{{ post.title }} - My Blog{% endblock %}
@@ -69,12 +72,20 @@
             {% endif %}
             </div>
         </header>
-        <article class="post-content prose">
+        <article class="post-content prose{% if post.has_methodology %} post-content--proj-blocks{% endif %}"
+                 style="{% if post.thread_color %}--proj-accent: var(--{{ post.thread_color }});{% endif %}">
+            {% if post.content_chunks %}
+            {% from 'partials/_post_section.html' import post_section with context %}
+            {% for chunk in post.content_chunks %}
+            {% if chunk.type == 'html' %}{{ chunk.html|safe }}{% else %}{{ post_section(chunk.section) }}{% endif %}
+            {% endfor %}
+            {% else %}
             {% if post.sections %}
             {% include 'partials/_post_sections.html' %}
             {% endif %}
             {% if post.content %}
             {{ post.content|safe }}
+            {% endif %}
             {% endif %}
         </article>
     </div>

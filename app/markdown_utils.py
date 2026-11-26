@@ -9,6 +9,11 @@ from markdown.extensions.meta import MetaExtension
 from markdown.extensions.tables import TableExtension
 
 _LIST_ITEM_RE = re.compile(r'^(\s*)([-*+]|\d+\.)\s')
+_FOOTNOTE_DEF_RE = re.compile(
+    r'^[ \t]{0,3}\[\^[^\]]+\]:[^\n]*(?:\n[ \t]+[^\n]*)*',
+    re.M,
+)
+_FOOTNOTE_BLOCK_RE = re.compile(r'<div class="footnote">[\s\S]*?</div>', re.I)
 
 
 def normalize_list_spacing(text):
@@ -36,6 +41,7 @@ def create_markdown_parser():
             FencedCodeExtension(),
             MetaExtension(),
             'markdown.extensions.toc',
+            'markdown.extensions.footnotes',
         ],
         output_format='html5',
     )
@@ -45,3 +51,22 @@ def convert_markdown(text, md):
     """Reset parser state and convert markdown body to HTML."""
     md.reset()
     return md.convert(normalize_list_spacing(text))
+
+
+def extract_footnote_defs(text):
+    """Split markdown into body and footnote definitions (Python-Markdown `[^id]:`)."""
+    if not text:
+        return text, ''
+    defs = [m.group(0).rstrip() for m in _FOOTNOTE_DEF_RE.finditer(text)]
+    if not defs:
+        return text, ''
+    body = _FOOTNOTE_DEF_RE.sub('', text)
+    body = re.sub(r'\n{3,}', '\n\n', body).rstrip() + '\n'
+    return body, '\n\n'.join(defs)
+
+
+def strip_footnote_block(html):
+    """Remove the generated footnotes list so it can be kept on the last chunk only."""
+    if not html:
+        return html
+    return _FOOTNOTE_BLOCK_RE.sub('', html).rstrip()

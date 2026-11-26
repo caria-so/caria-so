@@ -60,7 +60,44 @@
 </section>
 {% endif %}
 
-
+{# ════ LAB — toolchain (from homepage) ════ #}
+<section id="lab" class="home-band home-lab home-lab--about" aria-labelledby="lab-heading">
+    <div class="home-wrap home-lab-inner">
+        <div class="home-lab-head">
+            <div>
+                <span class="home-eyebrow">My Lab</span>
+                <h2 id="lab-heading" class="home-h2">The Toolchain</h2>
+            </div>
+            <p class="home-lab-intro">The work runs on code I wrote for it. Four tools — documents in, datasets grounded, literature reviews, simulations, and the structure underneath.</p>
+        </div>
+        <div class="home-lab-grid">
+            <a href="{{ url_for('blog.project_detail', slug='scidata-hub') }}" class="home-lab-cell">
+                <span class="home-lab-num">01 — Datasets</span>
+                <span class="home-lab-title">SciData Hub</span>
+                <span class="home-lab-note">Scientific datasets and ontologies on Hugging Face — queryable in SQL, joinable across domains.</span>
+                <span class="home-lab-link">View project →</span>
+            </a>
+            <a href="{{ url_for('blog.project_detail', slug='tractOCR') }}" class="home-lab-cell">
+                <span class="home-lab-num">02 — OCR</span>
+                <span class="home-lab-title">Tract</span>
+                <span class="home-lab-note">OCR for historical and difficult texts — layout detection and structured output.</span>
+                <span class="home-lab-link">View project →</span>
+            </a>
+            <a href="{{ url_for('blog.project_detail', slug='ip-β') }}" class="home-lab-cell">
+                <span class="home-lab-num">03 — Research</span>
+                <span class="home-lab-title">IP-β</span>
+                <span class="home-lab-note">Graph-native multi-agent pipeline for literature-grounded scientific discovery.</span>
+                <span class="home-lab-link">View project →</span>
+            </a>
+            <a href="{{ url_for('blog.project_detail', slug='deepowl') }}" class="home-lab-cell">
+                <span class="home-lab-num">04 — Structure</span>
+                <span class="home-lab-title">DeepOwl</span>
+                <span class="home-lab-note">Research engineering studio — knowledge systems, archives, and field tooling.</span>
+                <span class="home-lab-link">About DeepOwl →</span>
+            </a>
+        </div>
+    </div>
+</section>
 
 {# ════════════════════════════════════
     INDUSTRIES

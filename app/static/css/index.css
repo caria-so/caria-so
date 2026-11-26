@@ -202,10 +202,9 @@
 
 .home-notes-head {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
 }
 
 .home-chips {
@@ -250,6 +249,12 @@
     background: var(--chip-thread, var(--chip-all));
     border-color: var(--chip-thread, var(--chip-all));
     color: var(--c-background);
+}
+
+.home-notes-foot {
+    margin-top: 1.75rem;
+    display: flex;
+    justify-content: center;
 }
 
 .home-register {

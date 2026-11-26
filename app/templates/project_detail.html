@@ -37,7 +37,7 @@
        ════════════════════════════════════ #}
     <header class="proj-hero {{ project.pattern or 'lr-pattern-noise' }}">
         <div class="proj-hero-meta">
-            <a href="{{ url_for('blog.index') }}#lab" class="proj-back txt-mono txt-xsmall uppercase">
+            <a href="{{ url_for('blog.about') }}#lab" class="proj-back txt-mono txt-xsmall uppercase">
                 <i class="ph ph-arrow-left"></i> Lab
             </a>
             {% if project.status %}
@@ -311,7 +311,7 @@
         {% endif %}
 
         <div class="proj-nav">
-            <a href="{{ url_for('blog.index') }}#lab" class="btn btn-secondary txt-mono uppercase">
+            <a href="{{ url_for('blog.about') }}#lab" class="btn btn-secondary txt-mono uppercase">
                 <i class="ph ph-arrow-left"></i> Back to lab
             </a>
         </div>

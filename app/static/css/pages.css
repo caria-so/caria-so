@@ -80,8 +80,7 @@
 /* ── Prose block (replaces per-section p overrides) ── */
 .prose p {
     font-size: var(--t-body);
-    line-height: 1.75;
-    max-width: 68ch;
+    line-height: 1.6;
 }
 
 .prose p + p {
