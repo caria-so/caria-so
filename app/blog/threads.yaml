@@ -3,8 +3,8 @@
 
 threads:
 
-  - slug: archives
-    title: Archives
+  - slug: knowledge
+    title: Knowledge
     color: hatch-archives
     order: 2
 
